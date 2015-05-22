@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Desktop", "VisualCrypt.Desktop\VisualCrypt.Desktop.csproj", "{CD1444E2-ACFF-4019-925B-B1879B36E707}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Net", "VisualCrypt.Net\VisualCrypt.Net.csproj", "{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Portable", "VisualCrypt.Portable\VisualCrypt.Portable.csproj", "{A0AEFEF6-E642-4247-85F6-F2F0B329D935}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Desktop.Tests", "VisualCrypt.Desktop.Tests\VisualCrypt.Desktop.Tests.csproj", "{463CD309-F817-4881-BF28-3A7AE06B80CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Debug|x86 = Debug|x86
+		Release|Any CPU = Release|Any CPU
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Debug|x86.ActiveCfg = Debug|x86
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Debug|x86.Build.0 = Debug|x86
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Release|x86.ActiveCfg = Release|x86
+		{CD1444E2-ACFF-4019-925B-B1879B36E707}.Release|x86.Build.0 = Release|x86
+		{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}.Release|x86.ActiveCfg = Release|Any CPU
+		{A0AEFEF6-E642-4247-85F6-F2F0B329D935}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0AEFEF6-E642-4247-85F6-F2F0B329D935}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0AEFEF6-E642-4247-85F6-F2F0B329D935}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A0AEFEF6-E642-4247-85F6-F2F0B329D935}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0AEFEF6-E642-4247-85F6-F2F0B329D935}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0AEFEF6-E642-4247-85F6-F2F0B329D935}.Release|x86.ActiveCfg = Release|Any CPU
+		{463CD309-F817-4881-BF28-3A7AE06B80CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463CD309-F817-4881-BF28-3A7AE06B80CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463CD309-F817-4881-BF28-3A7AE06B80CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{463CD309-F817-4881-BF28-3A7AE06B80CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463CD309-F817-4881-BF28-3A7AE06B80CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463CD309-F817-4881-BF28-3A7AE06B80CE}.Release|x86.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
