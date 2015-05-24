@@ -2,20 +2,17 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using VisualCrypt.Portable.APIV2.DataTypes;
 using VisualCrypt.Portable.Tools;
 
 namespace VisualCrypt.Portable.APIV2.Implementations
 {
     public class FileContentsDetection
     {
-        readonly VisualCryptFormatter _visualCryptFormatter = new VisualCryptFormatter();
-
         /// <summary>
         /// Detects the contents of an unknown file that is being loaded for display purposes.
         /// - If VisualCrypt is detected, this is just from the prefix, does not mean it's valid or what version.
         /// </summary>
-        internal DecodeFileResult Detect(byte[] rawBytesFromFile, Encoding optionalPlatformDefaultEncoding = null)
+        internal string GetTextDetectingEncoding(byte[] rawBytesFromFile, Encoding optionalPlatformDefaultEncoding = null)
         {
             if (rawBytesFromFile == null)
                 throw new ArgumentNullException("rawBytesFromFile");
@@ -24,25 +21,19 @@ namespace VisualCrypt.Portable.APIV2.Implementations
 
             // If the file is empty, just return string.Empty and set ContentKind to PlainText.
             if (byteCount == 0)
-            {
-                return new DecodeFileResult(new ClearText(string.Empty)); // c'tor sets  ContentKind to PlainText.
-            }
+                return string.Empty;
 
             // Try by looking for a Unicode signature/BOM...
             // ...if found, return fault-tolerant decoder and use it.
             var signatureUnicodeEncoding = TryGetEncodingBySignatureDetection(rawBytesFromFile, false);
             if (signatureUnicodeEncoding != null)
-            {
-                var stringContents = signatureUnicodeEncoding.GetString(rawBytesFromFile, 0, byteCount);
-                return _visualCryptFormatter.DetectContentKindSuperficially(stringContents);
-            }
+                return signatureUnicodeEncoding.GetString(rawBytesFromFile, 0, byteCount);
 
             // Try if UTF8 decoding would work without errors
             var strictUTF8Encoding = new UTF8Encoding(false /* signature */, true /* trow on errors */);
             try
             {
-                var stringContents = strictUTF8Encoding.GetString(rawBytesFromFile, 0, byteCount);
-                return _visualCryptFormatter.DetectContentKindSuperficially(stringContents);
+                return strictUTF8Encoding.GetString(rawBytesFromFile, 0, byteCount);
             }
             catch (DecoderFallbackException) { }
 
@@ -52,29 +43,26 @@ namespace VisualCrypt.Portable.APIV2.Implementations
             if (controlCharPercent >= 2)
             {
                 // yes, this is probaby no text at all, encode it to displayable hex numbers to show the user 'something'.
-                var stringContents = ByteArrayToHexString.ByteArrayToHexViaLookup32(rawBytesFromFile);
-                return new DecodeFileResult(new ClearText(stringContents));
+                return ByteArrayToHexString.ByteArrayToHexViaLookup32(rawBytesFromFile);
+              
             }
 
             // If we are e.g. on Desktop, try injected default encoding.
             if (optionalPlatformDefaultEncoding != null)
             {
-                var stringContents = optionalPlatformDefaultEncoding.GetString(rawBytesFromFile, 0, byteCount);
-                return _visualCryptFormatter.DetectContentKindSuperficially(stringContents);
+                return optionalPlatformDefaultEncoding.GetString(rawBytesFromFile, 0, byteCount);
             }
 
             var encodingString = GetUserCultureBasedEncoding();
             try
             {
                 var cultureBasedEncoding = Encoding.GetEncoding(encodingString);
-                var stringContents = cultureBasedEncoding.GetString(rawBytesFromFile, 0, byteCount);
-                return _visualCryptFormatter.DetectContentKindSuperficially(stringContents);
+                return cultureBasedEncoding.GetString(rawBytesFromFile, 0, byteCount);
             }
             catch (Exception)
             {
                 var tolerantUTF8Encoding = new UTF8Encoding(false, false);
-                var stringContents = tolerantUTF8Encoding.GetString(rawBytesFromFile, 0, byteCount);
-                return _visualCryptFormatter.DetectContentKindSuperficially(stringContents);
+                return tolerantUTF8Encoding.GetString(rawBytesFromFile, 0, byteCount);
             }
         }
 

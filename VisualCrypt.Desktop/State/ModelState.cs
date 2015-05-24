@@ -106,7 +106,8 @@ namespace VisualCrypt.Desktop.State
                     IsStatusBarChecked = true,
                     IsWordWrapChecked = true,
                     IsSpellCheckingChecked = false
-                }
+                },
+                
             };
             return settings;
         }

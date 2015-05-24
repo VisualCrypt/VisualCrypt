@@ -48,5 +48,15 @@ namespace VisualCrypt.Desktop.Views
             var messageBoxText = "Error in {0}:\r\n\r\n{1}".FormatInvariant(methodName, e.Message);
             Show(messageBoxText, "Error (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+
+        public void ShowError(string error)
+        {
+            if (string.IsNullOrWhiteSpace(error))
+                error = "There was an error but the error message is missing.";
+
+            
+            Show(error, "Error (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 }

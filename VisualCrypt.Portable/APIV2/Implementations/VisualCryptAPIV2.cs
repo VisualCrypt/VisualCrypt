@@ -14,7 +14,7 @@ namespace VisualCrypt.Portable.APIV2.Implementations
         {
             if (coreAPI == null)
                 throw new ArgumentNullException("coreAPI", "The platform-specific API part is mandantory.");
-            
+
             _coreAPI = coreAPI;
         }
 
@@ -77,7 +77,7 @@ namespace VisualCrypt.Portable.APIV2.Implementations
                 PaddedData paddedData = _coreAPI.ApplyRandomPadding(compressed);
 
                 IV16 iv16 = _coreAPI.GenerateIV(16);
-               
+
                 BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, BCrypt.GensaltDefaultLog2Rounds);
 
                 AESKey32 aesKey32;
@@ -168,7 +168,7 @@ namespace VisualCrypt.Portable.APIV2.Implementations
                     aesKey32 = new AESKey32(hash);
                 }
 
-                MD16 md16a = _coreAPI.AESDecryptMessageDigest(cipherV2.MD16E, cipherV2.IV16, aesKey32); 
+                MD16 md16a = _coreAPI.AESDecryptMessageDigest(cipherV2.MD16E, cipherV2.IV16, aesKey32);
 
                 MD32 md32;
                 using (var sha = new SHA256ManagedMono())
@@ -204,9 +204,9 @@ namespace VisualCrypt.Portable.APIV2.Implementations
             return response;
         }
 
-        public Response<DecodeFileResult> DetectFileContents(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null)
+        public Response<string> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null)
         {
-            var response = new Response<DecodeFileResult>();
+            var response = new Response<string>();
 
             if (rawBytesFromFile == null)
             {
@@ -217,7 +217,7 @@ namespace VisualCrypt.Portable.APIV2.Implementations
             try
             {
                 var detection = new FileContentsDetection();
-                var decodeFileResult = detection.Detect(rawBytesFromFile, platformDefaultEncoding);
+                var decodeFileResult = detection.GetTextDetectingEncoding(rawBytesFromFile, platformDefaultEncoding);
                 if (decodeFileResult != null)
                 {
                     response.Result = decodeFileResult;

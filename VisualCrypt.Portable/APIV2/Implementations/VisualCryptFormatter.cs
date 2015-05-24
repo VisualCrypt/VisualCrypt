@@ -61,7 +61,7 @@ namespace VisualCrypt.Portable.APIV2.Implementations
                 var visualCrypt = visualCryptText.Value.Trim();
 
                 if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
-                    throw new FormatException("The file does not look encrypted (because it does not start with '{0}').".FormatInvariant(VisualCryptSlashText));
+                    throw new FormatException("The data is not in VisualCrypt/text V2 format (because it does not start with '{0}').".FormatInvariant(VisualCryptSlashText));
 
                 var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length);
 
@@ -94,19 +94,6 @@ namespace VisualCrypt.Portable.APIV2.Implementations
             {
                 throw new FormatException("Data invalid or truncated. " + e.Message);
             }
-        }
-
-        public DecodeFileResult DetectContentKindSuperficially(string text)
-        {
-            if (text == null)
-                throw new ArgumentNullException("text");
-
-            if (text.Contains(VisualCryptSlashBinary))
-                throw new NotSupportedException(VisualCryptSlashBinary);
-            if (text.Contains(VisualCryptSlashText))
-                return new DecodeFileResult(new VisualCryptText(text));
-            return new DecodeFileResult(new ClearText(text));
-
         }
     }
 }

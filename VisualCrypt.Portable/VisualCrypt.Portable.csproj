@@ -49,8 +49,6 @@
     <Compile Include="APIV2\Implementations\VisualCryptAPIV2.cs" />
     <Compile Include="APIV2\Implementations\VisualCryptFormatter.cs" />
     <Compile Include="APIV2\Interfaces\ICoreAPIV2.cs" />
-    <Compile Include="Editor\Constants\DefaultExtensions.cs" />
-    <Compile Include="Editor\Constants\ProductInfo.cs" />
     <Compile Include="Editor\Enums\SetPasswordDialogMode.cs" />
     <Compile Include="APIV2\DataTypes\CipherV2.cs" />
     <Compile Include="APIV2\DataTypes\ClearText.cs" />
@@ -63,7 +61,6 @@
     <Compile Include="APIV2\Implementations\SHA256ManagedMono.cs" />
     <Compile Include="APIV2\Implementations\Base64Encoder.cs" />
     <Compile Include="APIV2\DataTypes\ContentKind.cs" />
-    <Compile Include="Editor\Constants\DefaultFilenames.cs" />
     <Compile Include="Tools\ByteArrayExtensions.cs" />
     <Compile Include="Tools\ByteArrayToHexString.cs" />
     <Compile Include="Tools\StringExtensions.cs" />

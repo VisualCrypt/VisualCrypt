@@ -5,11 +5,15 @@ namespace VisualCrypt.Desktop.State
 {
     public class Defaults
     {
+        public const string ProductName = "VisualCrypt Notepad";
+
         public const string HelpUrl = "http://visualcrypt.com";
-        public const string ProgramName = "VisualCrypt Notepad";
+      
+        public const string UntitledDotVisualCrypt = "Untitled.visualcrypt";
+       
+        public const string VisualCryptExtension = ".visualcrypt";
       
         public readonly string DefaultDirectoryName;
-        public Encoding DefaultEncoding = Encoding.UTF8;
 
         public Defaults()
         {

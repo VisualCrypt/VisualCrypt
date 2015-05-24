@@ -5,8 +5,6 @@ namespace VisualCrypt.Portable.APIV2.Interfaces
 {
     public interface  IVisualCryptAPIV2
     {
-
-
         Response<SHA256PW32> CreateSHA256PW32(byte[] utf16LEPassword);
 
         Response<SHA256PW32> CreateSHA256PW32(string utf16LEPassword);
@@ -19,6 +17,6 @@ namespace VisualCrypt.Portable.APIV2.Interfaces
 
         Response<ClearText> Decrpyt(CipherV2 cipherV2, SHA256PW32 sha256PW32);
 
-        Response<DecodeFileResult> DetectFileContents(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null);
+        Response<string> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null);
     }
 }

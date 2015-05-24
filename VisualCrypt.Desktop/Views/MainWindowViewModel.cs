@@ -1,7 +1,6 @@
 ﻿using System.Globalization;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -9,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using VisualCrypt.Desktop.Features;
 using VisualCrypt.Desktop.Lib;
 using VisualCrypt.Desktop.Models.Printing;
 using VisualCrypt.Desktop.State;
@@ -16,7 +16,6 @@ using VisualCrypt.Net.APIV2.Implementations;
 using VisualCrypt.Portable.APIV2.DataTypes;
 using VisualCrypt.Portable.APIV2.Implementations;
 using VisualCrypt.Portable.APIV2.Interfaces;
-using VisualCrypt.Portable.Editor.Constants;
 using VisualCrypt.Portable.Editor.Enums;
 using VisualCrypt.Portable.Tools;
 
@@ -33,6 +32,8 @@ namespace VisualCrypt.Desktop.Views
         readonly SpellCheck _spellCheck;
         public IMessageBoxService MessageBoxService;
 
+
+
         public MainWindowViewModel(MainWindow mainWindow)
         {
             _visualCryptAPI = new VisualCryptAPIV2(new CoreAPIV2_Net4());
@@ -47,21 +48,13 @@ namespace VisualCrypt.Desktop.Views
 
         public void OnMainWindowInitialized()
         {
-
             ModelState.Init();
-            ModelState.Transient.ContentKind = ContentKind.PlainText;
+
+            ModelState.Transient.FileModel = new FileModel();
 
             ApplySettings();
-
-
-            UpdateWindowTitle();
-
-
-            UpdateStatusBar();
-
             Zoom100Command.Execute();
-
-
+            SetTextAndUpdateAllWithoutUndo(string.Empty);
         }
 
 
@@ -104,12 +97,12 @@ namespace VisualCrypt.Desktop.Views
 
 
 
-       
+
         public string PasswordStatus
         {
             get
             {
-                if (ModelState.Transient.IsSHA256PasswordHashPresent == false)
+                if (ModelState.Transient.FileModel.IsPasswordPresent == false)
                     return "Not Set";
 
                 // Unicode Character 'BLACK CIRCLE' (U+25CF)
@@ -121,14 +114,13 @@ namespace VisualCrypt.Desktop.Views
 
         public DelegateCommand ClearPasswordCommand
         {
-            get { return CreateCommand(ref _clearPasswordCommand, ExecuteClearPasswordCommand, () => ModelState.Transient.SHA256PW32 != null); }
+            get { return CreateCommand(ref _clearPasswordCommand, ExecuteClearPasswordCommand, () => ModelState.Transient.FileModel.IsPasswordPresent); }
         }
         DelegateCommand _clearPasswordCommand;
 
         void ExecuteClearPasswordCommand()
         {
-            ModelState.Transient.SHA256PW32.Value.OverwriteWithZeros();
-            ModelState.Transient.SHA256PW32 = null;
+            ModelState.Transient.FileModel.ClearPassword();
 
             RaisePropertyChanged(() => PasswordStatus);
             TextBlockClearPasswordVisibility = Visibility.Collapsed;
@@ -182,7 +174,7 @@ namespace VisualCrypt.Desktop.Views
 
         void ExecuteTextChangedCommand(TextChangedEventArgs e)
         {
-            ModelState.Transient.CanExit = false;
+            ModelState.Transient.FileModel.IsDirty = true;
             RaiseAllCanExecuteChanged();
             if ((IsStatusBarChecked))
                 UpdateStatusBar();
@@ -224,23 +216,12 @@ namespace VisualCrypt.Desktop.Views
             if (!ConfirmToDiscardText())
                 return;
 
-            // Clear Undo stack
-            _mainWindow.TextBox1.IsUndoEnabled = false;
-            // Clear Text
-            _mainWindow.TextBox1.Text = string.Empty;
-            // Enable Undo
-            _mainWindow.TextBox1.IsUndoEnabled = true;
+            ModelState.Transient.FileModel = new FileModel();
 
-            ModelState.Transient.CurrentFilename = null;
-            ModelState.Transient.ContentKind = ContentKind.PlainText;
-
-            ModelState.Transient.CurrentDirectoryName = null;
-            ModelState.Transient.CanExit = true;
-
+            ClearEditorAndUndoStack();
             UpdateWindowTitle();
             UpdateStatusBar();
         }
-
 
         #endregion
 
@@ -263,18 +244,11 @@ namespace VisualCrypt.Desktop.Views
             openFileDialog.DefaultExt = ".visualcrypt";
             openFileDialog.Filter = "VisualCrypt|*.visualcrypt; *.txt|Text|*.txt|All Files|*.*";
 
-
-
-            bool? result = openFileDialog.ShowDialog();
-
-            if (result == true)
+            if (openFileDialog.ShowDialog() == true)
             {
-                LoadFile(openFileDialog.FileName);
+                OpenFileCommon(openFileDialog.FileName);
             }
         }
-
-
-
 
         #endregion
 
@@ -286,7 +260,7 @@ namespace VisualCrypt.Desktop.Views
         {
             get
             {
-                return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand, () => true);
+                return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand, () => !ModelState.Transient.FileModel.IsEncrypted);
             }
         }
 
@@ -295,14 +269,8 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                if (ModelState.Transient.ContentKind == ContentKind.EncryptedText)
-                {
-                    var doDoubleEnrypt = MessageBoxService.Show("This looks already encrypted - encrypt again?",
-                        "VisualCrypt", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                    if (doDoubleEnrypt != MessageBoxResult.OK)
-                        return;
-                }
-                if (ModelState.Transient.IsSHA256PasswordHashPresent == false)
+
+                if (!ModelState.Transient.FileModel.IsPasswordPresent)
                 {
                     bool result = ShowSetPasswordDialog(SetPasswordDialogMode.SetAndEncrypt);
                     if (result == false)
@@ -312,33 +280,13 @@ namespace VisualCrypt.Desktop.Views
                 _mainWindow.TextBox1.IsUndoEnabled = false;
 
                 // do the encryption
-                var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(_mainWindow.TextBox1.Text),
-                  ModelState.Transient.SHA256PW32);
-                if (encryptResponse.Success)
-                {
-                    var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
-                    if (encodeResponse.Success)
-                    {
-                        _mainWindow.TextBox1.Text = encodeResponse.Result.Value;
-                    }
-                    else
-                        throw new Exception(encodeResponse.Error);
-                }
-                else
+                var encryptResponse = ModelState.Transient.FileModel.Encrypt(new ClearText(_mainWindow.TextBox1.Text));
+
+                if (!encryptResponse.Success)
                     throw new Exception(encryptResponse.Error);
 
+                SetTextAndUpdateAllWithoutUndo(encryptResponse.Result.Value);
 
-
-
-                // Enable Undo again
-                _mainWindow.TextBox1.IsUndoEnabled = true;
-
-                ModelState.Transient.CurrentFilename = DefaultFilenames.AdjustFileNameAfterEncryption(ModelState.Transient.CurrentFilename);
-                ModelState.Transient.ContentKind = ContentKind.EncryptedText;
-                _mainWindow.TextBox1.SpellCheck.IsEnabled = false;
-
-                UpdateWindowTitle();
-                UpdateStatusBar();
             }
             catch (Exception e)
             {
@@ -357,7 +305,7 @@ namespace VisualCrypt.Desktop.Views
         {
             get
             {
-                return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand, () => true);
+                return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand, () => ModelState.Transient.FileModel.IsEncrypted);
             }
         }
 
@@ -366,40 +314,30 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                if (ModelState.Transient.SHA256PW32 == null || _shouldShowPasswordDialog)
-                {
-                    bool result = ShowSetPasswordDialog(SetPasswordDialogMode.SetAndDecrypt);
-                    if (result == false)
-                        return;
-                }
-
-                // Clear Undo stack and disable Undo
-                _mainWindow.TextBox1.IsUndoEnabled = false;
-
                 var decodeResponse =
                     _visualCryptAPI.TryDecodeVisualCryptText(new VisualCryptText(_mainWindow.TextBox1.Text));
 
-                if (decodeResponse.Success)
+                if (!decodeResponse.Success)
                 {
-                    var decryptResponse = _visualCryptAPI.Decrpyt(decodeResponse.Result,
-                        ModelState.Transient.SHA256PW32);
-                    if (decryptResponse.Success)
-                        _mainWindow.TextBox1.Text = decryptResponse.Result.Value;
-                    else
-                        throw new Exception(decryptResponse.Error);
+                    MessageBoxService.ShowError(decodeResponse.Error);
+                    return;
+                }
+                if (!ModelState.Transient.FileModel.IsPasswordPresent)
+                {
+                    if (!ShowSetPasswordDialog(SetPasswordDialogMode.SetAndDecrypt))
+                        return;
+                    ExecuteDecryptEditorContentsCommand(); // loop!
                 }
                 else
-                    throw new Exception(decodeResponse.Error);
-
-                _mainWindow.TextBox1.IsUndoEnabled = true;
-
-                ModelState.Transient.CurrentFilename = DefaultFilenames.AdjustFileNameAfterDecryption(ModelState.Transient.CurrentFilename);
-                ModelState.Transient.ContentKind = ContentKind.PlainText;
-                IsSpellCheckingChecked = ModelState.EditorState.IsSpellCheckingChecked;
-
-                ModelState.Transient.CanExit = true;
-                UpdateWindowTitle();
-                UpdateStatusBar();
+                {
+                    var decrpytResponse = ModelState.Transient.FileModel.Decrypt(decodeResponse.Result);
+                    if (!decrpytResponse.Success)
+                    {
+                        MessageBoxService.ShowError(decrpytResponse.Error);
+                        return;
+                    }
+                    SetTextAndUpdateAllWithoutUndo(decrpytResponse.Result.Value);
+                }
             }
             catch (Exception e)
             {
@@ -422,12 +360,13 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                byte[] encodedTextBytes = ModelState.Transient.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
+                // TODO: THIS IS THE OLD WAY!!!
+                byte[] encodedTextBytes = ModelState.Transient.FileModel.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
 
-                string fullPath = Path.Combine(ModelState.Transient.CurrentDirectoryName, ModelState.Transient.CurrentFilename);
+                string fullPath = Path.Combine(ModelState.Transient.CurrentDirectoryName, ModelState.Transient.FileModel.Filename);
                 File.WriteAllBytes(fullPath, encodedTextBytes);
 
-                ModelState.Transient.CanExit = true;
+                ModelState.Transient.FileModel.IsDirty = false;
                 UpdateWindowTitle();
                 UpdateStatusBar();
                 SaveCommand.RaiseCanExecuteChanged();
@@ -440,8 +379,8 @@ namespace VisualCrypt.Desktop.Views
 
         bool CanExecuteSaveCommand()
         {
-            if (!ModelState.Transient.CanExit && ModelState.Transient.ContentKind == ContentKind.EncryptedText
-                && ModelState.Transient.CurrentFilename != null && ModelState.Transient.CurrentDirectoryName != null)
+            if (!ModelState.Transient.FileModel.IsDirty && ModelState.Transient.FileModel.IsEncrypted
+                && ModelState.Transient.FileModel.IsFilenamePresent)
                 return true;
             return false;
         }
@@ -463,7 +402,7 @@ namespace VisualCrypt.Desktop.Views
             var saveFileDialog = new SaveFileDialog
             {
                 InitialDirectory = ModelState.Transient.CurrentDirectoryName ?? ModelState.Defaults.DefaultDirectoryName,
-                FileName = ModelState.Transient.CurrentFilename ?? DefaultFilenames.GetDefaultFilename(ModelState.Transient.ContentKind),
+                FileName = ModelState.Transient.FileModel.Filename ?? Defaults.UntitledDotVisualCrypt,
                 DefaultExt = ".visualcrypt",
                 Filter = "VisualCrypt|*.visualcrypt; *.txt|Text|*.txt|All Files|*.*"
             };
@@ -477,13 +416,13 @@ namespace VisualCrypt.Desktop.Views
                 try
                 {
                     ModelState.Transient.CurrentDirectoryName = Path.GetDirectoryName(fullPath);
-                    ModelState.Transient.CurrentFilename = Path.GetFileName(fullPath);
 
-                    byte[] encodedTextBytes = ModelState.Transient.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
+
+                    byte[] encodedTextBytes = ModelState.Transient.FileModel.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
 
                     File.WriteAllBytes(fullPath, encodedTextBytes);
 
-                    ModelState.Transient.CanExit = true;
+                    ModelState.Transient.FileModel.IsDirty = false;
                     UpdateWindowTitle();
                     UpdateStatusBar();
                     SaveCommand.RaiseCanExecuteChanged();
@@ -1028,12 +967,7 @@ namespace VisualCrypt.Desktop.Views
 
         void ExecuteShowSetPasswordDialogCommand()
         {
-            var result = ShowSetPasswordDialog(SetPasswordDialogMode.Set);
-            if (!result) return;
-            if (ModelState.Transient.SHA256PW32 != null)
-                TextBlockClearPasswordVisibility = Visibility.Visible;
-            else
-                TextBlockClearPasswordVisibility = Visibility.Collapsed;
+            ShowSetPasswordDialog(SetPasswordDialogMode.Set);
         }
 
 
@@ -1042,12 +976,16 @@ namespace VisualCrypt.Desktop.Views
         /// </summary>
         bool ShowSetPasswordDialog(SetPasswordDialogMode setPasswordDialogMode)
         {
-            var setPassword = new SetPassword(setPasswordDialogMode, _visualCryptAPI)
+            var setPassword = new SetPassword(setPasswordDialogMode, MessageBoxService)
             {
                 WindowStyle = WindowStyle.ToolWindow,
                 Owner = _mainWindow,
             };
             var okClicked = setPassword.ShowDialog();
+            if (ModelState.Transient.FileModel.IsPasswordPresent)
+                TextBlockClearPasswordVisibility = Visibility.Visible;
+            else
+                TextBlockClearPasswordVisibility = Visibility.Collapsed;
             RaisePropertyChanged(() => PasswordStatus);
             return okClicked == true;
         }
@@ -1146,7 +1084,10 @@ namespace VisualCrypt.Desktop.Views
         {
             var pos = UpdatePositionString();
             var enc = GetEncodingInfo();
-            StatusBarText = "{0} | {1} | {2}".FormatInvariant(enc, pos, ModelState.Transient.ContentKind);
+            var contentKind = ModelState.Transient.FileModel.IsEncrypted
+                ? ContentKind.EncryptedText
+                : ContentKind.PlainText;
+            StatusBarText = "{0} | {1} | {2}".FormatInvariant(enc, pos, contentKind);
         }
         string UpdatePositionString()
         {
@@ -1189,7 +1130,7 @@ namespace VisualCrypt.Desktop.Views
 
         string GetEncodingInfo()
         {
-            return ModelState.Transient.SaveEncoding.EncodingName + ", Code Page " + ModelState.Transient.SaveEncoding.CodePage;
+            return ModelState.Transient.FileModel.SaveEncoding.EncodingName + ", Code Page " + ModelState.Transient.FileModel.SaveEncoding.CodePage;
         }
 
         void ApplySettings()
@@ -1204,7 +1145,7 @@ namespace VisualCrypt.Desktop.Views
 
         bool ConfirmToDiscardText()
         {
-            if (!ModelState.Transient.CanExit)
+            if (ModelState.Transient.FileModel.IsDirty)
                 return (MessageBoxService.Show("Discard changes?", "VisualCrypt Notepad", MessageBoxButton.OKCancel, MessageBoxImage.Question) ==
                         MessageBoxResult.OK);
 
@@ -1213,81 +1154,92 @@ namespace VisualCrypt.Desktop.Views
 
         void UpdateWindowTitle()
         {
-            var displayFileName = ModelState.Transient.CurrentFilename ?? DefaultFilenames.GetDefaultFilename(ModelState.Transient.ContentKind);
-            WindowTitleText = "{0} - {1}".FormatInvariant(displayFileName, Defaults.ProgramName);
+            var displayFileName = ModelState.Transient.FileModel.Filename ?? Defaults.UntitledDotVisualCrypt;
+            WindowTitleText = "{0} - {1}".FormatInvariant(displayFileName, Defaults.ProductName);
         }
 
-        bool _shouldShowPasswordDialog;
-        void LoadFile(string filename)
+        void ClearEditorAndUndoStack()
         {
+            _mainWindow.TextBox1.IsUndoEnabled = false;
+            _mainWindow.TextBox1.Text = string.Empty;
+            _mainWindow.TextBox1.IsUndoEnabled = true;
+        }
+
+
+        void OpenFileCommon(string filename)
+        {
+            if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename))
+                return;
+
             try
             {
+                var fileModel = new FileModel();
+                fileModel.SetFilename(filename);
+                var loadResponse = fileModel.TryLoadVisualCryptTextOrCleartext();
 
-                var rawBytesFromFile = File.ReadAllBytes(filename);
+                if (!loadResponse.Success)
+                {
+                    MessageBoxService.ShowError(loadResponse.Error);
+                    return;
+                }
 
-                var decodeFileResponse = _visualCryptAPI.DetectFileContents(rawBytesFromFile, Encoding.Default);
+                // we succeeded loading the file, now we can replace current content with the new content.
 
-                if (!decodeFileResponse.Success)
-                    throw new Exception(decodeFileResponse.Error);
-                //if (detectedContentKind == ContentKind.Binary)
-                //{
-                //    MessageBoxService.Show("Encrypting binary files is not currently supported. Display file anyway?", "VisualCrypt",
-                //        MessageBoxButton.OK, MessageBoxImage.Stop);
-                //    return;
-                //}
-
-                ModelState.Transient.ContentKind = decodeFileResponse.Result.ContentKind;
-
-                // Clear Undo stack and disable Undo
-                _mainWindow.TextBox1.IsUndoEnabled = false;
-                _mainWindow.TextBox1.Text = decodeFileResponse.Result.ContentKind == ContentKind.PlainText 
-                    ? decodeFileResponse.Result.ClearText.Value 
-                    : decodeFileResponse.Result.VisualCryptText.Value;
-
-                // Enable Undo
-                _mainWindow.TextBox1.IsUndoEnabled = true;
+                ModelState.Transient.FileModel = fileModel;
                 ModelState.Transient.CurrentDirectoryName = Path.GetDirectoryName(filename);
-                ModelState.Transient.CurrentFilename = Path.GetFileName(filename);
-                ModelState.Transient.CanExit = true;
 
-                if (ModelState.Transient.ContentKind == ContentKind.EncryptedText)
-                {
-                    _mainWindow.TextBox1.SpellCheck.IsEnabled = false;
-                    if (DecryptEditorContentsCommand.CanExecute())
-                    {
-                        _shouldShowPasswordDialog = true;
-                        DecryptEditorContentsCommand.Execute();
-                    }
-                }
-                else
-                {
+                SetTextAndUpdateAllWithoutUndo(loadResponse.Result);
 
-                    IsSpellCheckingChecked = ModelState.EditorState.IsSpellCheckingChecked;
+                if (ModelState.Transient.FileModel.IsEncrypted)
+                {
+                    DecryptEditorContentsCommand.Execute();
                 }
 
-                UpdateWindowTitle();
-                UpdateStatusBar();
             }
             catch (Exception e)
             {
                 MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
                 _mainWindow.TextBox1.Text = string.Empty;
             }
-            finally
-            {
-                _shouldShowPasswordDialog = false;
-            }
+
         }
 
-        /// <summary>
-        ///     args is expected to hold one filename only, can be segmented if it contains spaces.
-        /// </summary>
+        void SetTextAndUpdateAllWithoutUndo(string newText)
+        {
+            if (newText == null)
+                throw new ArgumentNullException("newText");
+
+            _mainWindow.TextBox1.IsUndoEnabled = false;
+            _mainWindow.TextBox1.Text = newText;
+
+            if (ModelState.Transient.FileModel.IsEncrypted)
+            {
+                _mainWindow.TextBox1.SpellCheck.IsEnabled = false;
+                _mainWindow.TextBox1.IsUndoEnabled = false;
+                _mainWindow.TextBox1.IsReadOnly = true;
+            }
+            else
+            {
+                _mainWindow.TextBox1.SpellCheck.IsEnabled = ModelState.EditorState.IsSpellCheckingChecked;
+                _mainWindow.TextBox1.IsUndoEnabled = true;
+                _mainWindow.TextBox1.IsReadOnly = false;
+
+            }
+            UpdateWindowTitle();
+            UpdateStatusBar();
+
+        }
+
+
         public void OpenFileFromCommandLine(string[] args)
         {
             if (args == null)
                 return;
 
-            string commandline = string.Empty;
+            var commandline = string.Empty;
+
+            // args is expected to hold one filename only
+            // but can be segmented if it contains spaces.
             foreach (string a in args)
             {
                 commandline += a;
@@ -1297,12 +1249,8 @@ namespace VisualCrypt.Desktop.Views
             if (commandline.Length == 0)
                 return;
 
-            if (File.Exists(commandline))
-            {
-                LoadFile(commandline);
-            }
+            OpenFileCommon(commandline);
         }
-
 
 
         public void OpenFileFromDragDrop(string dropFilename)
@@ -1310,8 +1258,7 @@ namespace VisualCrypt.Desktop.Views
             if (!ConfirmToDiscardText())
                 return;
 
-            if (!string.IsNullOrWhiteSpace(dropFilename) && File.Exists(dropFilename))
-                LoadFile(dropFilename);
+            OpenFileCommon(dropFilename);
         }
 
 

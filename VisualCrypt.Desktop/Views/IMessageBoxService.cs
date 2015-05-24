@@ -12,5 +12,7 @@ namespace VisualCrypt.Desktop.Views
        
 
         void ShowError(MethodBase methodBase, Exception e);
+
+        void ShowError(string error);
     }
 }

@@ -1,9 +1,10 @@
-﻿using System.Windows;
+﻿using System;
+using System.Reflection;
+using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Desktop.Lib;
 using VisualCrypt.Desktop.State;
 using VisualCrypt.Net.Tools;
-using VisualCrypt.Portable.APIV2.Interfaces;
 using VisualCrypt.Portable.Editor.Enums;
 
 namespace VisualCrypt.Desktop.Views
@@ -12,13 +13,14 @@ namespace VisualCrypt.Desktop.Views
     {
         DelegateCommand _setPasswordCommand;
         DelegateCommand _clearPasswordCommand;
-        readonly IVisualCryptAPIV2 _visualCyrptAPI;
+        readonly IMessageBoxService _messageBoxService;
 
-        public SetPassword(SetPasswordDialogMode setPasswordDialogMode, IVisualCryptAPIV2 visualCyrptAPI)
+        public SetPassword(SetPasswordDialogMode setPasswordDialogMode, IMessageBoxService messageBoxService)
         {
+            _messageBoxService = messageBoxService;
             InitializeComponent();
             DataContext = this;
-            _visualCyrptAPI = visualCyrptAPI;
+            
 
             switch (setPasswordDialogMode)
             {
@@ -60,19 +62,15 @@ namespace VisualCrypt.Desktop.Views
 
         private void ExecuteSetPasswordCommand()
         {
-            var hashResponse =  _visualCyrptAPI.CreateSHA256PW32(pwBox.SecurePassword.ToUTF16ByteArray());
-            if (hashResponse.Success)
+            var setPasswordResponse = ModelState.Transient.FileModel.SetPassword(pwBox.SecurePassword.ToUTF16ByteArray());
+            if (!setPasswordResponse.Success)
             {
-                ModelState.Transient.SHA256PW32 = hashResponse.Result;
+                _messageBoxService.ShowError(MethodBase.GetCurrentMethod(), new Exception(setPasswordResponse.Error));
+                pwBox.Password = string.Empty;
+                pwBox2.Password = string.Empty;
+                return;
             }
-            
-               
 
-            if (pwBox.SecurePassword.Length > 0)
-                ModelState.Transient.IsSHA256PasswordHashPresent = true;
-            else
-                ModelState.Transient.IsSHA256PasswordHashPresent = false;
-           
             pwBox.Password = string.Empty;
             pwBox2.Password = string.Empty;
             DialogResult = true;
