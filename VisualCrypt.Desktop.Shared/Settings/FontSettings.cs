@@ -1,17 +1,19 @@
 ﻿using System;
 using System.Runtime.Serialization;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media;
+using Microsoft.Practices.Prism.Logging;
+using Microsoft.Practices.ServiceLocation;
 
 namespace VisualCrypt.Desktop.Shared.Settings
 {
     [DataContract]
     public class FontSettings
     {
-
         public FontFamily FontFamily { get; set; }
 
-       
+
         public FontWeight FontWeight { get; set; }
 
         public FontStyle FontStyle { get; set; }
@@ -71,5 +73,23 @@ namespace VisualCrypt.Desktop.Shared.Settings
         }
 
 
+        public void ApplyTo(TextBox textBox1)
+        {
+            if(textBox1 == null)
+                throw new ArgumentNullException("textBox1");
+            try
+            {
+                if (FontFamily == null)
+                    FontFamily = SystemFonts.MessageFontFamily;
+                if (FontSize < 5)
+                    FontSize = SystemFonts.MessageFontSize;
+
+                Map.Copy(this, textBox1);
+            }
+            catch (Exception e)
+            {
+                ServiceLocator.Current.GetInstance<ILoggerFacade>().Log(e.Message, Category.Exception, Priority.High);
+            }
+        }
     }
 }

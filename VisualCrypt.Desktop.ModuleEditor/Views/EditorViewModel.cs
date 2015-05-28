@@ -19,32 +19,32 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
     [Export]
     public class EditorViewModel : ViewModelBase
     {
-        readonly Window _mainWindow = Application.Current.MainWindow;
-        TextBox _textBox1;
-        SpellCheck _spellCheck;
+        private TextBox _textBox1;
+        private SpellCheck _spellCheck;
         private FindReplaceViewModel _findReplaceDialogViewModel;
-        GoToViewModel _goToWindowViewModel;
-        readonly IMessageBoxService _messageBoxService = new MessageBoxService(Application.Current.MainWindow);
-        readonly IEventAggregator _eventAggregator;
+        private GoToViewModel _goToWindowViewModel;
+        private readonly IMessageBoxService _messageBoxService;
+        private readonly IEventAggregator _eventAggregator;
 
         [ImportingConstructor]
-        public EditorViewModel(IEventAggregator eventAggregator)
+        public EditorViewModel(IEventAggregator eventAggregator, IMessageBoxService messageBoxService)
         {
             _eventAggregator = eventAggregator;
+            _messageBoxService = messageBoxService;
         }
 
         public void OnEditorInitialized(TextBox textbox1)
         {
             _textBox1 = textbox1;
-
             _spellCheck = _textBox1.SpellCheck;
             _spellCheck.SpellingReform = SpellingReform.Postreform;
 
             _findReplaceDialogViewModel = new FindReplaceViewModel(_textBox1);
             _goToWindowViewModel = new GoToViewModel(_textBox1);
 
-            ApplyEditorSettings();
+            SettingsManager.EditorSettings.FontSettings.ApplyTo(_textBox1);
             ExecuteZoom100();
+
             OnTextReceived(string.Empty);
 
             _eventAggregator.GetEvent<EditorReceivesText>().Subscribe(OnTextReceived);
@@ -52,26 +52,39 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         }
 
-        void OnShouldSendText(Action<string> callback)
+        #region PubSubEvents
+
+        private void OnShouldSendText(Action<string> callback)
         {
-            var args = new EditorSendsText { Text = _textBox1.Text, Callback = callback };
+            var args = new EditorSendsText {Text = _textBox1.Text, Callback = callback};
             _eventAggregator.GetEvent<EditorSendsText>().Publish(args);
         }
 
-        void ApplyEditorSettings()
+        private void OnTextReceived(string newText)
         {
-            if (SettingsManager.EditorSettings.FontSettings.FontFamily == null)
-                SettingsManager.EditorSettings.FontSettings.FontFamily = SystemFonts.MessageFontFamily;
-            if (SettingsManager.EditorSettings.FontSettings.FontSize < 5)
-                SettingsManager.EditorSettings.FontSettings.FontSize = SystemFonts.MessageFontSize;
+            if (newText == null)
+                throw new ArgumentNullException("newText");
 
-            Map.Copy(SettingsManager.EditorSettings.FontSettings, _textBox1);
+            _textBox1.IsUndoEnabled = false;
+            _textBox1.Text = newText;
+            FileManager.FileModel.IsDirty = false;
 
-          
+            if (FileManager.FileModel.IsEncrypted)
+            {
+                _textBox1.SpellCheck.IsEnabled = false;
+                _textBox1.IsUndoEnabled = false;
+                _textBox1.IsReadOnly = true;
+            }
+            else
+            {
+                _textBox1.SpellCheck.IsEnabled = SettingsManager.EditorSettings.IsSpellCheckingChecked;
+                _textBox1.IsUndoEnabled = true;
+                _textBox1.IsReadOnly = false;
+            }
+            UpdateStatusBar();
         }
 
-
-
+        #endregion
 
         #region TextChangedCommand
 
@@ -87,12 +100,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         public DelegateCommand<RoutedEventArgs> SelectionChangedCommand
         {
-            get
-            {
-                return CreateCommand(ref _selectionChangedCommand, ExecuteSelectionChangedCommand, e => true);
-            }
+            get { return CreateCommand(ref _selectionChangedCommand, ExecuteSelectionChangedCommand, e => true); }
         }
-        DelegateCommand<RoutedEventArgs> _selectionChangedCommand;
+
+        private DelegateCommand<RoutedEventArgs> _selectionChangedCommand;
 
         public void ExecuteSelectionChangedCommand(RoutedEventArgs args)
         {
@@ -101,7 +112,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         }
 
         #endregion
-
 
         #region ZoomCommands
 
@@ -131,7 +141,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         public void ExecuteZoomOut()
         {
-            _textBox1.FontSize *= 1 / 1.05;
+            _textBox1.FontSize *= 1/1.05;
             UpdateZoomLevelMenuText();
 
             //Zoom100Command.RaiseCanExecuteChanged();
@@ -145,6 +155,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         {
             return !SettingsManager.EditorSettings.IsZoom100Checked;
         }
+
         public void ExecuteZoom100()
         {
             _textBox1.FontSize = SettingsManager.EditorSettings.FontSettings.FontSize;
@@ -155,13 +166,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             //ZoomOutCommand.RaiseCanExecuteChanged();
         }
 
-        void UpdateZoomLevelMenuText()
+        private void UpdateZoomLevelMenuText()
         {
-            var zoomLevel = (int)((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
+            var zoomLevel = (int) ((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100);
             var zoomLevelMenuText = "_Zoom (" + zoomLevel + "%)";
             SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
-            SettingsManager.EditorSettings.IsZoom100Checked = Math.Abs(((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
+            SettingsManager.EditorSettings.IsZoom100Checked =
+                Math.Abs(((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100) - 100) < 0.1;
         }
 
 
@@ -212,7 +224,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             var findReplaceDialog = new FindReplace(_findReplaceDialogViewModel)
             {
                 WindowStyle = WindowStyle.ToolWindow,
-                Owner = _mainWindow
+                Owner = Application.Current.MainWindow
             };
 
             findReplaceDialog.Show();
@@ -294,7 +306,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             var findReplaceDialog = new FindReplace(_findReplaceDialogViewModel)
             {
                 WindowStyle = WindowStyle.ToolWindow,
-                Owner = _mainWindow
+                Owner = Application.Current.MainWindow
             };
 
             findReplaceDialog.Show();
@@ -377,7 +389,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             var goToWindow = new GoTo(_goToWindowViewModel)
             {
                 WindowStyle = WindowStyle.ToolWindow,
-                Owner = _mainWindow
+                Owner = Application.Current.MainWindow
             };
 
             goToWindow.Show();
@@ -397,6 +409,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 
         private DateTime? _datePasted;
+
         public bool CanExecuteInsertDateTime()
         {
             return true;
@@ -447,12 +460,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 
 
-        void ShowFontDialog()
+        private void ShowFontDialog()
         {
             var fontDialog = new Font(_textBox1.SelectedText)
             {
                 WindowStyle = WindowStyle.ToolWindow,
-                Owner = _mainWindow,
+                Owner = Application.Current.MainWindow,
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             };
 
@@ -467,69 +480,36 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         #endregion
 
-        async void OnTextReceived(string newText)
+
+        #region Private methods
+
+
+        private void UpdateStatusBar()
         {
-            if (newText == null)
-                throw new ArgumentNullException("newText");
-
-            
-
-            _textBox1.IsUndoEnabled = false;
-            _textBox1.Text = newText;
-            FileManager.FileModel.IsDirty = false;
-
-            if (FileManager.FileModel.IsEncrypted)
-            {
-                _textBox1.SpellCheck.IsEnabled = false;
-                _textBox1.IsUndoEnabled = false;
-                _textBox1.IsReadOnly = true;
-            }
-            else
-            {
-                _textBox1.SpellCheck.IsEnabled = SettingsManager.EditorSettings.IsSpellCheckingChecked;
-                _textBox1.IsUndoEnabled = true;
-                _textBox1.IsReadOnly = false;
-
-            }
-
-            UpdateStatusBar();
-
-        }
-
-        #region private methods
-
-       
-
-        void UpdateStatusBar()
-        {
-            var pos = UpdatePositionString();
-            var enc = GetEncodingInfo();
+            var pos = GetPositionString();
+            var enc = GetEncodingString();
 
             var statusBarText = "{0} | {1} | Encrypted: {2}".FormatInvariant(enc, pos, FileManager.FileModel.IsEncrypted);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
         }
 
-        string GetEncodingInfo()
+        private string GetEncodingString()
         {
-           return FileManager.FileModel.SaveEncoding.EncodingName + ", Code Page " + FileManager.FileModel.SaveEncoding.CodePage;
+            return FileManager.FileModel.SaveEncoding.EncodingName + ", Code Page " +
+                   FileManager.FileModel.SaveEncoding.CodePage;
         }
-        string UpdatePositionString()
+
+        private string GetPositionString()
         {
-
             var rawPos = _textBox1.CaretIndex;
-
-            // get line and adjust for silly init values
             var lineIndex = GetCurrentLineIndex();
-
-
-            // get col and adjust for silly init values
             var colIndex = GetColIndex(lineIndex);
 
-
-            return "Ln {0}, Col {1} | Ch {2}/{3}".FormatInvariant(lineIndex + 1, colIndex + 1, rawPos, _textBox1.Text.Length);
+            return "Ln {0}, Col {1} | Ch {2}/{3}".FormatInvariant(lineIndex + 1, colIndex + 1, rawPos,
+                _textBox1.Text.Length);
         }
 
-        int GetColIndex(int lineIndex)
+        private int GetColIndex(int lineIndex)
         {
             var rawPos = _textBox1.CaretIndex;
             // get col and adjust for silly init values
@@ -541,7 +521,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             return colIndex;
         }
 
-        int GetCurrentLineIndex()
+        private int GetCurrentLineIndex()
         {
             var rawPos = _textBox1.CaretIndex;
 
@@ -553,8 +533,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         }
 
         #endregion
-
-
 
     }
 }
