@@ -13,7 +13,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Printing
         public static FlowDocument ConvertToFlowDocument(string text)
         {
             var flowDocument = new FlowDocument { LineHeight = double.NaN };
-            Map.Copy(AppState.EditorSettings.FontSettings, flowDocument);
+            Map.Copy(SettingsManager.EditorSettings.FontSettings, flowDocument);
 
 
 

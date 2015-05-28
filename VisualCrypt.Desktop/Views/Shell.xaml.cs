@@ -56,7 +56,7 @@ namespace VisualCrypt.Desktop.Views
 
         void Shell_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.ShowModuleWindow();
+            ViewModel.Init();
         }
 
         void ShellWindow_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -67,12 +67,12 @@ namespace VisualCrypt.Desktop.Views
                 ViewModel.ExecuteClearPasswordCommand();
 
             if (e.Key == Key.F12)
-                AppState.EditorSettings.IsStatusBarChecked = !AppState.EditorSettings.IsStatusBarChecked;
+                SettingsManager.EditorSettings.IsStatusBarChecked = !SettingsManager.EditorSettings.IsStatusBarChecked;
 
             if(e.Key == Key.W && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                AppState.EditorSettings.IsWordWrapChecked = !AppState.EditorSettings.IsWordWrapChecked;
+                SettingsManager.EditorSettings.IsWordWrapChecked = !SettingsManager.EditorSettings.IsWordWrapChecked;
             if (e.Key == Key.L && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                AppState.EditorSettings.IsSpellCheckingChecked = !AppState.EditorSettings.IsSpellCheckingChecked;
+                SettingsManager.EditorSettings.IsSpellCheckingChecked = !SettingsManager.EditorSettings.IsSpellCheckingChecked;
         }
 
         //void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)

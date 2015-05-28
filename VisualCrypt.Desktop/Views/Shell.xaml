@@ -8,8 +8,9 @@
         xmlns:shared="clr-namespace:VisualCrypt.Desktop.Shared;assembly=VisualCrypt.Desktop.Shared"
         xmlns:commands="clr-namespace:VisualCrypt.Desktop.Shared.Commands;assembly=VisualCrypt.Desktop.Shared"
         xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
+        xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
         mc:Ignorable="d"
-        Title="{Binding WindowTitleText}" Height="350" Width="805"
+        Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}" Height="350" Width="805"
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance views:ShellViewModel}"
         AllowDrop="True"
@@ -79,20 +80,20 @@
                 <MenuItem Header="_Insert Date, Time" Command="commands:EditorCommands.InsertDate" InputGestureText="F5, F5" />
             </MenuItem>
             <MenuItem Header="F_ormat">
-                <MenuItem Header="_Word Wrap" IsCheckable="True" IsChecked="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay}"  
+                <MenuItem Header="_Word Wrap" IsCheckable="True" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay}"  
                           InputGestureText="Ctrl+W" />
-                <MenuItem Header="Check Spe_lling" IsCheckable="True" IsChecked="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}" 
+                <MenuItem Header="Check Spe_lling" IsCheckable="True" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}" 
                           InputGestureText="Ctrl+L" />
                 <MenuItem Header="_Font..." Command="commands:EditorCommands.Font"  InputGestureText="Ctrl+Alt+F" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Status Bar" IsCheckable="True" IsChecked="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}" 
+                <MenuItem Header="_Status Bar" IsCheckable="True" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}" 
                           InputGestureText="F12"/>
-                <MenuItem Header="{Binding Source={x:Static state:AppState.EditorSettings}, Path=ZoomLevelMenuText}">
+                <MenuItem Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">
                     <MenuItem Header="Zoom _in" InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn"/>
                     <MenuItem Header="Zoom _out" InputGestureText="Ctrl -" Command="commands:EditorCommands.ZoomOut"/>
                     <Separator />
-                    <MenuItem Header="1_00%" InputGestureText="Ctrl+0" IsCheckable ="false" IsChecked="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsZoom100Checked, Mode=OneWay}" 
+                    <MenuItem Header="1_00%" InputGestureText="Ctrl+0" IsCheckable ="false" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsZoom100Checked, Mode=OneWay}" 
                               Command="commands:EditorCommands.Zoom100"/>
                 </MenuItem>
             </MenuItem>
@@ -108,7 +109,7 @@
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                         />
         <Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0" MinWidth="0" />
-        <DockPanel Grid.Row="2" Width="Auto" Height="20" Visibility="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}" >
+        <DockPanel Grid.Row="2" Width="Auto" Height="20" Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}" >
             <DockPanel.Resources>
                 <Style x:Key="X"  TargetType="TextBlock">
                     <Style.Triggers>
@@ -128,6 +129,7 @@
             <TextBlock DockPanel.Dock="Right">
                 <Hyperlink ToolTip="Set Password" Click="Hyperlink_SetPassword_Click">Password:</Hyperlink>
             </TextBlock>
+            <Image Source="../Images/save_16x4.png" Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}"></Image>
         </DockPanel>
     </Grid>
 </Window>

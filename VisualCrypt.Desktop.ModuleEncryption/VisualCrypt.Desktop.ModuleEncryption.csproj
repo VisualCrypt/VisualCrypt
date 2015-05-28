@@ -84,7 +84,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy "$(TargetDir)VisualCrypt.Desktop.ModuleEncryption.dll" "$(SolutionDir)VisualCrypt.Desktop\bin\$(ConfigurationName)\Modules\" /Y</PostBuildEvent>
+    <PostBuildEvent>REM xcopy "$(TargetDir)VisualCrypt.Desktop.ModuleEncryption.dll" "$(SolutionDir)VisualCrypt.Desktop\bin\$(ConfigurationName)\Modules\" /Y</PostBuildEvent>
   </PropertyGroup>
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

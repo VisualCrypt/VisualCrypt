@@ -37,8 +37,8 @@
                  Text=""
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                  Focusable="True"
-                 TextWrapping="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsWordWrapChecked, Mode=OneWay, Converter={StaticResource BoolTextWrappingConverter}}"
-                 SpellCheck.IsEnabled="{Binding Source={x:Static state:AppState.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}"
+                 TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=OneWay, Converter={StaticResource BoolTextWrappingConverter}}"
+                 SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}"
         >
       
         <!-- TextWrapping="{Binding TextWrapping}"-->

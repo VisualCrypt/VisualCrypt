@@ -20,13 +20,14 @@ namespace VisualCrypt.Desktop.Views
     {
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _eventAggregator;
-        private IMessageBoxService _messageBoxService;
+        private readonly IMessageBoxService _messageBoxService;
 
         [ImportingConstructor]
-        public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator)
+        public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, IMessageBoxService messageBoxService)
         {
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
+            _messageBoxService = messageBoxService;
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(OnEditorSendsText);
         }
@@ -44,10 +45,11 @@ namespace VisualCrypt.Desktop.Views
         }
 
 
-        public void ShowModuleWindow()
+        public void Init()
         {
 
             CreateEditor();
+            ExecuteNewCommand();
         }
         private void CreateEditor()
         {
@@ -78,17 +80,7 @@ namespace VisualCrypt.Desktop.Views
 
         }
 
-        public string WindowTitleText
-        {
-            get { return _windowTitleText; }
-            set
-            {
-                if (_windowTitleText == value) return;
-                _windowTitleText = value;
-                OnPropertyChanged(() => WindowTitleText);
-            }
-        }
-        string _windowTitleText;
+       
 
 
         public string StatusBarText
@@ -122,8 +114,8 @@ namespace VisualCrypt.Desktop.Views
         {
             get
             {
-                if (FileState.FileModel.IsPasswordPresent == false)
-                    return "Not Set";
+                //if (FileManager.FileModel.IsPasswordPresent == false)
+                //    return "Not Set";
 
                 // Unicode Character 'BLACK CIRCLE' (U+25CF)
                 return new string('\u25CF', 5);
@@ -131,7 +123,25 @@ namespace VisualCrypt.Desktop.Views
         }
 
 
+        #region NewCommand
 
+        DelegateCommand _newCommand;
+
+        public DelegateCommand NewCommand
+        {
+            get { return CreateCommand(ref _newCommand, ExecuteNewCommand, () => true); }
+        }
+
+        void ExecuteNewCommand()
+        {
+            if (!ConfirmToDiscardText())
+                return;
+            FileManager.FileModel = new EmptyCleartextFileModel();
+            _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
+         
+        }
+
+        #endregion
      
 
         #region HelpCommand
@@ -214,13 +224,13 @@ namespace VisualCrypt.Desktop.Views
 
                 // we succeeded loading the file, now we can replace current content with the new content.
 
-                FileState.FileModel = fileModel;
-                AppState.CurrentDirectoryName = Path.GetDirectoryName(filename);
+                FileManager.FileModel = fileModel;
+                SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
                 _eventAggregator.GetEvent<EditorReceivesText>().Publish(loadResponse.Result);
               
 
-                if (FileState.FileModel.IsEncrypted)
+                if (FileManager.FileModel.IsEncrypted)
                 {
                     _eventAggregator.GetEvent<EditorShouldSendText>().Publish(ExecuteDecrpytEditorContentsCommand);
                    
@@ -264,24 +274,18 @@ namespace VisualCrypt.Desktop.Views
 
         public void OpenFileFromDragDrop(string dropFilename)
         {
-            if (!ConfirmToDiscardText())
-                return;
+            //if (!ConfirmToDiscardText())
+            //    return;
 
             OpenFileCommon(dropFilename);
         }
 
-        bool ConfirmToDiscardText()
-        {
-            if (FileState.FileModel.IsDirty)
-                return (_messageBoxService.Show("Discard changes?", "VisualCrypt Notepad", MessageBoxButton.OKCancel, MessageBoxImage.Question) ==
-                        MessageBoxResult.OK);
-
-            return true;
-        }
+      
 
         string GetEncodingInfo()
         {
-            return FileState.FileModel.SaveEncoding.EncodingName + ", Code Page " + FileState.FileModel.SaveEncoding.CodePage;
+            return "todo";
+            // return FileManager.FileModel.SaveEncoding.EncodingName + ", Code Page " + FileManager.FileModel.SaveEncoding.CodePage;
         }
 
         public bool CanExecuteClearPasswordCommand()
@@ -292,6 +296,15 @@ namespace VisualCrypt.Desktop.Views
         public void ExecuteClearPasswordCommand()
         {
             throw new NotImplementedException();
+        }
+
+        bool ConfirmToDiscardText()
+        {
+            if (FileManager.FileModel.IsDirty)
+                return (_messageBoxService.Show("Discard changes?", Constants.ProductName, MessageBoxButton.OKCancel, MessageBoxImage.Question) ==
+                        MessageBoxResult.OK);
+
+            return true;
         }
     }
 }

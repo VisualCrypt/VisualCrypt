@@ -51,7 +51,7 @@ namespace VisualCrypt.Desktop.Shared.Services
             try
             {
                 if (Owner != null)
-                    return MessageBox.Show(_owner, messageBoxText, title, buttons, image,MessageBoxResult.Cancel);
+                    return MessageBox.Show(Owner, messageBoxText, title, buttons, image, MessageBoxResult.Cancel);
                 return MessageBox.Show(messageBoxText, title, buttons, image);
             }
             catch (Exception e)

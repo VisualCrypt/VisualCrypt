@@ -212,6 +212,14 @@
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
       <Name>VisualCrypt.Cryptography.Portable</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Desktop.ModuleEditor\VisualCrypt.Desktop.ModuleEditor.csproj">
+      <Project>{cc737d36-0357-417d-81a1-14077f4b5f1c}</Project>
+      <Name>VisualCrypt.Desktop.ModuleEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Desktop.ModuleEncryption\VisualCrypt.Desktop.ModuleEncryption.csproj">
+      <Project>{6e63beea-4535-4428-ac54-01885f74c77e}</Project>
+      <Name>VisualCrypt.Desktop.ModuleEncryption</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
       <Project>{1A98F3E7-2163-46CE-9B6A-E204FFF4F3B8}</Project>
       <Name>VisualCrypt.Desktop.Shared</Name>
@@ -221,7 +229,9 @@
     <Resource Include="Images\VisualCrypt.ico" />
     <Resource Include="Images\WindowIcon.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\save_16x4.png" />
+  </ItemGroup>
   <ItemGroup>
     <COMReference Include="Shell32">
       <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>

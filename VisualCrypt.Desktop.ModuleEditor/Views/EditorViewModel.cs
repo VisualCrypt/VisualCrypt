@@ -60,12 +60,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         void ApplyEditorSettings()
         {
-            if (AppState.EditorSettings.FontSettings.FontFamily == null)
-                AppState.EditorSettings.FontSettings.FontFamily = SystemFonts.MessageFontFamily;
-            if (AppState.EditorSettings.FontSettings.FontSize < 5)
-                AppState.EditorSettings.FontSettings.FontSize = SystemFonts.MessageFontSize;
+            if (SettingsManager.EditorSettings.FontSettings.FontFamily == null)
+                SettingsManager.EditorSettings.FontSettings.FontFamily = SystemFonts.MessageFontFamily;
+            if (SettingsManager.EditorSettings.FontSettings.FontSize < 5)
+                SettingsManager.EditorSettings.FontSettings.FontSize = SystemFonts.MessageFontSize;
 
-            Map.Copy(AppState.EditorSettings.FontSettings, _textBox1);
+            Map.Copy(SettingsManager.EditorSettings.FontSettings, _textBox1);
 
           
         }
@@ -77,7 +77,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         public void ExecuteTextChangedCommand(TextChangedEventArgs e)
         {
-            FileState.FileModel.IsDirty = true;
+            FileManager.FileModel.IsDirty = true;
             UpdateStatusBar();
         }
 
@@ -96,7 +96,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         public void ExecuteSelectionChangedCommand(RoutedEventArgs args)
         {
-            if ((AppState.EditorSettings.IsStatusBarChecked))
+            if ((SettingsManager.EditorSettings.IsStatusBarChecked))
                 UpdateStatusBar();
         }
 
@@ -143,11 +143,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         public bool CanExecuteZoom100()
         {
-            return !AppState.EditorSettings.IsZoom100Checked;
+            return !SettingsManager.EditorSettings.IsZoom100Checked;
         }
         public void ExecuteZoom100()
         {
-            _textBox1.FontSize = AppState.EditorSettings.FontSettings.FontSize;
+            _textBox1.FontSize = SettingsManager.EditorSettings.FontSettings.FontSize;
             UpdateZoomLevelMenuText();
 
             //Zoom100Command.RaiseCanExecuteChanged();
@@ -157,11 +157,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         void UpdateZoomLevelMenuText()
         {
-            var zoomLevel = (int)((_textBox1.FontSize / AppState.EditorSettings.FontSettings.FontSize) * 100);
+            var zoomLevel = (int)((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
             var zoomLevelMenuText = "_Zoom (" + zoomLevel + "%)";
-            AppState.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
+            SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
-            AppState.EditorSettings.IsZoom100Checked = Math.Abs(((_textBox1.FontSize / AppState.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
+            SettingsManager.EditorSettings.IsZoom100Checked = Math.Abs(((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
         }
 
 
@@ -179,7 +179,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             try
             {
                 var doc = Printer.ConvertToFlowDocument(_textBox1.Text);
-                Printer.PrintFlowDocument(doc, AppState.EditorSettings.PrintMargin);
+                Printer.PrintFlowDocument(doc, SettingsManager.EditorSettings.PrintMargin);
             }
             catch (Exception e)
             {
@@ -459,8 +459,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             if (fontDialog.ShowDialog() == true)
             {
                 ExecuteZoom100();
-                Map.Copy(AppState.EditorSettings.FontSettings, _textBox1);
-                AppState.SaveSettings();
+                Map.Copy(SettingsManager.EditorSettings.FontSettings, _textBox1);
+                SettingsManager.SaveSettings();
             }
 
         }
@@ -472,10 +472,13 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             if (newText == null)
                 throw new ArgumentNullException("newText");
 
+            
+
             _textBox1.IsUndoEnabled = false;
             _textBox1.Text = newText;
+            FileManager.FileModel.IsDirty = false;
 
-            if (FileState.FileModel.IsEncrypted)
+            if (FileManager.FileModel.IsEncrypted)
             {
                 _textBox1.SpellCheck.IsEnabled = false;
                 _textBox1.IsUndoEnabled = false;
@@ -483,7 +486,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             }
             else
             {
-                _textBox1.SpellCheck.IsEnabled = AppState.EditorSettings.IsSpellCheckingChecked;
+                _textBox1.SpellCheck.IsEnabled = SettingsManager.EditorSettings.IsSpellCheckingChecked;
                 _textBox1.IsUndoEnabled = true;
                 _textBox1.IsReadOnly = false;
 
@@ -502,13 +505,13 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             var pos = UpdatePositionString();
             var enc = GetEncodingInfo();
 
-            var statusBarText = "{0} | {1} | Encrypted: {2}".FormatInvariant(enc, pos, FileState.FileModel.IsEncrypted);
+            var statusBarText = "{0} | {1} | Encrypted: {2}".FormatInvariant(enc, pos, FileManager.FileModel.IsEncrypted);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
         }
 
         string GetEncodingInfo()
         {
-            return FileState.FileModel.SaveEncoding.EncodingName + ", Code Page " + FileState.FileModel.SaveEncoding.CodePage;
+           return FileManager.FileModel.SaveEncoding.EncodingName + ", Code Page " + FileManager.FileModel.SaveEncoding.CodePage;
         }
         string UpdatePositionString()
         {

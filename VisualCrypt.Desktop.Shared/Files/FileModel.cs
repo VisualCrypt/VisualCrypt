@@ -11,13 +11,12 @@ using VisualCrypt.Cryptography.Portable.Tools;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {
-    public class FileModel
+    public class FileModel : FileModelBase
     {
         readonly Encoding VisualCryptSaveEncoding = new UTF8Encoding(false,true);
         IVisualCryptAPIV2 _api = new VisualCryptAPIV2(new CoreAPIV2_Net4());
 
-        bool _isEncrypted = false;
-        public bool IsEncrypted { get { return _isEncrypted; } }
+ 
 
         bool _isPasswordPresent = false;
         public bool IsPasswordPresent { get { return _isPasswordPresent; } }
@@ -25,8 +24,7 @@ namespace VisualCrypt.Desktop.Shared.Files
         bool _isFilenamePresent = false;
         public bool IsFilenamePresent { get { return _isFilenamePresent; } }
 
-        string _filename = string.Empty;
-        public string Filename { get { return _filename; } }
+      
 
         VisualCryptText _visualCryptText = null;
         public VisualCryptText VisualCryptText { get { return _visualCryptText; } }
@@ -35,10 +33,10 @@ namespace VisualCrypt.Desktop.Shared.Files
 
         public Encoding SaveEncoding { get { return new UTF8Encoding(true, false); } }
 
-        public bool IsDirty { get; set; }
+       
         public void SetFilename(string filename)
         {
-            _filename = filename;
+            Filename = filename;
             _isFilenamePresent = true;
         }
 
@@ -63,7 +61,7 @@ namespace VisualCrypt.Desktop.Shared.Files
                 var response2 = _api.EncodeToVisualCryptText(encrpytResponse.Result);
                 if (response2.Success)
                 {
-                    _isEncrypted = true;
+                    IsEncrypted = true;
                     _visualCryptText = response2.Result;
                 }
                 return response2;
@@ -82,7 +80,7 @@ namespace VisualCrypt.Desktop.Shared.Files
                 var decryptResponse = _api.Decrpyt(cipherV2, _sha256PW32);
                 if (decryptResponse.Success)
                 {
-                    _isEncrypted = false;
+                    IsEncrypted = false;
                     response.Result = decryptResponse.Result;
                     response.Success = true;
                 }
@@ -104,10 +102,10 @@ namespace VisualCrypt.Desktop.Shared.Files
 
             try
             {
-                if (_filename == null)
+                if (Filename == null)
                     throw new InvalidOperationException("_filename must not be null.");
 
-                var rawBytesFromFile = File.ReadAllBytes(_filename);
+                var rawBytesFromFile = File.ReadAllBytes(Filename);
 
                 var getStringResponse = _api.GetStringFromFileBytes(rawBytesFromFile, Encoding.Default);
 
@@ -125,12 +123,12 @@ namespace VisualCrypt.Desktop.Shared.Files
                 {
                     // it's VisualCrypt
                     _visualCryptText = new VisualCryptText(getStringResponse.Result);
-                    _isEncrypted = true;
+                    IsEncrypted = true;
                 }
                 else
                 {
                     // it's ClearText
-                    _isEncrypted = false;
+                    IsEncrypted = false;
                 }
                 response.Result = getStringResponse.Result;
                 response.Success = true;
@@ -163,7 +161,7 @@ namespace VisualCrypt.Desktop.Shared.Files
             var response = new Response();
             try
             {
-                if (!_isEncrypted)
+                if (!IsEncrypted)
                     throw new Exception("Aborting Save - _isEncrypted was unexpectedly false.");
                 if (!_isFilenamePresent)
                     throw new Exception("Aborting Save - _isFilenamePresent was unexpectedly false.");
@@ -172,7 +170,7 @@ namespace VisualCrypt.Desktop.Shared.Files
                         "Aborting Save -  the data being saved is unexpectedly not in valid VisualCrypt format.");
 
                 byte[] visualCryptTextBytes = VisualCryptSaveEncoding.GetBytes(_visualCryptText.Value);
-                File.WriteAllBytes(_filename, visualCryptTextBytes);
+                File.WriteAllBytes(Filename, visualCryptTextBytes);
                 response.Success = true;
             }
             catch (Exception e)
@@ -191,7 +189,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
         internal void NotifyRedisplayingClearText()
         {
-            _isEncrypted = false;
+            IsEncrypted = false;
         }
     }
 

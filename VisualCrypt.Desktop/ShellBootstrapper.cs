@@ -29,7 +29,7 @@ namespace VisualCrypt.Desktop
         /// </remarks>
         protected override DependencyObject CreateShell()
         {
-            AppState.LoadOrInitSettings();
+            SettingsManager.LoadOrInitSettings();
             return this.Container.GetExportedValue<Shell>();
         }
 
@@ -59,8 +59,11 @@ namespace VisualCrypt.Desktop
 
             AggregateCatalog.Catalogs.Add(new AssemblyCatalog(GetType().Assembly));
             AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(Constants).Assembly));
-            var catalog = new DirectoryCatalog("Modules");
-            AggregateCatalog.Catalogs.Add(catalog);
+            AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(ModuleEditor.ModuleEditor).Assembly));
+            AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof(ModuleEncryption.ModuleEncryption).Assembly));
+
+            //var catalog = new DirectoryCatalog("Modules");
+            //AggregateCatalog.Catalogs.Add(catalog);
         }
 
         /// <summary>

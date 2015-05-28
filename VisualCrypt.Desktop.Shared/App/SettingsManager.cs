@@ -12,14 +12,14 @@ using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
 {
-    public static class AppState
+    public static class SettingsManager
     {
         static readonly ILoggerFacade Logger;
         public static EditorSettings EditorSettings { get; private set; }
       
         public static string CurrentDirectoryName { get; set; }
 
-        static AppState()
+        static SettingsManager()
         {
             Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
             Debug.Assert(Logger != null);

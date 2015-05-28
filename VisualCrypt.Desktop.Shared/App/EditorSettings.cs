@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using VisualCrypt.Desktop.Shared.Properties;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
@@ -20,7 +19,7 @@ namespace VisualCrypt.Desktop.Shared.App
             {
                 _isStatusBarChecked = value;
                 OnPropertyChanged();
-                AppState.SaveSettings();
+                SettingsManager.SaveSettings();
             }
         }
         bool _isStatusBarChecked;
@@ -33,7 +32,7 @@ namespace VisualCrypt.Desktop.Shared.App
             {
                 _isWordWrapChecked = value;
                 OnPropertyChanged();
-                AppState.SaveSettings();
+                SettingsManager.SaveSettings();
             }
         }
         bool _isWordWrapChecked;
@@ -46,7 +45,7 @@ namespace VisualCrypt.Desktop.Shared.App
             {
                 _isSpellCheckingChecked = value;
                 OnPropertyChanged();
-                AppState.SaveSettings();
+                SettingsManager.SaveSettings();
             }
         }
         bool _isSpellCheckingChecked;
@@ -59,7 +58,7 @@ namespace VisualCrypt.Desktop.Shared.App
             {
                 _printMargin = value; 
                 OnPropertyChanged();
-                AppState.SaveSettings();
+                SettingsManager.SaveSettings();
             }
         }
         int _printMargin;
@@ -93,8 +92,7 @@ namespace VisualCrypt.Desktop.Shared.App
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [NotifyPropertyChangedInvocator]
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanged;
             if (handler != null) 

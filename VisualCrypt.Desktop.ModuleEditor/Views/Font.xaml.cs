@@ -55,7 +55,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         public Font(string sampleText)
         {
             _selectedFontSettings = new FontSettings();
-            Map.Copy(AppState.EditorSettings.FontSettings, _selectedFontSettings);
+            Map.Copy(SettingsManager.EditorSettings.FontSettings, _selectedFontSettings);
 
             _sampleText = string.IsNullOrWhiteSpace(sampleText)
                 ? DefaultSampleText
@@ -118,7 +118,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         void OnOkButtonClicked(object sender, RoutedEventArgs e)
         {
-            Map.Copy(_selectedFontSettings, AppState.EditorSettings.FontSettings);
+            Map.Copy(_selectedFontSettings, SettingsManager.EditorSettings.FontSettings);
 
             DialogResult = true;
             Close();
