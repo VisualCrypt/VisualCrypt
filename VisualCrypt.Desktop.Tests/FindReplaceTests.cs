@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Windows.Controls;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Desktop.Lib;
-using VisualCrypt.Desktop.Views;
-using VisualCrypt.Portable.Tools;
+using VisualCrypt.Cryptography.Portable.Tools;
+using VisualCrypt.Desktop.ModuleEditor.Views;
 
 namespace VisualCrypt.Desktop.Tests
 {
@@ -276,7 +276,7 @@ namespace VisualCrypt.Desktop.Tests
 
         FindReplaceViewModel CreateViewModel()
         {
-            var vm = new FindReplaceViewModel(_textBox1, new DelegateCommand(delegate { }, () => true), new DelegateCommand(delegate { }, () => true));
+            var vm = new FindReplaceViewModel(_textBox1);
             vm.MessageBoxService = new FakeOkMessageBoxService();
             return vm;
         }

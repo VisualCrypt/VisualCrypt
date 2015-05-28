@@ -1,45 +1,21 @@
-﻿using System;
-using System.Reflection;
+// Copyright (c) Microsoft Corporation. All rights reserved. See License.txt in the project root for license information.
+
 using System.Windows;
-using VisualCrypt.Desktop.Views;
 
 namespace VisualCrypt.Desktop
 {
-    public partial class App
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
     {
-        void Application_Startup(object sender, StartupEventArgs startupEventArgs)
+        protected override void OnStartup(StartupEventArgs e)
         {
-            try
-            {
-                DispatcherUnhandledException += App_DispatcherUnhandledException;
-                AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
+            base.OnStartup(e);
 
-                var mainWindow = new MainWindow();
-                mainWindow.Show();
-                var mainWindowViewModel = (MainWindowViewModel)mainWindow.DataContext;
-                mainWindowViewModel.MessageBoxService = new MessageBoxService(mainWindow);
-                mainWindowViewModel.OpenFileFromCommandLine(startupEventArgs.Args);
-            }
-            catch (Exception e)
-            {
-                new MessageBoxService().ShowError(MethodBase.GetCurrentMethod(), e);
-               
-                Environment.Exit(1);
-            }
-        }
-
-
-
-        void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
-        {
-            e.Handled = true;
-            new MessageBoxService().ShowError(MethodBase.GetCurrentMethod(), e.Exception);
-        }
-
-        void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
-        {
-            var exception = e.ExceptionObject as Exception ?? new Exception("Unknown error.");
-            new MessageBoxService().ShowError(MethodBase.GetCurrentMethod(), exception);
+            // The boostrapper will create the Shell instance, so the App.xaml does not have a StartupUri.
+            ShellBootstrapper bootstrapper = new ShellBootstrapper();
+            bootstrapper.Run();
         }
     }
 }

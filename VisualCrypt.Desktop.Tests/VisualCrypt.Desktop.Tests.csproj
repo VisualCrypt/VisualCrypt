@@ -8,7 +8,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>VisualCrypt.Desktop.Tests</RootNamespace>
     <AssemblyName>VisualCrypt.Desktop.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -16,6 +16,9 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -35,6 +38,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.Mvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.Mvvm.Desktop">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.Mvvm.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Prism.SharedInterfaces">
+      <HintPath>..\packages\Prism.Mvvm.1.1.1\lib\net45\Microsoft.Practices.Prism.SharedInterfaces.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -62,18 +74,34 @@
     <Compile Include="SecureStringTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
+      <Project>{4c372f99-2c82-4b56-af6c-edf8751acc86}</Project>
+      <Name>VisualCrypt.Cryptography.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj">
+      <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
+      <Name>VisualCrypt.Cryptography.Portable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Desktop.ModuleEditor\VisualCrypt.Desktop.ModuleEditor.csproj">
+      <Project>{cc737d36-0357-417d-81a1-14077f4b5f1c}</Project>
+      <Name>VisualCrypt.Desktop.ModuleEditor</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Desktop.ModuleEncryption\VisualCrypt.Desktop.ModuleEncryption.csproj">
+      <Project>{6e63beea-4535-4428-ac54-01885f74c77e}</Project>
+      <Name>VisualCrypt.Desktop.ModuleEncryption</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
+      <Project>{1a98f3e7-2163-46ce-9b6a-e204fff4f3b8}</Project>
+      <Name>VisualCrypt.Desktop.Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Desktop\VisualCrypt.Desktop.csproj">
-      <Project>{cd1444e2-acff-4019-925b-b1879b36e707}</Project>
+      <Project>{165228e4-5fe9-4a20-b97b-60be97299c6c}</Project>
       <Name>VisualCrypt.Desktop</Name>
     </ProjectReference>
-    <ProjectReference Include="..\VisualCrypt.Net\VisualCrypt.Net.csproj">
-      <Project>{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}</Project>
-      <Name>VisualCrypt.Net</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VisualCrypt.Portable\VisualCrypt.Portable.csproj">
-      <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
-      <Name>VisualCrypt.Portable</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
@@ -95,6 +123,13 @@
   </Choose>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

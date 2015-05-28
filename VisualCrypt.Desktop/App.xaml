@@ -1,13 +1,13 @@
-﻿<Application
+﻿<Application x:Class="VisualCrypt.Desktop.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             x:Class="VisualCrypt.Desktop.App"
-             Startup="Application_Startup">
+             xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles.xaml"/>
+            <ResourceDictionary.MergedDictionaries>                
+                <ResourceDictionary Source="ModularityStyles.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

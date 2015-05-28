@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Input;
+using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.Views
 {

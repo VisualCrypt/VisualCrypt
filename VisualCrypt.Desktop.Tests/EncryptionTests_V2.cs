@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Desktop.State;
-using VisualCrypt.Net.APIV2.Implementations;
-using VisualCrypt.Portable.APIV2.DataTypes;
-using VisualCrypt.Portable.APIV2.Implementations;
-using VisualCrypt.Portable.APIV2.Interfaces;
-using VisualCrypt.Portable.Tools;
+using VisualCrypt.Cryptography.Net.APIV2.Implementations;
+using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
+using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
+using VisualCrypt.Cryptography.Portable.Tools;
 
 namespace VisualCrypt.Desktop.Tests
 {

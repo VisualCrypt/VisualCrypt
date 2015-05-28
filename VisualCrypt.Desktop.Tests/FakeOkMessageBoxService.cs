@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using VisualCrypt.Desktop.Views;
+﻿using System;
+using System.Windows;
+using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Tests
 {
@@ -10,10 +11,19 @@ namespace VisualCrypt.Desktop.Tests
             return MessageBoxResult.OK;
         }
 
+        public void ShowError(Exception e, string callerMemberName = "callerMemberName")
+        {
+          
+        }
 
-        public void ShowError(System.Reflection.MethodBase methodBase, System.Exception e)
+
+
+
+        public void ShowError(string error)
         {
             
         }
+
+
     }
 }
