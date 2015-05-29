@@ -12,9 +12,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Printing
     {
         public static FlowDocument ConvertToFlowDocument(string text)
         {
-            var flowDocument = new FlowDocument { LineHeight = double.NaN };
+            var flowDocument = new FlowDocument {LineHeight = double.NaN};
             Map.Copy(SettingsManager.EditorSettings.FontSettings, flowDocument);
-
 
 
             string[] lines;
@@ -57,7 +56,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Printing
 
             if (xpsDocumentWriter != null && printableArea != null)
             {
-                DocumentPaginator paginator = ((IDocumentPaginatorSource)flowDocument).DocumentPaginator;
+                DocumentPaginator paginator = ((IDocumentPaginatorSource) flowDocument).DocumentPaginator;
 
                 // Change the PageSize and PagePadding for the document to match the CanvasSize for the printer device.
                 paginator.PageSize = new Size(printableArea.MediaSizeWidth, printableArea.MediaSizeHeight);
@@ -77,7 +76,5 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Printing
                 xpsDocumentWriter.Write(paginator);
             }
         }
-
-       
     }
 }

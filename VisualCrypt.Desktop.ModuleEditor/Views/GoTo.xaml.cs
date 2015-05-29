@@ -9,7 +9,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             InitializeComponent();
 
             DataContext = goToWindowViewModel;
-           
+
             TextBoxLineNo.Focus();
 
             PreviewKeyDown += CloseWithEscape;

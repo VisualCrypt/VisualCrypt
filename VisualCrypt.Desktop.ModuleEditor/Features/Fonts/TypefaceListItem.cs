@@ -9,8 +9,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
 {
     internal class TypefaceListItem : TextBlock, IComparable
     {
-        private readonly string _displayName;
-        private readonly bool _simulated;
+        readonly string _displayName;
+        readonly bool _simulated;
 
         public TypefaceListItem(Typeface typeface)
         {

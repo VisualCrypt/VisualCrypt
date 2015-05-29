@@ -66,7 +66,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
             return bestName;
         }
 
-        private static int GetRelatedness(XmlLanguage keyLang, XmlLanguage userLang)
+        static int GetRelatedness(XmlLanguage keyLang, XmlLanguage userLang)
         {
             try
             {
@@ -100,7 +100,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
             return 0;
         }
 
-        private static string TrimSuffix(string tag)
+        static string TrimSuffix(string tag)
         {
             int i = tag.LastIndexOf('-');
             if (i > 0)
@@ -110,7 +110,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
             return tag;
         }
 
-        private static bool IsPrefixOf(string prefix, string tag)
+        static bool IsPrefixOf(string prefix, string tag)
         {
             return prefix.Length < tag.Length &&
                    tag[prefix.Length] == '-' &&

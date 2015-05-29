@@ -30,19 +30,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 GoCommand.RaiseCanExecuteChanged();
             }
         }
+
         string _lineNo;
-
-
 
         #region FindCommand
 
-        private int _lineIndex;
+        int _lineIndex;
+
         public DelegateCommand GoCommand
         {
             get { return CreateCommand(ref _goCommand, ExecuteGoCommand, CanExecuteGoToCommand); }
         }
 
-        
 
         DelegateCommand _goCommand;
 
@@ -72,7 +71,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 SelectSearchResult(index, lineLenght);
                 CloseAction();
             }
-          
+
             catch (Exception e)
             {
                 MessageBoxService.ShowError(e);
@@ -86,6 +85,5 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         }
 
         #endregion
-
     }
 }

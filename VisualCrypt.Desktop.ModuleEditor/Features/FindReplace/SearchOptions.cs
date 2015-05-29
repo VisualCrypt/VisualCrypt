@@ -6,52 +6,54 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.FindReplace
     {
         public bool MatchCase
         {
-            get { return _matchCase;}
-            set 
+            get { return _matchCase; }
+            set
             {
                 if (_matchCase == value) return;
                 _matchCase = value;
                 OnPropertyChanged(() => MatchCase);
             }
         }
+
         bool _matchCase;
 
         public bool MatchWholeWord
         {
-            get { return _matchWholeWord;}
-            set 
+            get { return _matchWholeWord; }
+            set
             {
                 if (_matchWholeWord == value) return;
                 _matchWholeWord = value;
                 OnPropertyChanged(() => MatchWholeWord);
             }
         }
+
         bool _matchWholeWord;
 
         public bool SearchUp
         {
-            get { return _searchUp;}
-            set 
+            get { return _searchUp; }
+            set
             {
                 if (_searchUp == value) return;
                 _searchUp = value;
                 OnPropertyChanged(() => SearchUp);
             }
         }
+
         bool _searchUp;
 
         public bool UseRegEx
         {
-            get { return _useRegEx;}
-            set 
+            get { return _useRegEx; }
+            set
             {
                 if (_useRegEx == value) return;
                 _useRegEx = value;
                 OnPropertyChanged(() => UseRegEx);
             }
         }
-        bool _useRegEx;
 
-       
+        bool _useRegEx;
     }
 }

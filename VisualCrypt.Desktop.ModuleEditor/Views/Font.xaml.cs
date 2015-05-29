@@ -27,25 +27,25 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         readonly string _sampleText;
         readonly FontSettings _selectedFontSettings;
 
-        ICollection<FontFamily> _familyCollection;          // see FamilyCollection property
+        ICollection<FontFamily> _familyCollection; // see FamilyCollection property
 
-        bool _updatePending;                                // indicates a call to OnUpdate is scheduled
-        bool _familyListValid;                              // indicates the list of font families is valid
-        bool _typefaceListValid;                            // indicates the list of typefaces is valid
-        bool _typefaceListSelectionValid;                   // indicates the current selection in the typeface list is valid
-        bool _previewValid;                                 // indicates the preview control is valid
+        bool _updatePending; // indicates a call to OnUpdate is scheduled
+        bool _familyListValid; // indicates the list of font families is valid
+        bool _typefaceListValid; // indicates the list of typefaces is valid
+        bool _typefaceListSelectionValid; // indicates the current selection in the typeface list is valid
+        bool _previewValid; // indicates the preview control is valid
 
 
         static readonly double[] CommonlyUsedFontSizes =
         {
-            3.0,    4.0,   5.0,   6.0,   6.5,
-            7.0,    7.5,   8.0,   8.5,   9.0,
-            9.5,   10.0,  10.5,  11.0,  11.5,
-            12.0,  12.5,  13.0,  13.5,  14.0,
-            15.0,  16.0,  17.0,  18.0,  19.0,
-            20.0,  22.0,  24.0,  26.0,  28.0,  30.0,  32.0,  34.0,  36.0,  38.0,
-            40.0,  44.0,  48.0,  52.0,  56.0,  60.0,  64.0,  68.0,  72.0,  76.0,
-            80.0,  88.0,  96.0, 104.0, 112.0, 120.0, 128.0, 136.0, 144.0
+            3.0, 4.0, 5.0, 6.0, 6.5,
+            7.0, 7.5, 8.0, 8.5, 9.0,
+            9.5, 10.0, 10.5, 11.0, 11.5,
+            12.0, 12.5, 13.0, 13.5, 14.0,
+            15.0, 16.0, 17.0, 18.0, 19.0,
+            20.0, 22.0, 24.0, 26.0, 28.0, 30.0, 32.0, 34.0, 36.0, 38.0,
+            40.0, 44.0, 48.0, 52.0, 56.0, 60.0, 64.0, 68.0, 72.0, 76.0,
+            80.0, 88.0, 96.0, 104.0, 112.0, 120.0, 128.0, 136.0, 144.0
         };
 
         #endregion
@@ -157,7 +157,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                     {
                         // Does the text box text match the beginning of the family name?
                         string familyDisplayName = item.ToString();
-                        if (string.Compare(text, 0, familyDisplayName, 0, text.Length, true, CultureInfo.CurrentCulture) == 0)
+                        if (
+                            string.Compare(text, 0, familyDisplayName, 0, text.Length, true, CultureInfo.CurrentCulture) ==
+                            0)
                         {
                             // Set the text box text to the complete family name and select the part not typed in.
                             FontFamilyTextBox.Text = familyDisplayName;
@@ -172,7 +174,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         void sizeTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             double sizeInPoints;
-            if (double.TryParse(SizeTextBox.Text, NumberStyles.AllowDecimalPoint,CultureInfo.CurrentCulture, out sizeInPoints))
+            if (double.TryParse(SizeTextBox.Text, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture,
+                out sizeInPoints))
             {
                 double sizeInPixels = FontSizeListItem.PointsToPixels(sizeInPoints);
                 if (!FontSizeListItem.FuzzyEqual(sizeInPixels, _selectedFontSettings.FontSize))
@@ -229,10 +232,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             }
         }
 
-
-
-
-
         #endregion
 
         #region Public properties and methods
@@ -244,10 +243,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         /// </summary>
         public ICollection<FontFamily> FontFamilyCollection
         {
-            get
-            {
-                return _familyCollection ?? System.Windows.Media.Fonts.SystemFontFamilies;
-            }
+            get { return _familyCollection ?? System.Windows.Media.Fonts.SystemFontFamilies; }
 
             set
             {
@@ -272,7 +268,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         //        }
         //    }
         //}
-
         /// <summary>
         /// Sets the properites of the specified object to match the font chooser selection properties.
         /// </summary>
@@ -287,10 +282,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         //        }
         //    }
         //}
-
-
-
-
 
         #endregion
 
@@ -330,7 +321,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
             // Set the text box contents if it doesn't already match the current size.
             double textBoxValue;
-            if (!double.TryParse(SizeTextBox.Text, NumberStyles.AllowDecimalPoint,CultureInfo.CurrentCulture,out textBoxValue) || !FontSizeListItem.FuzzyEqual(textBoxValue, sizeInPoints))
+            if (
+                !double.TryParse(SizeTextBox.Text, NumberStyles.AllowDecimalPoint, CultureInfo.CurrentCulture,
+                    out textBoxValue) || !FontSizeListItem.FuzzyEqual(textBoxValue, sizeInPoints))
             {
                 SizeTextBox.Text = sizeInPoints.ToString(CultureInfo.CurrentCulture);
             }
@@ -339,8 +332,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
             InvalidatePreview();
         }
-
-
 
         #endregion
 
@@ -512,7 +503,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             // We'll be called again after the list is initialized.
             if (_typefaceListValid)
             {
-                Typeface typeface = new Typeface(_selectedFontSettings.FontFamily, _selectedFontSettings.FontStyle, _selectedFontSettings.FontWeight, _selectedFontSettings.FontStretch);
+                Typeface typeface = new Typeface(_selectedFontSettings.FontFamily, _selectedFontSettings.FontStyle,
+                    _selectedFontSettings.FontWeight, _selectedFontSettings.FontStretch);
 
                 // Select the typeface in the list.
                 SelectTypefaceListItem(typeface);
@@ -539,7 +531,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         {
             var listItem = FontFamilyList.SelectedItem as FontFamilyListItem;
 
-            if (listItem != null && string.Compare(listItem.ToString(), displayName, true, CultureInfo.CurrentCulture) == 0)
+            if (listItem != null &&
+                string.Compare(listItem.ToString(), displayName, true, CultureInfo.CurrentCulture) == 0)
             {
                 // Already selected
                 return listItem;
@@ -597,8 +590,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
             while (first < limit)
             {
-                int i = first + (limit - first) / 2;
-                IComparable item = (IComparable)(itemList[i]);
+                int i = first + (limit - first)/2;
+                IComparable item = (IComparable) (itemList[i]);
                 int comparison = item.CompareTo(value);
                 if (comparison < 0)
                 {

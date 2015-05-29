@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Width="500" Height="500"
         Title="Font"
-       Background="{x:Static SystemColors.ControlBrush}">
+        Background="{x:Static SystemColors.ControlBrush}">
     <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="4*" />
@@ -54,12 +54,10 @@
         <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,12,0,0">
             <TextBlock DockPanel.Dock="Top">Preview:</TextBlock>
             <TextBox x:Name="PreviewTextBox"
-                FontSize="16" AcceptsReturn="True"
-                TextAlignment="Center"
-                TextWrapping="Wrap"
-                VerticalScrollBarVisibility="Auto"
-                >
-            </TextBox>
+                     FontSize="16" AcceptsReturn="True"
+                     TextAlignment="Center"
+                     TextWrapping="Wrap"
+                     VerticalScrollBarVisibility="Auto" />
         </DockPanel>
 
         <!-- Row 3: OK and Cancel buttons -->

@@ -5,16 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:VisualCrypt.Desktop.ModuleEditor.Views"
         mc:Ignorable="d"
-        Title="Go To" Height="130" Width="220" WindowStartupLocation="CenterOwner" d:DataContext="{d:DesignInstance views:GoToViewModel}">
+        Title="Go To" Height="130" Width="220" WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance views:GoToViewModel}">
     <Grid>
 
         <StackPanel>
             <TextBlock Margin="5">Line Number:</TextBlock>
-            <TextBox Margin="5" x:Name="TextBoxLineNo" Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+            <TextBox Margin="5" x:Name="TextBoxLineNo"
+                     Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
             <DockPanel>
 
                 <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" Width="65"
-                            Command="{Binding GoCommand}">
+                        Command="{Binding GoCommand}">
                     Go
                 </Button>
             </DockPanel>

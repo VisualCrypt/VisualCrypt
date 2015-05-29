@@ -9,7 +9,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
 {
     internal class FontFamilyListItem : TextBlock, IComparable
     {
-        private readonly string _displayName;
+        readonly string _displayName;
 
         public FontFamilyListItem(FontFamily fontFamily)
         {

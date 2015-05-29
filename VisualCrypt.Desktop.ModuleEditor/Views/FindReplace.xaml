@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:views="clr-namespace:VisualCrypt.Desktop.ModuleEditor.Views"
         mc:Ignorable="d"
-        Title="Find" Height="236.5" Width="365" WindowStartupLocation="CenterOwner" d:DataContext="{d:DesignInstance views:FindReplaceViewModel}">
+        Title="Find" Height="236.5" Width="365" WindowStartupLocation="CenterOwner"
+        d:DataContext="{d:DesignInstance views:FindReplaceViewModel}">
     <Grid>
         <TabControl x:Name="TabControl1" Height="Auto" SelectedIndex="{Binding TabControlSelectedIndex, Mode=TwoWay}">
             <TabItem Header="Find">
                 <StackPanel>
-                    <TextBox Margin="5" x:Name="TextBoxFindFindString" Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  />
+                    <TextBox Margin="5" x:Name="TextBoxFindFindString"
+                             Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
                         <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" Width="65"
-                            Command="{Binding FindNextCommand}" >
+                                Command="{Binding FindNextCommand}">
                             Find
                         </Button>
                     </DockPanel>
@@ -33,18 +35,26 @@
             </TabItem>
             <TabItem Header="Replace">
                 <StackPanel>
-                    <TextBox x:Name="TextBoxReplaceFindString" Margin="5" Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox x:Name="TextBoxReplaceFindString" Margin="5"
+                             Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                     <TextBlock Margin="5">Replace with:</TextBlock>
-                    <TextBox x:Name="TextBoxReplaceString" Margin="5" Text="{Binding ReplaceString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox x:Name="TextBoxReplaceString" Margin="5"
+                             Text="{Binding ReplaceString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <DockPanel>
-                        <TextBlock Margin="5" Text="{Binding PositionString}"></TextBlock>
+                        <TextBlock Margin="5" Text="{Binding PositionString}" />
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                             <Button Margin="5" HorizontalAlignment="Right" Width="65"
-                                Command="{Binding FindNextCommand}">
+                                    Command="{Binding FindNextCommand}">
                                 Find
                             </Button>
-                            <Button  IsDefault="True" Margin="5" HorizontalAlignment="Right" Width="65" Command="{Binding ReplaceCommand}">Replace</Button>
-                            <Button Margin="5" HorizontalAlignment="Right" Width="65" Command="{Binding ReplaceAllCommand}">Replace all</Button>
+                            <Button IsDefault="True" Margin="5" HorizontalAlignment="Right" Width="65"
+                                    Command="{Binding ReplaceCommand}">
+                                Replace
+                            </Button>
+                            <Button Margin="5" HorizontalAlignment="Right" Width="65"
+                                    Command="{Binding ReplaceAllCommand}">
+                                Replace all
+                            </Button>
                         </StackPanel>
                     </DockPanel>
 

@@ -11,7 +11,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
     public sealed class FindReplaceViewModel : ViewModelBase
     {
         readonly TextBox _textBox1;
-       
+
         int _timesNotFound;
 
         public SearchOptions SearchOptions { get; set; }
@@ -26,17 +26,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         int Pos
         {
-            get
-            {
-                return _textBox1.CaretIndex;
-            }
-            set
-            {
-                _textBox1.CaretIndex = value;
-            }
+            get { return _textBox1.CaretIndex; }
+            set { _textBox1.CaretIndex = value; }
         }
-
-
 
 
         public string FindString
@@ -53,6 +45,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 ReplaceAllCommand.RaiseCanExecuteChanged();
             }
         }
+
         string _findString = string.Empty;
 
         public string ReplaceString
@@ -65,6 +58,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 OnPropertyChanged(() => ReplaceString);
             }
         }
+
         string _replaceString = string.Empty;
 
         public int TabControlSelectedIndex
@@ -77,14 +71,20 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 OnPropertyChanged(() => TabControlSelectedIndex);
             }
         }
+
         int _tabControlSelectedIndex;
 
         #region FindCommand
 
         public DelegateCommand FindNextCommand
         {
-            get { return CreateCommand(ref _findNextCommand, ExecuteFindNextCommand, () => !string.IsNullOrEmpty(FindString)); }
+            get
+            {
+                return CreateCommand(ref _findNextCommand, ExecuteFindNextCommand,
+                    () => !string.IsNullOrEmpty(FindString));
+            }
         }
+
         DelegateCommand _findNextCommand;
 
 
@@ -103,10 +103,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             }
 
             if (!found && SearchOptions.UseRegEx == false)
-                MessageBoxService.Show("'{0}' is not in the document.".FormatInvariant(FindString), "Find", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBoxService.Show("'{0}' is not in the document.".FormatInvariant(FindString), "Find",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
-                MessageBoxService.Show("The expression '{0}' yields no matches in the document.".FormatInvariant(FindString), "Find", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+                MessageBoxService.Show(
+                    "The expression '{0}' yields no matches in the document.".FormatInvariant(FindString), "Find",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
         SearchResult? Find(bool wrapSearchPos, bool isReplace)
@@ -115,16 +117,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             return SearchRecoursive(wrapSearchPos, isReplace);
         }
 
-
-
         #endregion
 
         #region ReplaceCommand
 
         public DelegateCommand ReplaceCommand
         {
-            get { return CreateCommand(ref _replaceCommand, ExecuteReplaceCommand, () => !string.IsNullOrEmpty(FindString)); }
+            get
+            {
+                return CreateCommand(ref _replaceCommand, ExecuteReplaceCommand, () => !string.IsNullOrEmpty(FindString));
+            }
         }
+
         DelegateCommand _replaceCommand;
 
 
@@ -146,10 +150,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             }
 
             if (!found && SearchOptions.UseRegEx == false)
-                MessageBoxService.Show("'{0}' could not be found.".FormatInvariant(FindString), "Replace", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                MessageBoxService.Show("'{0}' could not be found.".FormatInvariant(FindString), "Replace",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
-                MessageBoxService.Show("No match for '{0}' could be found.".FormatInvariant(FindString), "Replace", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+                MessageBoxService.Show("No match for '{0}' could be found.".FormatInvariant(FindString), "Replace",
+                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
         }
 
         #endregion
@@ -158,8 +163,13 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         public DelegateCommand ReplaceAllCommand
         {
-            get { return CreateCommand(ref _replaceAllCommand, ExecuteReplaceAllCommand, () => !string.IsNullOrEmpty(FindString)); }
+            get
+            {
+                return CreateCommand(ref _replaceAllCommand, ExecuteReplaceAllCommand,
+                    () => !string.IsNullOrEmpty(FindString));
+            }
         }
+
         DelegateCommand _replaceAllCommand;
 
 
@@ -169,7 +179,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             Pos = 0;
             var count = 0;
 
-        start:
+            start:
             var searchResult = Find(false, false);
 
             if (searchResult.HasValue)
@@ -184,14 +194,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             var image = (count > 0) ? MessageBoxImage.Information : MessageBoxImage.Exclamation;
 
 
-            MessageBoxService.Show("{0} occurrences were replaced.".FormatInvariant(count), "Replace All", MessageBoxButton.OK, image);
+            MessageBoxService.Show("{0} occurrences were replaced.".FormatInvariant(count), "Replace All",
+                MessageBoxButton.OK, image);
         }
 
         #endregion
 
         SearchResult? SearchRecoursive(bool wrapSearchPos, bool isReplace)
         {
-
             SearchResult? searchResult;
             try
             {
@@ -201,7 +211,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             {
                 if (SearchOptions.UseRegEx)
                 {
-                    MessageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax",MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", MessageBoxButton.OK,
+                        MessageBoxImage.Error);
                     return null;
                 }
                 throw;
@@ -221,7 +232,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 {
                     if (isReplace && Pos != 0)
                     {
-                        var result = MessageBoxService.Show("Nothing found - Search again from the top of the document?", "Replace",
+                        var result = MessageBoxService.Show(
+                            "Nothing found - Search again from the top of the document?", "Replace",
                             MessageBoxButton.OKCancel, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
                             return null;
@@ -232,8 +244,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 {
                     if (isReplace && Pos != _textBox1.Text.Length)
                     {
-                        var result = MessageBoxService.Show("Nothing found - Search again from the bottom of the document?", "Replace",
-                            MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                        var result =
+                            MessageBoxService.Show("Nothing found - Search again from the bottom of the document?",
+                                "Replace",
+                                MessageBoxButton.OKCancel, MessageBoxImage.Question);
                         if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
                             return null;
                     }
@@ -247,16 +261,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         }
 
 
-
-
-
-
         void SelectSearchResult(int indexInSourceText, int lenght)
         {
             _textBox1.Select(indexInSourceText, lenght);
-            
         }
-
-
     }
 }

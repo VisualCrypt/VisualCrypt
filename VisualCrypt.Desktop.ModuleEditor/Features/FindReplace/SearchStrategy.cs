@@ -7,7 +7,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.FindReplace
         /// <summary>
         /// OK
         /// </summary>
-        public static SearchResult? Search(string source, string what, int startThisSearchAt, SearchOptions searchOptions)
+        public static SearchResult? Search(string source, string what, int startThisSearchAt,
+            SearchOptions searchOptions)
         {
             var regEx = CreateRegEx(what, searchOptions);
 

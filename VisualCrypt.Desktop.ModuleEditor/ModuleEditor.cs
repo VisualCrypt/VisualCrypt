@@ -7,12 +7,11 @@ using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.ModuleEditor
 {
-
-    [ModuleExport(typeof(ModuleEditor), DependsOnModuleNames = new string[] { })]
+    [ModuleExport(typeof (ModuleEditor), DependsOnModuleNames = new string[] {})]
     public class ModuleEditor : IModule
     {
-        private readonly ILoggerFacade _logger;
-        private readonly IModuleTracker _moduleTracker;
+        readonly ILoggerFacade _logger;
+        readonly IModuleTracker _moduleTracker;
 
 
         [ImportingConstructor]

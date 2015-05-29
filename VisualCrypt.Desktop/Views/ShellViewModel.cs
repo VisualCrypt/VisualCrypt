@@ -236,7 +236,7 @@ namespace VisualCrypt.Desktop.Views
 
                 var saveFileDialog = new SaveFileDialog
                 {
-                    Title = "Export Clear Text",
+                    Title = "Export Clear Text (Encoding: {0})".FormatInvariant(FileManager.FileModel.SaveEncoding.EncodingName),
                     InitialDirectory = SettingsManager.CurrentDirectoryName,
                     FileName = FileManager.FileModel.Filename.ReplaceCaseInsensitive(Constants.DotVisualCrypt, string.Empty),
                     DefaultExt = ".txt",

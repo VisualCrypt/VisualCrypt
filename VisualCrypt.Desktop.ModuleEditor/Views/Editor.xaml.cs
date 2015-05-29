@@ -6,7 +6,7 @@ using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
-    [Export(typeof(IEditor))]
+    [Export(typeof (IEditor))]
     [PartCreationPolicy(CreationPolicy.NonShared)]
     public partial class Editor : IEditor
     {
@@ -16,7 +16,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             Loaded += Editor_Loaded;
         }
 
-        private void Editor_Loaded(object sender, RoutedEventArgs e)
+        void Editor_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.OnEditorInitialized(TextBox1);
             TextBox1.TextChanged += TextBox1_TextChanged;
@@ -34,7 +34,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         {
             set { DataContext = value; }
             get { return DataContext as EditorViewModel; }
-
         }
 
         void TextBox1_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -44,8 +43,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             // Menu File
             // Print
             if ((e.Key == Key.P && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-                && (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
-              && ViewModel.CanExecutePrint()))
+                 && (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+                 && ViewModel.CanExecutePrint()))
                 ViewModel.ExecutePrint();
 
             // Menu Edit
@@ -55,7 +54,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 ViewModel.ExecuteFind();
             //Find Next
             if ((e.Key == Key.F3)
-               && ViewModel.CanExecuteFindNext())
+                && ViewModel.CanExecuteFindNext())
                 ViewModel.ExecuteFindNext();
             // Find Previous
             if ((e.Key == Key.F3 && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
@@ -71,18 +70,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 ViewModel.ExecuteDeleteLine();
             // GoTo
             if ((e.Key == Key.G && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-               && ViewModel.CanExecuteGoTo())
+                && ViewModel.CanExecuteGoTo())
                 ViewModel.ExecuteGoTo();
             // Insert Date, Time
             if ((e.Key == Key.F5)
-               && ViewModel.CanExecuteInsertDateTime())
+                && ViewModel.CanExecuteInsertDateTime())
                 ViewModel.ExecuteInsertDateTime();
 
             // Menu Format
             //Font
             if ((e.Key == Key.F && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-                && (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
-              && ViewModel.CanExecuteFont()))
+                 && (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt))
+                 && ViewModel.CanExecuteFont()))
                 ViewModel.ExecuteFont();
 
             // Menu View
@@ -119,19 +118,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
         void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ViewModel.ExecuteTextChangedCommand(e);
+            ViewModel.ExecuteTextChangedCommand();
         }
 
         void TextBox1_SelectionChanged(object sender, RoutedEventArgs routedEventArgs)
         {
-            ViewModel.ExecuteSelectionChangedCommand(routedEventArgs);
+            ViewModel.ExecuteSelectionChangedCommand();
         }
 
         #region EditorCommands
 
         void CanExecuteFind(object sender, CanExecuteRoutedEventArgs e)
         {
-
             e.CanExecute = ViewModel.CanExecuteFind();
         }
 
@@ -140,112 +138,112 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             ViewModel.ExecuteFind();
         }
 
-        private void CanExecuteFindNext(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteFindNext(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteFindNext();
         }
 
-        private void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteFindNext();
         }
 
-        private void CanExecuteFindPrevious(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteFindPrevious(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteFindPrevious();
         }
 
-        private void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteFindPrevious();
         }
 
-        private void CanExecuteReplace(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteReplace(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteReplace();
         }
 
-        private void ExecuteReplace(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteReplace(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteReplace();
         }
 
-        private void CanExecuteDeleteLine(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteDeleteLine(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteDeleteLine();
         }
 
-        private void ExecuteDeleteLine(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteDeleteLine(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteDeleteLine();
         }
 
-        private void CanExecuteGoTo(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteGoTo(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteGoTo();
         }
 
-        private void ExecuteGoTo(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteGoTo(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteGoTo();
         }
 
-        private void CanExecuteInsertDate(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteInsertDate(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteInsertDateTime();
         }
 
-        private void ExecuteInsertDate(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteInsertDate(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteInsertDateTime();
         }
 
-        private void CanExecuteFont(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteFont(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteFont();
         }
 
-        private void ExecuteFont(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteFont(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteFont();
         }
 
-        private void CanExecuteZoomIn(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteZoomIn(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteZoomIn();
         }
 
-        private void ExecuteZoomIn(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteZoomIn(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteZoomIn();
         }
 
-        private void CanExecuteZoomOut(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteZoomOut(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteZoomOut();
         }
 
-        private void ExecuteZoomOut(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteZoomOut(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteZoomOut();
         }
 
-        private void CanExecuteZoom100(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecuteZoom100(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecuteZoom100();
         }
 
-        private void ExecuteZoom100(object sender, ExecutedRoutedEventArgs e)
+        void ExecuteZoom100(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecuteZoom100();
         }
 
-        private void CanExecutePrint(object sender, CanExecuteRoutedEventArgs e)
+        void CanExecutePrint(object sender, CanExecuteRoutedEventArgs e)
         {
             e.CanExecute = ViewModel.CanExecutePrint();
         }
 
-        private void ExecutePrint(object sender, ExecutedRoutedEventArgs e)
+        void ExecutePrint(object sender, ExecutedRoutedEventArgs e)
         {
             ViewModel.ExecutePrint();
         }
