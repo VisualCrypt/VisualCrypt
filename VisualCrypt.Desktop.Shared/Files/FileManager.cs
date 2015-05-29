@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Windows;
-using Microsoft.Practices.ServiceLocation;
-using VisualCrypt.Desktop.Shared.App;
-using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {

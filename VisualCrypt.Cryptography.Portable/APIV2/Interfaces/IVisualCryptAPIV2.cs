@@ -13,10 +13,10 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 
         Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2);
 
-        Response<CipherV2> TryDecodeVisualCryptText(VisualCryptText visualCryptText);
+        Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText);
 
         Response<ClearText> Decrpyt(CipherV2 cipherV2, SHA256PW32 sha256PW32);
 
-        Response<string> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null);
+        Response<string, Encoding> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null);
     }
 }

@@ -82,7 +82,6 @@
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Files\BindableFileInfo.cs" />
     <Compile Include="Files\CleartextFileModel.cs" />
-    <Compile Include="Files\FileModel.cs" />
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="Files\FileModelBase.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -90,6 +89,7 @@
     <Compile Include="IModuleTracker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegionNames.cs" />
+    <Compile Include="Services\IEncryptionService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Settings\FontSettings.cs" />

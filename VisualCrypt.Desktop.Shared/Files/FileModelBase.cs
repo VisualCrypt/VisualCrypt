@@ -7,7 +7,7 @@ namespace VisualCrypt.Desktop.Shared.Files
     public class FileModelBase : INotifyPropertyChanged
     {
 
-        public bool IsDirty
+        public virtual bool IsDirty
         {
             get { return _isDirty; }
             set
@@ -24,7 +24,7 @@ namespace VisualCrypt.Desktop.Shared.Files
         public string Filename
         {
             get { return _filename; }
-            set
+            protected set
             {
                 if (_filename != value)
                 {
@@ -38,7 +38,7 @@ namespace VisualCrypt.Desktop.Shared.Files
         public bool IsEncrypted
         {
             get { return _isEncrypted; }
-            set
+            protected set
             {
                 if (_isEncrypted != value)
                 {

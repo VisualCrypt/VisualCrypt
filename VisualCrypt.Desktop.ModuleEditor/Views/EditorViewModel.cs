@@ -72,6 +72,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 _textBox1.SpellCheck.IsEnabled = false;
                 _textBox1.IsUndoEnabled = false;
                 _textBox1.IsReadOnly = true;
+               
             }
             else
             {

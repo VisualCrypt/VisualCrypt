@@ -179,12 +179,12 @@ namespace VisualCrypt.Desktop.Views
         //}
         private void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
         {
-            throw new System.NotImplementedException();
+            MessageBox.Show("Hyperlink_SetPassword_Click");
         }
 
         private void TextBlock_ClearPassword_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            throw new System.NotImplementedException();
+            MessageBox.Show("TextBlock_ClearPassword_MouseDown");
         }
     }
 }

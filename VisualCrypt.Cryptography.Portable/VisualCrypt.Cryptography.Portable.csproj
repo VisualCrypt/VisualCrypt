@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
+    <Folder Include="Editor\Enums\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIV2\DataTypes\MD16E.cs" />
@@ -49,7 +50,6 @@
     <Compile Include="APIV2\Implementations\VisualCryptAPIV2.cs" />
     <Compile Include="APIV2\Implementations\VisualCryptFormatter.cs" />
     <Compile Include="APIV2\Interfaces\ICoreAPIV2.cs" />
-    <Compile Include="Editor\Enums\SetPasswordDialogMode.cs" />
     <Compile Include="APIV2\DataTypes\CipherV2.cs" />
     <Compile Include="APIV2\DataTypes\ClearText.cs" />
     <Compile Include="APIV2\DataTypes\DecodeFileResult.cs" />

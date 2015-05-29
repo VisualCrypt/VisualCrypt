@@ -51,14 +51,14 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             return new VisualCryptText(sb.ToString());
         }
 
-        public CipherV2 DissectVisualCryptText(VisualCryptText visualCryptText)
+        public CipherV2 DissectVisualCryptText(string visualCryptText)
         {
             if (visualCryptText == null)
                 throw new ArgumentNullException("visualCryptText");
 
             try
             {
-                var visualCrypt = visualCryptText.Value.Trim();
+                var visualCrypt = visualCryptText.Trim();
 
                 if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
                     throw new FormatException("The data is not in VisualCrypt/text V2 format (because it does not start with '{0}').".FormatInvariant(VisualCryptSlashText));

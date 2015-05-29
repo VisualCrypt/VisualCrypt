@@ -11,7 +11,7 @@ using VisualCrypt.Cryptography.Portable.Tools;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {
-    public class FileModel : FileModelBase
+    public class VisualCryptFileModel : FileModelBase
     {
         readonly Encoding VisualCryptSaveEncoding = new UTF8Encoding(false,true);
         IVisualCryptAPIV2 _api = new VisualCryptAPIV2(new CoreAPIV2_Net4());
@@ -111,13 +111,13 @@ namespace VisualCrypt.Desktop.Shared.Files
 
                 if (!getStringResponse.Success)  // we do not even have a string.
                 {
-                    // in this case we do no changes in FileModel and just return the error.
+                    // in this case we do no changes in VisualCryptFileModel and just return the error.
                     response.Error = getStringResponse.Error;
                     return response;
                 }
 
                 // if we are here we have a string. Is it VisualCrypt/text or just Cleartext?
-                var decodeResponse = _api.TryDecodeVisualCryptText(new VisualCryptText(getStringResponse.Result));
+                var decodeResponse = _api.TryDecodeVisualCryptText(getStringResponse.Result);
 
                 if (decodeResponse.Success)
                 {
@@ -165,7 +165,7 @@ namespace VisualCrypt.Desktop.Shared.Files
                     throw new Exception("Aborting Save - _isEncrypted was unexpectedly false.");
                 if (!_isFilenamePresent)
                     throw new Exception("Aborting Save - _isFilenamePresent was unexpectedly false.");
-                if (!_api.TryDecodeVisualCryptText(_visualCryptText).Success)
+                if (!_api.TryDecodeVisualCryptText(_visualCryptText.Value).Success)
                     throw new Exception(
                         "Aborting Save -  the data being saved is unexpectedly not in valid VisualCrypt format.");
 

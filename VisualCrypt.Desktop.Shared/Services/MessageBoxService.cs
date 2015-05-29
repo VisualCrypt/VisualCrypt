@@ -61,7 +61,7 @@ namespace VisualCrypt.Desktop.Shared.Services
         }
 
 
-        public void ShowError(Exception e, [CallerMemberName] string callerMemberName = "callerMemberName" )
+        public void ShowError(Exception e, [CallerMemberName] string callerMemberName = "")
         {
            
             var messageBoxText = "Error in {0}:\r\n\r\n{1}".FormatInvariant(callerMemberName, e.Message);

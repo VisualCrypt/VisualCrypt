@@ -69,10 +69,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="EncryptedFileModel.cs" />
+    <Compile Include="EncryptionService.cs" />
+    <Compile Include="VisualCryptFileModel.cs" />
     <Compile Include="ModuleEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
+      <Project>{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}</Project>
+      <Name>VisualCrypt.Cryptography.Net</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj">
+      <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
+      <Name>VisualCrypt.Cryptography.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
       <Project>{1A98F3E7-2163-46CE-9B6A-E204FFF4F3B8}</Project>
       <Name>VisualCrypt.Desktop.Shared</Name>

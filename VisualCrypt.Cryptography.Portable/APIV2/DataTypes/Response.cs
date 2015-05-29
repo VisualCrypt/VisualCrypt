@@ -10,4 +10,10 @@
     {
         public T Result;
     }
+
+    public sealed class Response<T,T2> : Response
+    {
+        public T Result;
+        public T2 Result2;
+    }
 }

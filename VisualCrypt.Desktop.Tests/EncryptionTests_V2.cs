@@ -60,7 +60,7 @@ namespace VisualCrypt.Desktop.Tests
                 // do the decrpytion
                 string decrpytedMessage;
 
-                var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(new VisualCryptText(visualCrypt));
+                var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(visualCrypt);
 
                 if (decodeResponse.Success)
                 {
@@ -111,7 +111,7 @@ namespace VisualCrypt.Desktop.Tests
                 hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Wrong Password");
 
                 // do the decrpytion
-                var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(new VisualCryptText(visualCrypt));
+                var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(visualCrypt);
 
                 if (decodeResponse.Success)
                 {

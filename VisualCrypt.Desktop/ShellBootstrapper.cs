@@ -33,7 +33,7 @@ namespace VisualCrypt.Desktop
         protected override DependencyObject CreateShell()
         {
             SettingsManager.LoadOrInitSettings();
-            return this.Container.GetExportedValue<Shell>();
+            return Container.GetExportedValue<Shell>();
         }
 
         /// <summary>

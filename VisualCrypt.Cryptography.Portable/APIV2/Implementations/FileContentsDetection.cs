@@ -12,7 +12,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
         /// Detects the contents of an unknown file that is being loaded for display purposes.
         /// - If VisualCrypt is detected, this is just from the prefix, does not mean it's valid or what version.
         /// </summary>
-        internal string GetTextDetectingEncoding(byte[] rawBytesFromFile, Encoding optionalPlatformDefaultEncoding = null)
+        internal string GetTextDetectingEncoding(byte[] rawBytesFromFile, out Encoding appliedEncoding, Encoding optionalPlatformDefaultEncoding = null)
         {
             if (rawBytesFromFile == null)
                 throw new ArgumentNullException("rawBytesFromFile");
@@ -21,18 +21,25 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
             // If the file is empty, just return string.Empty and set ContentKind to PlainText.
             if (byteCount == 0)
+            {
+                appliedEncoding = null;
                 return string.Empty;
+            }
 
             // Try by looking for a Unicode signature/BOM...
             // ...if found, return fault-tolerant decoder and use it.
             var signatureUnicodeEncoding = TryGetEncodingBySignatureDetection(rawBytesFromFile, false);
             if (signatureUnicodeEncoding != null)
+            {
+                appliedEncoding = signatureUnicodeEncoding;
                 return signatureUnicodeEncoding.GetString(rawBytesFromFile, 0, byteCount);
+            }
 
             // Try if UTF8 decoding would work without errors
             var strictUTF8Encoding = new UTF8Encoding(false /* signature */, true /* trow on errors */);
             try
             {
+                appliedEncoding = strictUTF8Encoding;
                 return strictUTF8Encoding.GetString(rawBytesFromFile, 0, byteCount);
             }
             catch (DecoderFallbackException) { }
@@ -43,13 +50,15 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             if (controlCharPercent >= 2)
             {
                 // yes, this is probaby no text at all, encode it to displayable hex numbers to show the user 'something'.
+                appliedEncoding = Encoding.UTF8;
                 return ByteArrayToHexString.ByteArrayToHexViaLookup32(rawBytesFromFile);
-              
+
             }
 
             // If we are e.g. on Desktop, try injected default encoding.
             if (optionalPlatformDefaultEncoding != null)
             {
+                appliedEncoding = optionalPlatformDefaultEncoding;
                 return optionalPlatformDefaultEncoding.GetString(rawBytesFromFile, 0, byteCount);
             }
 
@@ -57,11 +66,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             try
             {
                 var cultureBasedEncoding = Encoding.GetEncoding(encodingString);
+                appliedEncoding = cultureBasedEncoding;
                 return cultureBasedEncoding.GetString(rawBytesFromFile, 0, byteCount);
             }
             catch (Exception)
             {
                 var tolerantUTF8Encoding = new UTF8Encoding(false, false);
+                appliedEncoding = tolerantUTF8Encoding;
                 return tolerantUTF8Encoding.GetString(rawBytesFromFile, 0, byteCount);
             }
         }
@@ -189,6 +200,6 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             return encoding;
         }
 
-       
+
     }
 }

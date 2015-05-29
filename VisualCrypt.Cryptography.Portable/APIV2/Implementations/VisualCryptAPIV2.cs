@@ -6,6 +6,7 @@ using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 {
+   
     public class VisualCryptAPIV2 : IVisualCryptAPIV2
     {
         readonly ICoreAPIV2 _coreAPI;
@@ -133,7 +134,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             return response;
         }
 
-        public Response<CipherV2> TryDecodeVisualCryptText(VisualCryptText visualCryptText)
+        public Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText)
         {
             if (visualCryptText == null)
                 return new Response<CipherV2> { Error = "Argument null: visualCryptText" };
@@ -204,9 +205,9 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             return response;
         }
 
-        public Response<string> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null)
+        public Response<string, Encoding> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null)
         {
-            var response = new Response<string>();
+            var response = new Response<string, Encoding>();
 
             if (rawBytesFromFile == null)
             {
@@ -217,10 +218,12 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             try
             {
                 var detection = new FileContentsDetection();
-                var decodeFileResult = detection.GetTextDetectingEncoding(rawBytesFromFile, platformDefaultEncoding);
+                Encoding encoding;
+                var decodeFileResult = detection.GetTextDetectingEncoding(rawBytesFromFile, out encoding, platformDefaultEncoding);
                 if (decodeFileResult != null)
                 {
                     response.Result = decodeFileResult;
+                    response.Result2 = encoding;
                     response.Success = true;
                 }
             }
