@@ -4,6 +4,9 @@ using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions;
 using Microsoft.Practices.Prism.Modularity;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
+using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 
@@ -46,7 +49,7 @@ namespace VisualCrypt.Desktop
             Application.Current.MainWindow = (Window)Shell;
             Application.Current.MainWindow.Show();
         }
-
+   
         /// <summary>
         /// Configures the <see cref="AggregateCatalog"/> used by MEF.
         /// </summary>

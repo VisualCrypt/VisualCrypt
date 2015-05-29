@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.Composition;
+﻿using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
@@ -33,7 +34,7 @@ namespace VisualCrypt.Desktop.Views
 
             this.Loaded += Shell_Loaded;
             this.PreviewKeyDown += ShellWindow_PreviewKeyDown;
-            //Closing += MainWindow_Closing;
+            Closing += MainWindow_Closing;
             //SizeChanged += MainWindow_SizeChanged;
 
             //AllowDrop = true;
@@ -57,6 +58,11 @@ namespace VisualCrypt.Desktop.Views
         void Shell_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.Init();
+        }
+
+        void MainWindow_Closing(object sender, CancelEventArgs e)
+        {
+            ViewModel.ExitCommand.Execute(e);
         }
 
         void ShellWindow_PreviewKeyDown(object sender, KeyEventArgs e)

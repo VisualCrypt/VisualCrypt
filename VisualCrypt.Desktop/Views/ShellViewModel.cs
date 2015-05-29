@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
@@ -32,6 +33,12 @@ namespace VisualCrypt.Desktop.Views
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(OnEditorSendsText);
         }
 
+        public void Init()
+        {
+
+            CreateEditor();
+            ExecuteNewCommand();
+        }
 
         void OnEditorSendsText(EditorSendsText args)
         {
@@ -45,40 +52,7 @@ namespace VisualCrypt.Desktop.Views
         }
 
 
-        public void Init()
-        {
-
-            CreateEditor();
-            ExecuteNewCommand();
-        }
-        private void CreateEditor()
-        {
-
-
-
-
-            // Get a reference to the main region.
-            IRegion mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
-            if (mainRegion == null) return;
-
-            // Check to see if we need to create an instance of the view.
-            var view = mainRegion.GetView("Editor") as IEditor;
-            if (view == null)
-            {
-                // Create a new instance of the EmployeeDetailsView using the Unity container.
-                view = ServiceLocator.Current.GetInstance<IEditor>();
-
-                // Add the view to the main region. This automatically activates the view too.
-                mainRegion.Add(view, "Editor");
-            }
-            else
-            {
-                // The view has already been added to the region so just activate it.
-                mainRegion.Activate(view);
-            }
-
-
-        }
+      
 
        
 
@@ -121,7 +95,41 @@ namespace VisualCrypt.Desktop.Views
                 return new string('\u25CF', 5);
             }
         }
+        #region ExitCommand
 
+
+        public DelegateCommand<CancelEventArgs> ExitCommand
+        {
+            get { return CreateCommand(ref _exitCommand, ExecuteExitCommand, e => true); }
+        }
+        DelegateCommand<CancelEventArgs> _exitCommand;
+
+        bool _isExitConfirmed;
+        void ExecuteExitCommand(CancelEventArgs e)
+        {
+
+            bool isInvokedFromWindowCloseEvent = e != null;
+
+            if (isInvokedFromWindowCloseEvent)
+            {
+                if(_isExitConfirmed)
+                    return;
+                if (ConfirmToDiscardText())
+                    return;
+                e.Cancel = true;
+            }
+            else
+            {
+               if (ConfirmToDiscardText())
+                {
+                    _isExitConfirmed = true;
+                    Application.Current.Shutdown();
+                }
+            }
+        }
+
+
+        #endregion
 
         #region NewCommand
 
@@ -205,6 +213,11 @@ namespace VisualCrypt.Desktop.Views
 
         #endregion
 
+       
+        public void ExecuteDecrpytEditorContentsCommand(string text)
+        {
+            
+        }
         void OpenFileCommon(string filename)
         {
             if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename))
@@ -228,12 +241,12 @@ namespace VisualCrypt.Desktop.Views
                 SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
                 _eventAggregator.GetEvent<EditorReceivesText>().Publish(loadResponse.Result);
-              
+
 
                 if (FileManager.FileModel.IsEncrypted)
                 {
                     _eventAggregator.GetEvent<EditorShouldSendText>().Publish(ExecuteDecrpytEditorContentsCommand);
-                   
+
                 }
 
             }
@@ -242,11 +255,6 @@ namespace VisualCrypt.Desktop.Views
                 _messageBoxService.ShowError(e);
             }
 
-        }
-
-        public void ExecuteDecrpytEditorContentsCommand(string text)
-        {
-            
         }
 
 
@@ -274,19 +282,14 @@ namespace VisualCrypt.Desktop.Views
 
         public void OpenFileFromDragDrop(string dropFilename)
         {
-            //if (!ConfirmToDiscardText())
-            //    return;
-
+            if (!ConfirmToDiscardText())
+                return;
             OpenFileCommon(dropFilename);
         }
 
       
 
-        string GetEncodingInfo()
-        {
-            return "todo";
-            // return FileManager.FileModel.SaveEncoding.EncodingName + ", Code Page " + FileManager.FileModel.SaveEncoding.CodePage;
-        }
+     
 
         public bool CanExecuteClearPasswordCommand()
         {
@@ -298,6 +301,8 @@ namespace VisualCrypt.Desktop.Views
             throw new NotImplementedException();
         }
 
+        #region Private Methods
+
         bool ConfirmToDiscardText()
         {
             if (FileManager.FileModel.IsDirty)
@@ -306,5 +311,25 @@ namespace VisualCrypt.Desktop.Views
 
             return true;
         }
+
+        void CreateEditor()
+        {
+            var mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
+            if (mainRegion == null) 
+               throw new InvalidOperationException("The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(RegionNames.EditorRegion));
+
+           var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
+            if (view == null)
+            {
+                view = ServiceLocator.Current.GetInstance<IEditor>();
+                mainRegion.Add(view, typeof(IEditor).Name);  // automatically activates the view
+            }
+            else
+            {
+                mainRegion.Activate(view);
+            }
+        }
+
+        #endregion
     }
 }
