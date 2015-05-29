@@ -81,7 +81,7 @@
     <Compile Include="Events\EditorReceivesText.cs" />
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Files\BindableFileInfo.cs" />
-    <Compile Include="Files\EmptyCleartextFileModel.cs" />
+    <Compile Include="Files\CleartextFileModel.cs" />
     <Compile Include="Files\FileModel.cs" />
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="Files\FileModelBase.cs" />

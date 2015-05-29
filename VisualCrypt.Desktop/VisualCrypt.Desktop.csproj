@@ -138,6 +138,9 @@
     </ApplicationDefinition>
     <Compile Include="Commands\SetupCommand.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Views\ImportEncoding.xaml.cs">
+      <DependentUpon>ImportEncoding.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
@@ -168,6 +171,10 @@
     <Page Include="ModuleControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ImportEncoding.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\About.xaml">
       <Generator>MSBuild:Compile</Generator>

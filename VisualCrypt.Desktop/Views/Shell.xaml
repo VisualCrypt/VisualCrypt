@@ -22,6 +22,8 @@
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenCommand}" />
         <KeyBinding Key="S" Modifiers="Control" Command="{Binding SaveCommand}" />
         <KeyBinding Key="S" Modifiers="Control+Alt" Command="{Binding SaveAsCommand}" />
+        <KeyBinding Key="F2" Command="{Binding ExportCommand}" />
+        <KeyBinding Key="F2" Modifiers="Shift" Command="{Binding ImportWithEncodingCommand}" />
         <KeyBinding Key="P" Modifiers="Control+Alt" Command="commands:EditorCommands.Print" />
         <!-- VisualCrypt -->
         <KeyBinding Key="P" Modifiers="Control" Command="{Binding ShowSetPasswordDialogCommand}" />
@@ -50,6 +52,9 @@
                 <MenuItem Header="_Open..." Command="{Binding OpenCommand}" InputGestureText="Ctrl+O"  />
                 <MenuItem Header="_Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
                 <MenuItem Header="Save _As..." Command="{Binding SaveAsCommand}" InputGestureText="Control+Alt+S"/>
+                <Separator />
+                <MenuItem Header="_Export Clear Text..." Command="{Binding ExportCommand}" InputGestureText="F2"/>
+                <MenuItem Header="_Import with Encoding..." Command="{Binding ImportWithEncodingCommand}" InputGestureText="Shift+F2"/>
                 <Separator />
                 <MenuItem Header="_Print..." Command="commands:EditorCommands.Print" InputGestureText="Ctrl+Alt+P"/>
                 <Separator />

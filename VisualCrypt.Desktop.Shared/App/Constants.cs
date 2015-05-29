@@ -16,7 +16,7 @@ namespace VisualCrypt.Desktop.Shared.App
       
         public const string UntitledDotVisualCrypt = "Untitled.visualcrypt";
        
-        public const string VisualCryptExtension = ".visualcrypt";
+        public const string DotVisualCrypt = ".visualcrypt";
       
         public static readonly string DefaultDirectoryName;
 

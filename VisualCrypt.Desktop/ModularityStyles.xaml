@@ -5,7 +5,10 @@
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
    
     xmlns:desktop="clr-namespace:VisualCrypt.Desktop">
-
+<Style TargetType="Button">
+    <Setter Property="Width" Value="65"></Setter>
+        <Setter Property="Height" Value="25"></Setter>
+    </Style>
     <SolidColorBrush x:Key="ModuleControl.NotStarted.BackgroundBrush-Simple" Color="White"/>
     <SolidColorBrush x:Key="ModuleControl.NotStarted.BorderBrush-Simple" Color="Gray"/>
     <SolidColorBrush x:Key="ModuleControl.NotStarted.ForegroundBrush-Simple" Color="Gray"/>

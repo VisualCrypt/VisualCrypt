@@ -15,9 +15,20 @@ namespace VisualCrypt.Desktop.Shared.App
     public static class SettingsManager
     {
         static readonly ILoggerFacade Logger;
+        static string _currentDirectoryName;
+
         public static EditorSettings EditorSettings { get; private set; }
-      
-        public static string CurrentDirectoryName { get; set; }
+
+        public static string CurrentDirectoryName
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_currentDirectoryName) || !Directory.Exists(_currentDirectoryName))
+                    return Constants.DefaultDirectoryName;
+                return _currentDirectoryName;
+            }
+            set { _currentDirectoryName = value; }
+        }
 
         static SettingsManager()
         {
@@ -26,8 +37,6 @@ namespace VisualCrypt.Desktop.Shared.App
 
             EditorSettings = FactorySettings();
 
-           
-            CurrentDirectoryName = string.Empty;
         }
 
         public static void LoadOrInitSettings()

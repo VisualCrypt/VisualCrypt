@@ -3,11 +3,13 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
+using System.Text;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Win32;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
@@ -24,7 +26,8 @@ namespace VisualCrypt.Desktop.Views
         private readonly IMessageBoxService _messageBoxService;
 
         [ImportingConstructor]
-        public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, IMessageBoxService messageBoxService)
+        public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator,
+            IMessageBoxService messageBoxService)
         {
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
@@ -40,21 +43,21 @@ namespace VisualCrypt.Desktop.Views
             ExecuteNewCommand();
         }
 
-        void OnEditorSendsText(EditorSendsText args)
+        private void OnEditorSendsText(EditorSendsText args)
         {
             if (args != null && args.Callback != null)
                 args.Callback(args.Text);
         }
 
-        void OnEditorSendsStatusBarInfo(string statusBarInfo)
+        private void OnEditorSendsStatusBarInfo(string statusBarInfo)
         {
             StatusBarText = statusBarInfo;
         }
 
 
-      
 
-       
+
+
 
 
         public string StatusBarText
@@ -67,7 +70,8 @@ namespace VisualCrypt.Desktop.Views
                 OnPropertyChanged(() => StatusBarText);
             }
         }
-        string _statusBarText;
+
+        private string _statusBarText;
 
         public Visibility TextBlockClearPasswordVisibility
         {
@@ -79,7 +83,8 @@ namespace VisualCrypt.Desktop.Views
                 OnPropertyChanged(() => TextBlockClearPasswordVisibility);
             }
         }
-        Visibility _textBlockClearPasswordVisibility = Visibility.Collapsed;
+
+        private Visibility _textBlockClearPasswordVisibility = Visibility.Collapsed;
 
 
 
@@ -95,24 +100,26 @@ namespace VisualCrypt.Desktop.Views
                 return new string('\u25CF', 5);
             }
         }
-        #region ExitCommand
 
+        #region ExitCommand
 
         public DelegateCommand<CancelEventArgs> ExitCommand
         {
             get { return CreateCommand(ref _exitCommand, ExecuteExitCommand, e => true); }
         }
-        DelegateCommand<CancelEventArgs> _exitCommand;
 
-        bool _isExitConfirmed;
-        void ExecuteExitCommand(CancelEventArgs e)
+        private DelegateCommand<CancelEventArgs> _exitCommand;
+
+        private bool _isExitConfirmed;
+
+        private void ExecuteExitCommand(CancelEventArgs e)
         {
 
             bool isInvokedFromWindowCloseEvent = e != null;
 
             if (isInvokedFromWindowCloseEvent)
             {
-                if(_isExitConfirmed)
+                if (_isExitConfirmed)
                     return;
                 if (ConfirmToDiscardText())
                     return;
@@ -120,7 +127,7 @@ namespace VisualCrypt.Desktop.Views
             }
             else
             {
-               if (ConfirmToDiscardText())
+                if (ConfirmToDiscardText())
                 {
                     _isExitConfirmed = true;
                     Application.Current.Shutdown();
@@ -133,24 +140,131 @@ namespace VisualCrypt.Desktop.Views
 
         #region NewCommand
 
-        DelegateCommand _newCommand;
+        private DelegateCommand _newCommand;
 
         public DelegateCommand NewCommand
         {
             get { return CreateCommand(ref _newCommand, ExecuteNewCommand, () => true); }
         }
 
-        void ExecuteNewCommand()
+        private void ExecuteNewCommand()
         {
             if (!ConfirmToDiscardText())
                 return;
-            FileManager.FileModel = new EmptyCleartextFileModel();
+            FileManager.FileModel = new CleartextFileModel();
             _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
-         
+
         }
 
         #endregion
-     
+
+        #region ImportWithEncodingCommand
+
+        DelegateCommand _importWithEncodingCommand;
+
+        public DelegateCommand ImportWithEncodingCommand
+        {
+            get { return CreateCommand(ref _importWithEncodingCommand, ExecuteImportWithEncodingCommand, () => true); }
+        }
+
+        void ExecuteImportWithEncodingCommand()
+        {
+            try
+            {
+                if (!ConfirmToDiscardText())
+                    return;
+
+                var importEncoding = new ImportEncoding { WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow };
+                var result = importEncoding.ShowDialog();
+                if (result == true)
+                {
+                    var selectedEncoding = importEncoding.SelectedEncodingInfo.GetEncoding();
+                    if (!ConfirmToDiscardText())
+                        return;
+
+                    var openFileDialog = new OpenFileDialog();
+                    openFileDialog.InitialDirectory = SettingsManager.CurrentDirectoryName;
+                    openFileDialog.DefaultExt = ".txt";
+                    openFileDialog.Filter = "Text|*.txt|All Files|*.*";
+
+                    if (openFileDialog.ShowDialog() == true)
+                    {
+                        string importedString = File.ReadAllText(openFileDialog.FileName, selectedEncoding);
+                        FileManager.FileModel = new CleartextFileModel(importedString, selectedEncoding, Path.GetFileName(openFileDialog.FileName));
+                        _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
+                    }
+
+                }
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
+            }
+        }
+
+        #endregion
+
+        #region ExportCommand
+
+        DelegateCommand _saveAsCommand;
+
+        public DelegateCommand ExportCommand
+        {
+            get { return CreateCommand(ref _saveAsCommand, ExecuteExportCommand, () => true); }
+        }
+
+        void ExecuteExportCommand()
+        {
+            try
+            {
+                _eventAggregator.GetEvent<EditorShouldSendText>().Publish(ExportCommandCallback);
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
+            }
+        }
+
+
+
+        void ExportCommandCallback(string clearText)
+        {
+            try
+            {
+                if (clearText == null)
+                    throw new ArgumentNullException("clearText");
+
+                var saveFileDialog = new SaveFileDialog
+                {
+                    Title = "Export Clear Text",
+                    InitialDirectory = SettingsManager.CurrentDirectoryName,
+                    FileName = FileManager.FileModel.Filename.ReplaceCaseInsensitive(Constants.DotVisualCrypt, string.Empty),
+                    DefaultExt = ".txt",
+                    Filter = "Text|*.txt|All Files|*.*"
+                };
+
+                var result = saveFileDialog.ShowDialog();
+
+                if (result == true)
+                {
+                    // Remember Directory after Export Clear Text?
+                    // string fullPath = saveFileDialog.FileName;
+                    // SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(fullPath);
+                    byte[] encodedTextBytes = FileManager.FileModel.SaveEncoding.GetBytes(clearText);
+
+                    File.WriteAllBytes(saveFileDialog.FileName, encodedTextBytes);
+                    // Reset IsDirty after Export Clear Text, too?
+                    // FileManager.FileModel.IsDirty = true;
+                }
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
+            }
+
+        }
+
+        #endregion
 
         #region HelpCommand
 
@@ -213,10 +327,10 @@ namespace VisualCrypt.Desktop.Views
 
         #endregion
 
-       
+
         public void ExecuteDecrpytEditorContentsCommand(string text)
         {
-            
+
         }
         void OpenFileCommon(string filename)
         {
@@ -287,9 +401,9 @@ namespace VisualCrypt.Desktop.Views
             OpenFileCommon(dropFilename);
         }
 
-      
 
-     
+
+
 
         public bool CanExecuteClearPasswordCommand()
         {
@@ -315,10 +429,10 @@ namespace VisualCrypt.Desktop.Views
         void CreateEditor()
         {
             var mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
-            if (mainRegion == null) 
-               throw new InvalidOperationException("The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(RegionNames.EditorRegion));
+            if (mainRegion == null)
+                throw new InvalidOperationException("The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(RegionNames.EditorRegion));
 
-           var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
+            var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
             if (view == null)
             {
                 view = ServiceLocator.Current.GetInstance<IEditor>();

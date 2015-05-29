@@ -9,7 +9,7 @@ namespace VisualCrypt.Desktop.Shared.Files
     public static class FileManager
     {
         public static readonly BindableFileInfo BindableFileInfo = new BindableFileInfo();
-        static FileModelBase _fileModel = new EmptyCleartextFileModel();
+        static FileModelBase _fileModel = new CleartextFileModel();
 
 
         public static FileModelBase FileModel

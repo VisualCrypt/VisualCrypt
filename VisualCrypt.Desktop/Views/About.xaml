@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="About" Height="262" Width="433.932" WindowStartupLocation="CenterOwner"
         d:DataContext="{d:DesignInstance views:About}">
-    <Grid>
+    <Grid d:DataContext="{d:DesignInstance  views:About}">
         <DockPanel Margin="20">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
@@ -17,6 +17,7 @@
                 <TextBlock Margin="5" TextWrapping="Wrap"><Run Text="Copyright © 201"/><Run Text="5"/><Run Text=" "/><Run Text="VisualCrypt AG"/></TextBlock>
                 <TextBlock Margin="5" TextWrapping="Wrap">Warning: This computer program is protected by copyright law 
                     and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.</TextBlock>
+             
             </StackPanel>
            
 
