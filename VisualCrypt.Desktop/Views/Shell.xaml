@@ -62,7 +62,7 @@
             </MenuItem>
             <MenuItem Header="_VisualCrypt">
                 <!--<MenuItem Header="_Import Binary as Base64..." Command="{Binding ImportBinaryAsBase64Command}" />-->
-                <MenuItem Header="Set _Password..." Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
+                <MenuItem Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}" Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
                 <MenuItem Header="_Encrypt Editor Contents" Command="{Binding EncryptEditorContentsCommand}" InputGestureText="Ctrl+E" />
                 <MenuItem Header="_Decrypt Editor Contents" Command="{Binding DecryptEditorContentsCommand}" InputGestureText="Ctrl+D" />
             </MenuItem>
@@ -127,14 +127,14 @@
                 </Style>
             </DockPanel.Resources>
             <TextBlock DockPanel.Dock="Left" Margin="5,0"  Text="{Binding StatusBarText}" TextAlignment="Left" />
-            <TextBlock Visibility="{Binding TextBlockClearPasswordVisibility}" ToolTip="Clear Password   Ctrl+R" 
+            <TextBlock Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}" ToolTip="Clear Password   Ctrl+R" 
                        DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold"  Foreground="#A5FF0000" 
                        Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown"></TextBlock>
-            <TextBlock DockPanel.Dock="Right" Margin="5,0" Text="{Binding PasswordStatus}"></TextBlock>
+            <TextBlock DockPanel.Dock="Right" Margin="5,0" Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}"></TextBlock>
             <TextBlock DockPanel.Dock="Right">
-                <Hyperlink ToolTip="Set Password" Click="Hyperlink_SetPassword_Click">Password:</Hyperlink>
+                <Hyperlink Click="Hyperlink_SetPassword_Click" ToolTip="Ctrl+P"><TextBlock Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}"></TextBlock></Hyperlink>
             </TextBlock>
-            <Image Source="../Images/save_16x4.png" Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}"></Image>
+            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S"  MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown" Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}"></Image>
         </DockPanel>
     </Grid>
 </Window>

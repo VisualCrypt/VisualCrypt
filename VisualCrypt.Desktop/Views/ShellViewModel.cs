@@ -3,7 +3,6 @@ using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Windows;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
@@ -15,7 +14,6 @@ using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.Services;
-using VisualCrypt.Cryptography.Portable.Editor.Enums;
 
 namespace VisualCrypt.Desktop.Views
 {
@@ -29,7 +27,7 @@ namespace VisualCrypt.Desktop.Views
 
         [ImportingConstructor]
         public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator,
-            IMessageBoxService messageBoxService,IEncryptionService encryptionService)
+            IMessageBoxService messageBoxService, IEncryptionService encryptionService)
         {
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
@@ -71,31 +69,7 @@ namespace VisualCrypt.Desktop.Views
 
         string _statusBarText;
 
-        public Visibility TextBlockClearPasswordVisibility
-        {
-            get { return _textBlockClearPasswordVisibility; }
-            set
-            {
-                if (_textBlockClearPasswordVisibility == value) return;
-                _textBlockClearPasswordVisibility = value;
-                OnPropertyChanged(() => TextBlockClearPasswordVisibility);
-            }
-        }
 
-        Visibility _textBlockClearPasswordVisibility = Visibility.Collapsed;
-
-
-        public string PasswordStatus
-        {
-            get
-            {
-                //if (FileManager.FileModel.IsPasswordPresent == false)
-                //    return "Not Set";
-
-                // Unicode Character 'BLACK CIRCLE' (U+25CF)
-                return new string('\u25CF', 5);
-            }
-        }
 
         #endregion
 
@@ -205,11 +179,11 @@ namespace VisualCrypt.Desktop.Views
 
         #region ExportCommand
 
-        DelegateCommand _saveAsCommand;
+        DelegateCommand _exportCommand;
 
         public DelegateCommand ExportCommand
         {
-            get { return CreateCommand(ref _saveAsCommand, ExecuteExportCommand, () => true); }
+            get { return CreateCommand(ref _exportCommand, ExecuteExportCommand, () => true); }
         }
 
         void ExecuteExportCommand()
@@ -279,7 +253,7 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.HelpUrl}};
+                var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } };
                 process.Start();
             }
             catch (Exception e)
@@ -301,7 +275,7 @@ namespace VisualCrypt.Desktop.Views
 
         void ExecuteAboutCommand()
         {
-            var aboutDialog = new About {WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow};
+            var aboutDialog = new About { WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow };
             aboutDialog.ShowDialog();
         }
 
@@ -350,7 +324,9 @@ namespace VisualCrypt.Desktop.Views
             }
         }
 
-        #endregion
+    
+
+
 
         void OpenFileCommon(string filename)
         {
@@ -370,7 +346,7 @@ namespace VisualCrypt.Desktop.Views
 
                 _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
 
-             
+
 
 
                 if (FileManager.FileModel.IsEncrypted)
@@ -420,6 +396,197 @@ namespace VisualCrypt.Desktop.Views
             OpenFileCommon(dropFilename);
         }
 
+        #endregion
+
+        #region EncryptEditorContentsCommand
+
+        DelegateCommand _encryptEditorContentsCommand;
+
+        public DelegateCommand EncryptEditorContentsCommand
+        {
+            get
+            {
+                return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand, () => !FileManager.FileModel.IsEncrypted);
+            }
+        }
+
+
+        void ExecuteEncryptEditorContentsCommand()
+        {
+            try
+            {
+
+                if (!PasswordManager.PasswordInfo.IsPasswordSet)
+                {
+                    bool result = ShowSetPasswordDialog(SetPasswordDialogMode.SetAndEncrypt);
+                    if (result == false)
+                        return;
+                }
+                // Clear Undo stack and disable Undo
+                //_mainWindow.TextBox1.IsUndoEnabled = false;
+
+                // do the encryption
+               // var encryptResponse = ModelState.Transient.FileModel.Encrypt(new ClearText(_mainWindow.TextBox1.Text));
+
+                //if (!encryptResponse.Success)
+                //    throw new Exception(encryptResponse.Error);
+
+                //SetTextAndUpdateAllWithoutUndo(encryptResponse.Result.Value);
+
+            }
+            catch (Exception e)
+            {
+
+                //MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
+            }
+        }
+
+        #endregion
+
+        #region DecryptEditorContentsCommand
+
+        DelegateCommand _decryptEditorContentsCommand;
+
+        public DelegateCommand DecryptEditorContentsCommand
+        {
+            get
+            {
+                return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand, () => FileManager.FileModel.IsEncrypted);
+            }
+        }
+
+
+        void ExecuteDecryptEditorContentsCommand()
+        {
+            try
+            {
+                //var decodeResponse =
+                //    _visualCryptAPI.TryDecodeVisualCryptText(new VisualCryptText(_mainWindow.TextBox1.Text));
+
+                //if (!decodeResponse.Success)
+                //{
+                //    MessageBoxService.ShowError(decodeResponse.Error);
+                //    return;
+                //}
+                //if (!ModelState.Transient.FileModel.IsPasswordPresent)
+                //{
+                //    if (!ShowSetPasswordDialog(SetPasswordDialogMode.SetAndDecrypt))
+                //        return;
+                //    ExecuteDecryptEditorContentsCommand(); // loop!
+                //}
+                //else
+                //{
+                //    var decrpytResponse = ModelState.Transient.FileModel.Decrypt(decodeResponse.Result);
+                //    if (!decrpytResponse.Success)
+                //    {
+                //        MessageBoxService.ShowError(decrpytResponse.Error);
+                //        return;
+                //    }
+                //    SetTextAndUpdateAllWithoutUndo(decrpytResponse.Result.Value);
+                //}
+            }
+            catch (Exception e)
+            {
+                //MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
+            }
+        }
+
+        #endregion
+
+        #region SaveCommand
+
+        DelegateCommand _saveCommand;
+
+        public DelegateCommand SaveCommand
+        {
+            get { return CreateCommand(ref _saveCommand, ExecuteSaveCommand, CanExecuteSaveCommand); }
+        }
+
+        void ExecuteSaveCommand()
+        {
+            //try
+            //{
+            //    // TODO: THIS IS THE OLD WAY!!!
+            //    byte[] encodedTextBytes = ModelState.Transient.FileModel.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
+
+            //    string fullPath = Path.Combine(ModelState.Transient.CurrentDirectoryName, ModelState.Transient.FileModel.Filename);
+            //    File.WriteAllBytes(fullPath, encodedTextBytes);
+
+            //    ModelState.Transient.FileModel.IsDirty = false;
+            //    UpdateWindowTitle();
+            //    UpdateStatusBar();
+            //    SaveCommand.RaiseCanExecuteChanged();
+            //}
+            //catch (Exception e)
+            //{
+            //    MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
+            //}
+        }
+
+        bool CanExecuteSaveCommand()
+        {
+            //if (!ModelState.Transient.FileModel.IsDirty && ModelState.Transient.FileModel.IsEncrypted
+            //    && ModelState.Transient.FileModel.IsFilenamePresent)
+            //    return true;
+            return false;
+        }
+
+        #endregion
+
+        #region SaveAsCommand
+
+        DelegateCommand _saveAsCommand;
+
+        public DelegateCommand SaveAsCommand
+        {
+            get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, CanExecuteSaveAsCommand); }
+        }
+
+        void ExecuteSaveAsCommand()
+        {
+
+            //var saveFileDialog = new SaveFileDialog
+            //{
+            //    InitialDirectory = ModelState.Transient.CurrentDirectoryName ?? ModelState.Defaults.DefaultDirectoryName,
+            //    FileName = ModelState.Transient.FileModel.Filename ?? Defaults.UntitledDotVisualCrypt,
+            //    DefaultExt = ".visualcrypt",
+            //    Filter = "VisualCrypt|*.visualcrypt; *.txt|Text|*.txt|All Files|*.*"
+            //};
+
+            //var result = saveFileDialog.ShowDialog();
+
+            //if (result == true)
+            //{
+            //    string fullPath = saveFileDialog.FileName;
+
+            //    try
+            //    {
+            //        ModelState.Transient.CurrentDirectoryName = Path.GetDirectoryName(fullPath);
+
+
+            //        byte[] encodedTextBytes = ModelState.Transient.FileModel.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
+
+            //        File.WriteAllBytes(fullPath, encodedTextBytes);
+
+            //        ModelState.Transient.FileModel.IsDirty = false;
+            //        UpdateWindowTitle();
+            //        UpdateStatusBar();
+            //        SaveCommand.RaiseCanExecuteChanged();
+            //    }
+            //    catch (Exception e)
+            //    {
+            //        MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
+            //    }
+            //}
+        }
+
+        bool CanExecuteSaveAsCommand()
+        {
+            return true;
+        }
+
+        #endregion
+
         #region ShowSetPasswordDialogCommand
 
         DelegateCommand _showSetPasswordDialogCommand;
@@ -434,7 +601,12 @@ namespace VisualCrypt.Desktop.Views
 
         void ExecuteShowSetPasswordDialogCommand()
         {
-            ShowSetPasswordDialog(SetPasswordDialogMode.Set);
+            if (PasswordManager.PasswordInfo.IsPasswordSet)
+                ShowSetPasswordDialog(SetPasswordDialogMode.Change);
+            else
+            {
+                ShowSetPasswordDialog(SetPasswordDialogMode.Set);
+            }
         }
 
 
@@ -443,31 +615,45 @@ namespace VisualCrypt.Desktop.Views
         /// </summary>
         bool ShowSetPasswordDialog(SetPasswordDialogMode setPasswordDialogMode)
         {
-            var setPassword = new SetPassword(setPasswordDialogMode, _messageBoxService)
+            var setPassword = new SetPassword(setPasswordDialogMode, _messageBoxService, _encryptionService)
             {
                 WindowStyle = WindowStyle.ToolWindow,
                 Owner = Application.Current.MainWindow
             };
             var okClicked = setPassword.ShowDialog();
-            if (true /*FileManager.FileModel.IsPasswordPresent*/)
-                TextBlockClearPasswordVisibility = Visibility.Visible;
-            /* else
-                TextBlockClearPasswordVisibility = Visibility.Collapsed;*/
-            OnPropertyChanged(() => PasswordStatus);
+
             return okClicked == true;
         }
 
         #endregion
 
-        public bool CanExecuteClearPasswordCommand()
+        #region ClearPasswordCommand
+
+        public DelegateCommand ClearPasswordCommand
         {
-            throw new NotImplementedException();
+            get { return CreateCommand(ref _clearPasswordCommand, ExecuteClearPasswordCommand, () => true); }
+        }
+        DelegateCommand _clearPasswordCommand;
+
+        void ExecuteClearPasswordCommand()
+        {
+            try
+            {
+                var clearPasswordResponse = _encryptionService.ClearPassword();
+                if (!clearPasswordResponse.Success)
+                {
+                    _messageBoxService.ShowError(clearPasswordResponse.Error);
+                    return;
+                }
+                PasswordManager.PasswordInfo.IsPasswordSet = false;
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e.Message);
+            }
         }
 
-        public void ExecuteClearPasswordCommand()
-        {
-            throw new NotImplementedException();
-        }
+        #endregion
 
         #region Private Methods
 
@@ -490,11 +676,11 @@ namespace VisualCrypt.Desktop.Views
                     "The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
                         RegionNames.EditorRegion));
 
-            var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
+            var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
             if (view == null)
             {
                 view = ServiceLocator.Current.GetInstance<IEditor>();
-                mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
+                mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
             }
             else
             {

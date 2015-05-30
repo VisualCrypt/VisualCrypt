@@ -10,5 +10,9 @@ namespace VisualCrypt.Desktop.Shared.Services
         /// Returns a clear text file or an encrypted file.
         /// </summary>
         Response<FileModelBase> OpenFile(string filename);
+
+        Response SetPassword(byte[] utf16LEPassword);
+
+        Response ClearPassword();
     }
 }

@@ -50,6 +50,9 @@ namespace VisualCrypt.Desktop.Shared.Files
         bool _isEncrypted;
 
 
+       
+
+
         public string Contents { get; protected set; }
 
         public Encoding SaveEncoding { get; protected set; }

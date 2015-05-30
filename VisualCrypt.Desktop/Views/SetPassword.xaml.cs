@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using VisualCrypt.Cryptography.Net.Tools;
-using VisualCrypt.Cryptography.Portable.Editor.Enums;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.Services;
 
@@ -12,22 +10,28 @@ namespace VisualCrypt.Desktop.Views
 {
     public sealed partial class SetPassword
     {
-        DelegateCommand _setPasswordCommand;
-        DelegateCommand _clearPasswordCommand;
         readonly IMessageBoxService _messageBoxService;
+        readonly IEncryptionService _encryptionService;
 
-        public SetPassword(SetPasswordDialogMode setPasswordDialogMode, IMessageBoxService messageBoxService)
+        public SetPassword(SetPasswordDialogMode setPasswordDialogMode, IMessageBoxService messageBoxService,
+            IEncryptionService encryptionService)
         {
             _messageBoxService = messageBoxService;
+            _encryptionService = encryptionService;
+
             InitializeComponent();
             DataContext = this;
-            
+
 
             switch (setPasswordDialogMode)
             {
                 case SetPasswordDialogMode.Set:
                     Title = "Set Password";
-                    ButtonOk.Content = "Set";
+                    ButtonOk.Content = "Set Password";
+                    break;
+                case SetPasswordDialogMode.Change:
+                    Title = "Change Password";
+                    ButtonOk.Content = "Change Password";
                     break;
                 case SetPasswordDialogMode.SetAndEncrypt:
                     Title = "Set Password & Encrypt";
@@ -39,8 +43,8 @@ namespace VisualCrypt.Desktop.Views
                     break;
             }
 
-            pwBox.Focus();
-            
+            PwBox.Focus();
+
             PreviewKeyDown += CloseWithEscape;
         }
 
@@ -49,6 +53,7 @@ namespace VisualCrypt.Desktop.Views
             if (e.Key == Key.Escape)
                 Close();
         }
+
 
         public DelegateCommand SetPasswordCommand
         {
@@ -61,29 +66,42 @@ namespace VisualCrypt.Desktop.Views
             }
         }
 
-        private void ExecuteSetPasswordCommand()
-        {
-           // var setPasswordResponse = FileManager.FileModel.SetPassword(pwBox.SecurePassword.ToUTF16ByteArray());
-            //if (!setPasswordResponse.Success)
-            //{
-            //    _messageBoxService.ShowError(MethodBase.GetCurrentMethod(), new Exception(setPasswordResponse.Error));
-            //    pwBox.Password = string.Empty;
-            //    pwBox2.Password = string.Empty;
-            //    return;
-            //}
+        DelegateCommand _setPasswordCommand;
 
-            pwBox.Password = string.Empty;
-            pwBox2.Password = string.Empty;
-            DialogResult = true;
-            Close();
+        void ExecuteSetPasswordCommand()
+        {
+            try
+            {
+                var setPasswordResponse = _encryptionService.SetPassword(PwBox.SecurePassword.ToUTF16ByteArray());
+                if (!setPasswordResponse.Success)
+                {
+                    PasswordManager.PasswordInfo.IsPasswordSet = false;
+                    _messageBoxService.ShowError(setPasswordResponse.Error);
+                    return;
+                }
+                PasswordManager.PasswordInfo.IsPasswordSet = true;
+                DialogResult = true;
+                Close();
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
+            }
+            finally
+            {
+                PwBox.Password = string.Empty;
+                PwBox2.Password = string.Empty;
+            }
         }
 
         bool CanExecuteSetPasswordCommand()
         {
-            if (pwBox.SecurePassword.IsEqualTo(pwBox2.SecurePassword))
+            if (PwBox.SecurePassword.IsEqualTo(PwBox2.SecurePassword))
                 return true;
             return false;
         }
+
+        DelegateCommand _clearPasswordCommand;
 
         public DelegateCommand ClearPasswordCommand
         {
@@ -96,19 +114,17 @@ namespace VisualCrypt.Desktop.Views
             }
         }
 
-        public SetPasswordDialogMode SetPasswordDialogMode { get; set; }
-
         void ExecuteClearPasswordCommand()
         {
-            pwBox.SecurePassword.Clear();
-            pwBox.Password = string.Empty;
-            pwBox2.SecurePassword.Clear();
-            pwBox2.Password = string.Empty;
+            PwBox.SecurePassword.Clear();
+            PwBox.Password = string.Empty;
+            PwBox2.SecurePassword.Clear();
+            PwBox2.Password = string.Empty;
         }
 
         bool CanExecuteClearPasswordCommand()
         {
-            if (pwBox.SecurePassword.Length > 0 || pwBox2.SecurePassword.Length > 0)
+            if (PwBox.SecurePassword.Length > 0 || PwBox2.SecurePassword.Length > 0)
             {
                 return true;
             }

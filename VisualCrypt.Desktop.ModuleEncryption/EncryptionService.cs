@@ -15,7 +15,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
     public class EncryptionService : IEncryptionService
     {
         readonly IVisualCryptAPIV2 _visualCryptApiv2;
-     
+
         public EncryptionService()
         {
             _visualCryptApiv2 = new VisualCryptAPIV2(new CoreAPIV2_Net4());
@@ -32,7 +32,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 
                 var rawBytesFromFile = File.ReadAllBytes(filename);
 
-                Response<string,Encoding> getStringResponse = _visualCryptApiv2.GetStringFromFileBytes(rawBytesFromFile, Encoding.Default);
+                Response<string, Encoding> getStringResponse = _visualCryptApiv2.GetStringFromFileBytes(rawBytesFromFile, Encoding.Default);
 
                 if (!getStringResponse.Success)  // we do not even have a string.
                 {
@@ -47,7 +47,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
                 if (decodeResponse.Success)
                 {
                     // it's VisualCrypt!
-                    var encryptedFileModel = new EncryptedFileModel(getStringResponse.Result, decodeResponse.Result,filename);
+                    var encryptedFileModel = new EncryptedFileModel(getStringResponse.Result, decodeResponse.Result, filename);
                     response.Result = encryptedFileModel;
 
                 }
@@ -60,6 +60,42 @@ namespace VisualCrypt.Desktop.ModuleEncryption
                 }
                 response.Success = true;
 
+            }
+            catch (Exception e)
+            {
+                response.Error = e.Message;
+            }
+            return response;
+        }
+
+        public Response SetPassword(byte[] utf16LEPassword)
+        {
+            var response = new Response();
+            try
+            {
+                var sha256Response = _visualCryptApiv2.CreateSHA256PW32(utf16LEPassword);
+                if (sha256Response.Success)
+                {
+                    KeyStore.SetSHA256PW32(sha256Response.Result);
+                    response.Success = true;
+                }
+                else
+                    response.Error = sha256Response.Error;
+            }
+            catch (Exception e)
+            {
+                response.Error = e.Message;
+            }
+            return response;
+        }
+
+        public Response ClearPassword()
+        {
+            var response = new Response();
+            try
+            {
+                KeyStore.Clear();
+                response.Success = true;
             }
             catch (Exception e)
             {
