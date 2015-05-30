@@ -2,6 +2,7 @@
 
 namespace VisualCrypt.Desktop.Shared.Events
 {
-
-    public class EditorReceivesText : PubSubEvent<string> { }
+	public class EditorReceivesText : PubSubEvent<string>
+	{
+	}
 }

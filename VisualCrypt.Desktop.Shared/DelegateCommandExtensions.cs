@@ -7,11 +7,11 @@ using Microsoft.Practices.Prism.Commands;
 
 namespace VisualCrypt.Desktop.Shared
 {
-    public static class DelegateCommandExtensions
-    {
-        public static DelegateCommand Create(DelegateCommand command)
-        {
-            return new DelegateCommand(null);
-        }
-    }
+	public static class DelegateCommandExtensions
+	{
+		public static DelegateCommand Create(DelegateCommand command)
+		{
+			return new DelegateCommand(null);
+		}
+	}
 }

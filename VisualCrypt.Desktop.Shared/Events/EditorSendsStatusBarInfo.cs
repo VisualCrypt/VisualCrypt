@@ -2,6 +2,7 @@
 
 namespace VisualCrypt.Desktop.Shared.Events
 {
-   
-    public class EditorSendsStatusBarInfo : PubSubEvent<string> { }
+	public class EditorSendsStatusBarInfo : PubSubEvent<string>
+	{
+	}
 }

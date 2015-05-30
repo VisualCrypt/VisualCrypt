@@ -4,15 +4,15 @@ using VisualCrypt.Desktop.Shared.Files;
 
 namespace VisualCrypt.Desktop.Shared.Services
 {
-    public interface IEncryptionService
-    {
-        /// <summary>
-        /// Returns a clear text file or an encrypted file.
-        /// </summary>
-        Response<FileModelBase> OpenFile(string filename);
+	public interface IEncryptionService
+	{
+		/// <summary>
+		/// Returns a clear text file or an encrypted file.
+		/// </summary>
+		Response<FileModelBase> OpenFile(string filename);
 
-        Response SetPassword(byte[] utf16LEPassword);
+		Response SetPassword(byte[] utf16LEPassword);
 
-        Response ClearPassword();
-    }
+		Response ClearPassword();
+	}
 }

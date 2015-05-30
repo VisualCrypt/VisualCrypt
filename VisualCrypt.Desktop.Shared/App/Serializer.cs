@@ -6,48 +6,48 @@ using System.Text;
 
 namespace VisualCrypt.Desktop.Shared.App
 {
-    public static class Serializer<T>
-    {
-        public static T Deserialize(string data)
-        {
-            if (string.IsNullOrEmpty(data))
-                return default(T);
+	public static class Serializer<T>
+	{
+		public static T Deserialize(string data)
+		{
+			if (string.IsNullOrEmpty(data))
+				return default(T);
 
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(data));
+			var stream = new MemoryStream(Encoding.UTF8.GetBytes(data));
 
-            var ser = new DataContractSerializer(typeof(T));
-            var options = (T)ser.ReadObject(stream);
-            return options;
-        }
+			var ser = new DataContractSerializer(typeof (T));
+			var options = (T) ser.ReadObject(stream);
+			return options;
+		}
 
-        public static T Deserialize(string data, IEnumerable<Type> knownTypes)
-        {
-            if (string.IsNullOrEmpty(data))
-                return default(T);
+		public static T Deserialize(string data, IEnumerable<Type> knownTypes)
+		{
+			if (string.IsNullOrEmpty(data))
+				return default(T);
 
-            var stream = new MemoryStream(Encoding.UTF8.GetBytes(data));
+			var stream = new MemoryStream(Encoding.UTF8.GetBytes(data));
 
-            var ser = new DataContractSerializer(typeof(T),knownTypes);
-            var options = (T)ser.ReadObject(stream);
-            return options;
-        }
+			var ser = new DataContractSerializer(typeof (T), knownTypes);
+			var options = (T) ser.ReadObject(stream);
+			return options;
+		}
 
-        public static string Serialize(T profile)
-        {
-            var stream = new MemoryStream();
-            var ser = new DataContractSerializer(typeof(T));
-            ser.WriteObject(stream, profile);
-            var serialized = Encoding.UTF8.GetString(stream.ToArray());
-            return serialized;
-        }
+		public static string Serialize(T profile)
+		{
+			var stream = new MemoryStream();
+			var ser = new DataContractSerializer(typeof (T));
+			ser.WriteObject(stream, profile);
+			var serialized = Encoding.UTF8.GetString(stream.ToArray());
+			return serialized;
+		}
 
-        public static string Serialize(T profile, IEnumerable<Type> knownTypes)
-        {
-            var stream = new MemoryStream();
-            var ser = new DataContractSerializer(typeof(T),knownTypes);
-            ser.WriteObject(stream, profile);
-            var serialized = Encoding.UTF8.GetString(stream.ToArray());
-            return serialized;
-        }
-    }
+		public static string Serialize(T profile, IEnumerable<Type> knownTypes)
+		{
+			var stream = new MemoryStream();
+			var ser = new DataContractSerializer(typeof (T), knownTypes);
+			ser.WriteObject(stream, profile);
+			var serialized = Encoding.UTF8.GetString(stream.ToArray());
+			return serialized;
+		}
+	}
 }

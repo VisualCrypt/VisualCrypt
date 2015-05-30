@@ -12,17 +12,24 @@
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="5" xml:space="preserve">Version:</TextBlock>
-                    <TextBlock Margin="5" Text="{Binding NotepadVersion}"></TextBlock>
+                    <TextBlock Margin="5" Text="{Binding NotepadVersion}" />
                 </StackPanel>
-                <TextBlock Margin="5" TextWrapping="Wrap"><Run Text="Copyright © 201"/><Run Text="5"/><Run Text=" "/><Run Text="VisualCrypt AG"/></TextBlock>
-                <TextBlock Margin="5" TextWrapping="Wrap">Warning: This computer program is protected by copyright law 
-                    and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.</TextBlock>
-             
-            </StackPanel>
-           
+                <TextBlock Margin="5" TextWrapping="Wrap">
+                    <Run Text="Copyright © 201" /><Run Text="5" /><Run Text=" " /><Run Text="VisualCrypt AG" />
+                </TextBlock>
+                <TextBlock Margin="5" TextWrapping="Wrap">
+                    Warning: This computer program is protected by copyright law
+                    and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted to the maximum extent possible under the law.
+                </TextBlock>
 
-                <Button DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right" Click="Button_Click" IsDefault="True">Ok</Button>
-            
+            </StackPanel>
+
+
+            <Button DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right" Click="Button_Click"
+                    IsDefault="True">
+                Ok
+            </Button>
+
         </DockPanel>
     </Grid>
 </Window>

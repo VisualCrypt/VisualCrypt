@@ -1,6 +1,6 @@
 ﻿namespace VisualCrypt.Desktop.Shared
 {
-    public interface IEditor
-    {
-    }
+	public interface IEditor
+	{
+	}
 }

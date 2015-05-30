@@ -2,30 +2,30 @@
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
-    public partial class GoTo
-    {
-        public GoTo(GoToViewModel goToWindowViewModel)
-        {
-            InitializeComponent();
+	public partial class GoTo
+	{
+		public GoTo(GoToViewModel goToWindowViewModel)
+		{
+			InitializeComponent();
 
-            DataContext = goToWindowViewModel;
+			DataContext = goToWindowViewModel;
 
-            TextBoxLineNo.Focus();
+			TextBoxLineNo.Focus();
 
-            PreviewKeyDown += CloseWithEscape;
+			PreviewKeyDown += CloseWithEscape;
 
-            goToWindowViewModel.CloseAction = Close;
-        }
+			goToWindowViewModel.CloseAction = Close;
+		}
 
-        void CloseWithEscape(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-                Close();
-        }
+		void CloseWithEscape(object sender, KeyEventArgs e)
+		{
+			if (e.Key == Key.Escape)
+				Close();
+		}
 
-        public void SelectAll()
-        {
-            TextBoxLineNo.SelectAll();
-        }
-    }
+		public void SelectAll()
+		{
+			TextBoxLineNo.SelectAll();
+		}
+	}
 }

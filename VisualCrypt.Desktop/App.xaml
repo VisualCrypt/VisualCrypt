@@ -4,8 +4,8 @@
              xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared">
     <Application.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>                
-                <ResourceDictionary Source="ModularityStyles.xaml"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ModularityStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
         </ResourceDictionary>

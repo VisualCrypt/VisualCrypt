@@ -4,66 +4,65 @@ using System.Text;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {
-    public class FileModelBase : INotifyPropertyChanged
-    {
+	public class FileModelBase : INotifyPropertyChanged
+	{
+		public virtual bool IsDirty
+		{
+			get { return _isDirty; }
+			set
+			{
+				if (true)
+				{
+					_isDirty = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 
-        public virtual bool IsDirty
-        {
-            get { return _isDirty; }
-            set
-            {
-                if (true)
-                {
-                    _isDirty = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        bool _isDirty;
+		bool _isDirty;
 
-        public string Filename
-        {
-            get { return _filename; }
-            protected set
-            {
-                if (_filename != value)
-                {
-                    _filename = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        string _filename;
+		public string Filename
+		{
+			get { return _filename; }
+			protected set
+			{
+				if (_filename != value)
+				{
+					_filename = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 
-        public bool IsEncrypted
-        {
-            get { return _isEncrypted; }
-            protected set
-            {
-                if (_isEncrypted != value)
-                {
-                    _isEncrypted = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        bool _isEncrypted;
+		string _filename;
 
+		public bool IsEncrypted
+		{
+			get { return _isEncrypted; }
+			protected set
+			{
+				if (_isEncrypted != value)
+				{
+					_isEncrypted = value;
+					OnPropertyChanged();
+				}
+			}
+		}
 
-       
-
-
-        public string Contents { get; protected set; }
-
-        public Encoding SaveEncoding { get; protected set; }
+		bool _isEncrypted;
 
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public string Contents { get; protected set; }
 
-        void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+		public Encoding SaveEncoding { get; protected set; }
+
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
 }

@@ -14,9 +14,8 @@
         WindowStartupLocation="CenterScreen"
         d:DataContext="{d:DesignInstance views:ShellViewModel}"
         AllowDrop="True"
-        Icon="/VisualCrypt;component/Images/WindowIcon.png"
-        >
-   <Window.InputBindings>
+        Icon="/VisualCrypt;component/Images/WindowIcon.png">
+    <Window.InputBindings>
         <!-- File -->
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewCommand}" />
         <KeyBinding Key="O" Modifiers="Control" Command="{Binding OpenCommand}" />
@@ -36,8 +35,8 @@
         <!-- View -->
         <!-- see Editorxaml.cs -->
         <!-- Help -->
-        <KeyBinding Key="F1"  Command="{Binding HelpCommand}" />
-        <KeyBinding Key="F1"  Modifiers="Shift" Command="{Binding AboutCommand}" />
+        <KeyBinding Key="F1" Command="{Binding HelpCommand}" />
+        <KeyBinding Key="F1" Modifiers="Shift" Command="{Binding AboutCommand}" />
         <KeyBinding Key="A" Modifiers="Shift" Command="{Binding LogCommand}" />
     </Window.InputBindings>
     <Grid AllowDrop="True">
@@ -48,23 +47,28 @@
         </Grid.RowDefinitions>
         <Menu Grid.Row="0" FontFamily="Segoe UI">
             <MenuItem Header="_File">
-                <MenuItem Header="_New" Command="{Binding NewCommand}"  InputGestureText="Ctrl+N" />
-                <MenuItem Header="_Open..." Command="{Binding OpenCommand}" InputGestureText="Ctrl+O"  />
+                <MenuItem Header="_New" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
+                <MenuItem Header="_Open..." Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
                 <MenuItem Header="_Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
-                <MenuItem Header="Save _As..." Command="{Binding SaveAsCommand}" InputGestureText="Control+Alt+S"/>
+                <MenuItem Header="Save _As..." Command="{Binding SaveAsCommand}" InputGestureText="Control+Alt+S" />
                 <Separator />
-                <MenuItem Header="_Export Clear Text..." Command="{Binding ExportCommand}" InputGestureText="F2"/>
-                <MenuItem Header="_Import with Encoding..." Command="{Binding ImportWithEncodingCommand}" InputGestureText="Shift+F2"/>
+                <MenuItem Header="_Export Clear Text..." Command="{Binding ExportCommand}" InputGestureText="F2" />
+                <MenuItem Header="_Import with Encoding..." Command="{Binding ImportWithEncodingCommand}"
+                          InputGestureText="Shift+F2" />
                 <Separator />
-                <MenuItem Header="_Print..." Command="commands:EditorCommands.Print" InputGestureText="Ctrl+Alt+P"/>
+                <MenuItem Header="_Print..." Command="commands:EditorCommands.Print" InputGestureText="Ctrl+Alt+P" />
                 <Separator />
                 <MenuItem Header="E_xit" Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="_VisualCrypt">
                 <!--<MenuItem Header="_Import Binary as Base64..." Command="{Binding ImportBinaryAsBase64Command}" />-->
-                <MenuItem Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}" Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
-                <MenuItem Header="_Encrypt Editor Contents" Command="{Binding EncryptEditorContentsCommand}" InputGestureText="Ctrl+E" />
-                <MenuItem Header="_Decrypt Editor Contents" Command="{Binding DecryptEditorContentsCommand}" InputGestureText="Ctrl+D" />
+                <MenuItem
+                    Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}"
+                    Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
+                <MenuItem Header="_Encrypt Editor Contents" Command="{Binding EncryptEditorContentsCommand}"
+                          InputGestureText="Ctrl+E" />
+                <MenuItem Header="_Decrypt Editor Contents" Command="{Binding DecryptEditorContentsCommand}"
+                          InputGestureText="Ctrl+D" />
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Undo" Command="Undo" CommandTarget="{Binding ElementName=TextBox1}" />
@@ -76,65 +80,83 @@
                 <Separator />
                 <MenuItem Header="_Find..." Command="commands:EditorCommands.Find" InputGestureText="Ctrl+F" />
                 <MenuItem Header="Find _Next" Command="commands:EditorCommands.FindNext" InputGestureText="F3" />
-                <MenuItem Header="Find _Previous" Command="commands:EditorCommands.FindPrevious" InputGestureText="Shift+F3" />
+                <MenuItem Header="Find _Previous" Command="commands:EditorCommands.FindPrevious"
+                          InputGestureText="Shift+F3" />
                 <MenuItem Header="_Replace..." Command="commands:EditorCommands.Replace" InputGestureText="Ctrl+H" />
-                <MenuItem Header="_Delete Line" Command="commands:EditorCommands.DeleteLine" InputGestureText="Shift+Del" />
-                <MenuItem Header="_Go To..." Command="commands:EditorCommands.GoTo" InputGestureText="Ctrl+G"  />
+                <MenuItem Header="_Delete Line" Command="commands:EditorCommands.DeleteLine"
+                          InputGestureText="Shift+Del" />
+                <MenuItem Header="_Go To..." Command="commands:EditorCommands.GoTo" InputGestureText="Ctrl+G" />
                 <Separator />
                 <MenuItem Header="Select _All" Command="SelectAll" CommandTarget="{Binding ElementName=TextBox1}" />
-                <MenuItem Header="_Insert Date, Time" Command="commands:EditorCommands.InsertDate" InputGestureText="F5, F5" />
+                <MenuItem Header="_Insert Date, Time" Command="commands:EditorCommands.InsertDate"
+                          InputGestureText="F5, F5" />
             </MenuItem>
             <MenuItem Header="F_ormat">
-                <MenuItem Header="_Word Wrap" IsCheckable="True" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay}"  
+                <MenuItem Header="_Word Wrap" IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay}"
                           InputGestureText="Ctrl+W" />
-                <MenuItem Header="Check Spe_lling" IsCheckable="True" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}" 
+                <MenuItem Header="Check Spe_lling" IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}"
                           InputGestureText="Ctrl+L" />
-                <MenuItem Header="_Font..." Command="commands:EditorCommands.Font"  InputGestureText="Ctrl+Alt+F" />
+                <MenuItem Header="_Font..." Command="commands:EditorCommands.Font" InputGestureText="Ctrl+Alt+F" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Header="_Status Bar" IsCheckable="True" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}" 
-                          InputGestureText="F12"/>
-                <MenuItem Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">
-                    <MenuItem Header="Zoom _in" InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn"/>
-                    <MenuItem Header="Zoom _out" InputGestureText="Ctrl -" Command="commands:EditorCommands.ZoomOut"/>
+                <MenuItem Header="_Status Bar" IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}"
+                          InputGestureText="F12" />
+                <MenuItem
+                    Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">
+                    <MenuItem Header="Zoom _in" InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn" />
+                    <MenuItem Header="Zoom _out" InputGestureText="Ctrl -" Command="commands:EditorCommands.ZoomOut" />
                     <Separator />
-                    <MenuItem Header="1_00%" InputGestureText="Ctrl+0" IsCheckable ="false" IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsZoom100Checked, Mode=OneWay}" 
-                              Command="commands:EditorCommands.Zoom100"/>
+                    <MenuItem Header="1_00%" InputGestureText="Ctrl+0" IsCheckable="false"
+                              IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsZoom100Checked, Mode=OneWay}"
+                              Command="commands:EditorCommands.Zoom100" />
                 </MenuItem>
             </MenuItem>
 
             <MenuItem Header="_Help">
-                <MenuItem Header="View _Help Online" Command="{Binding HelpCommand}"  InputGestureText="F1" />
-                <MenuItem Header="_About VisualCrypt Notepad" Command="{Binding AboutCommand}" InputGestureText="Shift+F1" />
+                <MenuItem Header="View _Help Online" Command="{Binding HelpCommand}" InputGestureText="F1" />
+                <MenuItem Header="_About VisualCrypt Notepad" Command="{Binding AboutCommand}"
+                          InputGestureText="Shift+F1" />
                 <MenuItem Header="Application _Log" Command="{Binding LogCommand}" InputGestureText="Shift+A" />
             </MenuItem>
         </Menu>
         <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static shared:RegionNames.EditorRegion}"
-                        VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" 
-                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
-                        />
-        <Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0" MinWidth="0" />
-        <DockPanel Grid.Row="2" Width="Auto" Height="20" Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}" >
+                        VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+        <Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0"
+                MinWidth="0" />
+        <DockPanel Grid.Row="2" Width="Auto" Height="20"
+                   Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <DockPanel.Resources>
-                <Style x:Key="X"  TargetType="TextBlock">
+                <Style x:Key="X" TargetType="TextBlock">
                     <Style.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Cursor" Value="Hand"/>
-                            <Setter Property="Foreground" Value="Red"/>
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Foreground" Value="Red" />
                         </Trigger>
                     </Style.Triggers>
                 </Style>
             </DockPanel.Resources>
-            <TextBlock DockPanel.Dock="Left" Margin="5,0"  Text="{Binding StatusBarText}" TextAlignment="Left" />
-            <TextBlock Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}" ToolTip="Clear Password   Ctrl+R" 
-                       DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold"  Foreground="#A5FF0000" 
-                       Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown"></TextBlock>
-            <TextBlock DockPanel.Dock="Right" Margin="5,0" Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}"></TextBlock>
+            <TextBlock DockPanel.Dock="Left" Margin="5,0" Text="{Binding StatusBarText}" TextAlignment="Left" />
+            <TextBlock
+                Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}"
+                ToolTip="Clear Password   Ctrl+R"
+                DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold" Foreground="#A5FF0000"
+                Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown" />
+            <TextBlock DockPanel.Dock="Right" Margin="5,0"
+                       Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}" />
             <TextBlock DockPanel.Dock="Right">
-                <Hyperlink Click="Hyperlink_SetPassword_Click" ToolTip="Ctrl+P"><TextBlock Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}"></TextBlock></Hyperlink>
+                <Hyperlink Click="Hyperlink_SetPassword_Click" ToolTip="Ctrl+P">
+                    <TextBlock
+                        Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}" />
+                </Hyperlink>
             </TextBlock>
-            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S"  MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown" Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}"></Image>
+            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S"
+                   MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown"
+                   Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}" />
         </DockPanel>
     </Grid>
 </Window>

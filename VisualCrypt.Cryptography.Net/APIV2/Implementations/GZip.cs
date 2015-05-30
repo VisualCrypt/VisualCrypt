@@ -4,50 +4,50 @@ using System.Text;
 
 namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 {
-    public class GZip
-    {
-        public static void CopyTo(Stream src, Stream dest)
-        {
-            byte[] bytes = new byte[4096];
+	public class GZip
+	{
+		public static void CopyTo(Stream src, Stream dest)
+		{
+			byte[] bytes = new byte[4096];
 
-            int cnt;
+			int cnt;
 
-            while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
-            {
-                dest.Write(bytes, 0, cnt);
-            }
-        }
+			while ((cnt = src.Read(bytes, 0, bytes.Length)) != 0)
+			{
+				dest.Write(bytes, 0, cnt);
+			}
+		}
 
-        public static byte[] Zip(string str)
-        {
-            var bytes = Encoding.UTF8.GetBytes(str);
+		public static byte[] Zip(string str)
+		{
+			var bytes = Encoding.UTF8.GetBytes(str);
 
-            using (var msi = new MemoryStream(bytes))
-            using (var mso = new MemoryStream())
-            {
-                using (var gs = new GZipStream(mso, CompressionMode.Compress))
-                {
-                    //msi.CopyTo(gs);
-                    CopyTo(msi, gs);
-                }
+			using (var msi = new MemoryStream(bytes))
+			using (var mso = new MemoryStream())
+			{
+				using (var gs = new GZipStream(mso, CompressionMode.Compress))
+				{
+					//msi.CopyTo(gs);
+					CopyTo(msi, gs);
+				}
 
-                return mso.ToArray();
-            }
-        }
+				return mso.ToArray();
+			}
+		}
 
-        public static string Unzip(byte[] bytes)
-        {
-            using (var msi = new MemoryStream(bytes))
-            using (var mso = new MemoryStream())
-            {
-                using (var gs = new GZipStream(msi, CompressionMode.Decompress))
-                {
-                    //gs.CopyTo(mso);
-                    CopyTo(gs, mso);
-                }
+		public static string Unzip(byte[] bytes)
+		{
+			using (var msi = new MemoryStream(bytes))
+			using (var mso = new MemoryStream())
+			{
+				using (var gs = new GZipStream(msi, CompressionMode.Decompress))
+				{
+					//gs.CopyTo(mso);
+					CopyTo(gs, mso);
+				}
 
-                return Encoding.UTF8.GetString(mso.ToArray());
-            }
-        }
-    }
+				return Encoding.UTF8.GetString(mso.ToArray());
+			}
+		}
+	}
 }

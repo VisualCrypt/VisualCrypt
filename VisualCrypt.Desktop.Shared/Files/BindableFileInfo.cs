@@ -3,48 +3,51 @@ using System.Runtime.CompilerServices;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {
-    public class BindableFileInfo : INotifyPropertyChanged
-    {
-        public bool IsDirty
-        {
-            get { return _isDirty; }
-            set
-            {
-                _isDirty = value;
-                OnPropertyChanged();
-            }
-        }
-        bool _isDirty;
+	public class BindableFileInfo : INotifyPropertyChanged
+	{
+		public bool IsDirty
+		{
+			get { return _isDirty; }
+			set
+			{
+				_isDirty = value;
+				OnPropertyChanged();
+			}
+		}
 
-        public string Filename
-        {
-            get { return _filename; }
-            set
-            {
-                _filename = value;
-                OnPropertyChanged();
-            }
-        }
-         string _filename;
+		bool _isDirty;
 
-        public bool IsEncrypted
-        {
-            get { return _isEncrypted; }
-            set
-            {
-                _isEncrypted = value;
-                OnPropertyChanged();
-            }
-        }
-        bool _isEncrypted;
+		public string Filename
+		{
+			get { return _filename; }
+			set
+			{
+				_filename = value;
+				OnPropertyChanged();
+			}
+		}
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		string _filename;
 
-        void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
+		public bool IsEncrypted
+		{
+			get { return _isEncrypted; }
+			set
+			{
+				_isEncrypted = value;
+				OnPropertyChanged();
+			}
+		}
+
+		bool _isEncrypted;
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+	}
 }

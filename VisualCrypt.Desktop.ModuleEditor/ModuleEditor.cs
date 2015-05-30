@@ -7,36 +7,36 @@ using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.ModuleEditor
 {
-    [ModuleExport(typeof (ModuleEditor), DependsOnModuleNames = new string[] {})]
-    public class ModuleEditor : IModule
-    {
-        readonly ILoggerFacade _logger;
-        readonly IModuleTracker _moduleTracker;
+	[ModuleExport(typeof (ModuleEditor), DependsOnModuleNames = new string[] {})]
+	public class ModuleEditor : IModule
+	{
+		readonly ILoggerFacade _logger;
+		readonly IModuleTracker _moduleTracker;
 
 
-        [ImportingConstructor]
-        public ModuleEditor(ILoggerFacade logger, IModuleTracker moduleTracker)
-        {
-            if (logger == null)
-            {
-                throw new ArgumentNullException("logger");
-            }
+		[ImportingConstructor]
+		public ModuleEditor(ILoggerFacade logger, IModuleTracker moduleTracker)
+		{
+			if (logger == null)
+			{
+				throw new ArgumentNullException("logger");
+			}
 
-            if (moduleTracker == null)
-            {
-                throw new ArgumentNullException("moduleTracker");
-            }
+			if (moduleTracker == null)
+			{
+				throw new ArgumentNullException("moduleTracker");
+			}
 
-            _logger = logger;
-            _moduleTracker = moduleTracker;
-            _moduleTracker.RecordModuleConstructed(ModuleNames.ModuleEditor);
-        }
+			_logger = logger;
+			_moduleTracker = moduleTracker;
+			_moduleTracker.RecordModuleConstructed(ModuleNames.ModuleEditor);
+		}
 
 
-        public void Initialize()
-        {
-            _logger.Log("ModuleEditor Initialize().", Category.Info, Priority.Medium);
-            _moduleTracker.RecordModuleInitialized(ModuleNames.ModuleEditor);
-        }
-    }
+		public void Initialize()
+		{
+			_logger.Log("ModuleEditor Initialize().", Category.Info, Priority.Medium);
+			_moduleTracker.RecordModuleInitialized(ModuleNames.ModuleEditor);
+		}
+	}
 }

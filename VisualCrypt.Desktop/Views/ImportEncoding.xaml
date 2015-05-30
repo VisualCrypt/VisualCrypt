@@ -10,17 +10,17 @@
     <Grid>
         <DockPanel Margin="20">
             <StackPanel DockPanel.Dock="Top">
-                    <TextBlock Margin="5" TextWrapping="Wrap">Use this when you see garbled characters when opening clear text files. This might happen when the file was created in another country.</TextBlock>
+                <TextBlock Margin="5" TextWrapping="Wrap">Use this when you see garbled characters when opening clear text files. This might happen when the file was created in another country.</TextBlock>
 
-                <TextBlock Margin="5" Text="The preselected Encoding is the default for your Windows version."></TextBlock>
+                <TextBlock Margin="5" Text="The preselected Encoding is the default for your Windows version." />
                 <ComboBox ItemsSource="{Binding AvailableEncodings}" SelectedItem="{Binding SelectedEncodingInfo}"
-                          DisplayMemberPath="DisplayName" d:DataContext="{d:DesignInstance views:ImportEncoding}"></ComboBox>
+                          DisplayMemberPath="DisplayName" d:DataContext="{d:DesignInstance views:ImportEncoding}" />
                 <TextBlock Margin="5" TextWrapping="Wrap">The selected import Encoding will be preserved when you use File / Export Clear Text, otherwise UTF-8 without BOM would be used for export.</TextBlock>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Right" HorizontalAlignment="Right">
-            <Button  Margin="5" HorizontalAlignment="Right" Click="ImportButton_Click" IsDefault="True">Import...</Button>
-            <Button DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right" Click="CancelButton_Click">Cancel</Button>
+                <Button Margin="5" HorizontalAlignment="Right" Click="ImportButton_Click" IsDefault="True">Import...</Button>
+                <Button DockPanel.Dock="Bottom" Margin="5" HorizontalAlignment="Right" Click="CancelButton_Click">Cancel</Button>
             </StackPanel>
         </DockPanel>
     </Grid>

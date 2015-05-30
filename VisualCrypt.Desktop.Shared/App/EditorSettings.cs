@@ -5,100 +5,106 @@ using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
 {
-    /// <summary>
-    /// Tracks the state of the editor. Some properties will be serialized, some not.
-    /// </summary>
-    [DataContract]
-    public sealed class EditorSettings : INotifyPropertyChanged
-    {
-        [DataMember]
-        public bool IsStatusBarChecked
-        {
-            get { return _isStatusBarChecked; }
-            set
-            {
-                _isStatusBarChecked = value;
-                OnPropertyChanged();
-                SettingsManager.SaveSettings();
-            }
-        }
-        bool _isStatusBarChecked;
+	/// <summary>
+	/// Tracks the state of the editor. Some properties will be serialized, some not.
+	/// </summary>
+	[DataContract]
+	public sealed class EditorSettings : INotifyPropertyChanged
+	{
+		[DataMember]
+		public bool IsStatusBarChecked
+		{
+			get { return _isStatusBarChecked; }
+			set
+			{
+				_isStatusBarChecked = value;
+				OnPropertyChanged();
+				SettingsManager.SaveSettings();
+			}
+		}
 
-        [DataMember]
-        public bool IsWordWrapChecked
-        {
-            get { return _isWordWrapChecked; }
-            set
-            {
-                _isWordWrapChecked = value;
-                OnPropertyChanged();
-                SettingsManager.SaveSettings();
-            }
-        }
-        bool _isWordWrapChecked;
+		bool _isStatusBarChecked;
 
-        [DataMember]
-        public bool IsSpellCheckingChecked
-        {
-            get { return _isSpellCheckingChecked; }
-            set
-            {
-                _isSpellCheckingChecked = value;
-                OnPropertyChanged();
-                SettingsManager.SaveSettings();
-            }
-        }
-        bool _isSpellCheckingChecked;
+		[DataMember]
+		public bool IsWordWrapChecked
+		{
+			get { return _isWordWrapChecked; }
+			set
+			{
+				_isWordWrapChecked = value;
+				OnPropertyChanged();
+				SettingsManager.SaveSettings();
+			}
+		}
 
-        [DataMember]
-        public int PrintMargin 
-        {
-            get { return _printMargin; }
-            set
-            {
-                _printMargin = value; 
-                OnPropertyChanged();
-                SettingsManager.SaveSettings();
-            }
-        }
-        int _printMargin;
+		bool _isWordWrapChecked;
 
-        [DataMember]
-        public FontSettings FontSettings { get; set; }
+		[DataMember]
+		public bool IsSpellCheckingChecked
+		{
+			get { return _isSpellCheckingChecked; }
+			set
+			{
+				_isSpellCheckingChecked = value;
+				OnPropertyChanged();
+				SettingsManager.SaveSettings();
+			}
+		}
 
-        public bool IsZoom100Checked
-        {
-            get { return _isZoom100Checked; }
-            set
-            {
-                _isZoom100Checked = value;
-                OnPropertyChanged();
-            }
-        }
-        bool _isZoom100Checked;
+		bool _isSpellCheckingChecked;
 
-        public string ZoomLevelMenuText
-        {
-            get { return _zoomLevelMenuText; }
-            set
-            {
-                _zoomLevelMenuText = value;
-                OnPropertyChanged();
-            }
-        }
-        string _zoomLevelMenuText;
+		[DataMember]
+		public int PrintMargin
+		{
+			get { return _printMargin; }
+			set
+			{
+				_printMargin = value;
+				OnPropertyChanged();
+				SettingsManager.SaveSettings();
+			}
+		}
 
-        #region INotifyPropertyChanged
+		int _printMargin;
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		[DataMember]
+		public FontSettings FontSettings { get; set; }
 
-        void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            var handler = PropertyChanged;
-            if (handler != null) 
-                handler(this, new PropertyChangedEventArgs(propertyName));
-        }
+		public bool IsZoom100Checked
+		{
+			get { return _isZoom100Checked; }
+			set
+			{
+				_isZoom100Checked = value;
+				OnPropertyChanged();
+			}
+		}
 
-        #endregion
-    }
+		bool _isZoom100Checked;
+
+		public string ZoomLevelMenuText
+		{
+			get { return _zoomLevelMenuText; }
+			set
+			{
+				_zoomLevelMenuText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		string _zoomLevelMenuText;
+
+		#region INotifyPropertyChanged
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			var handler = PropertyChanged;
+			if (handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
+		}
+
+		#endregion
+	}
 }
