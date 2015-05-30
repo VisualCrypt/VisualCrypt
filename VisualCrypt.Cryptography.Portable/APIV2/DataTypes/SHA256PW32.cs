@@ -16,7 +16,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
                 throw new ArgumentNullException("value");
 
             if (value.Length != 32)
-                throw new ArgumentOutOfRangeException("value", "The lenght must be 32 bytes.");
+                throw new ArgumentOutOfRangeException("value", "The length must be 32 bytes.");
 
             var allBytesZero = value.All(b => b == 0);
 

@@ -3,7 +3,7 @@
     public struct SearchResult
     {
         public int Index;
-        public int Lenght;
+        public int Length;
         public string Value;
     }
 }

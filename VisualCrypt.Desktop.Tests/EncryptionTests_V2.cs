@@ -75,7 +75,7 @@ namespace VisualCrypt.Desktop.Tests
                     throw new Exception(decodeResponse.Error);
 
                 Assert.IsTrue(decrpytedMessage.Equals(m), "The decrpyted message ('{0}') does not equal the original message".FormatInvariant(decrpytedMessage));
-                Console.WriteLine("Testing with m/pw lenght: " + m.Length + " Message: " + m);
+                Console.WriteLine("Testing with m/pw length: " + m.Length + " Message: " + m);
             }
         }
 

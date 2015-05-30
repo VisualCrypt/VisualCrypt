@@ -41,9 +41,9 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
             return new PaddedData(paddedDataBytes, requiredPadding);
         }
 
-        public IV16 GenerateIV(int lenght)
+        public IV16 GenerateIV(int length)
         {
-            var iv = new byte[lenght];
+            var iv = new byte[length];
 
             using (var rng = new RNGCryptoServiceProvider())
             {

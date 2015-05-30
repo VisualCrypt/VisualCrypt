@@ -99,7 +99,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             if (searchResult.HasValue)
             {
                 found = true;
-                SelectSearchResult(searchResult.Value.Index, searchResult.Value.Lenght);
+                SelectSearchResult(searchResult.Value.Index, searchResult.Value.Length);
             }
 
             if (!found && SearchOptions.UseRegEx == false)
@@ -142,7 +142,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
             if (searchResult.HasValue)
             {
-                var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Lenght);
+                var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
                 _textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
 
                 found = true;
@@ -184,7 +184,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
             if (searchResult.HasValue)
             {
-                var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Lenght);
+                var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
                 _textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
                 count++;
                 Pos = searchResult.Value.Index + ReplaceString.Length;
@@ -261,9 +261,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
         }
 
 
-        void SelectSearchResult(int indexInSourceText, int lenght)
+        void SelectSearchResult(int indexInSourceText, int length)
         {
-            _textBox1.Select(indexInSourceText, lenght);
+            _textBox1.Select(indexInSourceText, length);
         }
     }
 }
