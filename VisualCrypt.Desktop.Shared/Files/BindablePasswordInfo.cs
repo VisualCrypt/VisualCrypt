@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Microsoft.Practices.Prism.Mvvm;
 
 namespace VisualCrypt.Desktop.Shared.Files
@@ -23,6 +17,7 @@ namespace VisualCrypt.Desktop.Shared.Files
                 OnPropertyChanged(() => TextBlockClearPasswordVisibility);
                 OnPropertyChanged(() => PasswordStatus);
                 OnPropertyChanged(()=>HyperlinkPasswordText);
+                OnPropertyChanged(() => MenuPasswordText);
             }
         }
         bool _isPasswordSet;
