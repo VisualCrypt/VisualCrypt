@@ -154,7 +154,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
             return response;
         }
 
-        public Response<ClearText> Decrpyt(CipherV2 cipherV2, SHA256PW32 sha256PW32)
+        public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32)
         {
             var response = new Response<ClearText>();
 

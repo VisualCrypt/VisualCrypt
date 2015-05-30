@@ -77,7 +77,7 @@ namespace VisualCrypt.Desktop.Shared.Files
                 if (cipherV2 == null)
                     throw new ArgumentNullException("cipherV2");
 
-                var decryptResponse = _api.Decrpyt(cipherV2, _sha256PW32);
+                var decryptResponse = _api.Decrypt(cipherV2, _sha256PW32);
                 if (decryptResponse.Success)
                 {
                     IsEncrypted = false;

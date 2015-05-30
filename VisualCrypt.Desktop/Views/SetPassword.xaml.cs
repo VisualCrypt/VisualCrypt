@@ -34,7 +34,7 @@ namespace VisualCrypt.Desktop.Views
                     ButtonOk.Content = "Encrypt";
                     break;
                 case SetPasswordDialogMode.SetAndDecrypt:
-                    Title = "Set Password & Decrpyt";
+                    Title = "Set Password & Decrypt";
                     ButtonOk.Content = "Decrypt";
                     break;
             }

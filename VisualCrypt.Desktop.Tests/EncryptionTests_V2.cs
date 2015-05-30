@@ -57,24 +57,24 @@ namespace VisualCrypt.Desktop.Tests
                 else
                     throw new Exception(encryptResponse.Error);
 
-                // do the decrpytion
-                string decrpytedMessage;
+                // do the decryption
+                string decryptedMessage;
 
                 var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(visualCrypt);
 
                 if (decodeResponse.Success)
                 {
-                    var decryptResponse = _visualCryptAPI.Decrpyt(decodeResponse.Result,
+                    var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
                         hashPasswordResponse.Result);
                     if (decryptResponse.Success)
-                        decrpytedMessage = decryptResponse.Result.Value;
+                        decryptedMessage = decryptResponse.Result.Value;
                     else
                         throw new Exception(decryptResponse.Error);
                 }
                 else
                     throw new Exception(decodeResponse.Error);
 
-                Assert.IsTrue(decrpytedMessage.Equals(m), "The decrpyted message ('{0}') does not equal the original message".FormatInvariant(decrpytedMessage));
+                Assert.IsTrue(decryptedMessage.Equals(m), "The decrypted message ('{0}') does not equal the original message".FormatInvariant(decryptedMessage));
                 Console.WriteLine("Testing with m/pw length: " + m.Length + " Message: " + m);
             }
         }
@@ -110,16 +110,16 @@ namespace VisualCrypt.Desktop.Tests
                 // set a wrong password
                 hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Wrong Password");
 
-                // do the decrpytion
+                // do the decryption
                 var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(visualCrypt);
 
                 if (decodeResponse.Success)
                 {
-                    var decryptResponse = _visualCryptAPI.Decrpyt(decodeResponse.Result,
+                    var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
                         hashPasswordResponse.Result);
                     if (decryptResponse.Success)
                         Assert.Fail("decryptResponse.Success MUST NOT be true with wrong password!");
-                    Console.WriteLine("Cannot decrpyt with wrong password - OK!");
+                    Console.WriteLine("Cannot decrypt with wrong password - OK!");
                 }
                 else
                     throw new Exception(decodeResponse.Error);
