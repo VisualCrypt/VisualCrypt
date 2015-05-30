@@ -6,7 +6,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
     {
         Compressed Compress(ClearText clearText);
 
-        IV16 GenerateIV(int lenght);
+        IV16 GenerateIV(int length);
 
         PaddedData ApplyRandomPadding(Compressed compressed);
 

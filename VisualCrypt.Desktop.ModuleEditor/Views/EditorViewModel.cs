@@ -308,16 +308,16 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
                 // 2.) Is there a next line?
                 var isNextLine = _textBox1.LineCount > currentLineIndex + 1;
 
-                var currentLineLenght = _textBox1.GetLineLength(currentLineIndex);
-                if (currentLineLenght < 1)
+                var currentLineLength = _textBox1.GetLineLength(currentLineIndex);
+                if (currentLineLength < 1)
                     return;
 
 
                 var targetColIndex = 0;
                 if (isNextLine)
                 {
-                    var nextLineLenght = _textBox1.GetLineLength(currentLineIndex + 1);
-                    var nextLineIsAtLeastAsLongAsCurrentLine = nextLineLenght >= currentLineLenght;
+                    var nextLineLength = _textBox1.GetLineLength(currentLineIndex + 1);
+                    var nextLineIsAtLeastAsLongAsCurrentLine = nextLineLength >= currentLineLength;
 
                     if (nextLineIsAtLeastAsLongAsCurrentLine)
                     {
@@ -334,7 +334,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 
                 var firstPos = _textBox1.GetCharacterIndexFromLineIndex(currentLineIndex);
-                _textBox1.Text = _textBox1.Text.Remove(firstPos, currentLineLenght);
+                _textBox1.Text = _textBox1.Text.Remove(firstPos, currentLineLength);
 
 
                 var newPos = _textBox1.GetCharacterIndexFromLineIndex(currentLineIndex) + targetColIndex;

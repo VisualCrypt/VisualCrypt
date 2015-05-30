@@ -67,8 +67,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
                 var index = _textBox1.GetCharacterIndexFromLineIndex(_lineIndex);
                 _textBox1.CaretIndex = index;
-                var lineLenght = _textBox1.GetLineLength(_lineIndex);
-                SelectSearchResult(index, lineLenght);
+                var lineLength = _textBox1.GetLineLength(_lineIndex);
+                SelectSearchResult(index, lineLength);
                 CloseAction();
             }
 
@@ -78,9 +78,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
             }
         }
 
-        void SelectSearchResult(int indexInSourceText, int lenght)
+        void SelectSearchResult(int indexInSourceText, int length)
         {
-            _textBox1.Select(indexInSourceText, lenght);
+            _textBox1.Select(indexInSourceText, length);
             _textBox1.Focus();
         }
 

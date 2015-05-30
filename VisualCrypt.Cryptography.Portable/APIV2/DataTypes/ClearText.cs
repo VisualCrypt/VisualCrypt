@@ -4,9 +4,9 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 {
     public sealed class ClearText
     {
-        public const int MaxClearTextLenght = 1024 * 1024 * 10;
+        public const int MaxClearTextLength = 1024 * 1024 * 10;
 
-        public const int MinClearTextLenght = 0;
+        public const int MinClearTextLength = 0;
 
         /// <summary>
         /// The non-null DataBytes.
@@ -18,11 +18,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
             if (value == null)
                 throw new ArgumentNullException("value");
 
-            if (value.Length > MaxClearTextLenght)
+            if (value.Length > MaxClearTextLength)
                 throw new ArgumentOutOfRangeException("value", "Text too long.");
 
-            if (value.Length < MinClearTextLenght)
-                throw new ArgumentOutOfRangeException("value", string.Format("Text with a lenght shorter than {0} is not supported.", MinClearTextLenght));
+            if (value.Length < MinClearTextLength)
+                throw new ArgumentOutOfRangeException("value", string.Format("Text with a length shorter than {0} is not supported.", MinClearTextLength));
 
             Value = value;
         }

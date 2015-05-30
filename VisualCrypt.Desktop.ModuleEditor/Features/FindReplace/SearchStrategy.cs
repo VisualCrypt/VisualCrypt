@@ -20,7 +20,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Features.FindReplace
             {
                 Value = match.Value,
                 Index = match.Index,
-                Lenght = match.Length,
+                Length = match.Length,
             };
             return searchResult;
         }
