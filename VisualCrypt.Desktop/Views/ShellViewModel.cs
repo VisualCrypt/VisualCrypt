@@ -451,8 +451,8 @@ namespace VisualCrypt.Desktop.Views
             var okClicked = setPassword.ShowDialog();
             if (true /*FileManager.FileModel.IsPasswordPresent*/)
                 TextBlockClearPasswordVisibility = Visibility.Visible;
-            else
-                TextBlockClearPasswordVisibility = Visibility.Collapsed;
+            /* else
+                TextBlockClearPasswordVisibility = Visibility.Collapsed;*/
             OnPropertyChanged(() => PasswordStatus);
             return okClicked == true;
         }
