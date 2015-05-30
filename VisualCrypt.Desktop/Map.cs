@@ -19,10 +19,10 @@ namespace VisualCrypt.Desktop
                 throw new ArgumentNullException("destination");
 
             PropertyInfo[] sourceProperties = source.GetType().GetProperties();
-            PropertyInfo[] destionationProperties = destination.GetType().GetProperties();
+            PropertyInfo[] destinationProperties = destination.GetType().GetProperties();
 
             var commonProperties = from sp in sourceProperties
-                                   join dp in destionationProperties
+                                   join dp in destinationProperties
                                        on new { sp.Name, sp.PropertyType }
                                        equals
                                        new { dp.Name, dp.PropertyType }
@@ -33,7 +33,5 @@ namespace VisualCrypt.Desktop
                 match.dp.SetValue(destination, match.sp.GetValue(source, null), null);
             }
         }
-
-      
     }
 }
