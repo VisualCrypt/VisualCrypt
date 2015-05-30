@@ -76,14 +76,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\EditorCommands.cs" />
+    <Compile Include="DelegateCommandExtensions.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
     <Compile Include="Events\EditorReceivesText.cs" />
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Files\BindableFileInfo.cs" />
+    <Compile Include="Files\BindablePasswordInfo.cs" />
     <Compile Include="Files\CleartextFileModel.cs" />
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="Files\FileModelBase.cs" />
+    <Compile Include="Files\PasswordManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEditor.cs" />
     <Compile Include="IModuleTracker.cs" />

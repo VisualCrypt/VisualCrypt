@@ -69,8 +69,8 @@ namespace VisualCrypt.Desktop.Views
         {
             // This was in TextBox1_PreviewKeyDown, does this still work?
             if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                && ViewModel.CanExecuteClearPasswordCommand())
-                ViewModel.ExecuteClearPasswordCommand();
+                && ViewModel.ClearPasswordCommand.CanExecute())
+                ViewModel.ClearPasswordCommand.Execute();
 
             if (e.Key == Key.F12)
                 SettingsManager.EditorSettings.IsStatusBarChecked = !SettingsManager.EditorSettings.IsStatusBarChecked;
@@ -166,25 +166,22 @@ namespace VisualCrypt.Desktop.Views
 
 
 
-        //void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
-        //{
-        //    if (_shellViewModel.ShowSetPasswordDialogCommand.CanExecute())
-        //        _shellViewModel.ShowSetPasswordDialogCommand.Execute();
-        //}
-
-        //void TextBlock_ClearPassword_MouseDown(object sender, MouseButtonEventArgs e)
-        //{
-        //    if(_shellViewModel.ClearPasswordCommand.CanExecute())
-        //        _shellViewModel.ClearPasswordCommand.Execute();
-        //}
-        private void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
+        void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Hyperlink_SetPassword_Click");
+            if (ViewModel.ShowSetPasswordDialogCommand.CanExecute())
+                ViewModel.ShowSetPasswordDialogCommand.Execute();
         }
 
-        private void TextBlock_ClearPassword_MouseDown(object sender, MouseButtonEventArgs e)
+        void TextBlock_ClearPassword_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("TextBlock_ClearPassword_MouseDown");
+            if (ViewModel.ClearPasswordCommand.CanExecute())
+                ViewModel.ClearPasswordCommand.Execute();
+        }
+
+        void Image_IsDirty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (ViewModel.SaveCommand.CanExecute())
+                ViewModel.SaveCommand.CanExecute();
         }
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace VisualCrypt.Cryptography.Portable.Editor.Enums
+﻿namespace VisualCrypt.Desktop.Views
 {
-    public enum SetPasswordDialogMode { Set, SetAndEncrypt, SetAndDecrypt}
+    public enum SetPasswordDialogMode
+    {
+        Set, Change, SetAndEncrypt, SetAndDecrypt
+    }
 }
