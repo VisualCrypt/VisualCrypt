@@ -6,6 +6,8 @@
 		Change,
 		SetAndEncrypt,
 		SetAndDecrypt,
-		SetAndEncryptAndSave
+		SetAndEncryptAndSave,
+		SetAndDecryptLoadedFile,
+		CorrectPassword
 	}
 }

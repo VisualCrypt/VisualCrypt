@@ -4,6 +4,7 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
+using System.Windows.Navigation;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
@@ -343,17 +344,38 @@ namespace VisualCrypt.Desktop.Views
 				else
 					_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
 
-				if (FileManager.FileModel.IsEncrypted)
-				{
-					MessageBox.Show("We loaded an encryted file - we should offer decryption now.");
-					//DecryptEditorContentsCommand.Execute();
-					//_eventAggregator.GetEvent<EditorShouldSendText>().Publish( s=>
-					//{
-					//    MessageBox.Show(s);
-					//    ;
+				// if the loaded file was cleartext we are all done
+				if (!FileManager.FileModel.IsEncrypted)
+					return;
 
-					//});
+				// if it's encrypted, check if we have SOME password
+				// TODO: use async to make sure the contents loaded is already visible
+				if (!PasswordManager.PasswordInfo.IsPasswordSet)
+				{
+					bool result = ShowSetPasswordDialog(SetPasswordDialogMode.SetAndDecryptLoadedFile);
+					if (result == false)
+						return; // The user prefers to look at the cipher!
 				}
+
+			tryDecryptLoadFileWithCurrentPassword:
+				// We have a password, but we don't know if it's the right one. We must try!
+				var decryptForDisplayResult = _encryptionService.DecryptForDisplay(FileManager.FileModel, FileManager.FileModel.VisualCryptText);
+				if (decryptForDisplayResult.Success)
+				{
+					// we were lucky, the password we have is correct!
+					FileManager.FileModel = decryptForDisplayResult.Result;  // do this before pushing the text to the editor
+					_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
+					UpdateCanExecuteChanged();
+					return; // exit from this goto-loop!
+				}
+				// As we tested that it's valid VisualCrypt in the open routine, we can assume we are here because
+				// the password was wrong. So we ask the user again..:
+				bool result2 = ShowSetPasswordDialog(SetPasswordDialogMode.CorrectPassword);
+				if (result2 == false)
+					return; // The user prefers to look at the cipher!
+				// We have another password, from the user, we try again!
+				goto tryDecryptLoadFileWithCurrentPassword;
+
 			}
 			catch (Exception e)
 			{
@@ -443,7 +465,7 @@ namespace VisualCrypt.Desktop.Views
 
 		#endregion
 
-		
+
 
 		#region DecryptEditorContentsCommand
 
@@ -599,7 +621,7 @@ namespace VisualCrypt.Desktop.Views
 					throw new Exception(encryptAndSaveFileResponse.Error);
 				}
 			});
-			
+
 			// We are done with successful saving. Show that we did encrypt the text:
 			_eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
 			// Redisplay the clear text, to allow continue editing.
@@ -608,7 +630,7 @@ namespace VisualCrypt.Desktop.Views
 			_eventAggregator.GetEvent<EditorReceivesText>().Publish(clearTextBackup);
 
 			UpdateCanExecuteChanged();
-			
+
 		}
 
 		string GetFilenameSafe(string pathString)

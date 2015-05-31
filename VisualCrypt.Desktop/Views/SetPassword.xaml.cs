@@ -45,6 +45,14 @@ namespace VisualCrypt.Desktop.Views
 					Title = "Set Password, Encrypt and Save";
 					ButtonOk.Content = "Encrypt and Save";
 					break;
+				case SetPasswordDialogMode.SetAndDecryptLoadedFile:
+					Title = "Enter password to decrypt loaded file";
+					ButtonOk.Content = "Decrypt loaded file";
+					break;
+				case SetPasswordDialogMode.CorrectPassword:
+					Title = "The current password is not correct";
+					ButtonOk.Content = "Change Password and decrypt";
+					break;
 			}
 
 			PwBox.Focus();
