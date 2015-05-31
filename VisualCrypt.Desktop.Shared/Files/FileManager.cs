@@ -5,10 +5,10 @@ namespace VisualCrypt.Desktop.Shared.Files
 	public static class FileManager
 	{
 		public static readonly BindableFileInfo BindableFileInfo = new BindableFileInfo();
-		static FileModelBase _fileModel = new CleartextFileModel();
+		static FileModel _fileModel = FileModel.EmptyCleartext();
 
 
-		public static FileModelBase FileModel
+		public static FileModel FileModel
 		{
 			get { return _fileModel; }
 			set
@@ -25,7 +25,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		static void _fileModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			var fileModel = (FileModelBase) sender;
+			var fileModel = (FileModel) sender;
 			switch (e.PropertyName)
 			{
 				case "IsDirty":

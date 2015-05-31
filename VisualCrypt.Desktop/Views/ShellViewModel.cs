@@ -119,8 +119,8 @@ namespace VisualCrypt.Desktop.Views
 		{
 			if (!ConfirmToDiscardText())
 				return;
-			FileManager.FileModel = new CleartextFileModel();
-			_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
+			FileManager.FileModel = FileModel.EmptyCleartext();
+			_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
 		}
 
 		#endregion
@@ -161,9 +161,8 @@ namespace VisualCrypt.Desktop.Views
 					if (openFileDialog.ShowDialog() == true)
 					{
 						string importedString = File.ReadAllText(openFileDialog.FileName, selectedEncoding);
-						FileManager.FileModel = new CleartextFileModel(importedString, selectedEncoding,
-							Path.GetFileName(openFileDialog.FileName));
-						_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
+						FileManager.FileModel = FileModel.Cleartext(openFileDialog.FileName, importedString, selectedEncoding);
+						_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
 					}
 				}
 			}
@@ -181,7 +180,7 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand ExportCommand
 		{
-			get { return CreateCommand(ref _exportCommand, ExecuteExportCommand, () => true); }
+			get { return CreateCommand(ref _exportCommand, ExecuteExportCommand, () => !FileManager.FileModel.IsEncrypted); }
 		}
 
 		void ExecuteExportCommand()
@@ -251,7 +250,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.HelpUrl}};
+				var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } };
 				process.Start();
 			}
 			catch (Exception e)
@@ -273,7 +272,7 @@ namespace VisualCrypt.Desktop.Views
 
 		void ExecuteAboutCommand()
 		{
-			var aboutDialog = new About {WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow};
+			var aboutDialog = new About { WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow };
 			aboutDialog.ShowDialog();
 		}
 
@@ -339,11 +338,14 @@ namespace VisualCrypt.Desktop.Views
 				FileManager.FileModel = openFileResponse.Result;
 				SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
-				_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.Contents);
-
+				if (FileManager.FileModel.IsEncrypted)
+					_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.VisualCryptText);
+				else
+					_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
 
 				if (FileManager.FileModel.IsEncrypted)
 				{
+					MessageBox.Show("We loaded an encryted file - we should offer decryption now.");
 					//DecryptEditorContentsCommand.Execute();
 					//_eventAggregator.GetEvent<EditorShouldSendText>().Publish( s=>
 					//{
@@ -415,24 +417,33 @@ namespace VisualCrypt.Desktop.Views
 					if (result == false)
 						return;
 				}
-				// Clear Undo stack and disable Undo
-				//_mainWindow.TextBox1.IsUndoEnabled = false;
+				_eventAggregator.GetEvent<EditorShouldSendText>().Publish(textBufferContents =>
+				{
+					var createEncryptedFileResponse = _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents);
+					if (createEncryptedFileResponse.Success)
+					{
+						FileManager.FileModel = createEncryptedFileResponse.Result;  // do this before pushing the text to the editor
+						_eventAggregator.GetEvent<EditorReceivesText>().Publish(createEncryptedFileResponse.Result.VisualCryptText);
+						UpdateCanExecuteChanged();
+					}
+					else
+					{
+						_messageBoxService.ShowError(createEncryptedFileResponse.Error);
+					}
+				});
 
-				// do the encryption
-				// var encryptResponse = ModelState.Transient.FileModel.Encrypt(new ClearText(_mainWindow.TextBox1.Text));
-
-				//if (!encryptResponse.Success)
-				//    throw new Exception(encryptResponse.Error);
-
-				//SetTextAndUpdateAllWithoutUndo(encryptResponse.Result.Value);
 			}
 			catch (Exception e)
 			{
-				//MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
+				_messageBoxService.ShowError(e);
 			}
 		}
 
+
+
 		#endregion
+
+		
 
 		#region DecryptEditorContentsCommand
 
@@ -452,34 +463,31 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				//var decodeResponse =
-				//    _visualCryptAPI.TryDecodeVisualCryptText(new VisualCryptText(_mainWindow.TextBox1.Text));
+				if (!PasswordManager.PasswordInfo.IsPasswordSet)
+				{
+					bool result = ShowSetPasswordDialog(SetPasswordDialogMode.SetAndDecrypt);
+					if (result == false)
+						return;
+				}
+				_eventAggregator.GetEvent<EditorShouldSendText>().Publish(textBufferContents =>
+				{
+					var decryptForDisplayResult = _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents);
+					if (decryptForDisplayResult.Success)
+					{
+						FileManager.FileModel = decryptForDisplayResult.Result;  // do this before pushing the text to the editor
+						_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
+						UpdateCanExecuteChanged();
+					}
+					else
+					{
+						_messageBoxService.ShowError(decryptForDisplayResult.Error);
+					}
+				});
 
-				//if (!decodeResponse.Success)
-				//{
-				//    MessageBoxService.ShowError(decodeResponse.Error);
-				//    return;
-				//}
-				//if (!ModelState.Transient.FileModel.IsPasswordPresent)
-				//{
-				//    if (!ShowSetPasswordDialog(SetPasswordDialogMode.SetAndDecrypt))
-				//        return;
-				//    ExecuteDecryptEditorContentsCommand(); // loop!
-				//}
-				//else
-				//{
-				//    var decrpytResponse = ModelState.Transient.FileModel.Decrypt(decodeResponse.Result);
-				//    if (!decrpytResponse.Success)
-				//    {
-				//        MessageBoxService.ShowError(decrpytResponse.Error);
-				//        return;
-				//    }
-				//    SetTextAndUpdateAllWithoutUndo(decrpytResponse.Result.Value);
-				//}
 			}
 			catch (Exception e)
 			{
-				//MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
+				_messageBoxService.ShowError(e);
 			}
 		}
 
@@ -491,36 +499,128 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand SaveCommand
 		{
-			get { return CreateCommand(ref _saveCommand, ExecuteSaveCommand, CanExecuteSaveCommand); }
+			get { return CreateCommand(ref _saveCommand, ExecuteSaveCommand, () => true); }
 		}
 
 		void ExecuteSaveCommand()
 		{
-			//try
-			//{
-			//    // TODO: THIS IS THE OLD WAY!!!
-			//    byte[] encodedTextBytes = ModelState.Transient.FileModel.SaveEncoding.GetBytes(_mainWindow.TextBox1.Text);
-
-			//    string fullPath = Path.Combine(ModelState.Transient.CurrentDirectoryName, ModelState.Transient.FileModel.Filename);
-			//    File.WriteAllBytes(fullPath, encodedTextBytes);
-
-			//    ModelState.Transient.FileModel.IsDirty = false;
-			//    UpdateWindowTitle();
-			//    UpdateStatusBar();
-			//    SaveCommand.RaiseCanExecuteChanged();
-			//}
-			//catch (Exception e)
-			//{
-			//    MessageBoxService.ShowError(MethodBase.GetCurrentMethod(), e);
-			//}
+			ExecuteSaveCommandsCommon(false);
 		}
 
-		bool CanExecuteSaveCommand()
+		void ExecuteSaveCommandsCommon(bool isSaveAs)
 		{
-			//if (!ModelState.Transient.FileModel.IsDirty && ModelState.Transient.FileModel.IsEncrypted
-			//    && ModelState.Transient.FileModel.IsFilenamePresent)
-			//    return true;
-			return false;
+			try
+			{
+				// This is the simple case, we can 'just save'.
+				if (FileManager.FileModel.IsEncrypted && !isSaveAs && FileManager.FileModel.CheckFilenameForQuickSave())
+				{
+					var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
+					if (!response.Success)
+						throw new Exception(response.Error);
+					FileManager.FileModel.IsDirty = false;
+				}
+				// This is the case where we need a new filename and can then also 'just save'.
+				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave()))
+				{
+
+					var saveFileDialog = new SaveFileDialog
+					{
+						InitialDirectory = SettingsManager.CurrentDirectoryName,
+						FileName = GetFilenameSafe(FileManager.FileModel.Filename),
+						DefaultExt = ".visualcrypt",
+						Filter = "VisualCrypt|*.visualcrypt; *.txt|Text|*.txt|All Files|*.*"
+					};
+
+					if (saveFileDialog.ShowDialog() == true)
+					{
+						FileManager.FileModel.Filename = saveFileDialog.FileName;
+						var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
+						if (!response.Success)
+							throw new Exception(response.Error);
+						FileManager.FileModel.IsDirty = false;
+					}
+				}
+				// And in that case we need a different strategy: Encrypt and THEN save.
+				else
+				{
+					if (FileManager.FileModel.IsEncrypted)
+						throw new InvalidOperationException("We assert confusion!");
+					EncryptAndThenSave(isSaveAs);
+				}
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e);
+			}
+
+		}
+
+		void EncryptAndThenSave(bool isSaveAs)
+		{
+			// We have been called from Save/SaveAs because the file is not encrypted yet.
+			// We are still in a try/catch block
+
+			// To encrypt and then save, we must sure we have a password:
+			if (!PasswordManager.PasswordInfo.IsPasswordSet)
+			{
+				bool result = ShowSetPasswordDialog(SetPasswordDialogMode.SetAndEncryptAndSave);
+				if (result == false)
+					return;
+			}
+			// Then we must sure we have the file name:
+			if (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave())
+			{
+				var saveFileDialog = new SaveFileDialog
+				{
+					InitialDirectory = SettingsManager.CurrentDirectoryName,
+					FileName = GetFilenameSafe(FileManager.FileModel.Filename),
+					DefaultExt = ".visualcrypt",
+					Filter = "VisualCrypt|*.visualcrypt; *.txt|Text|*.txt|All Files|*.*"
+				};
+
+				if (saveFileDialog.ShowDialog() != true)
+					return;
+				FileManager.FileModel.Filename = saveFileDialog.FileName;
+			}
+			// No we have password and filename, we can now encrypt and save in one step.
+			// We will not replace FileManager.FileModel because we continue editing the same cleartext.
+			string clearTextBackup = null;
+			string visualCryptTextSaved = null;
+			_eventAggregator.GetEvent<EditorShouldSendText>().Publish(textBufferContents =>
+			{
+				clearTextBackup = textBufferContents;
+				var encryptAndSaveFileResponse = _encryptionService.EncryptAndSaveFile(FileManager.FileModel, textBufferContents);
+				if (encryptAndSaveFileResponse.Success)
+				{
+					visualCryptTextSaved = encryptAndSaveFileResponse.Result;
+				}
+				else
+				{
+					throw new Exception(encryptAndSaveFileResponse.Error);
+				}
+			});
+			
+			// We are done with successful saving. Show that we did encrypt the text:
+			_eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
+			// Redisplay the clear text, to allow continue editing.
+			FileManager.FileModel.IsDirty = false;
+
+			_eventAggregator.GetEvent<EditorReceivesText>().Publish(clearTextBackup);
+
+			UpdateCanExecuteChanged();
+			
+		}
+
+		string GetFilenameSafe(string pathString)
+		{
+			try
+			{
+				return Path.GetFileName(pathString);
+			}
+			catch (Exception)
+			{
+				return Constants.UntitledDotVisualCrypt;
+			}
 		}
 
 		#endregion
@@ -531,11 +631,35 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand SaveAsCommand
 		{
-			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, CanExecuteSaveAsCommand); }
+			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () => true); }
 		}
 
 		void ExecuteSaveAsCommand()
 		{
+			ExecuteSaveCommandsCommon(true);
+			return;
+			try
+			{
+				//var saveFileDialog = new SaveFileDialog
+				//{
+				//    InitialDirectory = ModelState.Transient.CurrentDirectoryName ?? ModelState.Defaults.DefaultDirectoryName,
+				//    FileName = ModelState.Transient.FileModel.Filename ?? Defaults.UntitledDotVisualCrypt,
+				//    DefaultExt = ".visualcrypt",
+				//    Filter = "VisualCrypt|*.visualcrypt; *.txt|Text|*.txt|All Files|*.*"
+				//};
+
+				//var result = saveFileDialog.ShowDialog();
+
+				//if (result == true)
+				//{
+				//    string fullPath = saveFileDialog.FileName;
+
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e);
+			}
+
 			//var saveFileDialog = new SaveFileDialog
 			//{
 			//    InitialDirectory = ModelState.Transient.CurrentDirectoryName ?? ModelState.Defaults.DefaultDirectoryName,
@@ -571,10 +695,7 @@ namespace VisualCrypt.Desktop.Views
 			//}
 		}
 
-		bool CanExecuteSaveAsCommand()
-		{
-			return true;
-		}
+
 
 		#endregion
 
@@ -644,7 +765,15 @@ namespace VisualCrypt.Desktop.Views
 
 		#endregion
 
-		#region Private Methods
+		#region private methods
+
+		void UpdateCanExecuteChanged()
+		{
+			// TODO: many more Commands, like Replace must be updated
+			_exportCommand.RaiseCanExecuteChanged();
+			_encryptEditorContentsCommand.RaiseCanExecuteChanged();
+			_decryptEditorContentsCommand.RaiseCanExecuteChanged();
+		}
 
 		bool ConfirmToDiscardText()
 		{
@@ -665,11 +794,11 @@ namespace VisualCrypt.Desktop.Views
 					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
 						RegionNames.EditorRegion));
 
-			var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
+			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
 			if (view == null)
 			{
 				view = ServiceLocator.Current.GetInstance<IEditor>();
-				mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
+				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
 			}
 			else
 			{

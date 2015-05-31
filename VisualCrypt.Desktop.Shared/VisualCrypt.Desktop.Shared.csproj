@@ -83,9 +83,8 @@
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Files\BindableFileInfo.cs" />
     <Compile Include="Files\BindablePasswordInfo.cs" />
-    <Compile Include="Files\CleartextFileModel.cs" />
     <Compile Include="Files\FileManager.cs" />
-    <Compile Include="Files\FileModelBase.cs" />
+    <Compile Include="Files\FileModel.cs" />
     <Compile Include="Files\PasswordManager.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IEditor.cs" />

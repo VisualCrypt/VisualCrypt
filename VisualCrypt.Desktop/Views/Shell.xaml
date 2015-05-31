@@ -65,9 +65,9 @@
                 <MenuItem
                     Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}"
                     Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
-                <MenuItem Header="_Encrypt Editor Contents" Command="{Binding EncryptEditorContentsCommand}"
+                <MenuItem Header="_Encrypt Editor ClearTextContents" Command="{Binding EncryptEditorContentsCommand}"
                           InputGestureText="Ctrl+E" />
-                <MenuItem Header="_Decrypt Editor Contents" Command="{Binding DecryptEditorContentsCommand}"
+                <MenuItem Header="_Decrypt Editor ClearTextContents" Command="{Binding DecryptEditorContentsCommand}"
                           InputGestureText="Ctrl+D" />
             </MenuItem>
             <MenuItem Header="_Edit">

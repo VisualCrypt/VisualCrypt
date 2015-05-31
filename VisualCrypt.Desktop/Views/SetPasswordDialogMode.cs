@@ -5,6 +5,7 @@
 		Set,
 		Change,
 		SetAndEncrypt,
-		SetAndDecrypt
+		SetAndDecrypt,
+		SetAndEncryptAndSave
 	}
 }

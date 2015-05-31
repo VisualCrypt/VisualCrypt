@@ -69,10 +69,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EncryptedFileModel.cs" />
     <Compile Include="EncryptionService.cs" />
     <Compile Include="KeyStore.cs" />
-    <Compile Include="VisualCryptFileModel.cs" />
     <Compile Include="ModuleEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -41,6 +41,10 @@ namespace VisualCrypt.Desktop.Views
 					Title = "Set Password & Decrypt";
 					ButtonOk.Content = "Decrypt";
 					break;
+				case SetPasswordDialogMode.SetAndEncryptAndSave:
+					Title = "Set Password, Encrypt and Save";
+					ButtonOk.Content = "Encrypt and Save";
+					break;
 			}
 
 			PwBox.Focus();

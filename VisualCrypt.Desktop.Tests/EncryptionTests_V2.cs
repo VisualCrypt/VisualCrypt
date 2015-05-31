@@ -126,5 +126,11 @@ namespace VisualCrypt.Desktop.Tests
 					throw new Exception(decodeResponse.Error);
 			}
 		}
+
+		[TestMethod]
+		public void PaddingIsAppliedCorrectlyBeforeEncryption()
+		{
+			Assert.Fail("Test needed There are conditions where an Exception from Padding is thrown, encrypting certain tests.");
+		}
 	}
 }

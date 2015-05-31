@@ -54,7 +54,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void OnShouldSendText(Action<string> callback)
 		{
-			var args = new EditorSendsText {Text = _textBox1.Text, Callback = callback};
+			var args = new EditorSendsText { Text = _textBox1.Text, Callback = callback };
 			_eventAggregator.GetEvent<EditorSendsText>().Publish(args);
 		}
 
@@ -64,8 +64,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				throw new ArgumentNullException("newText");
 
 			_textBox1.IsUndoEnabled = false;
-			_textBox1.Text = newText;
-			FileManager.FileModel.IsDirty = false;
+
+			var backup = FileManager.FileModel.IsDirty;
+			_textBox1.Text = newText; // triggers Text_Changed which sets FileManager.FileModel.IsDirty = true;
+			FileManager.FileModel.IsDirty = backup;
 
 			if (FileManager.FileModel.IsEncrypted)
 			{
@@ -129,7 +131,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteZoomOut()
 		{
-			_textBox1.FontSize *= 1/1.05;
+			_textBox1.FontSize *= 1 / 1.05;
 			UpdateZoomLevelMenuText();
 
 			//Zoom100Command.RaiseCanExecuteChanged();
@@ -155,12 +157,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void UpdateZoomLevelMenuText()
 		{
-			var zoomLevel = (int) ((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100);
+			var zoomLevel = (int)((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
 			var zoomLevelMenuText = "_Zoom (" + zoomLevel + "%)";
 			SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
 			SettingsManager.EditorSettings.IsZoom100Checked =
-				Math.Abs(((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100) - 100) < 0.1;
+				Math.Abs(((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
 		}
 
 		#endregion
@@ -232,7 +234,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		public bool CanExecuteFindNext()
 		{
 			return _findReplaceDialogViewModel.FindNextCommand.CanExecute() &&
-			       !string.IsNullOrEmpty(_findReplaceDialogViewModel.FindString);
+				   !string.IsNullOrEmpty(_findReplaceDialogViewModel.FindString);
 		}
 
 		#endregion
@@ -250,7 +252,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		public bool CanExecuteFindPrevious()
 		{
 			return _findReplaceDialogViewModel.FindNextCommand.CanExecute() &&
-			       !string.IsNullOrEmpty(_findReplaceDialogViewModel.FindString);
+				   !string.IsNullOrEmpty(_findReplaceDialogViewModel.FindString);
 		}
 
 		#endregion
