@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Desktop.Shared.Files;
 
@@ -21,6 +22,6 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response SaveEncryptedFile(FileModel fileModel);
 
-		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents);
+		Task<Response<string>> EncryptAndSaveFile(FileModel fileModel, string textBufferContents);
 	}
 }

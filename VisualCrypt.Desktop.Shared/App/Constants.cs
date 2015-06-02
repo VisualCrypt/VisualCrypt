@@ -18,9 +18,18 @@ namespace VisualCrypt.Desktop.Shared.App
 
 		public const string DotVisualCrypt = ".visualcrypt";
 
-		public static readonly string DefaultDirectoryName;
+        public static readonly string DefaultDirectoryName;
 
-		static Constants()
+        // Open/Save VisualCrypt
+        public static string VisualCryptDialogFilter_DefaultExt = ".visualcrypt";
+        public static string VisualCryptDialogFilter = "VisualCrypt (*.visualcrypt; *.txt)|*.visualcrypt;*.txt|All Files(*.*)|*.*";
+
+        // Import/Export Plaintext
+        public static string TextDialogFilter_DefaultExt = ".txt";
+        public static string TextDialogFilter = "Text(*.txt)|*.txt|All Files(*.*)|*.*";
+       
+
+        static Constants()
 		{
 			DefaultDirectoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
 		}

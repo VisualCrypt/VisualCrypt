@@ -75,6 +75,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\DialogDirection.cs" />
+    <Compile Include="App\DialogFilters.cs" />
     <Compile Include="Commands\EditorCommands.cs" />
     <Compile Include="DelegateCommandExtensions.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
