@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel.Composition;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions.Modularity;
 using Microsoft.Practices.Prism.Modularity;
 using VisualCrypt.Desktop.Shared;
@@ -9,29 +10,23 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 	[ModuleExport(typeof (ModuleEncryption), InitializationMode = InitializationMode.OnDemand)]
 	public class ModuleEncryption : IModule
 	{
-		readonly IModuleTracker _moduleTracker;
+		readonly ILoggerFacade _logger;
 
 		[ImportingConstructor]
-		public ModuleEncryption(IModuleTracker moduleTracker)
+		public ModuleEncryption(ILoggerFacade logger)
 		{
-			if (moduleTracker == null)
+			if (logger == null)
 			{
-				throw new ArgumentNullException("moduleTracker");
+				throw new ArgumentNullException("logger");
 			}
-
-			_moduleTracker = moduleTracker;
-			_moduleTracker.RecordModuleConstructed(ModuleNames.ModuleEncryption);
+			_logger = logger;
+			_logger.Log("{0} constructed.".FormatInvariant(GetType().Name),Category.Info, Priority.Low);
 		}
+
 
 		public void Initialize()
 		{
-			_moduleTracker.RecordModuleInitialized(ModuleNames.ModuleEncryption);
-			TestOpenFile();
-		}
-
-		void TestOpenFile()
-		{
-			throw new NotImplementedException();
+			_logger.Log("{0} initialized.".FormatInvariant(GetType().Name), Category.Info, Priority.Low);
 		}
 	}
 }

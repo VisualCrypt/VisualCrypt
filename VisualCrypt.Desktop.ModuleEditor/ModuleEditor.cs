@@ -11,32 +11,22 @@ namespace VisualCrypt.Desktop.ModuleEditor
 	public class ModuleEditor : IModule
 	{
 		readonly ILoggerFacade _logger;
-		readonly IModuleTracker _moduleTracker;
-
 
 		[ImportingConstructor]
-		public ModuleEditor(ILoggerFacade logger, IModuleTracker moduleTracker)
+		public ModuleEditor(ILoggerFacade logger)
 		{
 			if (logger == null)
 			{
 				throw new ArgumentNullException("logger");
 			}
-
-			if (moduleTracker == null)
-			{
-				throw new ArgumentNullException("moduleTracker");
-			}
-
 			_logger = logger;
-			_moduleTracker = moduleTracker;
-			_moduleTracker.RecordModuleConstructed(ModuleNames.ModuleEditor);
+			_logger.Log("{0} constructed.".FormatInvariant(GetType().Name),Category.Info, Priority.Low);
 		}
 
 
 		public void Initialize()
 		{
-			_logger.Log("ModuleEditor Initialize().", Category.Info, Priority.Medium);
-			_moduleTracker.RecordModuleInitialized(ModuleNames.ModuleEditor);
+			_logger.Log("{0} initialized.".FormatInvariant(GetType().Name), Category.Info, Priority.Low);
 		}
 	}
 }

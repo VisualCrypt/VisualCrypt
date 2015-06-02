@@ -13,7 +13,7 @@ namespace VisualCrypt.Desktop
 		{
 			base.OnStartup(e);
 
-			// The boostrapper will create the Shell instance, so the App.xaml does not have a StartupUri.
+			// The boostrapper will create the ShellWindow instance, so the App.xaml does not have a StartupUri.
 			ShellBootstrapper bootstrapper = new ShellBootstrapper();
 			bootstrapper.Run();
 		}

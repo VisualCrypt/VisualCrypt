@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Desktop.Shared.App;
@@ -8,30 +7,21 @@ using VisualCrypt.Desktop.Shared.App;
 namespace VisualCrypt.Desktop.Views
 {
 	[Export]
-	public partial class Shell
+	public partial class ShellWindow
 	{
-		/// <summary>
-		/// Sets the ViewModel.
-		/// </summary>
-		/// <remarks>
-		/// This set-only property is annotated with the <see cref="ImportAttribute"/> so it is injected by MEF with
-		/// the appropriate view model.
-		/// </remarks>
 		[Import]
-		[SuppressMessage("Microsoft.Design", "CA1044:PropertiesShouldNotBeWriteOnly",
-			Justification = "Needs to be a property to be composed by MEF")]
 		ShellViewModel ViewModel
 		{
 			set { DataContext = value; }
 			get { return DataContext as ShellViewModel; }
 		}
 
-		public Shell()
+		public ShellWindow()
 		{
 			InitializeComponent();
 
-			this.Loaded += Shell_Loaded;
-			this.PreviewKeyDown += ShellWindow_PreviewKeyDown;
+			Loaded += Shell_Loaded;
+			PreviewKeyDown += ShellWindow_PreviewKeyDown;
 			Closing += MainWindow_Closing;
 			//SizeChanged += MainWindow_SizeChanged;
 
@@ -65,7 +55,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			// This was in TextBox1_PreviewKeyDown, does this still work?
 			if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-			    && ViewModel.ClearPasswordCommand.CanExecute())
+				&& ViewModel.ClearPasswordCommand.CanExecute())
 				ViewModel.ClearPasswordCommand.Execute();
 
 			if (e.Key == Key.F12)

@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.Views
 {
-	public partial class About
+	public partial class AboutDialog
 	{
-		public About()
+		public AboutDialog()
 		{
 			InitializeComponent();
 			DataContext = this;

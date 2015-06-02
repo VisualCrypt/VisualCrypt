@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Navigation;
+using MahApps.Metro;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
@@ -36,6 +41,22 @@ namespace VisualCrypt.Desktop.Views
 			_encryptionService = encryptionService;
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
 			_eventAggregator.GetEvent<EditorSendsText>().Subscribe(OnEditorSendsText);
+			// create accent color menu items for the demo
+			this.AccentColors = ThemeManager.Accents
+				.Select(a => new AccentColorMenuData() {Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush})
+				.ToList();
+
+			// create metro theme color menu items for the demo
+			this.AppThemes = ThemeManager.AppThemes
+				.Select(
+					a =>
+						new AppThemeMenuData()
+						{
+							Name = a.Name,
+							BorderColorBrush = a.Resources["BlackColorBrush"] as Brush,
+							ColorBrush = a.Resources["WhiteColorBrush"] as Brush
+						})
+				.ToList();
 		}
 
 		public void Init()
@@ -142,7 +163,7 @@ namespace VisualCrypt.Desktop.Views
 				if (!ConfirmToDiscardText())
 					return;
 
-				var importEncoding = new ImportEncoding
+				var importEncoding = new ImportEncodingDialog
 				{
 					WindowStyle = WindowStyle.ToolWindow,
 					Owner = Application.Current.MainWindow
@@ -251,7 +272,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } };
+				var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.HelpUrl}};
 				process.Start();
 			}
 			catch (Exception e)
@@ -273,7 +294,7 @@ namespace VisualCrypt.Desktop.Views
 
 		void ExecuteAboutCommand()
 		{
-			var aboutDialog = new About { WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow };
+			var aboutDialog = new AboutDialog {WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow};
 			aboutDialog.ShowDialog();
 		}
 
@@ -292,7 +313,7 @@ namespace VisualCrypt.Desktop.Views
 
 		void ExecuteLogCommand()
 		{
-			ServiceLocator.Current.GetInstance<ModuleWindow>().Show();
+			ServiceLocator.Current.GetInstance<LogWindow>().Show();
 		}
 
 		#endregion
@@ -357,13 +378,14 @@ namespace VisualCrypt.Desktop.Views
 						return; // The user prefers to look at the cipher!
 				}
 
-			tryDecryptLoadFileWithCurrentPassword:
+				tryDecryptLoadFileWithCurrentPassword:
 				// We have a password, but we don't know if it's the right one. We must try!
-				var decryptForDisplayResult = _encryptionService.DecryptForDisplay(FileManager.FileModel, FileManager.FileModel.VisualCryptText);
+				var decryptForDisplayResult = _encryptionService.DecryptForDisplay(FileManager.FileModel,
+					FileManager.FileModel.VisualCryptText);
 				if (decryptForDisplayResult.Success)
 				{
 					// we were lucky, the password we have is correct!
-					FileManager.FileModel = decryptForDisplayResult.Result;  // do this before pushing the text to the editor
+					FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
 					_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
 					UpdateCanExecuteChanged();
 					return; // exit from this goto-loop!
@@ -375,7 +397,6 @@ namespace VisualCrypt.Desktop.Views
 					return; // The user prefers to look at the cipher!
 				// We have another password, from the user, we try again!
 				goto tryDecryptLoadFileWithCurrentPassword;
-
 			}
 			catch (Exception e)
 			{
@@ -444,7 +465,7 @@ namespace VisualCrypt.Desktop.Views
 					var createEncryptedFileResponse = _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents);
 					if (createEncryptedFileResponse.Success)
 					{
-						FileManager.FileModel = createEncryptedFileResponse.Result;  // do this before pushing the text to the editor
+						FileManager.FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
 						_eventAggregator.GetEvent<EditorReceivesText>().Publish(createEncryptedFileResponse.Result.VisualCryptText);
 						UpdateCanExecuteChanged();
 					}
@@ -453,7 +474,6 @@ namespace VisualCrypt.Desktop.Views
 						_messageBoxService.ShowError(createEncryptedFileResponse.Error);
 					}
 				});
-
 			}
 			catch (Exception e)
 			{
@@ -461,11 +481,7 @@ namespace VisualCrypt.Desktop.Views
 			}
 		}
 
-
-
 		#endregion
-
-
 
 		#region DecryptEditorContentsCommand
 
@@ -496,7 +512,7 @@ namespace VisualCrypt.Desktop.Views
 					var decryptForDisplayResult = _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents);
 					if (decryptForDisplayResult.Success)
 					{
-						FileManager.FileModel = decryptForDisplayResult.Result;  // do this before pushing the text to the editor
+						FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
 						_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
 						UpdateCanExecuteChanged();
 					}
@@ -505,7 +521,6 @@ namespace VisualCrypt.Desktop.Views
 						_messageBoxService.ShowError(decryptForDisplayResult.Error);
 					}
 				});
-
 			}
 			catch (Exception e)
 			{
@@ -541,10 +556,9 @@ namespace VisualCrypt.Desktop.Views
 						throw new Exception(response.Error);
 					FileManager.FileModel.IsDirty = false;
 				}
-				// This is the case where we need a new filename and can then also 'just save'.
+					// This is the case where we need a new filename and can then also 'just save'.
 				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave()))
 				{
-
 					var saveFileDialog = new SaveFileDialog
 					{
 						InitialDirectory = SettingsManager.CurrentDirectoryName,
@@ -562,7 +576,7 @@ namespace VisualCrypt.Desktop.Views
 						FileManager.FileModel.IsDirty = false;
 					}
 				}
-				// And in that case we need a different strategy: Encrypt and THEN save.
+					// And in that case we need a different strategy: Encrypt and THEN save.
 				else
 				{
 					if (FileManager.FileModel.IsEncrypted)
@@ -574,7 +588,6 @@ namespace VisualCrypt.Desktop.Views
 			{
 				_messageBoxService.ShowError(e);
 			}
-
 		}
 
 		void EncryptAndThenSave(bool isSaveAs)
@@ -630,7 +643,6 @@ namespace VisualCrypt.Desktop.Views
 			_eventAggregator.GetEvent<EditorReceivesText>().Publish(clearTextBackup);
 
 			UpdateCanExecuteChanged();
-
 		}
 
 		string GetFilenameSafe(string pathString)
@@ -675,7 +687,6 @@ namespace VisualCrypt.Desktop.Views
 				//if (result == true)
 				//{
 				//    string fullPath = saveFileDialog.FileName;
-
 			}
 			catch (Exception e)
 			{
@@ -717,8 +728,6 @@ namespace VisualCrypt.Desktop.Views
 			//}
 		}
 
-
-
 		#endregion
 
 		#region ShowSetPasswordDialogCommand
@@ -746,7 +755,7 @@ namespace VisualCrypt.Desktop.Views
 		/// </summary>
 		bool ShowSetPasswordDialog(SetPasswordDialogMode setPasswordDialogMode)
 		{
-			var setPassword = new SetPassword(setPasswordDialogMode, _messageBoxService, _encryptionService)
+			var setPassword = new SetPasswordDialog(setPasswordDialogMode, _messageBoxService, _encryptionService)
 			{
 				WindowStyle = WindowStyle.ToolWindow,
 				Owner = Application.Current.MainWindow
@@ -816,11 +825,11 @@ namespace VisualCrypt.Desktop.Views
 					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
 						RegionNames.EditorRegion));
 
-			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
+			var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
 			if (view == null)
 			{
 				view = ServiceLocator.Current.GetInstance<IEditor>();
-				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
+				mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
 			}
 			else
 			{
@@ -829,5 +838,43 @@ namespace VisualCrypt.Desktop.Views
 		}
 
 		#endregion
+
+		public List<AccentColorMenuData> AccentColors { get; set; }
+		public List<AppThemeMenuData> AppThemes { get; set; }
+	}
+
+	public class AccentColorMenuData
+	{
+		public string Name { get; set; }
+		public Brush BorderColorBrush { get; set; }
+		public Brush ColorBrush { get; set; }
+
+		ICommand _changeAccentCommand;
+
+		public ICommand ChangeAccentCommand
+		{
+			get
+			{
+				return _changeAccentCommand ??
+				       (_changeAccentCommand = new DelegateCommand<object>(DoChangeTheme, (x) => true));
+			}
+		}
+
+		protected virtual void DoChangeTheme(object sender)
+		{
+			var theme = ThemeManager.DetectAppStyle(Application.Current);
+			var accent = ThemeManager.GetAccent(this.Name);
+			ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
+		}
+	}
+
+	public class AppThemeMenuData : AccentColorMenuData
+	{
+		protected override void DoChangeTheme(object sender)
+		{
+			var theme = ThemeManager.DetectAppStyle(Application.Current);
+			var appTheme = ThemeManager.GetAppTheme(this.Name);
+			ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
+		}
 	}
 }

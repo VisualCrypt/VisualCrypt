@@ -3,18 +3,14 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Practices.Prism.Mvvm;
-using VisualCrypt.Desktop.Shared;
-using VisualCrypt.Desktop.Shared.App;
 
 namespace VisualCrypt.Desktop.Views
 {
-	public partial class ImportEncoding
+	public partial class ImportEncodingDialog
 	{
 		EncodingInfo _selectedEncodingInfo;
 
-
-		public ImportEncoding()
+		public ImportEncodingDialog()
 		{
 			InitializeComponent();
 			DataContext = this;

@@ -8,12 +8,12 @@ using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Views
 {
-	public sealed partial class SetPassword
+	public sealed partial class SetPasswordDialog
 	{
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEncryptionService _encryptionService;
 
-		public SetPassword(SetPasswordDialogMode setPasswordDialogMode, IMessageBoxService messageBoxService,
+		public SetPasswordDialog(SetPasswordDialogMode setPasswordDialogMode, IMessageBoxService messageBoxService,
 			IEncryptionService encryptionService)
 		{
 			_messageBoxService = messageBoxService;

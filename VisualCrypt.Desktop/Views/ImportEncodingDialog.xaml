@@ -1,4 +1,4 @@
-﻿<Window x:Class="VisualCrypt.Desktop.Views.ImportEncoding"
+﻿<Window x:Class="VisualCrypt.Desktop.Views.ImportEncodingDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,7 +6,7 @@
         xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
         mc:Ignorable="d"
         Title="Import With Encoding" Height="262" Width="433.932" WindowStartupLocation="CenterOwner"
-        d:DataContext="{d:DesignInstance views:About}">
+        d:DataContext="{d:DesignInstance views:AboutDialog}">
     <Grid>
         <DockPanel Margin="20">
             <StackPanel DockPanel.Dock="Top">
@@ -14,7 +14,7 @@
 
                 <TextBlock Margin="5" Text="The preselected Encoding is the default for your Windows version." />
                 <ComboBox ItemsSource="{Binding AvailableEncodings}" SelectedItem="{Binding SelectedEncodingInfo}"
-                          DisplayMemberPath="DisplayName" d:DataContext="{d:DesignInstance views:ImportEncoding}" />
+                          DisplayMemberPath="DisplayName" d:DataContext="{d:DesignInstance views:ImportEncodingDialog}" />
                 <TextBlock Margin="5" TextWrapping="Wrap">The selected import Encoding will be preserved when you use File / Export Clear Text, otherwise UTF-8 without BOM would be used for export.</TextBlock>
             </StackPanel>
 

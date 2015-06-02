@@ -4,9 +4,9 @@ using System.Reflection;
 using Microsoft.Win32;
 using Shell32;
 
-namespace VisualCrypt.Desktop.Commands
+namespace VisualCrypt.Desktop.Shared.Settings
 {
-	internal class SetupCommand
+	internal class OnFirstRunTasks
 	{
 		const string HasRunOnce = "HasRunOnce";
 		// 0: The app has not yet been run | 1: It has been run at least one time
@@ -17,6 +17,8 @@ namespace VisualCrypt.Desktop.Commands
 			{
 				using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\VisualCrypt", true))
 				{
+					if(registryKey == null) // The key is created by the installer.
+						return;
 					var hasRunOnce = (int) registryKey.GetValue(HasRunOnce);
 					if (hasRunOnce == 0)
 					{

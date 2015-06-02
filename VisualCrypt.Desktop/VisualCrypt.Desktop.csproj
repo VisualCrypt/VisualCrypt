@@ -127,23 +127,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Commands\SetupCommand.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="Views\ImportEncoding.xaml.cs">
-      <DependentUpon>ImportEncoding.xaml</DependentUpon>
+    <Compile Include="Views\ImportEncodingDialog.xaml.cs">
+      <DependentUpon>ImportEncodingDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\About.xaml.cs">
-      <DependentUpon>About.xaml</DependentUpon>
+    <Compile Include="Views\AboutDialog.xaml.cs">
+      <DependentUpon>AboutDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SetPassword.xaml.cs">
-      <DependentUpon>SetPassword.xaml</DependentUpon>
+    <Compile Include="Views\SetPasswordDialog.xaml.cs">
+      <DependentUpon>SetPasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SetPasswordDialogMode.cs" />
-    <Compile Include="Views\Shell.xaml.cs">
-      <DependentUpon>Shell.xaml</DependentUpon>
+    <Compile Include="Views\ShellWindow.xaml.cs">
+      <DependentUpon>ShellWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellViewModel.cs" />
-    <Page Include="ModuleView.xaml">
+    <Page Include="Views\LogWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -153,44 +151,28 @@
     </Compile>
     <Compile Include="ShellBootstrapper.cs" />
     <Compile Include="CallbackLogger.cs" />
-    <Compile Include="DiscoveryMethod.cs" />
-    <Compile Include="DownloadTiming.cs" />
-    <Compile Include="ModuleView.xaml.cs">
-      <DependentUpon>ModuleView.xaml</DependentUpon>
+    <Compile Include="Views\LogWindow.xaml.cs">
+      <DependentUpon>LogWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="ModularityStyles.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="ModuleControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ImportEncoding.xaml">
+    <Page Include="Views\ImportEncodingDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\About.xaml">
+    <Page Include="Views\AboutDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SetPassword.xaml">
+    <Page Include="Views\SetPasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\Shell.xaml">
+    <Page Include="Views\ShellWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ModuleControl.xaml.cs">
-      <DependentUpon>ModuleControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="ModuleInitializationStatus.cs" />
-    <Compile Include="ModuleTracker.cs" />
-    <Compile Include="ModuleTrackingState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -210,6 +192,14 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MahApps.Metro.Resources\MahApps.Metro.Resources.csproj">
+      <Project>{e708ac99-605b-42a0-8d20-abca8fe42dd2}</Project>
+      <Name>MahApps.Metro.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MahApps.Metro\MahApps.Metro.NET45.csproj">
+      <Project>{942d11c4-29f5-46c4-8c14-4b976d56c637}</Project>
+      <Name>MahApps.Metro.NET45</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
       <Project>{4c372f99-2c82-4b56-af6c-edf8751acc86}</Project>
       <Name>VisualCrypt.Cryptography.Net</Name>
