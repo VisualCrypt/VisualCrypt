@@ -19,7 +19,7 @@ namespace VisualCrypt.Desktop.Views
 				Close();
 		}
 
-		public string NotepadVersion
+		public static string NotepadVersion
 		{
 			get { return Version.NotepadVersion; }
 		}

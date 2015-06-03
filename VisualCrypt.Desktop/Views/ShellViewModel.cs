@@ -263,8 +263,8 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } };
-                process.Start();
+                using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } })
+                    process.Start();
             }
             catch (Exception e)
             {
@@ -619,16 +619,13 @@ namespace VisualCrypt.Desktop.Views
 
         }
 
-
-
-
-        string GetFilenameSafe(string pathString)
+        static string GetFilenameSafe(string pathString)
         {
             try
             {
                 return Path.GetFileName(pathString);
             }
-            catch (Exception)
+            catch (ArgumentException)
             {
                 return Constants.UntitledDotVisualCrypt;
             }
@@ -661,13 +658,20 @@ namespace VisualCrypt.Desktop.Views
             get { return CreateCommand(ref _showSetPasswordDialogCommand, ExecuteShowSetPasswordDialogCommand, () => true); }
         }
 
-        void ExecuteShowSetPasswordDialogCommand()
+        async void ExecuteShowSetPasswordDialogCommand()
         {
-            if (PasswordManager.PasswordInfo.IsPasswordSet)
-                SetPasswordAsync(SetPasswordDialogMode.Change);
-            else
+            try
             {
-                SetPasswordAsync(SetPasswordDialogMode.Set);
+                if (PasswordManager.PasswordInfo.IsPasswordSet)
+                    await SetPasswordAsync(SetPasswordDialogMode.Change);
+                else
+                {
+                    await SetPasswordAsync(SetPasswordDialogMode.Set);
+                }
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
             }
         }
 

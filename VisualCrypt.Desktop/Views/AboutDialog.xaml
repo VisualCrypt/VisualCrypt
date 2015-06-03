@@ -7,13 +7,13 @@
                       xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
                       mc:Ignorable="d"
                       Title="AboutDialog" Height="262" Width="433.932" WindowStartupLocation="CenterOwner"
-                      d:DataContext="{d:DesignInstance views:AboutDialog}">
-    <Grid d:DataContext="{d:DesignInstance  views:AboutDialog}">
+                      >
+    <Grid>
         <DockPanel Margin="20">
             <StackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Margin="5" xml:space="preserve">Version:</TextBlock>
-                    <TextBlock Margin="5" Text="{Binding NotepadVersion}" />
+                    <TextBlock Margin="5" Text="{Binding Path=NotepadVersion}" />
                 </StackPanel>
                 <TextBlock Margin="5" TextWrapping="Wrap">
                     <Run Text="Copyright © 201" /><Run Text="5" /><Run Text=" " /><Run Text="VisualCrypt AG" />
