@@ -200,7 +200,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		}
 
 
-		public async Task<Response<string>> EncryptAndSaveFile(FileModel fileModel, string textBufferContents)
+		public Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents)
 		{
 			var response = new Response<string>();
 

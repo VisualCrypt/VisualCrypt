@@ -22,6 +22,6 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response SaveEncryptedFile(FileModel fileModel);
 
-		Task<Response<string>> EncryptAndSaveFile(FileModel fileModel, string textBufferContents);
+		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents);
 	}
 }

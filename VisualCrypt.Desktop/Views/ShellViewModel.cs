@@ -169,7 +169,7 @@ namespace VisualCrypt.Desktop.Views
                     WindowStyle = WindowStyle.ToolWindow,
                     Owner = Application.Current.MainWindow
                 };
-                
+
                 if (importEncoding.ShowDialog() == true)
                 {
                     if (!ConfirmToDiscardText())
@@ -590,33 +590,39 @@ namespace VisualCrypt.Desktop.Views
             }
             // No we have password and filename, we can now encrypt and save in one step.
             // We will not replace FileManager.FileModel because we continue editing the same cleartext.
-            string clearTextBackup = null;
+            string editorClearText = await GetEditorText();
             string visualCryptTextSaved = null;
-            _eventAggregator.GetEvent<EditorShouldSendText>().Publish(async textBufferContents =>
-            {
-                clearTextBackup = textBufferContents;
-                var encryptAndSaveFileResponse = await Task.Run(()=>_encryptionService.EncryptAndSaveFile(FileManager.FileModel, textBufferContents));
-                if (encryptAndSaveFileResponse.Success)
-                {
-                    visualCryptTextSaved = encryptAndSaveFileResponse.Result;
-                }
-                else
-                {
-                    throw new Exception(encryptAndSaveFileResponse.Error);
-                }
-                // We are done with successful saving. Show that we did encrypt the text:
-                _eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
-                await Task.Delay(2000);
-                // Redisplay the clear text, to allow continue editing.
-                FileManager.FileModel.IsDirty = false;
 
-                _eventAggregator.GetEvent<EditorReceivesText>().Publish(clearTextBackup);
 
-                UpdateCanExecuteChanged();
-            });
 
-           
+            var encryptAndSaveFileResponse = await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText));
+            if (!encryptAndSaveFileResponse.Success)
+                throw new Exception(encryptAndSaveFileResponse.Error);
+
+            visualCryptTextSaved = encryptAndSaveFileResponse.Result;
+            // We are done with successful saving. Show that we did encrypt the text:
+            _eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
+            await Task.Delay(2000);
+            // Redisplay the clear text, to allow continue editing.
+            FileManager.FileModel.IsDirty = false;
+
+            _eventAggregator.GetEvent<EditorReceivesText>().Publish(editorClearText);
+
+            UpdateCanExecuteChanged();
+
         }
+
+        async Task<string> GetEditorText()
+        {
+            var tcs = new TaskCompletionSource<string>();
+
+            _eventAggregator.GetEvent<EditorShouldSendText>().Publish(textBufferContents =>
+            {
+                tcs.SetResult(textBufferContents);
+            });
+            return await tcs.Task;
+        }
+
 
         string GetFilenameSafe(string pathString)
         {
