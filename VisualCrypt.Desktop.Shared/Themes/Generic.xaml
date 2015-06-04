@@ -2,8 +2,10 @@
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Make sure to have this attribute in AssemblyInfo.cs:
-    [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]-->
-    <!-- Styles that are part of the 'Generic' theme -->
+    [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)] 
+    It's then not necessary to load this ResourceDictionary in App.xaml, MainWindow.xaml etc.,
+    however, ResourceDictionarys containing DynamicResources, such as colors must be explicitly loaded.
+    Index all Styles that are part of the 'Generic' theme here: -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppWindow.Generic.xaml"/>
     </ResourceDictionary.MergedDictionaries>

@@ -10,7 +10,7 @@
         <Setter Property="BorderBrush"
                 Value="Transparent" />
         <Setter Property="BorderThickness"
-                Value="3" />
+                Value="0" />
         <Setter Property="Margin"
                 Value="0" />
         <Setter Property="VerticalAlignment"
@@ -61,8 +61,13 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Rectangle x:Name="moveRectangle" Fill="{DynamicResource AccentColorBrush}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-                                <Image Grid.Row="0" Grid.Column="0" Source="AppWindowIcon.png" Margin="4"></Image>
-                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Title}" FontSize="{x:Static SystemFonts.CaptionFontSize}" FontFamily="{x:Static SystemFonts.CaptionFontFamily}" VerticalAlignment="Center"  IsHitTestVisible="True" Margin="0" Foreground="White" HorizontalAlignment="Left"></TextBlock>
+                                <Image Grid.Row="0" Grid.Column="0" Source="AppWindowIcon.png" Margin="4" IsHitTestVisible="False"></Image>
+                                <TextBlock Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Title}" 
+                                           FontSize="{x:Static SystemFonts.CaptionFontSize}" 
+                                           FontFamily="{x:Static SystemFonts.CaptionFontFamily}" 
+                                           VerticalAlignment="Center"  IsHitTestVisible="False" Margin="0" 
+                                           Foreground="White" 
+                                           HorizontalAlignment="Left"></TextBlock>
                                 <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Background="Transparent">
                                     <Button x:Name="minimizeButton" Style="{StaticResource WindowButtonStyle}" Content="0"  />
                                     <Button x:Name="restoreButton" Style="{StaticResource WindowButtonStyle}" Content="1" />

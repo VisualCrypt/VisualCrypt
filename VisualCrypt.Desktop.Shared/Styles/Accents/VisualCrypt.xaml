@@ -12,7 +12,9 @@
     <Color x:Key="AccentColor3">#66AF0007</Color>
     <!--20%-->
     <Color x:Key="AccentColor4">#33AF0007</Color>
-
+    
+    <Color x:Key="BarColor">#FFF0F0F0</Color>
+    <SolidColorBrush x:Key="BarColorBrush" Color="{StaticResource BarColor}"  />
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}"  />
     <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}"  />
