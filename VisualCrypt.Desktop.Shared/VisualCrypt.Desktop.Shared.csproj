@@ -80,7 +80,7 @@
     <Compile Include="App\DialogDirection.cs" />
     <Compile Include="App\DialogFilters.cs" />
     <Compile Include="Commands\EditorCommands.cs" />
-    <Compile Include="Controls\AppWindow - Copy.cs" />
+    <Compile Include="Controls\AppWindow.cs" />
     <Compile Include="DelegateCommandExtensions.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
@@ -107,7 +107,6 @@
     <Compile Include="App\Serializer.cs" />
     <Compile Include="Settings\OnFirstRunTasks.cs" />
     <Compile Include="StringExtensions.cs" />
-    <Content Include="Controls\AppWindow.cs" />
     <Compile Include="ValueConverters\BoolTextWrappingConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ThicknessToDoubleConverter.cs" />
