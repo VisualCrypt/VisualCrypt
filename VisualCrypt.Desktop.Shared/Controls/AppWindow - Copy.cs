@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Shapes;
+using MahApps.Metro.Native;
 
 namespace VisualCrypt.Desktop.Shared.Controls
 {
@@ -41,9 +42,10 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
             if (moveRectangle != null)
             {
-                moveRectangle.PreviewMouseLeftButtonDown += MoveRectangle_PreviewMouseLeftButtonDown;
-                moveRectangle.PreviewMouseLeftButtonUp += MoveRectangle_PreviewMouseLeftButtonUp;
-                moveRectangle.PreviewMouseMove += MoveRectangle_PreviewMouseMove;
+                moveRectangle.MouseDown += this.TitleBarMouseDown;
+                //moveRectangle.PreviewMouseLeftButtonDown += MoveRectangle_PreviewMouseLeftButtonDown;
+                //moveRectangle.PreviewMouseLeftButtonUp += MoveRectangle_PreviewMouseLeftButtonUp;
+                //moveRectangle.PreviewMouseMove += MoveRectangle_PreviewMouseMove;
             }
 
             var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
@@ -131,6 +133,128 @@ namespace VisualCrypt.Desktop.Shared.Controls
                 }
             }
         }
+
+
+        #region metro
+        public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(AppWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
+        public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(AppWindow), new PropertyMetadata(true));
+        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(AppWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
+        private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (AppWindow)d;
+            if (e.NewValue != e.OldValue)
+            {
+                //window.SetVisibiltyForAllTitleElements((bool)e.NewValue);
+            }
+        }
+
+        private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
+        {
+            // if UseNoneWindowStyle = true no title bar should be shown
+            if (((AppWindow)d).UseNoneWindowStyle)
+            {
+                return false;
+            }
+            return value;
+        }
+        
+        private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != e.OldValue)
+            {
+                // if UseNoneWindowStyle = true no title bar should be shown
+                var useNoneWindowStyle = (bool)e.NewValue;
+                var window = (AppWindow)d;
+                window.ToggleNoneWindowStyle(useNoneWindowStyle);
+            }
+        }
+        private void ToggleNoneWindowStyle(bool useNoneWindowStyle)
+        {
+            // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
+            if (useNoneWindowStyle)
+            {
+                ShowTitleBar = false;
+            }
+            
+        }
+        public bool ShowTitleBar
+        {
+            get { return (bool)GetValue(ShowTitleBarProperty); }
+            set { SetValue(ShowTitleBarProperty, value); }
+        }
+        public bool IsWindowDraggable
+        {
+            get { return (bool)GetValue(IsWindowDraggableProperty); }
+            set { SetValue(IsWindowDraggableProperty, value); }
+        }
+
+        public bool UseNoneWindowStyle
+        {
+            get { return (bool)GetValue(UseNoneWindowStyleProperty); }
+            set { SetValue(UseNoneWindowStyleProperty, value); }
+        }
+
+        public int TitlebarHeight
+        {
+            get { return (int)GetValue(TitlebarHeightProperty); }
+            set { SetValue(TitlebarHeightProperty, value); }
+        }
+        public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(AppWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
+        private static void TitlebarHeightPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
+        {
+            var window = (AppWindow)dependencyObject;
+            if (e.NewValue != e.OldValue)
+            {
+                //window.SetVisibiltyForAllTitleElements((int)e.NewValue > 0);
+            }
+        }
+        protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            // if UseNoneWindowStyle = true no movement, no maximize please
+            if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
+            {
+                var mPoint = Mouse.GetPosition(this);
+
+                if (IsWindowDraggable)
+                {
+                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                    UnsafeNativeMethods.ReleaseCapture();
+                    var wpfPoint = this.PointToScreen(mPoint);
+                    var x = Convert.ToInt16(wpfPoint.X);
+                    var y = Convert.ToInt16(wpfPoint.Y);
+                    var lParam = (int)(uint)x | (y << 16);
+                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
+                }
+
+                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
+                // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
+                var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
+                if (e.ClickCount == 2 && canResize && isMouseOnTitlebar)
+                {
+                    if (this.WindowState == WindowState.Maximized)
+                    {
+                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
+                    }
+                    else
+                    {
+                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
+                    }
+                }
+            }
+        }
+
+        protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            //if (ShowSystemMenuOnRightClick)
+            //{
+            //    var mousePosition = e.GetPosition(this);
+            //    if (e.ChangedButton == MouseButton.Right && (UseNoneWindowStyle || mousePosition.Y <= TitlebarHeight))
+            //    {
+            //        ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
+            //    }
+            //}
+        }
+        #endregion
 
         void ResizeRectangle_MouseLeave(object sender, MouseEventArgs e)
         {
