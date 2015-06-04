@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Shapes;
-using MahApps.Metro.Native;
+
 
 namespace VisualCrypt.Desktop.Shared.Controls
 {
@@ -17,6 +17,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
                 new FrameworkPropertyMetadata(typeof(AppWindow)));
         }
 
+        Rectangle _moveRectangle;
         Button _restoreButton;
         bool _restoreIfMove;
 
@@ -38,14 +39,12 @@ namespace VisualCrypt.Desktop.Shared.Controls
             if (closeButton != null)
                 closeButton.Click += Close_Click;
 
-            var moveRectangle = (Rectangle)GetTemplateChild("moveRectangle");
+            _moveRectangle = (Rectangle)GetTemplateChild("moveRectangle");
 
-            if (moveRectangle != null)
+            if (_moveRectangle != null)
             {
-                moveRectangle.MouseDown += this.TitleBarMouseDown;
-                //moveRectangle.PreviewMouseLeftButtonDown += MoveRectangle_PreviewMouseLeftButtonDown;
-                //moveRectangle.PreviewMouseLeftButtonUp += MoveRectangle_PreviewMouseLeftButtonUp;
-                //moveRectangle.PreviewMouseMove += MoveRectangle_PreviewMouseMove;
+                _moveRectangle.MouseDown += TitleBarMouseDown;
+
             }
 
             var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
@@ -80,180 +79,51 @@ namespace VisualCrypt.Desktop.Shared.Controls
         void Maximize()
         {
             WindowState = WindowState.Maximized;
-            var test = this;
-            _mLeft = SystemParameters.VirtualScreenLeft;
-            _mTop = SystemParameters.VirtualScreenTop;
-            Console.WriteLine("Saving _mLeft = {0}, _mTop = {1}", _mLeft, _mTop);
+
         }
 
-        void MoveRectangle_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            
-            if (e.ClickCount == 2)
-            {
-                if ((ResizeMode == ResizeMode.CanResize) || (ResizeMode == ResizeMode.CanResizeWithGrip))
-                {
-                    SwitchWindowState();
-                }
-                return;
-            }
 
-            if (WindowState == WindowState.Maximized)
-            {
-                _restoreIfMove = true;
-                return;
-            }
-            if (Mouse.LeftButton == MouseButtonState.Pressed)
-                DragMove();
-        }
-
-        private void MoveRectangle_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
-        {
-            _restoreIfMove = false;
-            Console.WriteLine("After Realease");
-            Console.WriteLine(Left);
-            Console.WriteLine(Top);
-        }
-
-        private void MoveRectangle_PreviewMouseMove(object sender, MouseEventArgs e)
-        {
-            if (_restoreIfMove)
-            {
-                _restoreIfMove = false;
-
-                SwitchWindowState();
-
-                POINT lMousePosition;
-                GetCursorPos(out lMousePosition);
-                if (!(lMousePosition.X > SystemParameters.WorkArea.Width))
-                {
-                    Left = 0;
-                    Top = 0;
-                    DragMove();
-                }
-            }
-        }
 
 
         #region metro
-        public static readonly DependencyProperty UseNoneWindowStyleProperty = DependencyProperty.Register("UseNoneWindowStyle", typeof(bool), typeof(AppWindow), new PropertyMetadata(false, OnUseNoneWindowStylePropertyChangedCallback));
-        public static readonly DependencyProperty IsWindowDraggableProperty = DependencyProperty.Register("IsWindowDraggable", typeof(bool), typeof(AppWindow), new PropertyMetadata(true));
-        public static readonly DependencyProperty ShowTitleBarProperty = DependencyProperty.Register("ShowTitleBar", typeof(bool), typeof(AppWindow), new PropertyMetadata(true, OnShowTitleBarPropertyChangedCallback, OnShowTitleBarCoerceValueCallback));
-        private static void OnShowTitleBarPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            var window = (AppWindow)d;
-            if (e.NewValue != e.OldValue)
-            {
-                //window.SetVisibiltyForAllTitleElements((bool)e.NewValue);
-            }
-        }
 
-        private static object OnShowTitleBarCoerceValueCallback(DependencyObject d, object value)
-        {
-            // if UseNoneWindowStyle = true no title bar should be shown
-            if (((AppWindow)d).UseNoneWindowStyle)
-            {
-                return false;
-            }
-            return value;
-        }
-        
-        private static void OnUseNoneWindowStylePropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (e.NewValue != e.OldValue)
-            {
-                // if UseNoneWindowStyle = true no title bar should be shown
-                var useNoneWindowStyle = (bool)e.NewValue;
-                var window = (AppWindow)d;
-                window.ToggleNoneWindowStyle(useNoneWindowStyle);
-            }
-        }
-        private void ToggleNoneWindowStyle(bool useNoneWindowStyle)
-        {
-            // UseNoneWindowStyle means no title bar, window commands or min, max, close buttons
-            if (useNoneWindowStyle)
-            {
-                ShowTitleBar = false;
-            }
-            
-        }
-        public bool ShowTitleBar
-        {
-            get { return (bool)GetValue(ShowTitleBarProperty); }
-            set { SetValue(ShowTitleBarProperty, value); }
-        }
-        public bool IsWindowDraggable
-        {
-            get { return (bool)GetValue(IsWindowDraggableProperty); }
-            set { SetValue(IsWindowDraggableProperty, value); }
-        }
+        public const int WM_NCLBUTTONDOWN = 0x00A1;
+        public const int HT_CAPTION = 0x2;
 
-        public bool UseNoneWindowStyle
-        {
-            get { return (bool)GetValue(UseNoneWindowStyleProperty); }
-            set { SetValue(UseNoneWindowStyleProperty, value); }
-        }
-
-        public int TitlebarHeight
-        {
-            get { return (int)GetValue(TitlebarHeightProperty); }
-            set { SetValue(TitlebarHeightProperty, value); }
-        }
-        public static readonly DependencyProperty TitlebarHeightProperty = DependencyProperty.Register("TitlebarHeight", typeof(int), typeof(AppWindow), new PropertyMetadata(30, TitlebarHeightPropertyChangedCallback));
-        private static void TitlebarHeightPropertyChangedCallback(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
-        {
-            var window = (AppWindow)dependencyObject;
-            if (e.NewValue != e.OldValue)
-            {
-                //window.SetVisibiltyForAllTitleElements((int)e.NewValue > 0);
-            }
-        }
         protected void TitleBarMouseDown(object sender, MouseButtonEventArgs e)
         {
-            // if UseNoneWindowStyle = true no movement, no maximize please
-            if (e.ChangedButton == MouseButton.Left && !this.UseNoneWindowStyle)
+          
+            if (e.ChangedButton == MouseButton.Left)
             {
                 var mPoint = Mouse.GetPosition(this);
 
-                if (IsWindowDraggable)
-                {
-                    IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-                    UnsafeNativeMethods.ReleaseCapture();
-                    var wpfPoint = this.PointToScreen(mPoint);
-                    var x = Convert.ToInt16(wpfPoint.X);
-                    var y = Convert.ToInt16(wpfPoint.Y);
-                    var lParam = (int)(uint)x | (y << 16);
-                    UnsafeNativeMethods.SendMessage(windowHandle, Constants.WM_NCLBUTTONDOWN, Constants.HT_CAPTION, lParam);
-                }
+                // we assume here dragging is allowed
+                IntPtr windowHandle = new WindowInteropHelper(this).Handle;
+                ReleaseCapture();
+                var wpfPoint = PointToScreen(mPoint);
+                var x = Convert.ToInt16(wpfPoint.X);
+                var y = Convert.ToInt16(wpfPoint.Y);
+                var lParam = (int)(uint)x | (y << 16);
 
-                var canResize = this.ResizeMode == ResizeMode.CanResizeWithGrip || this.ResizeMode == ResizeMode.CanResize;
-                // we can maximize or restore the window if the title bar height is set (also if title bar is hidden)
-                var isMouseOnTitlebar = mPoint.Y <= this.TitlebarHeight && this.TitlebarHeight > 0;
-                if (e.ClickCount == 2 && canResize && isMouseOnTitlebar)
+                SendMessage(windowHandle, WM_NCLBUTTONDOWN, HT_CAPTION, lParam);
+                var canResize = ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize;
+            
+                if (e.ClickCount == 2 && canResize)
                 {
-                    if (this.WindowState == WindowState.Maximized)
+                    if (WindowState == WindowState.Maximized)
                     {
-                        Microsoft.Windows.Shell.SystemCommands.RestoreWindow(this);
+                        WindowState = WindowState.Normal;
                     }
                     else
                     {
-                        Microsoft.Windows.Shell.SystemCommands.MaximizeWindow(this);
+                        Maximize();
+                       
                     }
                 }
             }
         }
 
-        protected void TitleBarMouseUp(object sender, MouseButtonEventArgs e)
-        {
-            //if (ShowSystemMenuOnRightClick)
-            //{
-            //    var mousePosition = e.GetPosition(this);
-            //    if (e.ChangedButton == MouseButton.Right && (UseNoneWindowStyle || mousePosition.Y <= TitlebarHeight))
-            //    {
-            //        ShowSystemMenuPhysicalCoordinates(this, PointToScreen(mousePosition));
-            //    }
-            //}
-        }
+      
         #endregion
 
         void ResizeRectangle_MouseLeave(object sender, MouseEventArgs e)
@@ -351,9 +221,13 @@ namespace VisualCrypt.Desktop.Shared.Controls
         #endregion
 
         #region interop
-
+        [DllImportAttribute("user32.dll")]
+        public static extern bool ReleaseCapture();
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
+
+        [DllImport("user32.dll")]
+        static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
 
         HwndSource _hwndSource;
 
@@ -365,14 +239,14 @@ namespace VisualCrypt.Desktop.Shared.Controls
         protected override void OnInitialized(EventArgs e)
         {
             SourceInitialized += OnSourceInitialized;
-          
+
             base.OnInitialized(e);
         }
 
         void OnSourceInitialized(object sender, EventArgs e)
         {
             _hwndSource = (HwndSource)PresentationSource.FromVisual(this);
-            if (_hwndSource != null) 
+            if (_hwndSource != null)
                 _hwndSource.AddHook(WindowProc);
         }
 
@@ -441,8 +315,8 @@ namespace VisualCrypt.Desktop.Shared.Controls
                     }
                 case WindowState.Maximized:
                     {
-                      
-                       
+
+
                         _restoreButton.Content = 1;
                         WindowState = WindowState.Normal;
                         break;
