@@ -1,4 +1,4 @@
-﻿<controls:VCWindow x:Class="VisualCrypt.Desktop.Views.ShellWindow"
+﻿<controls:AppWindow x:Class="VisualCrypt.Desktop.Views.ShellWindow"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,8 +9,8 @@
                       xmlns:commands="clr-namespace:VisualCrypt.Desktop.Shared.Commands;assembly=VisualCrypt.Desktop.Shared"
                       xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
                       xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
-                      xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Styles;assembly=VisualCrypt.Desktop.Shared"
-                     WindowStyle="None"
+                      xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                      WindowStyle="None"
                     AllowsTransparency="True"
                       Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
                       Height="350" Width="805"
@@ -177,4 +177,4 @@
                    Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}" />
         </DockPanel>
     </Grid>
-</controls:VCWindow>
+</controls:AppWindow>

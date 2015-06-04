@@ -106,7 +106,7 @@
     <Compile Include="App\Serializer.cs" />
     <Compile Include="Settings\OnFirstRunTasks.cs" />
     <Compile Include="StringExtensions.cs" />
-    <Compile Include="Styles\VCWindow.cs" />
+    <Compile Include="Controls\AppWindow.cs" />
     <Compile Include="ValueConverters\BoolTextWrappingConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ThicknessToDoubleConverter.cs" />
@@ -130,7 +130,7 @@
     </COMReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Themes\WindowIcon.png" />
+    <Resource Include="Themes\AppWindowIcon.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
@@ -195,7 +195,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\VCWindow.Generic.xaml">
+    <Page Include="Themes\AppWindow.Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -203,7 +203,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Themes\SharedStyles.Generic.xaml">
+    <Page Include="Styles\SharedStyles.Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,5 +1,4 @@
-﻿#region usings
-using System;
+﻿using System;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Forms;
@@ -10,34 +9,28 @@ using Button = System.Windows.Controls.Button;
 using Cursors = System.Windows.Input.Cursors;
 using MouseEventArgs = System.Windows.Input.MouseEventArgs;
 using Panel = System.Windows.Controls.Panel;
-#endregion
 
-namespace VisualCrypt.Desktop.Shared.Styles
+
+namespace VisualCrypt.Desktop.Shared.Controls
 {
-	/// <summary>
-	/// The FundRep Window Control that allows us to meet all 
-	/// visual expectations of our customer.
-	/// </summary>
-	public class VCWindow : Window
+	public class AppWindow : Window
 	{
-		static VCWindow()
+		static AppWindow()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(VCWindow),
-				new FrameworkPropertyMetadata(typeof(VCWindow)));
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(AppWindow),
+				new FrameworkPropertyMetadata(typeof(AppWindow)));
 		}
 
-		Button m_RestoreButton;
+		Button _restoreButton;
 
-		/// <summary>
-		/// Wire up the Template.
-		/// </summary>
+		
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
 
 			((Button)GetTemplateChild("minimizeButton")).Click += Minimize_Click;
-			m_RestoreButton = (Button)GetTemplateChild("restoreButton");
-			m_RestoreButton.Click += Restore_Click;
+			_restoreButton = (Button)GetTemplateChild("restoreButton");
+			_restoreButton.Click += Restore_Click;
 			((Button)GetTemplateChild("closeButton")).Click += Close_Click;
 
 			((Rectangle)GetTemplateChild("moveRectangle")).PreviewMouseLeftButtonDown += MoveRectangle_PreviewMouseLeftButtonDown;
@@ -55,8 +48,6 @@ namespace VisualCrypt.Desktop.Shared.Styles
 		#region Click events
 
 
-
-
 		void Minimize_Click(object sender, RoutedEventArgs e)
 		{
 			WindowState = WindowState.Minimized;
@@ -70,11 +61,11 @@ namespace VisualCrypt.Desktop.Shared.Styles
 					MaxHeight = Screen.FromHandle(new WindowInteropHelper(this).Handle).WorkingArea.Height;
 					MaxWidth = Screen.FromHandle(new WindowInteropHelper(this).Handle).WorkingArea.Width;
 					WindowState = WindowState.Maximized;
-					m_RestoreButton.Content = 2;
+					_restoreButton.Content = 2;
 					break;
 				case WindowState.Maximized:
 					WindowState = WindowState.Normal;
-					m_RestoreButton.Content = 1;
+					_restoreButton.Content = 1;
 					break;
 			}
 		}
@@ -186,26 +177,16 @@ namespace VisualCrypt.Desktop.Shared.Styles
 
 		#endregion
 
-		#region static
-
-
-
-
-
-
-
-		#endregion
-
 		#region interop
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
 
-		HwndSource m_HwndSource;
+		HwndSource _hwndSource;
 
 		void ResizeWindow(ResizeDirection direction)
 		{
-			SendMessage(m_HwndSource.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
+			SendMessage(_hwndSource.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
 		}
 
 		protected override void OnInitialized(EventArgs e)
@@ -216,7 +197,7 @@ namespace VisualCrypt.Desktop.Shared.Styles
 
 		void OnSourceInitialized(object sender, EventArgs e)
 		{
-			m_HwndSource = (HwndSource)PresentationSource.FromVisual(this);
+			_hwndSource = (HwndSource)PresentationSource.FromVisual(this);
 		}
 
 		#endregion

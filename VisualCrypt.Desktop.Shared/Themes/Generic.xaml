@@ -1,9 +1,10 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
+
+    <!-- Make sure to have this attribute in AssemblyInfo.cs:
+    [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]-->
     <!-- Styles that are part of the 'Generic' theme -->
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/VCWindow.Generic.xaml"/>
-        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/SharedStyles.Generic.xaml"/>
+        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppWindow.Generic.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

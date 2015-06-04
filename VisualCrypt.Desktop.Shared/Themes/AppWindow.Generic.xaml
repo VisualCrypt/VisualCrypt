@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:VisualCrypt.Desktop.Shared.Styles">
-    <!-- VCWindow styles -->
+                    xmlns:local="clr-namespace:VisualCrypt.Desktop.Shared.Controls">
+    <!-- AppWindow styles -->
     <!-- Content Border style -->
     <Style x:Key="ContentBorderStyle"
            TargetType="Border">
@@ -41,12 +41,12 @@
         </Style.Triggers>
     </Style>
     <!-- Window style -->
-    <Style TargetType="{x:Type local:VCWindow}">
+    <Style TargetType="{x:Type local:AppWindow}">
         <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:VCWindow}">
+                <ControlTemplate TargetType="{x:Type local:AppWindow}">
                     <Border  Style="{StaticResource ContentBorderStyle}">
                         <Grid>
                             <Grid>
@@ -61,7 +61,7 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Rectangle x:Name="moveRectangle" Fill="{DynamicResource AccentColorBrush}" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"/>
-                                <Image Grid.Row="0" Grid.Column="0" Source="WindowIcon.png" Margin="4"></Image>
+                                <Image Grid.Row="0" Grid.Column="0" Source="AppWindowIcon.png" Margin="4"></Image>
                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Title}" FontSize="{x:Static SystemFonts.CaptionFontSize}" FontFamily="{x:Static SystemFonts.CaptionFontFamily}" VerticalAlignment="Center"  IsHitTestVisible="True" Margin="0" Foreground="White" HorizontalAlignment="Left"></TextBlock>
                                 <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Background="Transparent">
                                     <Button x:Name="minimizeButton" Style="{StaticResource WindowButtonStyle}" Content="0"  />
