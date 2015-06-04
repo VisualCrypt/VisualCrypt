@@ -42,6 +42,7 @@
              AllowDrop="True"
              AcceptsTab="True"
              Text=""
+             BorderBrush="{x:Static SystemColors.MenuBarBrush}"
              VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
              Focusable="True"
              TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=OneWay, Converter={StaticResource BoolTextWrappingConverter}}"
@@ -51,12 +52,41 @@
         <TextBox.Style>
             <Style TargetType="TextBox">
                 <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type TextBox}">
+                            <Border x:Name="border" Background="White" BorderBrush="{x:Static SystemColors.MenuBarBrush}" CornerRadius="0" BorderThickness="1">
+                                <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="border" Value="Silver"/>
+                                </Trigger>
+
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="Opacity" TargetName="border" Value="0.15"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="BorderBrush" TargetName="border" Value="Silver"/>
+                                </Trigger>
+
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
                 <Style.Triggers>
                     <Trigger Property="IsFocused" Value="True">
                         <Setter Property="SelectionOpacity" Value="0.4" />
+                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
                     </Trigger>
                     <Trigger Property="IsFocused" Value="False">
                         <Setter Property="SelectionOpacity" Value="0.3" />
+                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                       
+                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
                     </Trigger>
                 </Style.Triggers>
             </Style>

@@ -1,30 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Composition;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Navigation;
-using MahApps.Metro;
-using Microsoft.Practices.Prism.Commands;
+﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
+using System;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.Diagnostics;
+using System.IO;
+using System.Threading.Tasks;
+using System.Windows;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.Services;
-using System.Threading.Tasks;
 
 namespace VisualCrypt.Desktop.Views
 {
-    [Export]
+	[Export]
     public class ShellViewModel : ViewModelBase
     {
         readonly IRegionManager _regionManager;
@@ -42,22 +36,7 @@ namespace VisualCrypt.Desktop.Views
             _encryptionService = encryptionService;
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
-            // create accent color menu items for the demo
-            this.AccentColors = ThemeManager.Accents
-                .Select(a => new AccentColorMenuData() { Name = a.Name, ColorBrush = a.Resources["AccentColorBrush"] as Brush })
-                .ToList();
-
-            // create metro theme color menu items for the demo
-            this.AppThemes = ThemeManager.AppThemes
-                .Select(
-                    a =>
-                        new AppThemeMenuData()
-                        {
-                            Name = a.Name,
-                            BorderColorBrush = a.Resources["BlackColorBrush"] as Brush,
-                            ColorBrush = a.Resources["WhiteColorBrush"] as Brush
-                        })
-                .ToList();
+           
         }
 
         public void Init()
@@ -684,7 +663,6 @@ namespace VisualCrypt.Desktop.Views
             var tcs = new TaskCompletionSource<bool>();
             var setPassword = new SetPasswordDialog(setPasswordDialogMode, _messageBoxService, _encryptionService)
             {
-                WindowStyle = WindowStyle.ToolWindow,
                 Owner = Application.Current.MainWindow
             };
             var okClicked = setPassword.ShowDialog() == true;
@@ -801,41 +779,8 @@ namespace VisualCrypt.Desktop.Views
 
         #endregion
 
-        public List<AccentColorMenuData> AccentColors { get; set; }
-        public List<AppThemeMenuData> AppThemes { get; set; }
+     
     }
 
-    public class AccentColorMenuData
-    {
-        public string Name { get; set; }
-        public Brush BorderColorBrush { get; set; }
-        public Brush ColorBrush { get; set; }
-
-        ICommand _changeAccentCommand;
-        public ICommand ChangeAccentCommand
-        {
-            get
-            {
-                return _changeAccentCommand ??
-                       (_changeAccentCommand = new DelegateCommand<object>(DoChangeTheme, (x) => true));
-            }
-        }
-
-        protected virtual void DoChangeTheme(object sender)
-        {
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            var accent = ThemeManager.GetAccent(this.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, accent, theme.Item1);
-        }
-    }
-
-    public class AppThemeMenuData : AccentColorMenuData
-    {
-        protected override void DoChangeTheme(object sender)
-        {
-            var theme = ThemeManager.DetectAppStyle(Application.Current);
-            var appTheme = ThemeManager.GetAppTheme(this.Name);
-            ThemeManager.ChangeAppStyle(Application.Current, theme.Item2, appTheme);
-        }
-    }
+    
 }

@@ -1,4 +1,4 @@
-﻿<controls:MetroWindow x:Class="VisualCrypt.Desktop.Views.AboutDialog"
+﻿<Window x:Class="VisualCrypt.Desktop.Views.AboutDialog"
                       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -33,4 +33,4 @@
 
         </DockPanel>
     </Grid>
-</controls:MetroWindow>
+</Window>
