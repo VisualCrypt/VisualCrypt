@@ -168,5 +168,7 @@ namespace VisualCrypt.Desktop.Views
 			if (ViewModel.SaveCommand.CanExecute())
 				ViewModel.SaveCommand.CanExecute();
 		}
+
+	   
 	}
 }

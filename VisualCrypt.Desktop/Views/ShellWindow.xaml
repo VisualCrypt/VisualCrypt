@@ -10,19 +10,14 @@
                       xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
                       xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
                       xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
-                      WindowStyle="None"
-                    AllowsTransparency="True"
                       Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
                       Height="350" Width="805"
                       WindowStartupLocation="CenterScreen"
-    
-                    
                       AllowDrop="True"
-                      ResizeMode="CanResizeWithGrip"
-      
-                      Icon="/VisualCrypt;component/Images/WindowIcon.png"
-      
-                      
+                    BorderThickness="0"
+                    WindowStyle="None"
+                    ResizeMode="CanResizeWithGrip"
+                    AllowsTransparency="True"
         >
 
    
@@ -57,10 +52,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
      
-        <Menu Grid.Row="0" Height="30" Padding="0">
+        <Menu Grid.Row="0" Height="27" Padding="0">
             <Menu.Resources>
                 <Style TargetType="MenuItem">
-                    <Setter Property="Padding" Value="4"></Setter>
+                    <Setter Property="Padding" Value="3"></Setter>
                 </Style>
             </Menu.Resources>
             <MenuItem Header="_File">
@@ -145,7 +140,7 @@
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0"
                 MinWidth="0" />
-        <DockPanel Grid.Row="2" Width="Auto" Height="20" Background="{DynamicResource BarColorBrush}"
+        <DockPanel Grid.Row="2" Width="Auto" Height="23" Background="{DynamicResource BarColorBrush}"
                    Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <DockPanel.Resources>
                 <Style x:Key="X" TargetType="TextBlock">
@@ -158,21 +153,21 @@
                     </Style.Triggers>
                 </Style>
             </DockPanel.Resources>
-            <TextBlock DockPanel.Dock="Left" Margin="5,0" Text="{Binding StatusBarText}" TextAlignment="Left" />
-            <TextBlock
+            <TextBlock DockPanel.Dock="Left" Margin="5,0" Text="{Binding StatusBarText}" TextAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock VerticalAlignment="Center"
                 Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}"
                 ToolTip="Clear Password   Ctrl+R"
                 DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold" Foreground="#A5FF0000"
                 Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown" />
-            <TextBlock DockPanel.Dock="Right" Margin="5,0"
+            <TextBlock DockPanel.Dock="Right" Margin="5,0" VerticalAlignment="Center"
                        Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}" />
-            <TextBlock DockPanel.Dock="Right">
+            <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">
                 <Hyperlink Click="Hyperlink_SetPassword_Click" ToolTip="Ctrl+P">
                     <TextBlock
                         Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}" />
                 </Hyperlink>
             </TextBlock>
-            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S"
+            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S" VerticalAlignment="Center" 
                    MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown"
                    Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}" />
         </DockPanel>

@@ -58,9 +58,9 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			switch (WindowState)
 			{
 				case WindowState.Normal:
-					MaxHeight = Screen.FromHandle(new WindowInteropHelper(this).Handle).WorkingArea.Height;
-					MaxWidth = Screen.FromHandle(new WindowInteropHelper(this).Handle).WorkingArea.Width;
-					WindowState = WindowState.Maximized;
+                    //MaxHeight = SystemParameters.WorkArea.Height;
+                    //MaxWidth = SystemParameters.WorkArea.Width;
+                    WindowState = WindowState.Maximized;
 					_restoreButton.Content = 2;
 					break;
 				case WindowState.Maximized:
