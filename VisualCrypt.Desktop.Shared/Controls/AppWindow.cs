@@ -11,10 +11,13 @@ namespace VisualCrypt.Desktop.Shared.Controls
 {
     public class AppWindow : Window
     {
-		public static readonly double StartupWidth = 805;
-		public static readonly double StartupHeight = 350;
+		// ReSharper disable MemberCanBeProtected.Global 
+		// nope, must be public for data binding
+	    public const double StartupWidth = 805;
+		public const double StartupHeight = 350 * 1.3;
+		// ReSharper restore MemberCanBeProtected.Global
 
-        static AppWindow()
+	    static AppWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(AppWindow),
                 new FrameworkPropertyMetadata(typeof(AppWindow)));
@@ -60,9 +63,10 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
         protected override void OnInitialized(EventArgs e)
         {
+			base.OnInitialized(e);
             SourceInitialized += OnSourceInitialized;
 			PreviewKeyDown += Window_PreviewKeyDown;
-            base.OnInitialized(e);
+	        WindowStyle = WindowStyle.None;
         }
 
 		#region Event handlers
@@ -267,7 +271,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
         HwndSource _hwndSource;
 
         [DllImportAttribute("user32.dll")]
-        public static extern bool ReleaseCapture();
+        static extern bool ReleaseCapture();
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);

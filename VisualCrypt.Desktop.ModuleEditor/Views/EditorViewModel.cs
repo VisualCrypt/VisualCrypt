@@ -210,7 +210,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			var findReplaceDialog = new FindReplace(_findReplaceDialogViewModel)
 			{
-				WindowStyle = WindowStyle.ToolWindow,
+				
 				Owner = Application.Current.MainWindow
 			};
 
@@ -280,7 +280,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			var findReplaceDialog = new FindReplace(_findReplaceDialogViewModel)
 			{
-				WindowStyle = WindowStyle.ToolWindow,
+				
 				Owner = Application.Current.MainWindow
 			};
 
@@ -358,7 +358,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			var goToWindow = new GoTo(_goToWindowViewModel)
 			{
-				WindowStyle = WindowStyle.ToolWindow,
 				Owner = Application.Current.MainWindow
 			};
 
@@ -431,7 +430,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			var fontDialog = new Font(_textBox1.SelectedText)
 			{
-				WindowStyle = WindowStyle.ToolWindow,
 				Owner = Application.Current.MainWindow,
 				WindowStartupLocation = WindowStartupLocation.CenterOwner
 			};

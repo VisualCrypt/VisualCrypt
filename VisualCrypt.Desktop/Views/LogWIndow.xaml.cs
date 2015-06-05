@@ -2,11 +2,13 @@
 
 using System.ComponentModel.Composition;
 using System.Globalization;
+using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 
 namespace VisualCrypt.Desktop.Views
 {
     [Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
     public partial class LogWindow 
     {
         [Import(AllowRecomposition = false)]
@@ -15,7 +17,22 @@ namespace VisualCrypt.Desktop.Views
         public LogWindow()
         {
             InitializeComponent();
+			Loaded += LogWindow_Loaded;
+			Closed += LogWindow_Closed;
         }
+
+		void LogWindow_Closed(object sender, System.EventArgs e)
+		{
+			_logger.Callback = null;
+		}
+
+		void LogWindow_Loaded(object sender, RoutedEventArgs e)
+		{
+			
+			_logger.Callback = Log;
+			_logger.ReplaySavedLogs(Log);
+			
+		}
 
         public void Log(string message, Category category, Priority priority)
         {
@@ -29,9 +46,11 @@ namespace VisualCrypt.Desktop.Views
         }
 
      
-        public void OnImportsSatisfied()
-        {
-            _logger.ReplaySavedLogs(Log);
-        }
+     
+
+	    void ButtonClose_Click(object sender, RoutedEventArgs e)
+	    {
+		    Close();
+	    }
     }
 }

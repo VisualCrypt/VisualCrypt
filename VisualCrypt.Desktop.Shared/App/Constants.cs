@@ -10,7 +10,7 @@ namespace VisualCrypt.Desktop.Shared.App
 		internal const string Key_NotepadSettings = "NotepadSettings"; // string key containing the serialized settings
 		// ReSharper restore InconsistentNaming
 
-		public const string ProductName = "VisualCrypt Notepad";
+		public const string ProductName = "VisualCrypt Editor";
 
 		public const string HelpUrl = "http://visualcrypt.com";
 

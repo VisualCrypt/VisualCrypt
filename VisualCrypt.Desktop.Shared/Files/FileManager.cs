@@ -1,4 +1,5 @@
 ﻿using System;
+using VisualCrypt.Desktop.Shared.App;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {
@@ -18,7 +19,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				_fileModel = value;
 				_fileModel.PropertyChanged += _fileModel_PropertyChanged;
 				BindableFileInfo.IsDirty = _fileModel.IsDirty;
-				BindableFileInfo.Filename = _fileModel.Filename;
+				BindableFileInfo.Filename = Constants.ProductName  +" - "  +_fileModel.Filename ;
 				BindableFileInfo.IsEncrypted = _fileModel.IsEncrypted;
 			}
 		}

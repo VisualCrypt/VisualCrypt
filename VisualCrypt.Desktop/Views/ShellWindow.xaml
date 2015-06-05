@@ -131,9 +131,9 @@
 
             <MenuItem Header="_Help">
                 <MenuItem Header="View _Help Online" Command="{Binding HelpCommand}" InputGestureText="F1" />
-                <MenuItem Header="_AboutDialog VisualCrypt Notepad" Command="{Binding AboutCommand}"
-                          InputGestureText="Shift+F1" />
-                <MenuItem Header="Application _Log" Command="{Binding LogCommand}" InputGestureText="Shift+A" />
+                <MenuItem Header="QA _Log" Command="{Binding LogCommand}" InputGestureText="Shift+A" />
+                <Separator />
+                <MenuItem Header="_About VisualCrypt Editor" Command="{Binding AboutCommand}"  InputGestureText="Shift+F1" />
             </MenuItem>
         </Menu>
         <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static shared:RegionNames.EditorRegion}"

@@ -156,7 +156,6 @@ namespace VisualCrypt.Desktop.Views
 
                 var importEncoding = new ImportEncodingDialog
                 {
-                    WindowStyle = WindowStyle.ToolWindow,
                     Owner = Application.Current.MainWindow
                 };
 
@@ -264,7 +263,7 @@ namespace VisualCrypt.Desktop.Views
 
         void ExecuteAboutCommand()
         {
-            var aboutDialog = new AboutDialog { WindowStyle = WindowStyle.ToolWindow, Owner = Application.Current.MainWindow };
+            var aboutDialog = new AboutDialog { Owner = Application.Current.MainWindow };
             aboutDialog.ShowDialog();
         }
 

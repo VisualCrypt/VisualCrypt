@@ -25,15 +25,14 @@
         </Style.Triggers>
     </Style>
     <!-- Window style -->
-    <Style TargetType="{x:Type local:AppWindow}">
+    <Style TargetType="{x:Type local:AppDialog}">
         <Setter Property="AllowsTransparency" Value="False"></Setter>
         <Setter Property="Background" Value="White"></Setter>
-        <Setter Property="WindowStyle" Value="None"/>
         <Setter Property="ResizeMode" Value="NoResize"/>
         <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:AppWindow}">
+                <ControlTemplate TargetType="{x:Type local:AppDialog}">
                     <Grid Margin="0" Background="{TemplateBinding Background}">
                         <Grid>
                             <Grid.RowDefinitions>
@@ -43,11 +42,11 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto"/>
+                               
                             </Grid.ColumnDefinitions>
 
                             <Rectangle x:Name="moveRectangle" Fill="{DynamicResource AccentColorBrush}" 
-                                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
+                                           Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch"/>
                             <Image  Margin="3,3,10,3"  Grid.Row="0" Grid.Column="0" Source="AppWindowIcon.png"  IsHitTestVisible="False"></Image>
                             <TextBlock Grid.Row="0" Grid.Column="1" Text="{TemplateBinding Title}"
                                            FontSize="{x:Static SystemFonts.CaptionFontSize}" 
@@ -55,12 +54,8 @@
                                            VerticalAlignment="Center"  IsHitTestVisible="False" Margin="0" Padding="0"
                                            Foreground="White" 
                                            HorizontalAlignment="Left"></TextBlock>
-                            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Background="Transparent">
-                                <Button Width="30"  x:Name="minimizeButton" Style="{StaticResource WindowButtonStyle}" Content="0"  />
-                                <Button Width="30" x:Name="restoreButton" Style="{StaticResource WindowButtonStyle}" Content="1" />
-                                <Button Width="30" x:Name="closeButton" Style="{StaticResource WindowButtonStyle}" Content="r" />
-                            </StackPanel>
-                            <Grid Column="0" Background="Transparent" Grid.Row="1" Grid.ColumnSpan="3" Margin="0">
+                          
+                            <Grid Column="0" Background="Transparent" Grid.Row="1" Grid.ColumnSpan="2" Margin="0">
                                 <AdornerDecorator>
                                     <ContentPresenter/>
                                 </AdornerDecorator>

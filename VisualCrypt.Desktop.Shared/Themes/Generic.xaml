@@ -8,5 +8,6 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     Index all Styles that are part of the 'Generic' theme here: -->
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppWindow.Generic.xaml"/>
+        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppDialog.Generic.xaml"/>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

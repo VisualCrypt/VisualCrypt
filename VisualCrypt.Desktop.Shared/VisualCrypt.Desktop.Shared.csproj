@@ -80,6 +80,7 @@
     <Compile Include="App\DialogDirection.cs" />
     <Compile Include="App\DialogFilters.cs" />
     <Compile Include="Commands\EditorCommands.cs" />
+    <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />
     <Compile Include="DelegateCommandExtensions.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
@@ -147,6 +148,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\DialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -192,6 +197,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Styles\Sizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\AppDialog.Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

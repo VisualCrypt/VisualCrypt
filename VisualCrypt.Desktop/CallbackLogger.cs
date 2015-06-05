@@ -10,18 +10,23 @@ namespace VisualCrypt.Desktop
             new Queue<Tuple<string, Category, Priority>>();
 
 
-        Action<string, Category, Priority> _callback;
+        public Action<string, Category, Priority> Callback;
 
 
         public void Log(string message, Category category, Priority priority)
         {
-            if (_callback != null)
+	        var date = DateTime.Now;
+	        var time = string.Format("{0}:{1}:{2}", date.Hour, date.Minute, date.Second);
+	        string timestamped = string.Format("{0} {1}", time, message);
+            if (Callback != null)
             {
-                _callback(message, category, priority);
+				Callback(timestamped, category, priority);
             }
             else
             {
-                _savedLogs.Enqueue(new Tuple<string, Category, Priority>(message, category, priority));
+	            if (_savedLogs.Count > 100)
+		            _savedLogs.Dequeue();
+				_savedLogs.Enqueue(new Tuple<string, Category, Priority>(timestamped, category, priority));
             }
         }
 
@@ -33,7 +38,7 @@ namespace VisualCrypt.Desktop
             while (_savedLogs.Count > 0)
             {
                 var log = _savedLogs.Dequeue();
-                _callback(log.Item1, log.Item2, log.Item3);
+                Callback(log.Item1, log.Item2, log.Item3);
             }
         }
     }
