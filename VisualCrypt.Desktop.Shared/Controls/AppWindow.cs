@@ -11,6 +11,9 @@ namespace VisualCrypt.Desktop.Shared.Controls
 {
     public class AppWindow : Window
     {
+		public static readonly double StartupWidth = 805;
+		public static readonly double StartupHeight = 350;
+
         static AppWindow()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(AppWindow),
@@ -41,7 +44,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
             if (_moveRectangle != null)
             {
-                _moveRectangle.MouseDown += ResizeRectangle_MouseDown;
+                _moveRectangle.MouseDown += MoveRectangle_MouseDown;
 
             }
 
@@ -58,13 +61,31 @@ namespace VisualCrypt.Desktop.Shared.Controls
         protected override void OnInitialized(EventArgs e)
         {
             SourceInitialized += OnSourceInitialized;
-
+			PreviewKeyDown += Window_PreviewKeyDown;
             base.OnInitialized(e);
         }
 
+		#region Event handlers
 
-        #region Eventt handlers
-
+		void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+		{
+			var isAltPressed = Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt);
+			if (e.Key == Key.System && Keyboard.IsKeyDown(Key.Space) && isAltPressed)
+			{ 
+				e.Handled = true;
+				CenterOnPrimaryScreenWithDefaults();
+			}
+		}
+		void CenterOnPrimaryScreenWithDefaults()
+		{
+			Left = (SystemParameters.WorkArea.Width / 2) - (StartupWidth / 2);
+			Top = (SystemParameters.WorkArea.Height / 2) - (StartupHeight / 2);
+			Width = StartupWidth;
+			Height = StartupHeight;
+			WindowState = WindowState.Normal;
+			SetCanResize(true);
+		}
+	   
 
         void Minimize_Click(object sender, RoutedEventArgs e)
         {
@@ -81,7 +102,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
             Close();
         }
 
-        void ResizeRectangle_MouseDown(object sender, MouseButtonEventArgs e)
+        void MoveRectangle_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton != MouseButton.Left)
                 return;
@@ -95,6 +116,8 @@ namespace VisualCrypt.Desktop.Shared.Controls
             var lParam = (int)(uint)x | (y << 16);
 
             SendMessage(windowHandle, WmNclbuttondown, HtCaption, lParam);
+	        SetCanResize(true);
+			
             var canResize = ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize;
 
             if (e.ClickCount == 2 && canResize)
@@ -103,7 +126,8 @@ namespace VisualCrypt.Desktop.Shared.Controls
             }
         }
 
-        void ResizeRectangle_MouseLeave(object sender, MouseEventArgs e)
+
+	    void ResizeRectangle_MouseLeave(object sender, MouseEventArgs e)
         {
             if (e.LeftButton != MouseButtonState.Pressed)
                 Cursor = Cursors.Arrow;
@@ -111,6 +135,9 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
         void ResizeRectangle_MouseMove(Object sender, MouseEventArgs e)
         {
+            if (WindowState == WindowState.Maximized)
+                return;
+
             var rectangle = sender as Rectangle;
             if (rectangle != null)
                 switch (rectangle.Name)
@@ -144,6 +171,8 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
         void ResizeRectangle_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (WindowState == WindowState.Maximized)
+                return;
             var rectangle = sender as Rectangle;
             if (rectangle != null)
                 switch (rectangle.Name)
@@ -202,18 +231,33 @@ namespace VisualCrypt.Desktop.Shared.Controls
             {
                 case WindowState.Normal:
                     {
+						// Maximize
                         _restoreButton.Content = 2;
                         WindowState = WindowState.Maximized;
+                        SetCanResize(false);
                         break;
                     }
                 case WindowState.Maximized:
                     {
+						// Restore to normal size.
                         _restoreButton.Content = 1;
                         WindowState = WindowState.Normal;
+						SetCanResize(false);
                         break;
                     }
             }
         }
+
+
+		void SetCanResize(bool canResize)
+		{
+			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
+			if (resizeGrid != null)
+				foreach (UIElement rectangle in resizeGrid.Children)
+				{
+					rectangle.IsHitTestVisible = canResize;
+				}
+		}
         #endregion
 
         #region interop
