@@ -8,8 +8,8 @@
             <ResourceDictionary.MergedDictionaries>
              
                
-                <!--<ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Fonts.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Colors.xaml" />-->
+                <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Colors.xaml" />
                 <ResourceDictionary
                     Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Accents/VisualCrypt.xaml" />
                 
