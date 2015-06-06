@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
@@ -8,19 +9,25 @@ using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.Shared)]
 	public sealed class FindReplaceViewModel : ViewModelBase
 	{
-		readonly TextBox _textBox1;
+		TextBox _textBox1;
 
 		int _timesNotFound;
+
+		public void SetTextBox(TextBox textBox1)
+		{
+			_textBox1 = textBox1;
+		}
 
 		public SearchOptions SearchOptions { get; set; }
 
 		public IMessageBoxService MessageBoxService;
 
-		public FindReplaceViewModel(TextBox textBox1)
+		public FindReplaceViewModel()
 		{
-			_textBox1 = textBox1;
 			SearchOptions = new SearchOptions();
 		}
 

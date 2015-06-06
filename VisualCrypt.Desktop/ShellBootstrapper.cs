@@ -51,7 +51,7 @@ namespace VisualCrypt.Desktop
 
 			// Because we created the ReplayLogger and it needs to be used immediately, 
 			// we compose it to satisfy any imports it has.
-			Container.ComposeExportedValue<ReplayLogger>(_replayLogger);
+			Container.ComposeExportedValue(_replayLogger);
 		}
 
 		protected override IModuleCatalog CreateModuleCatalog()

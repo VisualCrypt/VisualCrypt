@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -6,6 +7,8 @@ using System.Windows.Input;
 
 namespace VisualCrypt.Desktop.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public partial class ImportEncodingDialog
 	{
 		EncodingInfo _selectedEncodingInfo;
@@ -27,7 +30,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			get
 			{
-				var encodings = Encoding.GetEncodings().OrderBy((e) => e.DisplayName).ToList();
+				var encodings = Encoding.GetEncodings().OrderBy(e => e.DisplayName).ToList();
 				var defaultEncoding = encodings.SingleOrDefault(e => e.DisplayName == Encoding.Default.EncodingName);
 				if (defaultEncoding != null)
 					SelectedEncodingInfo = defaultEncoding;

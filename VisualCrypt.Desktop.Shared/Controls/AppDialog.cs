@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,6 +10,7 @@ using System.Windows.Shapes;
 
 namespace VisualCrypt.Desktop.Shared.Controls
 {
+	
 	public class AppDialog : Window
 	{
 		static AppDialog()

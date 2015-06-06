@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,6 +20,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 	///     started. Enjoy!
 	///     --Niklas Borson,  FontDialogSample.zip
 	/// </summary>
+	[Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public partial class Font
 	{
 		#region fields and types
@@ -52,8 +55,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#region Construction and initialization
 
-		public Font(string sampleText)
+		[ImportingConstructor]
+		public Font(IParamsProvider paramsProvider)
 		{
+			string sampleText = paramsProvider.GetParams<Font, string>();
 			_selectedFontSettings = new FontSettings();
 			Map.Copy(SettingsManager.EditorSettings.FontSettings, _selectedFontSettings);
 

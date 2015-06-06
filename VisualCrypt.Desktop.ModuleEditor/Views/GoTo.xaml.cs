@@ -1,9 +1,14 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel.Composition;
+using System.Windows.Input;
+using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public partial class GoTo
 	{
+		[ImportingConstructor]
 		public GoTo(GoToViewModel goToWindowViewModel)
 		{
 			InitializeComponent();
@@ -14,6 +19,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			PreviewKeyDown += CloseWithEscape;
 
+			Activated += (sender, args) =>
+			{
+				TextBoxLineNo.SelectAll();
+				goToWindowViewModel.MessageBoxService = new MessageBoxService(this);
+			};
+
 			goToWindowViewModel.CloseAction = Close;
 		}
 
@@ -23,9 +34,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				Close();
 		}
 
-		public void SelectAll()
-		{
-			TextBoxLineNo.SelectAll();
-		}
+		
 	}
 }

@@ -20,16 +20,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 	{
 		TextBox _textBox1;
 		SpellCheck _spellCheck;
-		FindReplaceViewModel _findReplaceDialogViewModel;
+		readonly FindReplaceViewModel _findReplaceDialogViewModel;
 		GoToViewModel _goToWindowViewModel;
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEventAggregator _eventAggregator;
 
 		[ImportingConstructor]
-		public EditorViewModel(IEventAggregator eventAggregator, IMessageBoxService messageBoxService)
+		public EditorViewModel(IEventAggregator eventAggregator, IMessageBoxService messageBoxService, FindReplaceViewModel findReplaceViewModel, GoToViewModel goToViewModel)
 		{
 			_eventAggregator = eventAggregator;
 			_messageBoxService = messageBoxService;
+			_findReplaceDialogViewModel = findReplaceViewModel;
+			_goToWindowViewModel = goToViewModel;
 		}
 
 		public void OnEditorInitialized(TextBox textbox1)
@@ -38,8 +40,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_spellCheck = _textBox1.SpellCheck;
 			_spellCheck.SpellingReform = SpellingReform.Postreform;
 
-			_findReplaceDialogViewModel = new FindReplaceViewModel(_textBox1);
-			_goToWindowViewModel = new GoToViewModel(_textBox1);
+			_findReplaceDialogViewModel.SetTextBox(_textBox1);
+			_goToWindowViewModel.SetTextBox(_textBox1);
 
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_textBox1);
 			ExecuteZoom100();
@@ -196,27 +198,30 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			return _textBox1.Text.Length > 0;
 		}
 
-		public void ExecuteFind()
+		public async void ExecuteFind()
 		{
-			_findReplaceDialogViewModel.TabControlSelectedIndex = 0;
-			var fr = Application.Current.Windows.OfType<FindReplace>().FirstOrDefault();
-			if (fr != null)
+			try
 			{
-				fr.Activate();
-				fr.TextBoxFindFindString.SelectAll();
-				fr.TextBoxFindFindString.Focus();
-				return;
+				_findReplaceDialogViewModel.TabControlSelectedIndex = 0;
+				var fr = Application.Current.Windows.OfType<FindReplace>().FirstOrDefault();
+				if (fr != null)
+				{
+
+					fr.WindowState = WindowState.Normal;
+					fr.Activate();
+					fr.TextBoxFindFindString.SelectAll();
+					fr.TextBoxFindFindString.Focus();
+					return;
+				}
+
+				ParamsProvider.SetParams(typeof (FindReplace), _findReplaceDialogViewModel);
+				await WindowManager.ShowWindowAsyncAndWaitForClose<FindReplace>();
+				_textBox1.Focus();
 			}
-
-			var findReplaceDialog = new FindReplace(_findReplaceDialogViewModel)
+			catch (Exception e)
 			{
-				
-				Owner = Application.Current.MainWindow
-			};
-
-			findReplaceDialog.Show();
-			findReplaceDialog.Closed += (o, args) => _textBox1.Focus();
-			_findReplaceDialogViewModel.MessageBoxService = new MessageBoxService(findReplaceDialog);
+				_messageBoxService.ShowError(e);
+			}
 		}
 
 		#endregion
@@ -351,19 +356,21 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#region GoToCommand
 
-		public void ExecuteGoTo()
+		public async void ExecuteGoTo()
 		{
-			if (Application.Current.Windows.OfType<GoTo>().Any())
-				return;
-
-			var goToWindow = new GoTo(_goToWindowViewModel)
+			try
 			{
-				Owner = Application.Current.MainWindow
-			};
+				if (Application.Current.Windows.OfType<GoTo>().Any())
+					return;
 
-			goToWindow.Show();
-			goToWindow.SelectAll();
-			_goToWindowViewModel.MessageBoxService = new MessageBoxService(goToWindow);
+				await WindowManager.ShowWindowAsyncAndWaitForClose<GoTo>();
+				_textBox1.Focus();
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e);
+			}
+
 		}
 
 		public bool CanExecuteGoTo()
@@ -413,11 +420,20 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			return true;
 		}
 
-		public void ExecuteFont()
+		public async void ExecuteFont()
 		{
 			try
 			{
-				ShowFontDialog();
+				ParamsProvider.SetParams(typeof(Font), _textBox1.Text);
+				var fontDialog = await WindowManager.GetDialogFromShowDialogAsyncWhenClosed<Font>();
+
+
+				if (fontDialog.DialogResult == true)
+				{
+					ExecuteZoom100();
+					Map.Copy(SettingsManager.EditorSettings.FontSettings, _textBox1);
+					SettingsManager.SaveSettings();
+				}
 			}
 			catch (Exception e)
 			{
@@ -426,21 +442,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 
-		void ShowFontDialog()
-		{
-			var fontDialog = new Font(_textBox1.SelectedText)
-			{
-				Owner = Application.Current.MainWindow,
-				WindowStartupLocation = WindowStartupLocation.CenterOwner
-			};
-
-			if (fontDialog.ShowDialog() == true)
-			{
-				ExecuteZoom100();
-				Map.Copy(SettingsManager.EditorSettings.FontSettings, _textBox1);
-				SettingsManager.SaveSettings();
-			}
-		}
+	
 
 		#endregion
 

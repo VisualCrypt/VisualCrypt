@@ -1,14 +1,21 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Windows.Input;
+using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public partial class FindReplace
 	{
+		[ImportingConstructor]
 		public FindReplace(FindReplaceViewModel findReplaceViewModel)
 		{
 			InitializeComponent();
 			DataContext = findReplaceViewModel;
+
+			findReplaceViewModel.MessageBoxService = new MessageBoxService(this);
 
 			if (findReplaceViewModel.TabControlSelectedIndex == 0)
 			{

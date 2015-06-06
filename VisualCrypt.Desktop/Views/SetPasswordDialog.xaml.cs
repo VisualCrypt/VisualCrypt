@@ -1,20 +1,25 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using VisualCrypt.Cryptography.Net.Tools;
+using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public sealed partial class SetPasswordDialog
 	{
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEncryptionService _encryptionService;
 
-		public SetPasswordDialog(SetPasswordDialogMode setPasswordDialogMode, IMessageBoxService messageBoxService,
-			IEncryptionService encryptionService)
+		[ImportingConstructor]
+		public SetPasswordDialog(IMessageBoxService messageBoxService,
+			IEncryptionService encryptionService, IParamsProvider paramsProvider)
 		{
 			_messageBoxService = messageBoxService;
 			_encryptionService = encryptionService;
@@ -22,7 +27,14 @@ namespace VisualCrypt.Desktop.Views
 			InitializeComponent();
 			DataContext = this;
 
+			PwBox.Focus();
 
+			PreviewKeyDown += CloseWithEscape;
+			SetMode(paramsProvider.GetParams<SetPasswordDialog, SetPasswordDialogMode>());
+		}
+
+		void SetMode(SetPasswordDialogMode setPasswordDialogMode)
+		{
 			switch (setPasswordDialogMode)
 			{
 				case SetPasswordDialogMode.Set:
@@ -54,10 +66,6 @@ namespace VisualCrypt.Desktop.Views
 					ButtonOk.Content = "Change Password and decrypt";
 					break;
 			}
-
-			PwBox.Focus();
-
-			PreviewKeyDown += CloseWithEscape;
 		}
 
 		void CloseWithEscape(object sender, KeyEventArgs e)

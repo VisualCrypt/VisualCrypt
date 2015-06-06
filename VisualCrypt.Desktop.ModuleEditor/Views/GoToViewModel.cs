@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
 using VisualCrypt.Desktop.Shared;
@@ -6,17 +7,14 @@ using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.Shared)]
 	public sealed class GoToViewModel : ViewModelBase
 	{
-		readonly TextBox _textBox1;
+		TextBox _textBox1;
 
 		public IMessageBoxService MessageBoxService;
 		public Action CloseAction;
-
-		public GoToViewModel(TextBox textBox1)
-		{
-			_textBox1 = textBox1;
-		}
 
 		public string LineNo
 		{
@@ -33,7 +31,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		string _lineNo;
 
-		#region FindCommand
+		#region GoCommand
 
 		int _lineIndex;
 
@@ -85,5 +83,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 		#endregion
+
+		public void SetTextBox(TextBox textBox1)
+		{
+			_textBox1 = textBox1;
+		}
 	}
 }

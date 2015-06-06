@@ -79,6 +79,8 @@
   <ItemGroup>
     <Compile Include="App\DialogDirection.cs" />
     <Compile Include="App\DialogFilters.cs" />
+    <Compile Include="App\WindowManager.cs" />
+    <Compile Include="App\ParamsProvider.cs" />
     <Compile Include="Commands\EditorCommands.cs" />
     <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />

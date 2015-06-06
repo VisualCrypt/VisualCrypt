@@ -1,9 +1,12 @@
-﻿using System.Windows;
+﻿using System.ComponentModel.Composition;
+using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.Views
 {
+	[Export]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public partial class AboutDialog
 	{
 		public AboutDialog()
