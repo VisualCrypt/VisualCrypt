@@ -116,10 +116,10 @@
             <MenuItem Header="_View">
                 <MenuItem Header="_Status Bar" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}"
-                          InputGestureText="F11" />
+                          InputGestureText="F12" />
                 <MenuItem Header="_Tool Area" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsToolAreaChecked, Mode=TwoWay}"
-                          InputGestureText="F12" />
+                          InputGestureText="ESC" />
                 <MenuItem
                     Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">
                     <MenuItem Header="Zoom _in" InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn" />

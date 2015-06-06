@@ -58,9 +58,9 @@ namespace VisualCrypt.Desktop.Views
 				&& ViewModel.ClearPasswordCommand.CanExecute())
 				ViewModel.ClearPasswordCommand.Execute();
 
-			if (e.Key == Key.F11)
-				SettingsManager.EditorSettings.IsStatusBarChecked = !SettingsManager.EditorSettings.IsStatusBarChecked;
 			if (e.Key == Key.F12)
+				SettingsManager.EditorSettings.IsStatusBarChecked = !SettingsManager.EditorSettings.IsStatusBarChecked;
+			if (e.Key == Key.Escape)
 				SettingsManager.EditorSettings.IsToolAreaChecked = !SettingsManager.EditorSettings.IsToolAreaChecked;
 
 			if (e.Key == Key.W && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))

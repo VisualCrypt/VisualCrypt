@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
@@ -25,7 +26,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		TextBox _textbockReplaceFindString;
 		TextBox _textboxReplaceString;
 		TextBox _textBoxGotoString;
-
+		UserControl _editorControl;
 		SpellCheck _spellCheck;
 
 		readonly IMessageBoxService _messageBoxService;
@@ -42,13 +43,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SearchOptions = new SearchOptions();
 		}
 
-		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textbockReplaceFindString, TextBox textboxReplaceString, TextBox textBoxGotoString)
+		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textbockReplaceFindString, TextBox textboxReplaceString, TextBox textBoxGotoString, UserControl editorControl)
 		{
 			_textBox1 = textbox1;
 			_textboxFindFindString = textboxFindFindString;
 			_textbockReplaceFindString = textbockReplaceFindString;
 			_textboxReplaceString = textboxReplaceString;
 			_textBoxGotoString = textBoxGotoString;
+			_editorControl = editorControl;
 
 			_spellCheck = _textBox1.SpellCheck;
 			_spellCheck.SpellingReform = SpellingReform.Postreform;
@@ -220,27 +222,37 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 		int _toolAreaSelectedIndex;
 
+		public TabItem ToolAreaSelectedItem
+		{
+			get { return _toolAreaSelectedItem; }
+			set
+			{
+				if (_toolAreaSelectedItem != value)
+				{
+					_toolAreaSelectedItem = value;
+					OnPropertyChanged(() => ToolAreaSelectedItem);
+				}
+			}
+		}
+		TabItem _toolAreaSelectedItem;
 		#endregion
 
-		#region FindCommand
+		#region FindMenuCommand
 
-		public bool CanExecuteFind()
+		public bool CanExecuteFindMenuCommand()
 		{
 			return _textBox1.Text.Length > 0;
 		}
 
-		public void ExecuteFind()
+		public void ExecuteFindMenuCommand()
 		{
 			try
 			{
 				SettingsManager.EditorSettings.IsToolAreaChecked = true;
 				ToolAreaSelectedIndex = 0;
+				_editorControl.UpdateLayout();
 				_textboxFindFindString.SelectAll();
 				_textboxFindFindString.Focus();
-
-
-				// after Find
-				// _textBox1.Focus();
 			}
 			catch (Exception e)
 			{
@@ -250,9 +262,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region FindNextCommand
+		#region FindNextMenuCommand
 
-		public void ExecuteFindNext()
+		public void ExecuteFindNextMenuCommand()
 		{
 			var oldDirection = SearchOptions.SearchUp;
 			SearchOptions.SearchUp = false;
@@ -260,7 +272,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SearchOptions.SearchUp = oldDirection;
 		}
 
-		public bool CanExecuteFindNext()
+		public bool CanExecuteFindNextMenuCommand()
 		{
 			return FindNextCommand.CanExecute() &&
 				   !string.IsNullOrEmpty(FindString);
@@ -268,9 +280,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region FindPreviousCommand
+		#region FindPreviousMenuCommand
 
-		public void ExecuteFindPrevious()
+		public void ExecuteFindPreviousMenuCommand()
 		{
 			var oldDirection = SearchOptions.SearchUp;
 			SearchOptions.SearchUp = true;
@@ -278,7 +290,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SearchOptions.SearchUp = oldDirection;
 		}
 
-		public bool CanExecuteFindPrevious()
+		public bool CanExecuteFindPreviousMenuCommand()
 		{
 			return FindNextCommand.CanExecute() &&
 				   !string.IsNullOrEmpty(FindString);
@@ -286,17 +298,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region FindLogic, imported
+		#region FindLogic
 
 		int _timesNotFound;
 
-
-
 		public SearchOptions SearchOptions { get; set; }
-
-
-
-
 
 		int Pos
 		{
@@ -335,18 +341,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		string _replaceString = string.Empty;
 
-		public int TabControlSelectedIndex
-		{
-			get { return _tabControlSelectedIndex; }
-			set
-			{
-				if (_tabControlSelectedIndex == value) return;
-				_tabControlSelectedIndex = value;
-				OnPropertyChanged(() => TabControlSelectedIndex);
-			}
-		}
-
-		int _tabControlSelectedIndex;
 
 		#region FindCommand
 
@@ -548,11 +542,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteReplace()
 		{
-			
+
 			SettingsManager.EditorSettings.IsToolAreaChecked = true;
 			ToolAreaSelectedIndex = 1;
-			_textboxFindFindString.SelectAll();
-			_textboxFindFindString.Focus();
+			_editorControl.UpdateLayout();
+			_textbockReplaceFindString.SelectAll();
+			_textbockReplaceFindString.Focus();
 
 			// Find would focus textbox1 after found
 
@@ -635,16 +630,23 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 		string _lineNo;
 
+		public int LineCount
+		{
+			get { return _textBox1.LineCount; }
+		}
+
 
 		public DelegateCommand GoButtonCommand
 		{
 			get { return CreateCommand(ref _goButtonCommand, ExecuteGoButtonCommand, CanExecuteGoButtonCommand); }
 		}
+
 		DelegateCommand _goButtonCommand;
 
 		int _lineIndex;
 		bool CanExecuteGoButtonCommand()
 		{
+			OnPropertyChanged(()=>LineCount);
 			int lineNo;
 			var canParse = int.TryParse(LineNo, out lineNo);
 			if (!canParse)
@@ -665,7 +667,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				_textBox1.CaretIndex = index;
 				var lineLength = _textBox1.GetLineLength(_lineIndex);
 				GoButton_SelectSearchResult(index, lineLength);
-				
+
 			}
 			catch (Exception e)
 			{
@@ -681,19 +683,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region GoToCommand_notBUtton
-		
-		public void ExecuteGoTo()
+		#region GoMenuCommand
+
+		public void ExecuteGoMenuCommand()
 		{
 			try
 			{
-				if (!IsValidGoToInput()) // this sets _lineIndex
-					return;
-				var index = _textBox1.GetCharacterIndexFromLineIndex(_lineIndex);
-				_textBox1.CaretIndex = index;
-				var lineLength = _textBox1.GetLineLength(_lineIndex);
-				SelectSearchResult(index, lineLength);
-				_textBox1.Focus();
+				SettingsManager.EditorSettings.IsToolAreaChecked = true;
+				ToolAreaSelectedIndex = 2;
+
+				_editorControl.UpdateLayout();
+				_textBoxGotoString.SelectAll();
+				_textBoxGotoString.Focus();
 			}
 			catch (Exception e)
 			{
@@ -702,41 +703,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		}
 
-		public bool CanExecuteGoTo()
+		public bool CanExecuteGoMenuCommand()
 		{
-			return _textBox1.LineCount > 1;
+			return _textBox1.LineCount > 0;
 		}
 
-		#endregion
-
-		#region GoCommand
-
-
-
-
-
-		bool IsValidGoToInput()
-		{
-			int lineNo;
-			var canParse = int.TryParse(LineNo, out lineNo);
-			if (!canParse)
-				return false;
-			if (lineNo <= 0)
-				return false;
-			if (_textBox1.LineCount < lineNo)
-				return false;
-			_lineIndex = lineNo - 1;
-			return true;
-		}
-
-
-
-		void SelectSearchResult(int indexInSourceText, int length)
-		{
-			_textBox1.Select(indexInSourceText, length);
-			_textBox1.Focus();
-		}
-	
 		#endregion
 
 		#region DateCommand
@@ -809,6 +780,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void UpdateStatusBar()
 		{
+			OnPropertyChanged(()=>LineCount);
+
 			var pos = GetPositionString();
 			var enc = GetEncodingString();
 

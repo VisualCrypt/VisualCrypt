@@ -18,10 +18,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void Editor_Loaded(object sender, RoutedEventArgs e)
 		{
-			ViewModel.OnEditorInitialized(TextBox1, TextBoxFindFindString, TextBoxReplaceFindString, TextBoxReplaceString, TextBoxGotoString);
+			ViewModel.OnEditorInitialized(TextBox1, TextBoxFindFindString, TextBoxReplaceFindString, TextBoxReplaceString, TextBoxGotoString, this);
 			TextBox1.TextChanged += TextBox1_TextChanged;
 			TextBox1.SelectionChanged += TextBox1_SelectionChanged;
-			TextBox1.PreviewKeyDown += TextBox1_PreviewKeyDown;
+			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 
 			TextBox1.SpellCheck.SpellingReform = SpellingReform.Postreform;
 			TextBox1.PreviewMouseWheel += TextBox1_PreviewMouseWheel;
@@ -36,7 +36,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			get { return DataContext as EditorViewModel; }
 		}
 
-		void TextBox1_PreviewKeyDown(object sender, KeyEventArgs e)
+		void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
 			// see also: Shell.xaml, Shell.xaml.cs
 
@@ -50,16 +50,16 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			// Menu Edit
 			// Find
 			if ((e.Key == Key.F && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-			    && ViewModel.CanExecuteFind())
-				ViewModel.ExecuteFind();
+			    && ViewModel.CanExecuteFindMenuCommand())
+				ViewModel.ExecuteFindMenuCommand();
 			//Find Next
 			if ((e.Key == Key.F3)
-			    && ViewModel.CanExecuteFindNext())
-				ViewModel.ExecuteFindNext();
+			    && ViewModel.CanExecuteFindNextMenuCommand())
+				ViewModel.ExecuteFindNextMenuCommand();
 			// Find Previous
 			if ((e.Key == Key.F3 && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
-			    && ViewModel.CanExecuteFindPrevious())
-				ViewModel.ExecuteFindPrevious();
+			    && ViewModel.CanExecuteFindPreviousMenuCommand())
+				ViewModel.ExecuteFindPreviousMenuCommand();
 			// Replace
 			if ((e.Key == Key.H && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
 			    && ViewModel.CanExecuteReplace())
@@ -70,8 +70,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				ViewModel.ExecuteDeleteLine();
 			// GoTo
 			if ((e.Key == Key.G && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-			    && ViewModel.CanExecuteGoTo())
-				ViewModel.ExecuteGoTo();
+			    && ViewModel.CanExecuteGoMenuCommand())
+				ViewModel.ExecuteGoMenuCommand();
 			// Insert Date, Time
 			if ((e.Key == Key.F5)
 			    && ViewModel.CanExecuteInsertDateTime())
@@ -130,32 +130,32 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void CanExecuteFind(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = ViewModel.CanExecuteFind();
+			e.CanExecute = ViewModel.CanExecuteFindMenuCommand();
 		}
 
 		void ExecuteFind(object sender, ExecutedRoutedEventArgs e)
 		{
-			ViewModel.ExecuteFind();
+			ViewModel.ExecuteFindMenuCommand();
 		}
 
 		void CanExecuteFindNext(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = ViewModel.CanExecuteFindNext();
+			e.CanExecute = ViewModel.CanExecuteFindNextMenuCommand();
 		}
 
 		void ExecuteFindNext(object sender, ExecutedRoutedEventArgs e)
 		{
-			ViewModel.ExecuteFindNext();
+			ViewModel.ExecuteFindNextMenuCommand();
 		}
 
 		void CanExecuteFindPrevious(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = ViewModel.CanExecuteFindPrevious();
+			e.CanExecute = ViewModel.CanExecuteFindPreviousMenuCommand();
 		}
 
 		void ExecuteFindPrevious(object sender, ExecutedRoutedEventArgs e)
 		{
-			ViewModel.ExecuteFindPrevious();
+			ViewModel.ExecuteFindPreviousMenuCommand();
 		}
 
 		void CanExecuteReplace(object sender, CanExecuteRoutedEventArgs e)
@@ -180,12 +180,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void CanExecuteGoTo(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = ViewModel.CanExecuteGoTo();
+			e.CanExecute = ViewModel.CanExecuteGoMenuCommand();
 		}
 
 		void ExecuteGoTo(object sender, ExecutedRoutedEventArgs e)
 		{
-			ViewModel.ExecuteGoTo();
+			ViewModel.ExecuteGoMenuCommand();
 		}
 
 		void CanExecuteInsertDate(object sender, CanExecuteRoutedEventArgs e)
@@ -252,7 +252,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void ButtonGoTo_OnClick(object sender, RoutedEventArgs e)
 		{
-			ViewModel.ExecuteGoTo();
+			ViewModel.ExecuteGoMenuCommand();
+		}
+
+		void ToolArea_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			UpdateLayout();
 		}
 	}
 }
