@@ -152,7 +152,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ShellBootstrapper.cs" />
-    <Compile Include="CallbackLogger.cs" />
+    <Compile Include="ReplayLogger.cs" />
     <Compile Include="Views\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

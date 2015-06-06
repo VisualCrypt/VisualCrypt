@@ -282,7 +282,9 @@ namespace VisualCrypt.Desktop.Views
 
         void ExecuteLogCommand()
         {
-            ServiceLocator.Current.GetInstance<LogWindow>().Show();
+	        var logWindow = ServiceLocator.Current.GetInstance<LogWindow>();
+	        logWindow.Owner = Application.Current.MainWindow;
+			logWindow.Show();
         }
 
         #endregion

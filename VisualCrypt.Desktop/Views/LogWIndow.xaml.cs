@@ -12,7 +12,7 @@ namespace VisualCrypt.Desktop.Views
     public partial class LogWindow 
     {
         [Import(AllowRecomposition = false)]
-        CallbackLogger _logger;
+        ReplayLogger _logger;
 
         public LogWindow()
         {
@@ -34,7 +34,7 @@ namespace VisualCrypt.Desktop.Views
 			
 		}
 
-        public void Log(string message, Category category, Priority priority)
+	    void Log(string message, Category category, Priority priority)
         {
             TraceTextBox.AppendText(
                 string.Format(
@@ -43,6 +43,9 @@ namespace VisualCrypt.Desktop.Views
                     category,
                     priority,
                     message));
+			
+			TraceTextBox.ScrollToEnd();
+			
         }
 
      

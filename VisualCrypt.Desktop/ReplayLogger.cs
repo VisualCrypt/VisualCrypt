@@ -4,7 +4,7 @@ using Microsoft.Practices.Prism.Logging;
 
 namespace VisualCrypt.Desktop
 {
-    public class CallbackLogger : ILoggerFacade
+    public class ReplayLogger : ILoggerFacade
     {
         readonly Queue<Tuple<string, Category, Priority>> _savedLogs =
             new Queue<Tuple<string, Category, Priority>>();

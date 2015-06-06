@@ -11,7 +11,7 @@ namespace VisualCrypt.Desktop
 {
 	public class ShellBootstrapper : MefBootstrapper
 	{
-		readonly CallbackLogger _callbackLogger = new CallbackLogger();
+		readonly ReplayLogger _replayLogger = new ReplayLogger();
 
 		/// <summary>
 		/// Creates the main window of the application and initializes the RegionManager attached property of the ShellWindow.
@@ -49,9 +49,9 @@ namespace VisualCrypt.Desktop
 		{
 			base.ConfigureContainer();
 
-			// Because we created the CallbackLogger and it needs to be used immediately, 
+			// Because we created the ReplayLogger and it needs to be used immediately, 
 			// we compose it to satisfy any imports it has.
-			Container.ComposeExportedValue<CallbackLogger>(_callbackLogger);
+			Container.ComposeExportedValue<ReplayLogger>(_replayLogger);
 		}
 
 		protected override IModuleCatalog CreateModuleCatalog()
@@ -67,14 +67,14 @@ namespace VisualCrypt.Desktop
 		/// The base implementation returns a new TextLogger.
 		/// </remarks>
 		/// <returns>
-		/// A CallbackLogger.
+		/// A ReplayLogger.
 		/// </returns>
 		protected override ILoggerFacade CreateLogger()
 		{
 			// Because the ShellWindow is displayed after most of the interesting boostrapper work has been performed,
 			// this quickstart uses a special logger class to hold on to early log entries and display them 
 			// after the UI is visible.
-			return _callbackLogger;
+			return _replayLogger;
 		}
 	}
 }
