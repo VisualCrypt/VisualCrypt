@@ -35,5 +35,42 @@
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="FontSize" Value="13"></Setter>
     </Style>
-   
+    <Style TargetType="{x:Type TabItem}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid>
+                        <Border Name="Border" Margin="0,0,0,0" Background="Transparent"
+                            BorderBrush="Black" BorderThickness="0,0,0,0" CornerRadius="0">
+                            <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"
+                              HorizontalAlignment="Center"
+                              ContentSource="Header" Margin="0"
+                              RecognizesAccessKey="True">
+                                <ContentPresenter.LayoutTransform>
+                                    <RotateTransform Angle="0" />
+                                </ContentPresenter.LayoutTransform>
+                            </ContentPresenter>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Panel.ZIndex" Value="100" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0" />
+                            <Setter Property="Foreground" Value="Black" />
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="False">
+                            <Setter Property="Panel.ZIndex" Value="0" />
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0" />
+                            <Setter Property="Foreground" Value="DarkGray" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="Border" Property="Background" Value="DarkRed" />
+                            <Setter TargetName="Border" Property="BorderBrush" Value="Black" />
+                            <Setter Property="Foreground" Value="DarkGray" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

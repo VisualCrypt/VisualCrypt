@@ -12,7 +12,6 @@
         <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/DialogStyles.xaml" />
     </controls:AppWindow.Resources>
     <Grid>
-
         <StackPanel>
             <TextBlock Margin="5">Line Number:</TextBlock>
             <TextBox Margin="5" x:Name="TextBoxLineNo"
@@ -24,7 +23,6 @@
                     Go
                 </Button>
             </DockPanel>
-
         </StackPanel>
 
     </Grid>

@@ -15,8 +15,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			InitializeComponent();
 			DataContext = findReplaceViewModel;
 
-			findReplaceViewModel.MessageBoxService = new MessageBoxService(this);
-
 			if (findReplaceViewModel.TabControlSelectedIndex == 0)
 			{
 				SetWindowHeight(0);
@@ -27,7 +25,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				SetWindowHeight(1);
 				TextBoxReplaceFindString.Focus();
 			}
-
+			Loaded += (sender, args) =>
+			{
+				findReplaceViewModel.MessageBoxService = new MessageBoxService(this);
+			};
 			PreviewKeyDown += CloseWithEscape;
 			findReplaceViewModel.PropertyChanged += findReplaceViewModel_PropertyChanged;
 		}

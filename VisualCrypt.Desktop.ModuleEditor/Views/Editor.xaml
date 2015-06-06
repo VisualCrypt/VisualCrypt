@@ -37,7 +37,13 @@
         <CommandBinding Command="commands:EditorCommands.Print" CanExecute="CanExecutePrint" Executed="ExecutePrint" />
 
     </UserControl.CommandBindings>
-    <TextBox x:Name="TextBox1"
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="300"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="TextBox1"
+             Grid.Column="0"
              AcceptsReturn="True"
              AllowDrop="True"
              AcceptsTab="True"
@@ -48,48 +54,142 @@
              TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=OneWay, Converter={StaticResource BoolTextWrappingConverter}}"
              SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}">
 
-        <!-- TextWrapping="{Binding TextWrapping}"-->
-        <TextBox.Style>
-            <Style TargetType="TextBox">
-                <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="{x:Type TextBox}">
-                            <Border x:Name="border" Background="White" BorderBrush="{x:Static SystemColors.MenuBarBrush}" CornerRadius="0" BorderThickness="1">
-                                <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Border>
-                            <ControlTemplate.Triggers>
+            <!-- TextWrapping="{Binding TextWrapping}"-->
+            <TextBox.Style>
+                <Style TargetType="TextBox">
+                    <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type TextBox}">
+                                <Border x:Name="border" Background="White" BorderBrush="{x:Static SystemColors.MenuBarBrush}" CornerRadius="0" BorderThickness="1">
+                                    <ScrollViewer x:Name="PART_ContentHost" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
 
-                                <Trigger Property="IsFocused" Value="True">
-                                    <Setter Property="BorderBrush" TargetName="border" Value="Silver"/>
-                                </Trigger>
+                                    <Trigger Property="IsFocused" Value="True">
+                                        <Setter Property="BorderBrush" TargetName="border" Value="Silver"/>
+                                    </Trigger>
 
-                                <Trigger Property="IsEnabled" Value="False">
-                                    <Setter Property="Opacity" TargetName="border" Value="0.15"/>
-                                </Trigger>
-                                <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="BorderBrush" TargetName="border" Value="Silver"/>
-                                </Trigger>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Setter Property="Opacity" TargetName="border" Value="0.15"/>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="BorderBrush" TargetName="border" Value="Silver"/>
+                                    </Trigger>
 
-                            </ControlTemplate.Triggers>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsFocused" Value="True">
-                        <Setter Property="SelectionOpacity" Value="0.4" />
-                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
-                    </Trigger>
-                    <Trigger Property="IsFocused" Value="False">
-                        <Setter Property="SelectionOpacity" Value="0.3" />
-                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
-                    </Trigger>
-                    <Trigger Property="IsMouseOver" Value="True">
-                       
-                        <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </TextBox.Style>
-    </TextBox>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Style.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter Property="SelectionOpacity" Value="0.4" />
+                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsFocused" Value="False">
+                            <Setter Property="SelectionOpacity" Value="0.3" />
+                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+
+                            <Setter Property="BorderBrush" Value="{x:Static SystemColors.MenuBarBrush}"></Setter>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBox.Style>
+        </TextBox>
+        <Grid Grid.Column="1"   Background="{DynamicResource BarColorBrush}">
+            <Grid.Resources>
+                    <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/DialogStyles.xaml" />
+            </Grid.Resources>
+
+            <Grid>
+                <TabControl x:Name="TabControl1" Height="Auto" SelectedIndex="{Binding TabControlSelectedIndex, Mode=TwoWay}"
+                             Background="{DynamicResource BarColorBrush}" BorderThickness="0"
+                            >
+                    <TabItem>
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Find"></TextBlock>
+                        </TabItem.Header>
+                        <StackPanel HorizontalAlignment="Stretch">
+                            <TextBox Margin="5" x:Name="TextBoxFindFindString"
+                             Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <StackPanel HorizontalAlignment="Right">
+                                <Button IsDefault="True" Command="{Binding FindNextCommand}">
+                                    Find
+                                </Button>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="0">
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchCase, Mode=TwoWay}">Match case</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchWholeWord, Mode=TwoWay}">Match whole word</CheckBox>
+                                </StackPanel>
+                                <StackPanel Margin="0">
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.SearchUp, Mode=TwoWay}">Search up</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.UseRegEx, Mode=TwoWay}">Use Regular Expressions</CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Replace"></TextBlock>
+                        </TabItem.Header>
+                        <StackPanel>
+                            <TextBox x:Name="TextBoxReplaceFindString" Margin="5"
+                             Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBlock Margin="5">Replace with:</TextBlock>
+                            <TextBox x:Name="TextBoxReplaceString" Margin="5"
+                             Text="{Binding ReplaceString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <DockPanel>
+                                <TextBlock Margin="5" Text="{Binding PositionString}" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Command="{Binding FindNextCommand}">
+                                        Find
+                                    </Button>
+                                    <Button IsDefault="True"
+                                    Command="{Binding ReplaceCommand}">
+                                        Replace
+                                    </Button>
+                                    <Button 
+                                    Command="{Binding ReplaceAllCommand}">
+                                        Replace all
+                                    </Button>
+                                </StackPanel>
+                            </DockPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <StackPanel Margin="0">
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchCase, Mode=TwoWay}">Match case</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchWholeWord, Mode=TwoWay}">Match whole word</CheckBox>
+                                </StackPanel>
+                                <StackPanel Margin="0">
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.SearchUp, Mode=TwoWay}">Search up</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.UseRegEx, Mode=TwoWay}">Use Regular Expressions</CheckBox>
+                                </StackPanel>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </TabItem>
+                    <TabItem>
+                        <TabItem.Header>
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Go"></TextBlock>
+                        </TabItem.Header>
+                        <StackPanel>
+                            <TextBlock Margin="5">Line Number:</TextBlock>
+                            <TextBox Margin="5" x:Name="TextBoxLineNo"
+                     Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <DockPanel>
+
+                                <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" Width="65"
+                        Command="{Binding GoCommand}">
+                                    Go
+                                </Button>
+                            </DockPanel>
+                        </StackPanel>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+        </Grid>
+    </Grid>
 </UserControl>

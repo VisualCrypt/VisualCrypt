@@ -19,9 +19,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			PreviewKeyDown += CloseWithEscape;
 
-			Activated += (sender, args) =>
+			Activated += (sender, args) => TextBoxLineNo.SelectAll();
+
+			Loaded += (sender, args) =>
 			{
-				TextBoxLineNo.SelectAll();
 				goToWindowViewModel.MessageBoxService = new MessageBoxService(this);
 			};
 
