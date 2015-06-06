@@ -116,6 +116,9 @@
             <MenuItem Header="_View">
                 <MenuItem Header="_Status Bar" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}"
+                          InputGestureText="F11" />
+                <MenuItem Header="_Tool Area" IsCheckable="True"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsToolAreaChecked, Mode=TwoWay}"
                           InputGestureText="F12" />
                 <MenuItem
                     Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">

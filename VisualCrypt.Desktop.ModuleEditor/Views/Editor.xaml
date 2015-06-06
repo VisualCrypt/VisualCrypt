@@ -40,7 +40,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="300"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="TextBox1"
              Grid.Column="0"
@@ -98,7 +98,9 @@
                 </Style>
             </TextBox.Style>
         </TextBox>
-        <Grid Grid.Column="1"   Background="{DynamicResource BarColorBrush}">
+        <Grid Grid.Column="1"  Background="{DynamicResource BarColorBrush}"
+              Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsToolAreaChecked, Converter={StaticResource BoolVisibilityConverter}}"
+              >
             <Grid.Resources>
                     <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/DialogStyles.xaml" />
             </Grid.Resources>
@@ -177,12 +179,12 @@
                         </TabItem.Header>
                         <StackPanel>
                             <TextBlock Margin="5">Line Number:</TextBlock>
-                            <TextBox Margin="5" x:Name="TextBoxLineNo"
+                            <TextBox Margin="5" x:Name="TextBoxGotoString"
                      Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <DockPanel>
 
                                 <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" Width="65"
-                        Command="{Binding GoCommand}">
+                         Click="ButtonGoTo_OnClick">
                                     Go
                                 </Button>
                             </DockPanel>

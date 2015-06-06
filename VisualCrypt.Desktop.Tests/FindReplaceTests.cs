@@ -15,256 +15,273 @@ namespace VisualCrypt.Desktop.Tests
 		[TestMethod]
 		public void ReplaceAll_One_With_One()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 100));
+			Assert.Fail("Fix Test");
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 100));
 
-			vm.FindString = "a";
-			vm.ReplaceString = "b";
-			vm.ReplaceAllCommand.Execute();
-			var results = CountChars('b');
+			//vm.FindString = "a";
+			//vm.ReplaceString = "b";
+			//vm.ReplaceAllCommand.Execute();
+			//var results = CountChars('b');
 
-			Assert.IsTrue(results == 100, "Expecting 100 times 'b' but found {0} times 'b'".FormatInvariant(results));
+			//Assert.IsTrue(results == 100, "Expecting 100 times 'b' but found {0} times 'b'".FormatInvariant(results));
 		}
 
 		[TestMethod]
 		public void ReplaceAll_One_With_Two_Of_Same()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 100));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "a";
-			vm.ReplaceString = "aa";
-			vm.ReplaceAllCommand.Execute();
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 100));
 
-			var results = CountChars('a');
+			//vm.FindString = "a";
+			//vm.ReplaceString = "aa";
+			//vm.ReplaceAllCommand.Execute();
 
-			Assert.IsTrue(results == 200, "Expecting 200 times 'a' but found {0} times 'a'".FormatInvariant(results));
+			//var results = CountChars('a');
+
+			//Assert.IsTrue(results == 200, "Expecting 200 times 'a' but found {0} times 'a'".FormatInvariant(results));
 		}
 
 		[TestMethod]
 		public void ReplaceAll_Two_With_One_Of_Same()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 100));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "aa";
-			vm.ReplaceString = "a";
-			vm.ReplaceAllCommand.Execute();
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 100));
 
-			var results = CountChars('a');
+			//vm.FindString = "aa";
+			//vm.ReplaceString = "a";
+			//vm.ReplaceAllCommand.Execute();
 
-			Assert.IsTrue(results == 50, "Expecting 50 times 'a' but found {0} times 'a'".FormatInvariant(results));
+			//var results = CountChars('a');
+
+			//Assert.IsTrue(results == 50, "Expecting 50 times 'a' but found {0} times 'a'".FormatInvariant(results));
 		}
 
 		[TestMethod]
 		public void ReplaceAll_Two_With_One_Of_Same_Odd_Total()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 3));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "aa";
-			vm.ReplaceString = "a";
-			vm.ReplaceAllCommand.Execute();
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 3));
 
-			var results = CountChars('a');
+			//vm.FindString = "aa";
+			//vm.ReplaceString = "a";
+			//vm.ReplaceAllCommand.Execute();
 
-			Assert.IsTrue(results == 2, "Expecting 2 times 'a' but found {0} times 'a'".FormatInvariant(results));
+			//var results = CountChars('a');
+
+			//Assert.IsTrue(results == 2, "Expecting 2 times 'a' but found {0} times 'a'".FormatInvariant(results));
 		}
 
 		[TestMethod]
 		public void FindNext()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 3));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "a";
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 3));
 
-			// search forward with wrapping
-			vm.SearchOptions.SearchUp = false;
+			//vm.FindString = "a";
 
-			_textBox1.CaretIndex = 0;
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 1);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 1);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//// search forward with wrapping
+			//vm.SearchOptions.SearchUp = false;
 
-			// search backwards with wrapping
-			vm.SearchOptions.SearchUp = true;
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 1);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 1);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//_textBox1.CaretIndex = 0;
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 1);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 1);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
+
+			//// search backwards with wrapping
+			//vm.SearchOptions.SearchUp = true;
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 1);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 1);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
 		}
 
 		[TestMethod]
 		public void FindNext_Long_UnEven()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 9));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "aa";
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 9));
 
-			// search forward with wrapping
-			vm.SearchOptions.SearchUp = false;
+			//vm.FindString = "aa";
 
-			_textBox1.CaretIndex = 0;
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 4);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 6);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//// search forward with wrapping
+			//vm.SearchOptions.SearchUp = false;
 
-			// search backwards with wrapping
-			vm.SearchOptions.SearchUp = true;
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 7);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 5);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 3);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 1);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 7);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 5);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 3);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 1);
-			vm.FindNextCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 7);
+			//_textBox1.CaretIndex = 0;
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 4);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 6);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
+
+			//// search backwards with wrapping
+			//vm.SearchOptions.SearchUp = true;
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 7);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 5);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 3);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 1);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 7);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 5);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 3);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 1);
+			//vm.FindNextCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 7);
 		}
 
 		[TestMethod]
 		public void ReplaceNext()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 4));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "a";
-			vm.ReplaceString = "b";
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 4));
 
-			// search forward with wrapping
-			vm.SearchOptions.SearchUp = false;
+			//vm.FindString = "a";
+			//vm.ReplaceString = "b";
 
-			_textBox1.CaretIndex = 0;
-			vm.ReplaceCommand.Execute();
-			vm.ReplaceCommand.Execute();
-			vm.ReplaceCommand.Execute();
-			vm.ReplaceCommand.Execute();
+			//// search forward with wrapping
+			//vm.SearchOptions.SearchUp = false;
 
-			var results = CountChars('b');
-			Assert.IsTrue(results == 4);
+			//_textBox1.CaretIndex = 0;
+			//vm.ReplaceCommand.Execute();
+			//vm.ReplaceCommand.Execute();
+			//vm.ReplaceCommand.Execute();
+			//vm.ReplaceCommand.Execute();
+
+			//var results = CountChars('b');
+			//Assert.IsTrue(results == 4);
 		}
 
 		[TestMethod]
 		public void ReplaceNext_Shrink()
 		{
-			var vm = CreateViewModel();
-			FillWithText(new string('a', 6));
+			Assert.Fail("Fix Test");
 
-			vm.FindString = "aaa";
-			vm.ReplaceString = "b";
+			//var vm = CreateViewModel();
+			//FillWithText(new string('a', 6));
 
-			// search forward with wrapping
-			vm.SearchOptions.SearchUp = false;
+			//vm.FindString = "aaa";
+			//vm.ReplaceString = "b";
 
-			_textBox1.CaretIndex = 0;
-			vm.ReplaceCommand.Execute();
-			vm.ReplaceCommand.Execute();
+			//// search forward with wrapping
+			//vm.SearchOptions.SearchUp = false;
+
+			//_textBox1.CaretIndex = 0;
+			//vm.ReplaceCommand.Execute();
+			//vm.ReplaceCommand.Execute();
 
 
-			var results_b = CountChars('b');
-			Assert.IsTrue(results_b == 2);
+			//var results_b = CountChars('b');
+			//Assert.IsTrue(results_b == 2);
 
-			var results_a = CountChars('a');
-			Assert.IsTrue(results_a == 0);
+			//var results_a = CountChars('a');
+			//Assert.IsTrue(results_a == 0);
 		}
 
 		[TestMethod]
 		public void ReplaceNext_Extend()
 		{
-			var vm = CreateViewModel();
-			FillWithText("aabbbcc");
+			Assert.Fail("Fix Test");
+			//var vm = CreateViewModel();
+			//FillWithText("aabbbcc");
 
-			vm.FindString = "b";
-			vm.ReplaceString = "aaaa";
+			//vm.FindString = "b";
+			//vm.ReplaceString = "aaaa";
 
-			// search forward with wrapping
-			vm.SearchOptions.SearchUp = false;
+			//// search forward with wrapping
+			//vm.SearchOptions.SearchUp = false;
 
-			_textBox1.CaretIndex = 0;
-			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2);
-			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 6);
-			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 10);
+			//_textBox1.CaretIndex = 0;
+			//vm.ReplaceCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2);
+			//vm.ReplaceCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 6);
+			//vm.ReplaceCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 10);
 
-			vm.FindString = "aaaaaaaaaaaaaa";
-			vm.ReplaceString = "z";
-			vm.ReplaceCommand.Execute();
+			//vm.FindString = "aaaaaaaaaaaaaa";
+			//vm.ReplaceString = "z";
+			//vm.ReplaceCommand.Execute();
 
-			var results_z = CountChars('z');
-			Assert.IsTrue(results_z == 1);
+			//var results_z = CountChars('z');
+			//Assert.IsTrue(results_z == 1);
 
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
 		}
 
 		[TestMethod]
 		public void ReplaceNext_Extend_SearchUp()
 		{
-			var vm = CreateViewModel();
-			FillWithText("aabbbcc");
+			Assert.Fail("Fix Test");
+			//var vm = CreateViewModel();
+			//FillWithText("aabbbcc");
 
-			vm.FindString = "b";
-			vm.ReplaceString = "aaaa";
+			//vm.FindString = "b";
+			//vm.ReplaceString = "aaaa";
 
-			// search forward with wrapping
-			vm.SearchOptions.SearchUp = true;
+			//// search forward with wrapping
+			//vm.SearchOptions.SearchUp = true;
 
-			_textBox1.CaretIndex = 0;
-			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 4); // is 4
-			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 3); // sb 3
-			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_textBox1.CaretIndex == 2); // sb 2
+			//_textBox1.CaretIndex = 0;
+			//vm.ReplaceCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 4); // is 4
+			//vm.ReplaceCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 3); // sb 3
+			//vm.ReplaceCommand.Execute();
+			//Assert.IsTrue(_textBox1.CaretIndex == 2); // sb 2
 
-			vm.FindString = "aaaaaaaaaaaaaa";
-			vm.ReplaceString = "z";
-			vm.ReplaceCommand.Execute();
+			//vm.FindString = "aaaaaaaaaaaaaa";
+			//vm.ReplaceString = "z";
+			//vm.ReplaceCommand.Execute();
 
-			var results_z = CountChars('z');
-			Assert.IsTrue(results_z == 1);
+			//var results_z = CountChars('z');
+			//Assert.IsTrue(results_z == 1);
 
-			Assert.IsTrue(_textBox1.CaretIndex == 0);
+			//Assert.IsTrue(_textBox1.CaretIndex == 0);
 		}
 
 		int CountChars(char character)
@@ -274,13 +291,14 @@ namespace VisualCrypt.Desktop.Tests
 				select c).Count();
 		}
 
-		FindReplaceViewModel CreateViewModel()
-		{
-			var vm = new FindReplaceViewModel();
-			vm.SetTextBox(_textBox1);
-			vm.MessageBoxService = new FakeOkMessageBoxService();
-			return vm;
-		}
+		//FindReplaceViewModel CreateViewModel()
+		//{
+			
+		//	var vm = new FindReplaceViewModel();
+		//	vm.SetTextBox(_textBox1);
+		//	vm.MessageBoxService = new FakeOkMessageBoxService();
+		//	return vm;
+		//}
 
 		void FillWithText(string text)
 		{

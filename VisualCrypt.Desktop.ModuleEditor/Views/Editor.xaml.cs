@@ -18,7 +18,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void Editor_Loaded(object sender, RoutedEventArgs e)
 		{
-			ViewModel.OnEditorInitialized(TextBox1);
+			ViewModel.OnEditorInitialized(TextBox1, TextBoxFindFindString, TextBoxReplaceFindString, TextBoxReplaceString, TextBoxGotoString);
 			TextBox1.TextChanged += TextBox1_TextChanged;
 			TextBox1.SelectionChanged += TextBox1_SelectionChanged;
 			TextBox1.PreviewKeyDown += TextBox1_PreviewKeyDown;
@@ -249,5 +249,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 		#endregion
+
+		void ButtonGoTo_OnClick(object sender, RoutedEventArgs e)
+		{
+			ViewModel.ExecuteGoTo();
+		}
 	}
 }

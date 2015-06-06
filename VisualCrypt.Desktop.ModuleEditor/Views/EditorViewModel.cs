@@ -4,7 +4,9 @@ using System.Globalization;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VisualCrypt.Desktop.ModuleEditor.Features.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.Features.Printing;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
@@ -16,32 +18,42 @@ using VisualCrypt.Desktop.Shared.Settings;
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
 	[Export]
-	public class EditorViewModel
+	public class EditorViewModel : ViewModelBase
 	{
 		TextBox _textBox1;
+		TextBox _textboxFindFindString;
+		TextBox _textbockReplaceFindString;
+		TextBox _textboxReplaceString;
+		TextBox _textBoxGotoString;
+
 		SpellCheck _spellCheck;
-		readonly FindReplaceViewModel _findReplaceDialogViewModel;
-		GoToViewModel _goToWindowViewModel;
+
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEventAggregator _eventAggregator;
 
 		[ImportingConstructor]
-		public EditorViewModel(IEventAggregator eventAggregator, IMessageBoxService messageBoxService, FindReplaceViewModel findReplaceViewModel, GoToViewModel goToViewModel)
+		public EditorViewModel(IEventAggregator eventAggregator, IMessageBoxService messageBoxService)
 		{
 			_eventAggregator = eventAggregator;
 			_messageBoxService = messageBoxService;
-			_findReplaceDialogViewModel = findReplaceViewModel;
-			_goToWindowViewModel = goToViewModel;
+
+
+			// From FRVM
+			SearchOptions = new SearchOptions();
 		}
 
-		public void OnEditorInitialized(TextBox textbox1)
+		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textbockReplaceFindString, TextBox textboxReplaceString, TextBox textBoxGotoString)
 		{
 			_textBox1 = textbox1;
+			_textboxFindFindString = textboxFindFindString;
+			_textbockReplaceFindString = textbockReplaceFindString;
+			_textboxReplaceString = textboxReplaceString;
+			_textBoxGotoString = textBoxGotoString;
+
 			_spellCheck = _textBox1.SpellCheck;
 			_spellCheck.SpellingReform = SpellingReform.Postreform;
 
-			_findReplaceDialogViewModel.SetTextBox(_textBox1);
-			_goToWindowViewModel.SetTextBox(_textBox1);
+
 
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_textBox1);
 			ExecuteZoom100();
@@ -191,6 +203,25 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
+
+		#region TOOLAREA
+
+		public int ToolAreaSelectedIndex
+		{
+			get { return _toolAreaSelectedIndex; }
+			set
+			{
+				if (_toolAreaSelectedIndex != value)
+				{
+					_toolAreaSelectedIndex = value;
+					OnPropertyChanged(() => ToolAreaSelectedIndex);
+				}
+			}
+		}
+		int _toolAreaSelectedIndex;
+
+		#endregion
+
 		#region FindCommand
 
 		public bool CanExecuteFind()
@@ -198,25 +229,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			return _textBox1.Text.Length > 0;
 		}
 
-		public async void ExecuteFind()
+		public void ExecuteFind()
 		{
 			try
 			{
-				_findReplaceDialogViewModel.TabControlSelectedIndex = 0;
-				var fr = Application.Current.Windows.OfType<FindReplace>().FirstOrDefault();
-				if (fr != null)
-				{
+				SettingsManager.EditorSettings.IsToolAreaChecked = true;
+				ToolAreaSelectedIndex = 0;
+				_textboxFindFindString.SelectAll();
+				_textboxFindFindString.Focus();
 
-					fr.WindowState = WindowState.Normal;
-					fr.Activate();
-					fr.TextBoxFindFindString.SelectAll();
-					fr.TextBoxFindFindString.Focus();
-					return;
-				}
 
-				ParamsProvider.SetParams(typeof (FindReplace), _findReplaceDialogViewModel);
-				await WindowManager.ShowWindowAsyncAndWaitForClose<FindReplace>();
-				_textBox1.Focus();
+				// after Find
+				// _textBox1.Focus();
 			}
 			catch (Exception e)
 			{
@@ -230,16 +254,16 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteFindNext()
 		{
-			var oldDirection = _findReplaceDialogViewModel.SearchOptions.SearchUp;
-			_findReplaceDialogViewModel.SearchOptions.SearchUp = false;
-			_findReplaceDialogViewModel.FindNextCommand.Execute();
-			_findReplaceDialogViewModel.SearchOptions.SearchUp = oldDirection;
+			var oldDirection = SearchOptions.SearchUp;
+			SearchOptions.SearchUp = false;
+			FindNextCommand.Execute();
+			SearchOptions.SearchUp = oldDirection;
 		}
 
 		public bool CanExecuteFindNext()
 		{
-			return _findReplaceDialogViewModel.FindNextCommand.CanExecute() &&
-				   !string.IsNullOrEmpty(_findReplaceDialogViewModel.FindString);
+			return FindNextCommand.CanExecute() &&
+				   !string.IsNullOrEmpty(FindString);
 		}
 
 		#endregion
@@ -248,18 +272,270 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteFindPrevious()
 		{
-			var oldDirection = _findReplaceDialogViewModel.SearchOptions.SearchUp;
-			_findReplaceDialogViewModel.SearchOptions.SearchUp = true;
-			_findReplaceDialogViewModel.FindNextCommand.Execute();
-			_findReplaceDialogViewModel.SearchOptions.SearchUp = oldDirection;
+			var oldDirection = SearchOptions.SearchUp;
+			SearchOptions.SearchUp = true;
+			FindNextCommand.Execute();
+			SearchOptions.SearchUp = oldDirection;
 		}
 
 		public bool CanExecuteFindPrevious()
 		{
-			return _findReplaceDialogViewModel.FindNextCommand.CanExecute() &&
-				   !string.IsNullOrEmpty(_findReplaceDialogViewModel.FindString);
+			return FindNextCommand.CanExecute() &&
+				   !string.IsNullOrEmpty(FindString);
 		}
 
+		#endregion
+
+		#region FindLogic, imported
+
+		int _timesNotFound;
+
+
+
+		public SearchOptions SearchOptions { get; set; }
+
+
+
+
+
+		int Pos
+		{
+			get { return _textBox1.CaretIndex; }
+			set { _textBox1.CaretIndex = value; }
+		}
+
+
+		public string FindString
+		{
+			get { return _findString; }
+			set
+			{
+				if (_findString == value) return;
+				_findString = value;
+				OnPropertyChanged(() => FindString);
+
+				FindNextCommand.RaiseCanExecuteChanged();
+				ReplaceCommand.RaiseCanExecuteChanged();
+				ReplaceAllCommand.RaiseCanExecuteChanged();
+			}
+		}
+
+		string _findString = string.Empty;
+
+		public string ReplaceString
+		{
+			get { return _replaceString; }
+			set
+			{
+				if (_replaceString == value) return;
+				_replaceString = value;
+				OnPropertyChanged(() => ReplaceString);
+			}
+		}
+
+		string _replaceString = string.Empty;
+
+		public int TabControlSelectedIndex
+		{
+			get { return _tabControlSelectedIndex; }
+			set
+			{
+				if (_tabControlSelectedIndex == value) return;
+				_tabControlSelectedIndex = value;
+				OnPropertyChanged(() => TabControlSelectedIndex);
+			}
+		}
+
+		int _tabControlSelectedIndex;
+
+		#region FindCommand
+
+		public DelegateCommand FindNextCommand
+		{
+			get
+			{
+				return CreateCommand(ref _findNextCommand, ExecuteFindNextCommand,
+					() => !string.IsNullOrEmpty(FindString));
+			}
+		}
+
+		DelegateCommand _findNextCommand;
+
+
+		void ExecuteFindNextCommand()
+		{
+			var found = false;
+			if (!SearchOptions.SearchUp)
+				Pos = Pos + _textBox1.SelectionLength;
+
+			var searchResult = Find(true, false);
+
+			if (searchResult.HasValue)
+			{
+				found = true;
+				Find_SelectSearchResult(searchResult.Value.Index, searchResult.Value.Length);
+			}
+
+			if (!found && SearchOptions.UseRegEx == false)
+				_messageBoxService.Show("'{0}' is not in the document.".FormatInvariant(FindString), "Find",
+					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+			if (!found && SearchOptions.UseRegEx)
+				_messageBoxService.Show(
+					"The expression '{0}' yields no matches in the document.".FormatInvariant(FindString), "Find",
+					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+		}
+
+		SearchResult? Find(bool wrapSearchPos, bool isReplace)
+		{
+			_timesNotFound = 0;
+			return SearchRecoursive(wrapSearchPos, isReplace);
+		}
+
+		#endregion
+
+		#region ReplaceCommand
+
+		public DelegateCommand ReplaceCommand
+		{
+			get { return CreateCommand(ref _replaceCommand, ExecuteReplaceCommand, () => !string.IsNullOrEmpty(FindString)); }
+		}
+
+		DelegateCommand _replaceCommand;
+
+
+		void ExecuteReplaceCommand()
+		{
+			var found = false;
+			if (!SearchOptions.SearchUp)
+				Pos = Pos + _textBox1.SelectionLength;
+
+			var searchResult = Find(true, true);
+
+			if (searchResult.HasValue)
+			{
+				var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
+				_textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
+
+				found = true;
+				Find_SelectSearchResult(searchResult.Value.Index, ReplaceString.Length);
+			}
+
+			if (!found && SearchOptions.UseRegEx == false)
+				_messageBoxService.Show("'{0}' could not be found.".FormatInvariant(FindString), "Replace",
+					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+			if (!found && SearchOptions.UseRegEx)
+				_messageBoxService.Show("No match for '{0}' could be found.".FormatInvariant(FindString), "Replace",
+					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+		}
+
+		#endregion
+
+		#region ReplaceAllCommand
+
+		public DelegateCommand ReplaceAllCommand
+		{
+			get
+			{
+				return CreateCommand(ref _replaceAllCommand, ExecuteReplaceAllCommand,
+					() => !string.IsNullOrEmpty(FindString));
+			}
+		}
+
+		DelegateCommand _replaceAllCommand;
+
+
+		void ExecuteReplaceAllCommand()
+		{
+			SearchOptions.SearchUp = false;
+			Pos = 0;
+			var count = 0;
+
+		start:
+			var searchResult = Find(false, false);
+
+			if (searchResult.HasValue)
+			{
+				var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
+				_textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
+				count++;
+				Pos = searchResult.Value.Index + ReplaceString.Length;
+
+				goto start;
+			}
+			var image = (count > 0) ? MessageBoxImage.Information : MessageBoxImage.Exclamation;
+
+
+			_messageBoxService.Show("{0} occurrences were replaced.".FormatInvariant(count), "Replace All",
+				MessageBoxButton.OK, image);
+		}
+
+		#endregion
+
+		SearchResult? SearchRecoursive(bool wrapSearchPos, bool isReplace)
+		{
+			SearchResult? searchResult;
+			try
+			{
+				searchResult = SearchStrategy.Search(_textBox1.Text, _findString, Pos, SearchOptions);
+			}
+			catch (ArgumentException ae)
+			{
+				if (SearchOptions.UseRegEx)
+				{
+					_messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", MessageBoxButton.OK,
+						MessageBoxImage.Error);
+					return null;
+				}
+				throw;
+			}
+			if (searchResult.HasValue)
+			{
+				return searchResult;
+			}
+			// if not found..
+			if (!wrapSearchPos)
+				return null;
+
+			_timesNotFound += 1;
+			if (_timesNotFound < 2)
+			{
+				if (!SearchOptions.SearchUp)
+				{
+					if (isReplace && Pos != 0)
+					{
+						var result = _messageBoxService.Show(
+							"Nothing found - Search again from the top of the document?", "Replace",
+							MessageBoxButton.OKCancel, MessageBoxImage.Question);
+						if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
+							return null;
+					}
+					Pos = 0;
+				}
+				else
+				{
+					if (isReplace && Pos != _textBox1.Text.Length)
+					{
+						var result =
+							_messageBoxService.Show("Nothing found - Search again from the bottom of the document?",
+								"Replace",
+								MessageBoxButton.OKCancel, MessageBoxImage.Question);
+						if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
+							return null;
+					}
+					Pos = _textBox1.Text.Length;
+				}
+
+				return SearchRecoursive(true, isReplace);
+			}
+			_timesNotFound = 0;
+			return null;
+		}
+
+
+		void Find_SelectSearchResult(int indexInSourceText, int length)
+		{
+			_textBox1.Select(indexInSourceText, length);
+		}
 		#endregion
 
 		#region ReplaceCommand
@@ -272,25 +548,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteReplace()
 		{
-			_findReplaceDialogViewModel.TabControlSelectedIndex = 1;
+			
+			SettingsManager.EditorSettings.IsToolAreaChecked = true;
+			ToolAreaSelectedIndex = 1;
+			_textboxFindFindString.SelectAll();
+			_textboxFindFindString.Focus();
 
-			var fr = Application.Current.Windows.OfType<FindReplace>().FirstOrDefault();
-			if (fr != null)
-			{
-				fr.Activate();
-				fr.TextBoxReplaceString.SelectAll();
-				fr.TextBoxReplaceString.Focus();
-				return;
-			}
+			// Find would focus textbox1 after found
 
-			var findReplaceDialog = new FindReplace(_findReplaceDialogViewModel)
-			{
-				
-				Owner = Application.Current.MainWindow
-			};
-
-			findReplaceDialog.Show();
-			_findReplaceDialogViewModel.MessageBoxService = new MessageBoxService(findReplaceDialog);
 		}
 
 		#endregion
@@ -354,16 +619,80 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region GoToCommand
+		#region GoButtonCommand
 
-		public async void ExecuteGoTo()
+		public string LineNo
+		{
+			get { return _lineNo; }
+			set
+			{
+				if (_lineNo == value) return;
+				_lineNo = value;
+				OnPropertyChanged(() => LineNo);
+
+				GoButtonCommand.RaiseCanExecuteChanged();
+			}
+		}
+		string _lineNo;
+
+
+		public DelegateCommand GoButtonCommand
+		{
+			get { return CreateCommand(ref _goButtonCommand, ExecuteGoButtonCommand, CanExecuteGoButtonCommand); }
+		}
+		DelegateCommand _goButtonCommand;
+
+		int _lineIndex;
+		bool CanExecuteGoButtonCommand()
+		{
+			int lineNo;
+			var canParse = int.TryParse(LineNo, out lineNo);
+			if (!canParse)
+				return false;
+			if (lineNo <= 0)
+				return false;
+			if (_textBox1.LineCount < lineNo)
+				return false;
+			_lineIndex = lineNo - 1;
+			return true;
+		}
+
+		void ExecuteGoButtonCommand()
 		{
 			try
 			{
-				if (Application.Current.Windows.OfType<GoTo>().Any())
-					return;
+				var index = _textBox1.GetCharacterIndexFromLineIndex(_lineIndex);
+				_textBox1.CaretIndex = index;
+				var lineLength = _textBox1.GetLineLength(_lineIndex);
+				GoButton_SelectSearchResult(index, lineLength);
+				
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e);
+			}
+		}
 
-				await WindowManager.ShowWindowAsyncAndWaitForClose<GoTo>();
+		void GoButton_SelectSearchResult(int indexInSourceText, int length)
+		{
+			_textBox1.Select(indexInSourceText, length);
+			_textBox1.Focus();
+		}
+
+		#endregion
+
+		#region GoToCommand_notBUtton
+		
+		public void ExecuteGoTo()
+		{
+			try
+			{
+				if (!IsValidGoToInput()) // this sets _lineIndex
+					return;
+				var index = _textBox1.GetCharacterIndexFromLineIndex(_lineIndex);
+				_textBox1.CaretIndex = index;
+				var lineLength = _textBox1.GetLineLength(_lineIndex);
+				SelectSearchResult(index, lineLength);
 				_textBox1.Focus();
 			}
 			catch (Exception e)
@@ -378,6 +707,36 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			return _textBox1.LineCount > 1;
 		}
 
+		#endregion
+
+		#region GoCommand
+
+
+
+
+
+		bool IsValidGoToInput()
+		{
+			int lineNo;
+			var canParse = int.TryParse(LineNo, out lineNo);
+			if (!canParse)
+				return false;
+			if (lineNo <= 0)
+				return false;
+			if (_textBox1.LineCount < lineNo)
+				return false;
+			_lineIndex = lineNo - 1;
+			return true;
+		}
+
+
+
+		void SelectSearchResult(int indexInSourceText, int length)
+		{
+			_textBox1.Select(indexInSourceText, length);
+			_textBox1.Focus();
+		}
+	
 		#endregion
 
 		#region DateCommand
@@ -442,7 +801,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 
-	
+
 
 		#endregion
 

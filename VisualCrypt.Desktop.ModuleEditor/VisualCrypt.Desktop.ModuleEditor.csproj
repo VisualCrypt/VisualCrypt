@@ -86,17 +86,9 @@
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\EditorViewModel.cs" />
-    <Compile Include="Views\FindReplace.xaml.cs">
-      <DependentUpon>FindReplace.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\FindReplaceViewModel.cs" />
     <Compile Include="Views\Font.xaml.cs">
       <DependentUpon>Font.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GoTo.xaml.cs">
-      <DependentUpon>GoTo.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\GoToViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
@@ -113,15 +105,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\FindReplace.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\Font.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\GoTo.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
