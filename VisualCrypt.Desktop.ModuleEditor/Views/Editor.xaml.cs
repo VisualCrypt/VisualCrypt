@@ -272,5 +272,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 					TextBox1.Focus();
 			}
 		}
+
+		
 	}
 }

@@ -219,6 +219,15 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		int _toolAreaSelectedIndex;
 
+		public DelegateCommand CloseToolAreaCommand
+		{
+			get
+			{
+				return CreateCommand(ref _closeToolAreaCommand, () => SettingsManager.EditorSettings.IsToolAreaChecked = false,
+					() => true);
+			}
+		}
+		DelegateCommand _closeToolAreaCommand;
 		#endregion
 
 		#region FindMenuCommand

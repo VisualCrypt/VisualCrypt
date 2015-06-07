@@ -110,10 +110,7 @@
                 <ResourceDictionary
                     Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
             </Grid.Resources>
-
             <Grid>
-
-
                 <TabControl x:Name="TabControl" Height="Auto"
                             SelectedIndex="{Binding ToolAreaSelectedIndex, Mode=TwoWay}"
 
@@ -226,7 +223,8 @@
                                                                   Margin="{TemplateBinding Padding}"
                                                                   RecognizesAccessKey="True"
                                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                  />
                                             </Border>
                                         </ControlTemplate>
                                     </Setter.Value>
@@ -246,12 +244,10 @@
                         <TabItem.Header>
                             <Button Content="r" Foreground="DarkGray" Margin="0,0,0,7" Padding="0" Width="25"
                                     Height="25" HorizontalAlignment="Right"
-                                    Style="{StaticResource ToolAreaWindowButtonStyle}" />
+                                    Style="{StaticResource ToolAreaWindowButtonStyle}" Command="{Binding CloseToolAreaCommand}"/>
                         </TabItem.Header>
                     </TabItem>
                 </TabControl>
-
-
             </Grid>
         </Grid>
     </Grid>
