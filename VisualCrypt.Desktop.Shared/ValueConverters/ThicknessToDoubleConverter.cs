@@ -20,6 +20,7 @@ namespace VisualCrypt.Desktop.Shared.ValueConverters
 			throw new NotImplementedException();
 		}
 	}
+
 	public class StringToVisibilityConverter : IValueConverter
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

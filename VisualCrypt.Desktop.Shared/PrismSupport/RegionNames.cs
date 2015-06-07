@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Desktop.Shared
+﻿namespace VisualCrypt.Desktop.Shared.PrismSupport
 {
 	public static class RegionNames
 	{

@@ -192,7 +192,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="VisualCrypt.Desktop.ruleset" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">

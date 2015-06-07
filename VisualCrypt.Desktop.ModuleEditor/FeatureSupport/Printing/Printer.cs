@@ -6,7 +6,7 @@ using System.Windows.Xps;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Settings;
 
-namespace VisualCrypt.Desktop.ModuleEditor.Features.Printing
+namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing
 {
 	public static class Printer
 	{

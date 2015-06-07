@@ -14,6 +14,7 @@ using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
+using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Views
@@ -36,7 +37,6 @@ namespace VisualCrypt.Desktop.Views
 			_encryptionService = encryptionService;
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
 			_eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
-
 		}
 
 		public void Init()
@@ -55,10 +55,8 @@ namespace VisualCrypt.Desktop.Views
 		{
 			var tcs = new TaskCompletionSource<string>();
 
-			_eventAggregator.GetEvent<EditorShouldSendText>().Publish(textBufferContents =>
-			{
-				tcs.SetResult(textBufferContents);
-			});
+			_eventAggregator.GetEvent<EditorShouldSendText>()
+				.Publish(textBufferContents => { tcs.SetResult(textBufferContents); });
 			return await tcs.Task;
 		}
 
@@ -182,8 +180,6 @@ namespace VisualCrypt.Desktop.Views
 			}
 		}
 
-
-
 		#endregion
 
 		#region ExportCommand
@@ -205,9 +201,10 @@ namespace VisualCrypt.Desktop.Views
 					throw new ArgumentNullException("editorCleatext");
 
 				string title = "Export Clear Text (Encoding: {0})".FormatInvariant(
-						   FileManager.FileModel.SaveEncoding.EncodingName);
+					FileManager.FileModel.SaveEncoding.EncodingName);
 
-				string suggestedFilename = FileManager.FileModel.Filename.ReplaceCaseInsensitive(Constants.DotVisualCrypt, string.Empty);
+				string suggestedFilename = FileManager.FileModel.Filename.ReplaceCaseInsensitive(Constants.DotVisualCrypt,
+					string.Empty);
 				var pickFileResult = await PickFileAsync(suggestedFilename, DialogFilter.Text, DialogDirection.Save, title);
 				if (pickFileResult.Item1)
 				{
@@ -220,9 +217,6 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(e);
 			}
 		}
-
-
-
 
 		#endregion
 
@@ -239,7 +233,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } })
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.HelpUrl}})
 					process.Start();
 			}
 			catch (Exception e)
@@ -294,7 +288,6 @@ namespace VisualCrypt.Desktop.Views
 			{
 				_messageBoxService.ShowError(e);
 			}
-
 		}
 
 		#endregion
@@ -354,7 +347,7 @@ namespace VisualCrypt.Desktop.Views
 						return; // The user prefers to look at the cipher!
 				}
 
-			tryDecryptLoadFileWithCurrentPassword:
+				tryDecryptLoadFileWithCurrentPassword:
 				// We have a password, but we don't know if it's the right one. We must try!
 				var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
 					FileManager.FileModel.VisualCryptText));
@@ -438,7 +431,8 @@ namespace VisualCrypt.Desktop.Views
 				}
 
 				string textBufferContents = await EditorSendsTextAsync();
-				var createEncryptedFileResponse = await Task.Run(() => _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents));
+				var createEncryptedFileResponse =
+					await Task.Run(() => _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents));
 				if (createEncryptedFileResponse.Success)
 				{
 					FileManager.FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
@@ -484,7 +478,8 @@ namespace VisualCrypt.Desktop.Views
 				}
 
 				string textBufferContents = await EditorSendsTextAsync();
-				var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents));
+				var decryptForDisplayResult =
+					await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents));
 				if (decryptForDisplayResult.Success)
 				{
 					FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
@@ -530,7 +525,7 @@ namespace VisualCrypt.Desktop.Views
 						throw new Exception(response.Error);
 					FileManager.FileModel.IsDirty = false;
 				}
-				// This is the case where we need a new filename and can then also 'just save'.
+					// This is the case where we need a new filename and can then also 'just save'.
 				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave()))
 				{
 					string suggestedFilename = null;
@@ -547,7 +542,7 @@ namespace VisualCrypt.Desktop.Views
 						FileManager.FileModel.IsDirty = false;
 					}
 				}
-				// And in that case we need a different strategy: Encrypt and THEN save.
+					// And in that case we need a different strategy: Encrypt and THEN save.
 				else
 				{
 					if (FileManager.FileModel.IsEncrypted)
@@ -591,8 +586,8 @@ namespace VisualCrypt.Desktop.Views
 			string visualCryptTextSaved = null;
 
 
-
-			var encryptAndSaveFileResponse = await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText));
+			var encryptAndSaveFileResponse =
+				await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText));
 			if (!encryptAndSaveFileResponse.Success)
 				throw new Exception(encryptAndSaveFileResponse.Error);
 
@@ -606,7 +601,6 @@ namespace VisualCrypt.Desktop.Views
 			_eventAggregator.GetEvent<EditorReceivesText>().Publish(editorClearText);
 
 			UpdateCanExecuteChanged();
-
 		}
 
 		static string GetFilenameSafe(string pathString)
@@ -671,7 +665,7 @@ namespace VisualCrypt.Desktop.Views
 		/// </summary>
 		async Task<bool> SetPasswordAsync(SetPasswordDialogMode setPasswordDialogMode)
 		{
-			ParamsProvider.SetParams(typeof(SetPasswordDialog), setPasswordDialogMode);
+			ParamsProvider.SetParams(typeof (SetPasswordDialog), setPasswordDialogMode);
 			return await WindowManager.GetBoolFromShowDialogAsyncWhenClosed<SetPasswordDialog>();
 		}
 
@@ -735,11 +729,11 @@ namespace VisualCrypt.Desktop.Views
 					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
 						RegionNames.EditorRegion));
 
-			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
+			var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
 			if (view == null)
 			{
 				view = ServiceLocator.Current.GetInstance<IEditor>();
-				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
+				mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
 			}
 			else
 			{
@@ -747,7 +741,8 @@ namespace VisualCrypt.Desktop.Views
 			}
 		}
 
-		async static Task<Tuple<bool, string>> PickFileAsync(string suggestedFilename, DialogFilter diaglogFilter, DialogDirection dialogDirection, string title = null)
+		static async Task<Tuple<bool, string>> PickFileAsync(string suggestedFilename, DialogFilter diaglogFilter,
+			DialogDirection dialogDirection, string title = null)
 		{
 			FileDialog fileDialog;
 			if (dialogDirection == DialogDirection.Open)
@@ -783,9 +778,5 @@ namespace VisualCrypt.Desktop.Views
 		}
 
 		#endregion
-
-
 	}
-
-
 }

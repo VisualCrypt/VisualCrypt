@@ -10,13 +10,12 @@ using System.Windows.Shapes;
 
 namespace VisualCrypt.Desktop.Shared.Controls
 {
-	
 	public class AppDialog : Window
 	{
 		static AppDialog()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(AppDialog),
-				new FrameworkPropertyMetadata(typeof(AppDialog)));
+			DefaultStyleKeyProperty.OverrideMetadata(typeof (AppDialog),
+				new FrameworkPropertyMetadata(typeof (AppDialog)));
 		}
 
 		public AppDialog()
@@ -31,28 +30,27 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		{
 			base.OnApplyTemplate();
 
-			var minimizeButton = (Button)GetTemplateChild("minimizeButton");
+			var minimizeButton = (Button) GetTemplateChild("minimizeButton");
 			if (minimizeButton != null)
 				minimizeButton.Click += Minimize_Click;
 
-			_restoreButton = (Button)GetTemplateChild("restoreButton");
+			_restoreButton = (Button) GetTemplateChild("restoreButton");
 			if (_restoreButton != null)
 				_restoreButton.Click += Restore_Click;
 
 
-			var closeButton = (Button)GetTemplateChild("closeButton");
+			var closeButton = (Button) GetTemplateChild("closeButton");
 			if (closeButton != null)
 				closeButton.Click += Close_Click;
 
-			_moveRectangle = (Rectangle)GetTemplateChild("moveRectangle");
+			_moveRectangle = (Rectangle) GetTemplateChild("moveRectangle");
 
 			if (_moveRectangle != null)
 			{
 				_moveRectangle.MouseDown += MoveRectangle_MouseDown;
-
 			}
 
-			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
+			var resizeGrid = (Panel) GetTemplateChild("resizeGrid");
 			if (resizeGrid != null)
 				foreach (UIElement rectangle in resizeGrid.Children)
 				{
@@ -62,14 +60,12 @@ namespace VisualCrypt.Desktop.Shared.Controls
 				}
 		}
 
-		
 
 		protected override void OnInitialized(EventArgs e)
 		{
 			base.OnInitialized(e);
 			SourceInitialized += OnSourceInitialized;
 			PreviewKeyDown += Window_PreviewKeyDown;
-		
 		}
 
 		#region Event handlers
@@ -83,10 +79,11 @@ namespace VisualCrypt.Desktop.Shared.Controls
 				CenterOnPrimaryScreenWithDefaults();
 			}
 		}
+
 		void CenterOnPrimaryScreenWithDefaults()
 		{
-			Left = (SystemParameters.WorkArea.Width / 2) - (Width / 2);
-			Top = (SystemParameters.WorkArea.Height / 2) - (Height / 2);
+			Left = (SystemParameters.WorkArea.Width/2) - (Width/2);
+			Top = (SystemParameters.WorkArea.Height/2) - (Height/2);
 			WindowState = WindowState.Normal;
 			SetCanResize(true);
 		}
@@ -118,7 +115,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			var wpfPoint = PointToScreen(mPoint);
 			var x = Convert.ToInt16(wpfPoint.X);
 			var y = Convert.ToInt16(wpfPoint.Y);
-			var lParam = (int)(uint)x | (y << 16);
+			var lParam = (int) (uint) x | (y << 16);
 
 			SendMessage(windowHandle, WmNclbuttondown, HtCaption, lParam);
 			SetCanResize(true);
@@ -235,34 +232,35 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			switch (WindowState)
 			{
 				case WindowState.Normal:
-					{
-						// Maximize
-						_restoreButton.Content = 2;
-						WindowState = WindowState.Maximized;
-						SetCanResize(false);
-						break;
-					}
+				{
+					// Maximize
+					_restoreButton.Content = 2;
+					WindowState = WindowState.Maximized;
+					SetCanResize(false);
+					break;
+				}
 				case WindowState.Maximized:
-					{
-						// Restore to normal size.
-						_restoreButton.Content = 1;
-						WindowState = WindowState.Normal;
-						SetCanResize(false);
-						break;
-					}
+				{
+					// Restore to normal size.
+					_restoreButton.Content = 1;
+					WindowState = WindowState.Normal;
+					SetCanResize(false);
+					break;
+				}
 			}
 		}
 
 
 		void SetCanResize(bool canResize)
 		{
-			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
+			var resizeGrid = (Panel) GetTemplateChild("resizeGrid");
 			if (resizeGrid != null)
 				foreach (UIElement rectangle in resizeGrid.Children)
 				{
 					rectangle.IsHitTestVisible = canResize;
 				}
 		}
+
 		#endregion
 
 		#region interop
@@ -294,12 +292,12 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 		void ResizeWindow(ResizeDirection direction)
 		{
-			SendMessage(_hwndSource.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
+			SendMessage(_hwndSource.Handle, 0x112, (IntPtr) (61440 + direction), IntPtr.Zero);
 		}
 
 		void OnSourceInitialized(object sender, EventArgs e)
 		{
-			_hwndSource = (HwndSource)PresentationSource.FromVisual(this);
+			_hwndSource = (HwndSource) PresentationSource.FromVisual(this);
 			if (_hwndSource != null)
 				_hwndSource.AddHook(WindowProc);
 		}
@@ -330,7 +328,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 			IntPtr lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-			var lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
+			var lMmi = (MINMAXINFO) Marshal.PtrToStructure(lParam, typeof (MINMAXINFO));
 
 			if (lPrimaryScreen.Equals(lCurrentScreen))
 			{
@@ -349,6 +347,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 			Marshal.StructureToPtr(lMmi, lParam, true);
 		}
+
 		// ReSharper disable InconsistentNaming
 
 		enum MonitorOptions : uint
@@ -385,7 +384,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 		public class MONITORINFO
 		{
-			public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));
+			public int cbSize = Marshal.SizeOf(typeof (MONITORINFO));
 			public RECT rcMonitor = new RECT();
 			public RECT rcWork = new RECT();
 			public int dwFlags = 0;
@@ -406,5 +405,6 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			}
 		}
 	}
-		#endregion
+
+	#endregion
 }

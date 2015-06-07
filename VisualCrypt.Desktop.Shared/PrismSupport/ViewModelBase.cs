@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Mvvm;
 
-namespace VisualCrypt.Desktop.Shared
+namespace VisualCrypt.Desktop.Shared.PrismSupport
 {
 	public abstract class ViewModelBase : BindableBase
 	{

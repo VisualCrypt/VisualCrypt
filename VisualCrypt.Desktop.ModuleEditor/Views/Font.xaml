@@ -1,12 +1,13 @@
 ﻿<controls:AppDialog x:Class="VisualCrypt.Desktop.ModuleEditor.Views.Font"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
-        Width="500" Height="500"
-        Title="Font"
-        Background="{x:Static SystemColors.ControlBrush}">
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    Width="500" Height="500"
+                    Title="Font"
+                    Background="{x:Static SystemColors.ControlBrush}">
     <controls:AppDialog.Resources>
-        <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/DialogStyles.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
     </controls:AppDialog.Resources>
     <Grid Margin="12">
         <Grid.RowDefinitions>

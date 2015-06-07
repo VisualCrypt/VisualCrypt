@@ -12,7 +12,7 @@ using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.ModuleEncryption
 {
-	[Export(typeof(IEncryptionService))]
+	[Export(typeof (IEncryptionService))]
 	public class EncryptionService : IEncryptionService
 	{
 		readonly IVisualCryptAPIV2 _visualCryptApiv2;
@@ -176,15 +176,15 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		public Response SaveEncryptedFile(FileModel fileModel)
 		{
 			var response = new Response();
-			
+
 			try
 			{
-				if(fileModel == null)
+				if (fileModel == null)
 					throw new ArgumentNullException("fileModel");
-				
+
 				if (!fileModel.IsEncrypted)
 					throw new Exception("Aborting Save - IsEncrypted is false.");
-				
+
 				if (!_visualCryptApiv2.TryDecodeVisualCryptText(fileModel.VisualCryptText).Success)
 					throw new Exception("Aborting Save -  The data being saved is not valid VisualCrypt format.");
 

@@ -1,4 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Rules for VisualCrypt.Desktop" Description="Code analysis rules for VisualCrypt.Desktop.csproj." ToolsVersion="14.0">
-  <IncludeAll Action="Warning" />
-</RuleSet>

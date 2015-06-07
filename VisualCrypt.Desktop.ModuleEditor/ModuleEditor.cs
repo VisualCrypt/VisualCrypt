@@ -20,7 +20,7 @@ namespace VisualCrypt.Desktop.ModuleEditor
 				throw new ArgumentNullException("logger");
 			}
 			_logger = logger;
-			_logger.Log("{0} constructed.".FormatInvariant(GetType().Name),Category.Info, Priority.Low);
+			_logger.Log("{0} constructed.".FormatInvariant(GetType().Name), Category.Info, Priority.Low);
 		}
 
 

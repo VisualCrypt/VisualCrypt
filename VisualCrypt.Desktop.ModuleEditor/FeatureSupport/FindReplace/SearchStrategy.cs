@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace VisualCrypt.Desktop.ModuleEditor.Features.FindReplace
+namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace
 {
 	public static class SearchStrategy
 	{

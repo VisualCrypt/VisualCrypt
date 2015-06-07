@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
 
-namespace VisualCrypt.Desktop.Shared.App
+namespace VisualCrypt.Desktop.Shared.PrismSupport
 {
-	[Export(typeof(IParamsProvider))]
+	[Export(typeof (IParamsProvider))]
 	public class ParamsProvider : IParamsProvider
 	{
 		static readonly Dictionary<Type, object> OptionsByType = new Dictionary<Type, object>();
@@ -25,15 +25,15 @@ namespace VisualCrypt.Desktop.Shared.App
 
 		public TParams GetParams<TKey, TParams>()
 		{
-			var key = typeof(TKey);
+			var key = typeof (TKey);
 			if (OptionsByType.ContainsKey(key))
 			{
-				var instance = (TParams)OptionsByType[key];
+				var instance = (TParams) OptionsByType[key];
 				OptionsByType.Remove(key);
 				return instance;
-
 			}
-			throw new InvalidOperationException("ParamsProvider: no options found, did you set them with ParamsProvider.SetParams()?");
+			throw new InvalidOperationException(
+				"ParamsProvider: no options found, did you set them with ParamsProvider.SetParams()?");
 		}
 	}
 

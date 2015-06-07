@@ -5,12 +5,13 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Desktop.ModuleEditor.Features.FindReplace;
-using VisualCrypt.Desktop.ModuleEditor.Features.Printing;
+using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
+using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
+using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
 using VisualCrypt.Desktop.Shared.Settings;
 
@@ -40,7 +41,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SearchOptions = new SearchOptions();
 		}
 
-		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textBoxReplaceFindString, TextBox textBoxGotoString, UserControl editorControl)
+		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textBoxReplaceFindString,
+			TextBox textBoxGotoString, UserControl editorControl)
 		{
 			_textBox1 = textbox1;
 			_textboxFindFindString = textboxFindFindString;
@@ -50,7 +52,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			_spellCheck = _textBox1.SpellCheck;
 			_spellCheck.SpellingReform = SpellingReform.Postreform;
-
 
 
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_textBox1);
@@ -66,7 +67,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void OnShouldSendText(Action<string> callback)
 		{
-			var args = new EditorSendsText { Text = _textBox1.Text, Callback = callback };
+			var args = new EditorSendsText {Text = _textBox1.Text, Callback = callback};
 			_eventAggregator.GetEvent<EditorSendsText>().Publish(args);
 		}
 
@@ -143,7 +144,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteZoomOut()
 		{
-			_textBox1.FontSize *= 1 / 1.05;
+			_textBox1.FontSize *= 1/1.05;
 			UpdateZoomLevelMenuText();
 
 			//Zoom100Command.RaiseCanExecuteChanged();
@@ -169,12 +170,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void UpdateZoomLevelMenuText()
 		{
-			var zoomLevel = (int)((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
+			var zoomLevel = (int) ((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100);
 			var zoomLevelMenuText = "_Zoom (" + zoomLevel + "%)";
 			SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
 			SettingsManager.EditorSettings.IsZoom100Checked =
-				Math.Abs(((_textBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
+				Math.Abs(((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100) - 100) < 0.1;
 		}
 
 		#endregion
@@ -201,7 +202,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-
 		#region TOOLAREA
 
 		public int ToolAreaSelectedIndex
@@ -216,9 +216,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				}
 			}
 		}
+
 		int _toolAreaSelectedIndex;
 
-	
 		#endregion
 
 		#region FindMenuCommand
@@ -259,7 +259,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		public bool CanExecuteFindNextMenuCommand()
 		{
 			return FindNextCommand.CanExecute() &&
-				   !string.IsNullOrEmpty(FindString);
+			       !string.IsNullOrEmpty(FindString);
 		}
 
 		#endregion
@@ -277,7 +277,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		public bool CanExecuteFindPreviousMenuCommand()
 		{
 			return FindNextCommand.CanExecute() &&
-				   !string.IsNullOrEmpty(FindString);
+			       !string.IsNullOrEmpty(FindString);
 		}
 
 		#endregion
@@ -324,7 +324,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 		string _replaceString = string.Empty;
-
 
 		#region FindCommand
 
@@ -428,7 +427,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			Pos = 0;
 			var count = 0;
 
-		start:
+			start:
 			var searchResult = Find(false, false);
 
 			if (searchResult.HasValue)
@@ -509,8 +508,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			return null;
 		}
 
-	
-		
 		#endregion
 
 		#region ReplaceCommand
@@ -523,7 +520,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteReplace()
 		{
-
 			SettingsManager.EditorSettings.IsToolAreaChecked = true;
 			ToolAreaSelectedIndex = 1;
 			_editorControl.UpdateLayout();
@@ -531,7 +527,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_textbockReplaceFindString.Focus();
 
 			// Find would focus textbox1 after found
-
 		}
 
 		#endregion
@@ -609,6 +604,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				GoButtonCommand.RaiseCanExecuteChanged();
 			}
 		}
+
 		string _lineNo;
 
 		public int LineCount
@@ -630,6 +626,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		DelegateCommand _goButtonCommand;
 
 		int _lineIndex;
+
 		bool CanExecuteGoButtonCommand()
 		{
 			OnPropertyChanged(() => LineCount);
@@ -653,7 +650,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				_textBox1.CaretIndex = index;
 				var lineLength = _textBox1.GetLineLength(_lineIndex);
 				SelectSearchResult(index, lineLength);
-
 			}
 			catch (Exception e)
 			{
@@ -686,7 +682,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			{
 				_messageBoxService.ShowError(e);
 			}
-
 		}
 
 		public bool CanExecuteGoMenuCommand()
@@ -740,7 +735,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			try
 			{
-				ParamsProvider.SetParams(typeof(Font), _textBox1.Text);
+				ParamsProvider.SetParams(typeof (Font), _textBox1.Text);
 				var fontDialog = await WindowManager.GetDialogFromShowDialogAsyncWhenClosed<Font>();
 
 
@@ -756,9 +751,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				_messageBoxService.ShowError(e);
 			}
 		}
-
-
-
 
 		#endregion
 

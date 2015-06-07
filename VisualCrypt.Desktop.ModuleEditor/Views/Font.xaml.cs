@@ -7,8 +7,9 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using VisualCrypt.Desktop.ModuleEditor.Features.Fonts;
+using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Fonts;
 using VisualCrypt.Desktop.Shared.App;
+using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views

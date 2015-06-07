@@ -1,7 +1,8 @@
 ﻿namespace VisualCrypt.Desktop.Shared.App
 {
-    public enum DialogDirection
-    {
-        Open, Save
-    }
+	public enum DialogDirection
+	{
+		Open,
+		Save
+	}
 }

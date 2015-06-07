@@ -1,27 +1,27 @@
 ﻿<controls:AppWindow x:Class="VisualCrypt.Desktop.Views.ShellWindow"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:regions="http://www.codeplex.com/CompositeWPF"
-                      xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
-                      xmlns:shared="clr-namespace:VisualCrypt.Desktop.Shared;assembly=VisualCrypt.Desktop.Shared"
-                      xmlns:commands="clr-namespace:VisualCrypt.Desktop.Shared.Commands;assembly=VisualCrypt.Desktop.Shared"
-                      xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
-                      xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
-                      xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
-                      Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
-                      Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}" 
-                      Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
-                      WindowStartupLocation="CenterScreen"
-                      AllowDrop="True"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:regions="http://www.codeplex.com/CompositeWPF"
+                    xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
+                    xmlns:shared="clr-namespace:VisualCrypt.Desktop.Shared;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:commands="clr-namespace:VisualCrypt.Desktop.Shared.Commands;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:prismSupport="clr-namespace:VisualCrypt.Desktop.Shared.PrismSupport;assembly=VisualCrypt.Desktop.Shared"
+                    Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
+                    Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
+                    Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
+                    WindowStartupLocation="CenterScreen"
+                    AllowDrop="True"
                     BorderThickness="0"
                     WindowStyle="None"
                     ResizeMode="CanResizeWithGrip"
-                    AllowsTransparency="True"
-        >
+                    AllowsTransparency="True">
 
-   
+
     <Window.InputBindings>
         <!-- File -->
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewCommand}" />
@@ -52,12 +52,12 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-     
+
         <Menu Grid.Row="0" Height="27" Padding="0" IsTabStop="False">
             <Menu.Resources>
                 <Style TargetType="MenuItem">
-                    <Setter Property="Padding" Value="3"></Setter>
-                    <Setter Property="IsTabStop" Value="False"></Setter>
+                    <Setter Property="Padding" Value="3" />
+                    <Setter Property="IsTabStop" Value="False" />
                 </Style>
             </Menu.Resources>
             <MenuItem Header="_File">
@@ -130,17 +130,18 @@
                               IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsZoom100Checked, Mode=OneWay}"
                               Command="commands:EditorCommands.Zoom100" />
                 </MenuItem>
-               
+
             </MenuItem>
 
             <MenuItem Header="_Help">
                 <MenuItem Header="View _Help Online" Command="{Binding HelpCommand}" InputGestureText="F1" />
                 <MenuItem Header="QA _Log" Command="{Binding LogCommand}" InputGestureText="Shift+A" />
                 <Separator />
-                <MenuItem Header="_About VisualCrypt Editor" Command="{Binding AboutCommand}"  InputGestureText="Shift+F1" />
+                <MenuItem Header="_About VisualCrypt Editor" Command="{Binding AboutCommand}"
+                          InputGestureText="Shift+F1" />
             </MenuItem>
         </Menu>
-        <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static shared:RegionNames.EditorRegion}"
+        <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <!--<Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0"
@@ -158,12 +159,13 @@
                     </Style.Triggers>
                 </Style>
             </DockPanel.Resources>
-            <TextBlock DockPanel.Dock="Left" Margin="5,0" Text="{Binding StatusBarText}" TextAlignment="Left" VerticalAlignment="Center" />
+            <TextBlock DockPanel.Dock="Left" Margin="5,0" Text="{Binding StatusBarText}" TextAlignment="Left"
+                       VerticalAlignment="Center" />
             <TextBlock VerticalAlignment="Center"
-                Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}"
-                ToolTip="Clear Password   Ctrl+R"
-                DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold" Foreground="#A5FF0000"
-                Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown" />
+                       Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}"
+                       ToolTip="Clear Password   Ctrl+R"
+                       DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold" Foreground="#A5FF0000"
+                       Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown" />
             <TextBlock DockPanel.Dock="Right" Margin="5,0" VerticalAlignment="Center"
                        Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}" />
             <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">
@@ -172,7 +174,7 @@
                         Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}" />
                 </Hyperlink>
             </TextBlock>
-            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S" VerticalAlignment="Center" 
+            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S" VerticalAlignment="Center"
                    MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown"
                    Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}" />
         </DockPanel>

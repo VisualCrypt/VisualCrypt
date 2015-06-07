@@ -17,7 +17,7 @@ namespace VisualCrypt.Desktop.Shared.Settings
 			{
 				using (RegistryKey registryKey = Registry.CurrentUser.OpenSubKey(@"Software\VisualCrypt", true))
 				{
-					if(registryKey == null) // The key is created by the installer.
+					if (registryKey == null) // The key is created by the installer.
 						return;
 					var hasRunOnce = (int) registryKey.GetValue(HasRunOnce);
 					if (hasRunOnce == 0)

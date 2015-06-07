@@ -5,36 +5,37 @@
                     xmlns:app="clr-namespace:VisualCrypt.Desktop.Shared.App"
                     mc:Ignorable="options">
     <Style TargetType="TextBlock">
-        <Setter Property="Margin" Value="15,0"></Setter>
-        <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="Margin" Value="15,0" />
+        <Setter Property="FontSize" Value="13" />
     </Style>
     <Style TargetType="TextBlock" x:Key="DialogH1Style">
-        <Setter Property="Margin" Value="15,0"></Setter>
-        <Setter Property="FontSize" Value="20"></Setter>
-        <Setter Property="LineHeight" Value="35"></Setter>
+        <Setter Property="Margin" Value="15,0" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="LineHeight" Value="35" />
     </Style>
     <Style TargetType="PasswordBox">
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="Margin" Value="15,0,15,10"></Setter>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="15,0,15,10" />
     </Style>
     <Style TargetType="TextBox">
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="FontFamily" Value="{Binding Source={x:Static app:SettingsManager.EditorSettings}, Path=FontSettings.FontFamily}"></Setter>
-        <Setter Property="Margin" Value="15,0,15,10"></Setter>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily"
+                Value="{Binding Source={x:Static app:SettingsManager.EditorSettings}, Path=FontSettings.FontFamily}" />
+        <Setter Property="Margin" Value="15,0,15,10" />
     </Style>
     <Style TargetType="ComboBox">
-        <Setter Property="FontSize" Value="14"></Setter>
-        <Setter Property="Margin" Value="15,0,15,10"></Setter>
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="15,0,15,10" />
     </Style>
     <Style TargetType="Button">
-        <Setter Property="Height" Value="30"></Setter>
-        <Setter Property="Width" Value="Auto"></Setter>
-        <Setter Property="MinWidth" Value="65"></Setter>
-        <Setter Property="Margin" Value="15"></Setter>
-        <Setter Property="Padding" Value="10,0"></Setter>
-        <Setter Property="BorderThickness" Value="1"></Setter>
-        <Setter Property="FontSize" Value="13"></Setter>
-        <Setter Property="Background" Value="{DynamicResource ButtonColorBrush}"></Setter>
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Width" Value="Auto" />
+        <Setter Property="MinWidth" Value="65" />
+        <Setter Property="Margin" Value="15" />
+        <Setter Property="Padding" Value="10,0" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="Background" Value="{DynamicResource ButtonColorBrush}" />
     </Style>
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="Template">
@@ -42,11 +43,11 @@
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Grid>
                         <Border Name="Border" Margin="0,0,0,0" Background="Transparent"
-                            BorderBrush="Black" BorderThickness="0,0,0,0" CornerRadius="0">
+                                BorderBrush="Black" BorderThickness="0,0,0,0" CornerRadius="0">
                             <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center"
-                              HorizontalAlignment="Center"
-                              ContentSource="Header" Margin="0"
-                              RecognizesAccessKey="True">
+                                              HorizontalAlignment="Center"
+                                              ContentSource="Header" Margin="0"
+                                              RecognizesAccessKey="True">
                                 <ContentPresenter.LayoutTransform>
                                     <RotateTransform Angle="0" />
                                 </ContentPresenter.LayoutTransform>

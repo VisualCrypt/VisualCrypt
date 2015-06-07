@@ -55,7 +55,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			// This was in TextBox1_PreviewKeyDown, does this still work?
 			if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-				&& ViewModel.ClearPasswordCommand.CanExecute())
+			    && ViewModel.ClearPasswordCommand.CanExecute())
 				ViewModel.ClearPasswordCommand.Execute();
 
 			if (e.Key == Key.F12)
@@ -170,7 +170,5 @@ namespace VisualCrypt.Desktop.Views
 			if (ViewModel.SaveCommand.CanExecute())
 				ViewModel.SaveCommand.CanExecute();
 		}
-
-	   
 	}
 }

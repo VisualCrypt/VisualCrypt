@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using VisualCrypt.Desktop.Shared;
+using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
@@ -267,7 +268,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			if (e.Property == IsVisibleProperty)
 			{
-				if( (bool)e.NewValue== false)
+				if ((bool) e.NewValue == false)
 					TextBox1.Focus();
 			}
 		}

@@ -1,5 +1,5 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Make sure to have this attribute in AssemblyInfo.cs:
     [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)] 
@@ -7,7 +7,7 @@ xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     however, ResourceDictionarys containing DynamicResources, such as colors must be explicitly loaded.
     Index all Styles that are part of the 'Generic' theme here: -->
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppWindow.Generic.xaml"/>
-        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppDialog.Generic.xaml"/>
+        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppWindow.Generic.xaml" />
+        <ResourceDictionary Source="/VisualCrypt.Desktop.Shared;component/Themes/AppDialog.Generic.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

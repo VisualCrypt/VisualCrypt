@@ -12,7 +12,9 @@ namespace VisualCrypt.Desktop.Shared.App
 		static readonly ILoggerFacade Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
 
 		//  for TaskCompletitionSource 
-		public struct Void { }
+		public struct Void
+		{
+		}
 
 		public static async Task<Void> ShowWindowAsyncAndWaitForClose<T>() where T : AppWindow
 		{
@@ -26,7 +28,7 @@ namespace VisualCrypt.Desktop.Shared.App
 
 				appWindow.Closed += (o, args) => tcs.SetResult(new Void());
 				appWindow.Show();
-	
+
 				return await tcs.Task;
 			}
 
@@ -34,7 +36,6 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				Logger.Log(e.Message, Category.Exception, Priority.High);
 				tcs.SetException(e);
-
 			}
 			return await tcs.Task;
 		}
@@ -50,10 +51,9 @@ namespace VisualCrypt.Desktop.Shared.App
 
 			appDialog.Closed += (o, args) => tcs.SetResult(appDialog);
 			appDialog.ShowDialog();
-			
+
 			return await tcs.Task.ConfigureAwait(false);
 		}
-
 
 
 		public static async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : AppDialog
@@ -70,7 +70,5 @@ namespace VisualCrypt.Desktop.Shared.App
 
 			return await tcs.Task.ConfigureAwait(false);
 		}
-
-
 	}
 }

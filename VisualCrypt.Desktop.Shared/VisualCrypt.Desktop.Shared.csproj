@@ -80,11 +80,10 @@
     <Compile Include="App\DialogDirection.cs" />
     <Compile Include="App\DialogFilters.cs" />
     <Compile Include="App\WindowManager.cs" />
-    <Compile Include="App\ParamsProvider.cs" />
+    <Compile Include="PrismSupport\ParamsProvider.cs" />
     <Compile Include="Commands\EditorCommands.cs" />
     <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />
-    <Compile Include="DelegateCommandExtensions.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
     <Compile Include="Events\EditorReceivesText.cs" />
@@ -94,10 +93,9 @@
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="Files\FileModel.cs" />
     <Compile Include="Files\PasswordManager.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="IEditor.cs" />
+    <Compile Include="PrismSupport\IEditor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegionNames.cs" />
+    <Compile Include="PrismSupport\RegionNames.cs" />
     <Compile Include="Services\IEncryptionService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
@@ -114,8 +112,8 @@
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Version.cs" />
-    <Compile Include="ViewModelBase.cs" />
-    <Compile Include="ModuleNames.cs" />
+    <Compile Include="PrismSupport\ViewModelBase.cs" />
+    <Compile Include="PrismSupport\ModuleNames.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -146,59 +144,55 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Styles\Accents\VisualCrypt.xaml">
+    <Page Include="Styles\InUse\VisualCryptColors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\DialogStyles.xaml">
+    <Page Include="Styles\InUse\DialogStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Colors.xaml">
+    <Page Include="Styles\NotInUse\Colors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.Buttons.xaml">
+    <Page Include="Styles\NotInUse\Controls.Buttons.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.CheckBox.xaml">
+    <Page Include="Styles\NotInUse\Controls.CheckBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.ContextMenu.xaml">
+    <Page Include="Styles\NotInUse\Controls.ContextMenu.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.Label.xaml">
+    <Page Include="Styles\NotInUse\Controls.Label.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.ProgressBar.xaml">
+    <Page Include="Styles\NotInUse\Controls.ProgressBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.StatusBar.xaml">
+    <Page Include="Styles\NotInUse\Controls.StatusBar.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.TextBlock.xaml">
+    <Page Include="Styles\NotInUse\Controls.Tooltip.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Controls.Tooltip.xaml">
+    <Page Include="Styles\NotInUse\Fonts.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Fonts.xaml">
+    <Page Include="Styles\NotInUse\Anim.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Styles\Shared.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\Sizes.xaml">
+    <Page Include="Styles\NotInUse\Sizes.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -211,10 +205,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Styles\SharedStyles.Generic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

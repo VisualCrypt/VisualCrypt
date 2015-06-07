@@ -1,6 +1,6 @@
-﻿using VisualCrypt.Desktop.Shared;
+﻿using VisualCrypt.Desktop.Shared.PrismSupport;
 
-namespace VisualCrypt.Desktop.ModuleEditor.Features.FindReplace
+namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace
 {
 	public class SearchOptions : ViewModelBase
 	{

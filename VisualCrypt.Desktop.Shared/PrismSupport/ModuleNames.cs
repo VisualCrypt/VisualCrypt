@@ -1,4 +1,4 @@
-namespace VisualCrypt.Desktop.Shared
+namespace VisualCrypt.Desktop.Shared.PrismSupport
 {
 	/// <summary>
 	/// A set of well-known module names for communication with IModuleTracker.

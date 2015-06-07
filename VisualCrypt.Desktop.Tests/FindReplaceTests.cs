@@ -293,7 +293,7 @@ namespace VisualCrypt.Desktop.Tests
 
 		//FindReplaceViewModel CreateViewModel()
 		//{
-			
+
 		//	var vm = new FindReplaceViewModel();
 		//	vm.SetTextBox(_textBox1);
 		//	vm.MessageBoxService = new FakeOkMessageBoxService();

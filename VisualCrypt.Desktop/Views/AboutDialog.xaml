@@ -1,43 +1,44 @@
 ﻿<controls:AppDialog x:Class="VisualCrypt.Desktop.Views.AboutDialog"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
-                      mc:Ignorable="d"
-                     Background="{DynamicResource BarColorBrush}"
-                      Title="About VisualCrypt Editor" Height="300" Width="500" WindowStartupLocation="CenterOwner"
-                      >
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    mc:Ignorable="d"
+                    Background="{DynamicResource BarColorBrush}"
+                    Title="About VisualCrypt Editor" Height="300" Width="500" WindowStartupLocation="CenterOwner">
     <controls:AppDialog.Resources>
-        <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/DialogStyles.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
     </controls:AppDialog.Resources>
     <Border x:Name="DialogBorder" Padding="10">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"></ColumnDefinition>
-                <ColumnDefinition Width="100*"></ColumnDefinition>
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="100*" />
             </Grid.ColumnDefinitions>
-            <Grid x:Name="SymbolCol" Grid.Column="0">
-
-            </Grid>
+            <Grid x:Name="SymbolCol" Grid.Column="0" />
             <Grid x:Name="MainCol" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid x:Name="ContentRow" Grid.Row="0">
                     <StackPanel HorizontalAlignment="Stretch">
-                        <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding Title}"></TextBlock>
+                        <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding Title}" />
                         <StackPanel Orientation="Horizontal">
                             <TextBlock xml:space="preserve">Version:</TextBlock>
-                            <TextBlock  Text="{Binding Path=NotepadVersion}" />
+                            <TextBlock Text="{Binding Path=NotepadVersion}" />
                         </StackPanel>
-                        <TextBlock></TextBlock>
-                        <TextBlock TextWrapping="Wrap">This version of VisualCrypt Editor is Open Source and free for private use. Please use only the offical download from <Hyperlink>https://visualcrypt.com</Hyperlink> for your security!</TextBlock>
-                        <TextBlock></TextBlock>
+                        <TextBlock />
+                        <TextBlock TextWrapping="Wrap">
+                            This version of VisualCrypt Editor is Open Source and free for private use. Please use only the offical download from
+                            <Hyperlink>https://visualcrypt.com</Hyperlink> for your security!
+                        </TextBlock>
+                        <TextBlock />
                         <TextBlock TextWrapping="Wrap" FontSize="12">
-                    However, this computer program is protected by copyright law
-                    and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted.
+                            However, this computer program is protected by copyright law
+                            and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted.
                         </TextBlock>
 
                     </StackPanel>

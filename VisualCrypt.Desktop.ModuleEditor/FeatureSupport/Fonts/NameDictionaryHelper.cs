@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Media;
 
-namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
+namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Fonts
 {
 	internal static class NameDictionaryHelper
 	{

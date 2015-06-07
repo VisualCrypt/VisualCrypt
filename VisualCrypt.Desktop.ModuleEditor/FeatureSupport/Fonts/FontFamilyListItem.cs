@@ -5,7 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 
-namespace VisualCrypt.Desktop.ModuleEditor.Features.Fonts
+namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Fonts
 {
 	internal class FontFamilyListItem : TextBlock, IComparable
 	{

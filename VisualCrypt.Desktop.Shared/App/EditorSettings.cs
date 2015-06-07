@@ -22,6 +22,7 @@ namespace VisualCrypt.Desktop.Shared.App
 				SettingsManager.SaveSettings();
 			}
 		}
+
 		bool _isStatusBarChecked;
 
 		[DataMember]
@@ -35,8 +36,9 @@ namespace VisualCrypt.Desktop.Shared.App
 				SettingsManager.SaveSettings();
 			}
 		}
+
 		bool _isToolAreaChecked;
-		
+
 
 		[DataMember]
 		public bool IsWordWrapChecked
@@ -105,7 +107,6 @@ namespace VisualCrypt.Desktop.Shared.App
 			}
 		}
 
-		
 
 		string _zoomLevelMenuText;
 

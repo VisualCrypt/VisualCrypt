@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Desktop.ModuleEditor.Features.FindReplace
+﻿namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace
 {
 	public struct SearchResult
 	{

@@ -12,8 +12,9 @@ namespace VisualCrypt.Desktop.Shared.Files
 		static readonly Encoding VisualCryptTextSaveEncoding = new UTF8Encoding(false, true);
 		static readonly Encoding DefaultClearTextSaveEncoding = VisualCryptTextSaveEncoding;
 
-		private FileModel() { }
-
+		FileModel()
+		{
+		}
 
 
 		public bool IsDirty
@@ -28,6 +29,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				}
 			}
 		}
+
 		bool _isDirty;
 
 		public string Filename { get; set; }
@@ -67,7 +69,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			{
 				return false;
 			}
-
 		}
 
 		public void SaveEncrypted()
@@ -89,8 +90,9 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		public static FileModel Cleartext(string filename, string clearTextContents, Encoding saveEncoding)
 		{
-			return new FileModel {
-				Filename = filename, 
+			return new FileModel
+			{
+				Filename = filename,
 				ClearTextContents = clearTextContents,
 				IsEncrypted = false,
 				SaveEncoding = saveEncoding,

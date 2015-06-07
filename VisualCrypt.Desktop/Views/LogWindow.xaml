@@ -1,47 +1,47 @@
 ﻿<controls:AppWindow x:Class="VisualCrypt.Desktop.Views.LogWindow"
-                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                      xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
-                      mc:Ignorable="d"
-                      Title="QA Log"
-                      WindowStartupLocation="CenterScreen"
-                     Background="{DynamicResource BarColorBrush}"
-                      Width="500" Height="300">
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    mc:Ignorable="d"
+                    Title="QA Log"
+                    WindowStartupLocation="CenterScreen"
+                    Background="{DynamicResource BarColorBrush}"
+                    Width="500" Height="300">
     <controls:AppWindow.Resources>
-        <ResourceDictionary Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/DialogStyles.xaml" />
+        <ResourceDictionary
+            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
     </controls:AppWindow.Resources>
     <Border x:Name="DialogBorder" Padding="10">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0"></ColumnDefinition>
-                <ColumnDefinition Width="100*"></ColumnDefinition>
+                <ColumnDefinition Width="0" />
+                <ColumnDefinition Width="100*" />
             </Grid.ColumnDefinitions>
-            <Grid x:Name="SymbolCol" Grid.Column="0">
-
-            </Grid>
+            <Grid x:Name="SymbolCol" Grid.Column="0" />
             <Grid x:Name="MainCol" Grid.Column="1">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="Auto"></RowDefinition>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid x:Name="ContentRow" Grid.Row="0">
                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel DockPanel.Dock="Top">
-                        <TextBlock Style="{StaticResource DialogH1Style}" Text="QA Log"></TextBlock>
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="QA Log" />
 
-                        <TextBlock>This debug information will not be saved to a file.</TextBlock><TextBlock></TextBlock>
+                            <TextBlock>This debug information will not be saved to a file.</TextBlock>
+                            <TextBlock />
                         </StackPanel>
-                        <TextBox x:Name="TraceTextBox"  TextWrapping="Wrap" VerticalAlignment="Stretch"
-                        VerticalScrollBarVisibility="Visible" AcceptsReturn="True" IsReadOnly="True" IsUndoEnabled="False"
-                                  Background="{DynamicResource BarColorBrush}"
-                 />
+                        <TextBox x:Name="TraceTextBox" TextWrapping="Wrap" VerticalAlignment="Stretch"
+                                 VerticalScrollBarVisibility="Visible" AcceptsReturn="True" IsReadOnly="True"
+                                 IsUndoEnabled="False"
+                                 Background="{DynamicResource BarColorBrush}" />
 
                     </DockPanel>
                 </Grid>
                 <Grid x:Name="ButtonRow" Grid.Row="1">
-                  
+
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Click="ButtonClose_Click" IsDefault="True">Close</Button>
                     </StackPanel>
@@ -50,5 +50,5 @@
 
         </Grid>
     </Border>
-   
+
 </controls:AppWindow>

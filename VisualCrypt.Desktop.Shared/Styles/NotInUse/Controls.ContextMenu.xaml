@@ -339,8 +339,9 @@
         </Setter>
     </Style>
 
-    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}"
-                     TargetType="{x:Type ContentControl}">
+    <ControlTemplate
+        x:Key="{ComponentResourceKey ResourceId=SubmenuContent, TypeInTargetAssembly={x:Type FrameworkElement}}"
+        TargetType="{x:Type ContentControl}">
         <Border BorderBrush="{DynamicResource SubMenuBorderBrush}"
                 BorderThickness="1"
                 Background="{DynamicResource SubMenuBackgroundBrush}">
@@ -348,8 +349,9 @@
         </Border>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
-                     TargetType="{x:Type MenuItem}">
+    <ControlTemplate
+        x:Key="{ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
+        TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="True">
             <Rectangle x:Name="Bg"
                        Fill="{TemplateBinding Background}"
@@ -480,8 +482,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
-                     TargetType="{x:Type MenuItem}">
+    <ControlTemplate
+        x:Key="{ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
+        TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="True">
             <Rectangle x:Name="Bg"
                        Fill="{TemplateBinding Background}"
@@ -550,8 +553,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
-                     TargetType="{x:Type MenuItem}">
+    <ControlTemplate
+        x:Key="{ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
+        TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="True">
             <Rectangle x:Name="Bg"
                        Fill="{TemplateBinding Background}"
@@ -687,8 +691,9 @@
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
-    <ControlTemplate x:Key="{ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
-                     TargetType="{x:Type MenuItem}">
+    <ControlTemplate
+        x:Key="{ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}"
+        TargetType="{x:Type MenuItem}">
         <Grid SnapsToDevicePixels="True">
             <Rectangle x:Name="Bg"
                        Fill="{TemplateBinding Background}"
