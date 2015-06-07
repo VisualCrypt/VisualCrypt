@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Composition;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -18,7 +19,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void Editor_Loaded(object sender, RoutedEventArgs e)
 		{
-			ViewModel.OnEditorInitialized(TextBox1, TextBoxFindFindString, TextBoxReplaceFindString, TextBoxReplaceString, TextBoxGotoString, this);
+			ViewModel.OnEditorInitialized(TextBox1, TextBoxFindFindString, TextBoxReplaceFindString, TextBoxGotoString, this);
 			TextBox1.TextChanged += TextBox1_TextChanged;
 			TextBox1.SelectionChanged += TextBox1_SelectionChanged;
 			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
@@ -26,6 +27,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			TextBox1.SpellCheck.SpellingReform = SpellingReform.Postreform;
 			TextBox1.PreviewMouseWheel += TextBox1_PreviewMouseWheel;
 			TextBox1.Focus();
+
+			TabControl.Initialized += (o, args) => TabControl.SelectedIndex = 0;
 		}
 
 
@@ -258,6 +261,15 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		void ToolArea_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
 			UpdateLayout();
+		}
+
+		void ToolArea_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		{
+			if (e.Property == IsVisibleProperty)
+			{
+				if( (bool)e.NewValue== false)
+					TextBox1.Focus();
+			}
 		}
 	}
 }

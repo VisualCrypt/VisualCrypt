@@ -53,10 +53,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
      
-        <Menu Grid.Row="0" Height="27" Padding="0">
+        <Menu Grid.Row="0" Height="27" Padding="0" IsTabStop="False">
             <Menu.Resources>
                 <Style TargetType="MenuItem">
                     <Setter Property="Padding" Value="3"></Setter>
+                    <Setter Property="IsTabStop" Value="False"></Setter>
                 </Style>
             </Menu.Resources>
             <MenuItem Header="_File">
@@ -142,8 +143,8 @@
         <ContentControl Grid.Row="1" regions:RegionManager.RegionName="{x:Static shared:RegionNames.EditorRegion}"
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-        <Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0"
-                MinWidth="0" />
+        <!--<Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0"
+                MinWidth="0" />-->
         <DockPanel Grid.Row="2" Width="Auto" Height="23" Background="{DynamicResource BarColorBrush}"
                    Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <DockPanel.Resources>

@@ -1,8 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
@@ -24,7 +22,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		TextBox _textBox1;
 		TextBox _textboxFindFindString;
 		TextBox _textbockReplaceFindString;
-		TextBox _textboxReplaceString;
 		TextBox _textBoxGotoString;
 		UserControl _editorControl;
 		SpellCheck _spellCheck;
@@ -43,12 +40,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SearchOptions = new SearchOptions();
 		}
 
-		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textbockReplaceFindString, TextBox textboxReplaceString, TextBox textBoxGotoString, UserControl editorControl)
+		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textBoxReplaceFindString, TextBox textBoxGotoString, UserControl editorControl)
 		{
 			_textBox1 = textbox1;
 			_textboxFindFindString = textboxFindFindString;
-			_textbockReplaceFindString = textbockReplaceFindString;
-			_textboxReplaceString = textboxReplaceString;
+			_textbockReplaceFindString = textBoxReplaceFindString;
 			_textBoxGotoString = textBoxGotoString;
 			_editorControl = editorControl;
 
@@ -222,19 +218,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 		int _toolAreaSelectedIndex;
 
-		public TabItem ToolAreaSelectedItem
-		{
-			get { return _toolAreaSelectedItem; }
-			set
-			{
-				if (_toolAreaSelectedItem != value)
-				{
-					_toolAreaSelectedItem = value;
-					OnPropertyChanged(() => ToolAreaSelectedItem);
-				}
-			}
-		}
-		TabItem _toolAreaSelectedItem;
+	
 		#endregion
 
 		#region FindMenuCommand
@@ -367,7 +351,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			if (searchResult.HasValue)
 			{
 				found = true;
-				Find_SelectSearchResult(searchResult.Value.Index, searchResult.Value.Length);
+				SelectSearchResult(searchResult.Value.Index, searchResult.Value.Length);
 			}
 
 			if (!found && SearchOptions.UseRegEx == false)
@@ -411,7 +395,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				_textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
 
 				found = true;
-				Find_SelectSearchResult(searchResult.Value.Index, ReplaceString.Length);
+				SelectSearchResult(searchResult.Value.Index, ReplaceString.Length);
 			}
 
 			if (!found && SearchOptions.UseRegEx == false)
@@ -525,11 +509,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			return null;
 		}
 
-
-		void Find_SelectSearchResult(int indexInSourceText, int length)
-		{
-			_textBox1.Select(indexInSourceText, length);
-		}
+	
+		
 		#endregion
 
 		#region ReplaceCommand
@@ -632,7 +613,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public int LineCount
 		{
-			get { return _textBox1.LineCount; }
+			get
+			{
+				if (_textBox1 != null)
+					return _textBox1.LineCount;
+				return 0;
+			}
 		}
 
 
@@ -646,7 +632,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		int _lineIndex;
 		bool CanExecuteGoButtonCommand()
 		{
-			OnPropertyChanged(()=>LineCount);
+			OnPropertyChanged(() => LineCount);
 			int lineNo;
 			var canParse = int.TryParse(LineNo, out lineNo);
 			if (!canParse)
@@ -666,7 +652,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				var index = _textBox1.GetCharacterIndexFromLineIndex(_lineIndex);
 				_textBox1.CaretIndex = index;
 				var lineLength = _textBox1.GetLineLength(_lineIndex);
-				GoButton_SelectSearchResult(index, lineLength);
+				SelectSearchResult(index, lineLength);
 
 			}
 			catch (Exception e)
@@ -675,7 +661,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			}
 		}
 
-		void GoButton_SelectSearchResult(int indexInSourceText, int length)
+		void SelectSearchResult(int indexInSourceText, int length)
 		{
 			_textBox1.Select(indexInSourceText, length);
 			_textBox1.Focus();
@@ -780,7 +766,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void UpdateStatusBar()
 		{
-			OnPropertyChanged(()=>LineCount);
+			OnPropertyChanged(() => LineCount);
 
 			var pos = GetPositionString();
 			var enc = GetEncodingString();

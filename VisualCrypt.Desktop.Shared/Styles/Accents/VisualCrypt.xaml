@@ -14,7 +14,11 @@
     <Color x:Key="AccentColor4">#33AF0007</Color>
     
     <Color x:Key="BarColor">#FFF0F0F0</Color>
+    <Color x:Key="ButtonColor">#FFDDDDDD</Color>
+
+
     <SolidColorBrush x:Key="BarColorBrush" Color="{StaticResource BarColor}"  />
+    <SolidColorBrush x:Key="ButtonColorBrush" Color="{StaticResource ButtonColor}"  />
     <!-- re-set brushes too -->
     <SolidColorBrush x:Key="HighlightBrush" Color="{StaticResource HighlightColor}"  />
     <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}"  />

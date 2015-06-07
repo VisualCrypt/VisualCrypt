@@ -34,6 +34,7 @@
         <Setter Property="Padding" Value="10,0"></Setter>
         <Setter Property="BorderThickness" Value="1"></Setter>
         <Setter Property="FontSize" Value="13"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ButtonColorBrush}"></Setter>
     </Style>
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="Template">
