@@ -17,6 +17,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 				new FrameworkPropertyMetadata(typeof(AppDialog)));
 		}
 
+		HwndSource _hwndSource;
 		Rectangle _moveRectangle;
 
 		public override void OnApplyTemplate()
@@ -28,7 +29,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			closeButton.Click += Close_Click;
 
 			_moveRectangle = (Rectangle)GetTemplateChild("moveRectangle");
-			_moveRectangle.MouseDown += MoveRectangle_MouseDown;
+			_moveRectangle.MouseDown += MoveWindow;
 
 			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
 			foreach (UIElement rectangle in resizeGrid.Children)
@@ -44,68 +45,45 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		protected override void OnInitialized(EventArgs e)
 		{
 			base.OnInitialized(e);
-			SourceInitialized += OnSourceInitialized;
-			PreviewKeyDown += Window_PreviewKeyDown;
+			SourceInitialized += delegate { _hwndSource = (HwndSource) PresentationSource.FromVisual(this); };
+			PreviewKeyDown += CustomizeAltSpace;
 			WindowStyle = WindowStyle.None;
 			AllowsTransparency = true;
 			Closed += AppWindow_Closed;
 		}
 
+		#region Event handlers
+
 		void AppWindow_Closed(object sender, EventArgs e)
 		{
 			if (_hwndSource != null)
 			{
-				_hwndSource.RemoveHook(WindowProc);
 				_hwndSource.Dispose();
 				_hwndSource = null;
 			}
 		}
 
-		#region Event handlers
-
-		void Window_PreviewKeyDown(object sender, KeyEventArgs e)
+		void CustomizeAltSpace(object sender, KeyEventArgs e)
 		{
 			var isAltPressed = Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.RightAlt);
 			if (e.Key == Key.System && Keyboard.IsKeyDown(Key.Space) && isAltPressed)
 			{
 				e.Handled = true;
-				CenterOnPrimaryScreenWithDefaults();
+				CenterOnPrimaryScreen();
 			}
 		}
 
-		void CenterOnPrimaryScreenWithDefaults()
+		void CenterOnPrimaryScreen()
 		{
 			Left = (SystemParameters.WorkArea.Width / 2) - (Width / 2);
 			Top = (SystemParameters.WorkArea.Height / 2) - (Height / 2);
 			WindowState = WindowState.Normal;
-			SetCanResize(true);
 		}
-
-
-	
 
 		
 		void Close_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
-		}
-
-		void MoveRectangle_MouseDown(object sender, MouseButtonEventArgs e)
-		{
-			if (e.ChangedButton != MouseButton.Left)
-				return;
-
-			var mPoint = Mouse.GetPosition(this);
-			IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-
-			var wpfPoint = PointToScreen(mPoint);
-			var x = Convert.ToInt16(wpfPoint.X);
-			var y = Convert.ToInt16(wpfPoint.Y);
-			var lParam = (int)(uint)x | (y << 16);
-
-			const int wmNclbuttondown = 0x00A1;
-			const int htCaption = 0x2;
-			SendMessage(windowHandle, wmNclbuttondown, htCaption, lParam);
 		}
 
 
@@ -194,7 +172,6 @@ namespace VisualCrypt.Desktop.Shared.Controls
 				}
 		}
 
-
 		enum ResizeDirection
 		{
 			Left = 1,
@@ -210,159 +187,43 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		
 
 
-		void SetCanResize(bool canResize)
-		{
-			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
-			if (resizeGrid != null)
-				foreach (UIElement rectangle in resizeGrid.Children)
-				{
-					rectangle.IsHitTestVisible = canResize;
-				}
-		}
+		
 
 		#endregion
 
 		#region interop
 
-		
-		
-		HwndSource _hwndSource;
+		void MoveWindow(object sender, MouseButtonEventArgs e)
+		{
+			if (e.ChangedButton != MouseButton.Left)
+				return;
 
-	
+			var mPoint = Mouse.GetPosition(this);
 
-		[DllImport("user32.dll", CharSet = CharSet.Auto)]
-		static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
+			var wpfPoint = PointToScreen(mPoint);
+			var x = Convert.ToInt16(wpfPoint.X);
+			var y = Convert.ToInt16(wpfPoint.Y);
+			var lParam = (int)(uint)x | (y << 16);
 
-		[DllImport("user32.dll")]
-		static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
-
-		[DllImport("user32.dll")]
-		[return: MarshalAs(UnmanagedType.Bool)]
-		static extern bool GetCursorPos(out POINT lpPoint);
-
-
-		[DllImport("user32.dll", SetLastError = true)]
-		static extern IntPtr MonitorFromPoint(POINT pt, MonitorOptions dwFlags);
-
-		[DllImport("user32.dll")]
-		static extern bool GetMonitorInfo(IntPtr hMonitor, MONITORINFO lpmi);
-
+			const int wmNclbuttondown = 0x00A1;
+			const int htCaption = 0x2;
+			SendMessage(_hwndSource.Handle, wmNclbuttondown, htCaption, lParam);
+		}
 
 		void ResizeWindow(ResizeDirection direction)
 		{
 			SendMessage(_hwndSource.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
 		}
 
-		void OnSourceInitialized(object sender, EventArgs e)
-		{
-			_hwndSource = (HwndSource)PresentationSource.FromVisual(this);
-			//if (_hwndSource != null)
-			//	_hwndSource.AddHook(WindowProc);
-		}
+		[DllImport("user32.dll")]
+		static extern int SendMessage(IntPtr hWnd, int msg, int wParam, int lParam);
 
-		IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
-		{
-			switch (msg)
-			{
-				case 0x0024:
-					WmGetMinMaxInfo(lParam);
-					break;
-			}
-
-			return IntPtr.Zero;
-		}
-
-		void WmGetMinMaxInfo(IntPtr lParam)
-		{
-			POINT lMousePosition;
-			GetCursorPos(out lMousePosition);
-
-			IntPtr lPrimaryScreen = MonitorFromPoint(new POINT(0, 0), MonitorOptions.MONITOR_DEFAULTTOPRIMARY);
-			var lPrimaryScreenInfo = new MONITORINFO();
-			if (GetMonitorInfo(lPrimaryScreen, lPrimaryScreenInfo) == false)
-			{
-				return;
-			}
-
-			IntPtr lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
-
-			var lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
-
-			if (lPrimaryScreen.Equals(lCurrentScreen))
-			{
-				lMmi.ptMaxPosition.X = lPrimaryScreenInfo.rcWork.Left;
-				lMmi.ptMaxPosition.Y = lPrimaryScreenInfo.rcWork.Top;
-				lMmi.ptMaxSize.X = lPrimaryScreenInfo.rcWork.Right - lPrimaryScreenInfo.rcWork.Left;
-				lMmi.ptMaxSize.Y = lPrimaryScreenInfo.rcWork.Bottom - lPrimaryScreenInfo.rcWork.Top;
-			}
-			else
-			{
-				lMmi.ptMaxPosition.X = lPrimaryScreenInfo.rcMonitor.Left;
-				lMmi.ptMaxPosition.Y = lPrimaryScreenInfo.rcMonitor.Top;
-				lMmi.ptMaxSize.X = lPrimaryScreenInfo.rcMonitor.Right - lPrimaryScreenInfo.rcMonitor.Left;
-				lMmi.ptMaxSize.Y = lPrimaryScreenInfo.rcMonitor.Bottom - lPrimaryScreenInfo.rcMonitor.Top;
-			}
-
-			Marshal.StructureToPtr(lMmi, lParam, true);
-		}
-
-		// ReSharper disable InconsistentNaming
-
-		enum MonitorOptions : uint
-		{
-			MONITOR_DEFAULTTOPRIMARY = 0x00000001,
-			MONITOR_DEFAULTTONEAREST = 0x00000002
-		}
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct POINT
-		{
-			public int X;
-			public int Y;
-
-			public POINT(int x, int y)
-			{
-				X = x;
-				Y = y;
-			}
-		}
-
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct MINMAXINFO
-		{
-			public POINT ptReserved;
-			public POINT ptMaxSize;
-			public POINT ptMaxPosition;
-			public POINT ptMinTrackSize;
-			public POINT ptMaxTrackSize;
-		};
-
-
-		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-		public class MONITORINFO
-		{
-			public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));
-			public RECT rcMonitor = new RECT();
-			public RECT rcWork = new RECT();
-			public int dwFlags = 0;
-		}
-
-
-		[StructLayout(LayoutKind.Sequential)]
-		public struct RECT
-		{
-			public readonly int Left, Top, Right, Bottom;
-
-			public RECT(int left, int top, int right, int bottom)
-			{
-				Left = left;
-				Top = top;
-				Right = right;
-				Bottom = bottom;
-			}
-		}
-	}
+		[DllImport("user32.dll", CharSet = CharSet.Auto)]
+		static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
 
 		#endregion
+
+	}
+
+		
 }
