@@ -39,6 +39,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 				rectangle.MouseLeave += ResizeRectangle_MouseLeave;
 			}
 			// ReSharper restore PossibleNullReferenceException
+			
 		}
 
 

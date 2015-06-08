@@ -22,7 +22,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 	{
 		#region Initialization
 
-		[Import]
 		IEditor _editor;
 
 		readonly IMessageBoxService _messageBoxService;
@@ -35,8 +34,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_messageBoxService = messageBoxService;
 		}
 
-		public void OnEditorLoaded()
+		public void OnEditorLoaded(IEditor editor)
 		{
+			_editor = editor;
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);
 			SearchOptions = new SearchOptions();
 			ExecuteZoom100();

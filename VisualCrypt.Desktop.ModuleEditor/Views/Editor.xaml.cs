@@ -28,7 +28,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void Editor_Loaded(object sender, RoutedEventArgs e)
 		{
-			ViewModel.OnEditorLoaded();
+			ViewModel.OnEditorLoaded((IEditor)this);
 
 			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 			
