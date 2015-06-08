@@ -1,4 +1,5 @@
 ﻿using Microsoft.Practices.Prism.Commands;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
@@ -24,15 +25,17 @@ namespace VisualCrypt.Desktop.Views
 	{
 		readonly IRegionManager _regionManager;
 		readonly IEventAggregator _eventAggregator;
+		readonly ILoggerFacade _logger;
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEncryptionService _encryptionService;
 
 		[ImportingConstructor]
-		public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator,
+		public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ILoggerFacade logger,
 			IMessageBoxService messageBoxService, IEncryptionService encryptionService)
 		{
 			_regionManager = regionManager;
 			_eventAggregator = eventAggregator;
+			_logger = logger;
 			_messageBoxService = messageBoxService;
 			_encryptionService = encryptionService;
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
@@ -41,8 +44,18 @@ namespace VisualCrypt.Desktop.Views
 
 		public void Init()
 		{
-			CreateEditor();
-			ExecuteNewCommand();
+			ActivateEditor();
+			if (!string.IsNullOrWhiteSpace(Environment.CommandLine))
+			{
+				_logger.Log("Trying to get file from Commandline {0}".FormatInvariant(Environment.CommandLine), Category.Info,
+					Priority.None);
+				OpenFileFromCommandLine(Environment.GetCommandLineArgs());
+			}
+			else
+			{
+				ExecuteNewCommand();
+				_logger.Log("Started with new file - Ready.", Category.Info, Priority.None);
+			}
 		}
 
 		void ExecuteEditorSendsTextCallback(EditorSendsText args)
@@ -383,8 +396,9 @@ namespace VisualCrypt.Desktop.Views
 
 			// args is expected to hold one filename only
 			// but can be segmented if it contains spaces.
-			foreach (string a in args)
+			for (int index = 1; index < args.Length; index++)
 			{
+				string a = args[index];
 				commandline += a;
 				commandline += " ";
 			}
@@ -726,7 +740,7 @@ namespace VisualCrypt.Desktop.Views
 			return true;
 		}
 
-		void CreateEditor()
+		void ActivateEditor()
 		{
 			var mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
 			if (mainRegion == null)

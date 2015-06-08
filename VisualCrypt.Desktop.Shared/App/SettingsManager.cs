@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Practices.Prism.Logging;
@@ -45,7 +46,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				Logger.Log("Could not load settings, using factory settings.", Category.Warn, Priority.Medium);
 				settings = FactorySettings();
-				SaveSettings();
+				SaveSettings(settings);
 			}
 			else
 				Logger.Log("Settings successfully loaded!.", Category.Info, Priority.Medium);
@@ -54,8 +55,10 @@ namespace VisualCrypt.Desktop.Shared.App
 
 			TryPinToTaskbarOnFirstRun();
 		}
+	
 
-		public static void SaveSettings()
+
+		public static void SaveSettings(object settingValueForLoggingOnly, [CallerMemberName] string callerMemberName = null)
 		{
 			try
 			{
@@ -65,7 +68,7 @@ namespace VisualCrypt.Desktop.Shared.App
 
 				using (var visualCryptKey = GetOrCreateVisualCryptKey())
 					visualCryptKey.SetValue(Constants.Key_NotepadSettings, serializedSettings);
-				Logger.Log("Settings saved!", Category.Info, Priority.Low);
+				Logger.Log("Setting '{0}:{1}' saved!".FormatInvariant(callerMemberName,settingValueForLoggingOnly), Category.Info, Priority.Low);
 			}
 			catch (Exception e)
 			{

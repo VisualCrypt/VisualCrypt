@@ -13,9 +13,12 @@ namespace VisualCrypt.Desktop
 	{
 		readonly ReplayLogger _replayLogger = new ReplayLogger();
 
-		/// <summary>
-		/// Creates the main window of the application and initializes the RegionManager attached property of the ShellWindow.
-		/// </summary>
+		public override void Run(bool runWithDefaultConfiguration)
+		{
+			base.Run(runWithDefaultConfiguration);
+			Container.GetExportedValue<ShellViewModel>().Init();
+		}
+
 		protected override DependencyObject CreateShell()
 		{
 			SettingsManager.LoadOrInitSettings();
@@ -54,11 +57,7 @@ namespace VisualCrypt.Desktop
 			Container.ComposeExportedValue(_replayLogger);
 		}
 
-		protected override IModuleCatalog CreateModuleCatalog()
-		{
-			// When using MEF, the existing Prism ModuleCatalog is still the place to configure modules via configuration files.
-			return new ConfigurationModuleCatalog();
-		}
+		
 
 		/// <summary>
 		/// Create the <see cref="ILoggerFacade"/> used by the bootstrapper.

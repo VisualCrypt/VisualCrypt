@@ -19,7 +19,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isStatusBarChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings();
+				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -33,7 +33,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isToolAreaChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings();
+				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -48,7 +48,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isWordWrapChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings();
+				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -62,7 +62,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isSpellCheckingChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings();
+				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -76,7 +76,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_printMargin = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings();
+				SettingsManager.SaveSettings(value);
 			}
 		}
 

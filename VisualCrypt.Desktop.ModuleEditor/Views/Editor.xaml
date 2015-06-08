@@ -49,13 +49,16 @@
                  AcceptsReturn="True"
                  AllowDrop="True"
                  AcceptsTab="True"
+                 Padding="3"
                  Text=""
                  BorderBrush="{x:Static SystemColors.MenuBarBrush}"
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                  TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=OneWay, Converter={StaticResource BoolTextWrappingConverter}}"
-                 SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}">
-
-            <!-- TextWrapping="{Binding TextWrapping}"-->
+                 
+                 SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=OneWay}"
+                 
+                >
+                <!-- TextWrapping="{Binding TextWrapping}"-->
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
@@ -102,7 +105,7 @@
                     </Style.Triggers>
                 </Style>
             </TextBox.Style>
-        </TextBox>
+      </TextBox>
         <Grid Grid.Column="1" Background="{DynamicResource BarColorBrush}"
               IsVisibleChanged="ToolArea_OnIsVisibleChanged"
               Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsToolAreaChecked, Converter={StaticResource BoolVisibilityConverter}}">

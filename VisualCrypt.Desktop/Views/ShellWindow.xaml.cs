@@ -20,7 +20,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			InitializeComponent();
 
-			Loaded += Shell_Loaded;
+			
 			PreviewKeyDown += ShellWindow_PreviewKeyDown;
 			Closing += MainWindow_Closing;
 			//SizeChanged += MainWindow_SizeChanged;
@@ -41,10 +41,7 @@ namespace VisualCrypt.Desktop.Views
 			// _shellViewModel.OnMainWindowInitialized();
 		}
 
-		void Shell_Loaded(object sender, RoutedEventArgs e)
-		{
-			ViewModel.Init();
-		}
+		
 
 		void MainWindow_Closing(object sender, CancelEventArgs e)
 		{

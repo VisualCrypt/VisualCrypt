@@ -7,7 +7,7 @@ using VisualCrypt.Desktop.Shared;
 
 namespace VisualCrypt.Desktop.ModuleEncryption
 {
-	[ModuleExport(typeof (ModuleEncryption), InitializationMode = InitializationMode.OnDemand)]
+	[ModuleExport(typeof (ModuleEncryption), InitializationMode = InitializationMode.WhenAvailable)]
 	public class ModuleEncryption : IModule
 	{
 		readonly ILoggerFacade _logger;

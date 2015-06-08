@@ -516,7 +516,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		
+
 
 		#region DeleteLineCommand
 
@@ -598,7 +598,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			get
 			{
-				if (_editor.TextBox1 != null)
+				if (_editor != null)
 					return _editor.TextBox1.LineCount;
 				return 0;
 			}
@@ -729,7 +729,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				{
 					ExecuteZoom100();
 					Map.Copy(SettingsManager.EditorSettings.FontSettings, _editor.TextBox1);
-					SettingsManager.SaveSettings();
+					SettingsManager.SaveSettings(SettingsManager.EditorSettings.FontSettings);
 				}
 			}
 			catch (Exception e)

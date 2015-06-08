@@ -4,10 +4,11 @@ using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions.Modularity;
 using Microsoft.Practices.Prism.Modularity;
 using VisualCrypt.Desktop.Shared;
+using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.ModuleEditor
 {
-	[ModuleExport(typeof (ModuleEditor), DependsOnModuleNames = new string[] {})]
+	[ModuleExport(typeof(ModuleEditor), InitializationMode = InitializationMode.WhenAvailable, DependsOnModuleNames = new []{ ModuleNames.ModuleEncryption })]
 	public class ModuleEditor : IModule
 	{
 		readonly ILoggerFacade _logger;
