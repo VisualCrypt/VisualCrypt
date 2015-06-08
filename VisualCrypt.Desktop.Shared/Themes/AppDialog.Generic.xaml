@@ -49,11 +49,11 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="*" />
-
+                                <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
 
                             <Rectangle x:Name="moveRectangle" Fill="{DynamicResource AccentColorBrush}"
-                                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Stretch"
+                                       Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" VerticalAlignment="Stretch"
                                        HorizontalAlignment="Stretch" />
                             <Image Margin="3,3,10,3" Grid.Row="0" Grid.Column="0" Source="AppWindowIcon.png"
                                    IsHitTestVisible="False" />
@@ -63,8 +63,12 @@
                                        VerticalAlignment="Center" IsHitTestVisible="False" Margin="0" Padding="0"
                                        Foreground="White"
                                        HorizontalAlignment="Left" />
+                            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" Background="Transparent">
+                                <Button Width="30" x:Name="closeButton" Style="{StaticResource WindowButtonStyle}"
+                                        Content="r" />
+                            </StackPanel>
 
-                            <Grid Column="0" Background="Transparent" Grid.Row="1" Grid.ColumnSpan="2" Margin="0">
+                            <Grid Column="0" Background="Transparent" Grid.Row="1" Grid.ColumnSpan="3" Margin="0">
                                 <AdornerDecorator>
                                     <ContentPresenter />
                                 </AdornerDecorator>

@@ -92,32 +92,32 @@ namespace VisualCrypt.Desktop.Tests
 			//vm.SearchOptions.SearchUp = false;
 
 			//_textBox1.CaretIndex = 0;
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 1);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 2);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 1);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 2);
 
 			//// search backwards with wrapping
 			//vm.SearchOptions.SearchUp = true;
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 1);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 2);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 1);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 2);
 		}
 
@@ -135,40 +135,40 @@ namespace VisualCrypt.Desktop.Tests
 			//vm.SearchOptions.SearchUp = false;
 
 			//_textBox1.CaretIndex = 0;
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 2);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 4);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 6);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 2);
 
 			//// search backwards with wrapping
 			//vm.SearchOptions.SearchUp = true;
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 0);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 7);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 5);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 3);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 1);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 7);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 5);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 3);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 1);
-			//vm.FindNextCommand.Execute();
+			//vm.FindNextButtonCommand.Execute();
 			//Assert.IsTrue(_textBox1.CaretIndex == 7);
 		}
 

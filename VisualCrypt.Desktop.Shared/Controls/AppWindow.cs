@@ -66,6 +66,16 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			SourceInitialized += OnSourceInitialized;
 			PreviewKeyDown += Window_PreviewKeyDown;
 			WindowStyle = WindowStyle.None;
+			Closed += AppWindow_Closed;
+		}
+
+		void AppWindow_Closed(object sender, EventArgs e)
+		{
+			if (_hwndSource != null)
+			{
+				_hwndSource.RemoveHook(WindowProc);
+				_hwndSource.Dispose();
+			}
 		}
 
 		#region Event handlers
@@ -312,7 +322,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 					WmGetMinMaxInfo(lParam);
 					break;
 			}
-
+			
 			return IntPtr.Zero;
 		}
 

@@ -233,7 +233,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.HelpUrl}})
+				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } })
 					process.Start();
 			}
 			catch (Exception e)
@@ -347,7 +347,7 @@ namespace VisualCrypt.Desktop.Views
 						return; // The user prefers to look at the cipher!
 				}
 
-				tryDecryptLoadFileWithCurrentPassword:
+			tryDecryptLoadFileWithCurrentPassword:
 				// We have a password, but we don't know if it's the right one. We must try!
 				var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
 					FileManager.FileModel.VisualCryptText));
@@ -525,7 +525,7 @@ namespace VisualCrypt.Desktop.Views
 						throw new Exception(response.Error);
 					FileManager.FileModel.IsDirty = false;
 				}
-					// This is the case where we need a new filename and can then also 'just save'.
+				// This is the case where we need a new filename and can then also 'just save'.
 				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave()))
 				{
 					string suggestedFilename = null;
@@ -542,7 +542,7 @@ namespace VisualCrypt.Desktop.Views
 						FileManager.FileModel.IsDirty = false;
 					}
 				}
-					// And in that case we need a different strategy: Encrypt and THEN save.
+				// And in that case we need a different strategy: Encrypt and THEN save.
 				else
 				{
 					if (FileManager.FileModel.IsEncrypted)
@@ -639,10 +639,15 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand ShowSetPasswordDialogCommand
 		{
-			get { return CreateCommand(ref _showSetPasswordDialogCommand, ExecuteShowSetPasswordDialogCommand, () => true); }
+			get
+			{
+				if (_showSetPasswordDialogCommand == null)
+					_showSetPasswordDialogCommand = DelegateCommand.FromAsyncHandler(ExecuteShowSetPasswordDialogCommand, () => true);
+				return _showSetPasswordDialogCommand;
+			}
 		}
 
-		async void ExecuteShowSetPasswordDialogCommand()
+		async Task ExecuteShowSetPasswordDialogCommand()
 		{
 			try
 			{
@@ -665,7 +670,7 @@ namespace VisualCrypt.Desktop.Views
 		/// </summary>
 		async Task<bool> SetPasswordAsync(SetPasswordDialogMode setPasswordDialogMode)
 		{
-			ParamsProvider.SetParams(typeof (SetPasswordDialog), setPasswordDialogMode);
+			ParamsProvider.SetParams(typeof(SetPasswordDialog), setPasswordDialogMode);
 			return await WindowManager.GetBoolFromShowDialogAsyncWhenClosed<SetPasswordDialog>();
 		}
 
@@ -729,11 +734,11 @@ namespace VisualCrypt.Desktop.Views
 					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
 						RegionNames.EditorRegion));
 
-			var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
+			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
 			if (view == null)
 			{
 				view = ServiceLocator.Current.GetInstance<IEditor>();
-				mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
+				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
 			}
 			else
 			{

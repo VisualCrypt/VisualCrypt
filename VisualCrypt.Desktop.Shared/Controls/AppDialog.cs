@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,50 +13,31 @@ namespace VisualCrypt.Desktop.Shared.Controls
 	{
 		static AppDialog()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof (AppDialog),
-				new FrameworkPropertyMetadata(typeof (AppDialog)));
-		}
-
-		public AppDialog()
-		{
-			WindowStyle = WindowStyle.None;
+			DefaultStyleKeyProperty.OverrideMetadata(typeof(AppDialog),
+				new FrameworkPropertyMetadata(typeof(AppDialog)));
 		}
 
 		Rectangle _moveRectangle;
-		Button _restoreButton;
 
 		public override void OnApplyTemplate()
 		{
 			base.OnApplyTemplate();
+			// ReSharper disable PossibleNullReferenceException, this should fail fast
+			var closeButton = (Button)GetTemplateChild("closeButton");
 
-			var minimizeButton = (Button) GetTemplateChild("minimizeButton");
-			if (minimizeButton != null)
-				minimizeButton.Click += Minimize_Click;
+			closeButton.Click += Close_Click;
 
-			_restoreButton = (Button) GetTemplateChild("restoreButton");
-			if (_restoreButton != null)
-				_restoreButton.Click += Restore_Click;
+			_moveRectangle = (Rectangle)GetTemplateChild("moveRectangle");
+			_moveRectangle.MouseDown += MoveRectangle_MouseDown;
 
-
-			var closeButton = (Button) GetTemplateChild("closeButton");
-			if (closeButton != null)
-				closeButton.Click += Close_Click;
-
-			_moveRectangle = (Rectangle) GetTemplateChild("moveRectangle");
-
-			if (_moveRectangle != null)
+			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
+			foreach (UIElement rectangle in resizeGrid.Children)
 			{
-				_moveRectangle.MouseDown += MoveRectangle_MouseDown;
+				rectangle.PreviewMouseDown += ResizeRectangle_PreviewMouseDown;
+				rectangle.MouseMove += ResizeRectangle_MouseMove;
+				rectangle.MouseLeave += ResizeRectangle_MouseLeave;
 			}
-
-			var resizeGrid = (Panel) GetTemplateChild("resizeGrid");
-			if (resizeGrid != null)
-				foreach (UIElement rectangle in resizeGrid.Children)
-				{
-					rectangle.PreviewMouseDown += ResizeRectangle_PreviewMouseDown;
-					rectangle.MouseMove += ResizeRectangle_MouseMove;
-					rectangle.MouseLeave += ResizeRectangle_MouseLeave;
-				}
+			// ReSharper restore PossibleNullReferenceException
 		}
 
 
@@ -66,6 +46,19 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			base.OnInitialized(e);
 			SourceInitialized += OnSourceInitialized;
 			PreviewKeyDown += Window_PreviewKeyDown;
+			WindowStyle = WindowStyle.None;
+			AllowsTransparency = true;
+			Closed += AppWindow_Closed;
+		}
+
+		void AppWindow_Closed(object sender, EventArgs e)
+		{
+			if (_hwndSource != null)
+			{
+				_hwndSource.RemoveHook(WindowProc);
+				_hwndSource.Dispose();
+				_hwndSource = null;
+			}
 		}
 
 		#region Event handlers
@@ -82,23 +75,16 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 		void CenterOnPrimaryScreenWithDefaults()
 		{
-			Left = (SystemParameters.WorkArea.Width/2) - (Width/2);
-			Top = (SystemParameters.WorkArea.Height/2) - (Height/2);
+			Left = (SystemParameters.WorkArea.Width / 2) - (Width / 2);
+			Top = (SystemParameters.WorkArea.Height / 2) - (Height / 2);
 			WindowState = WindowState.Normal;
 			SetCanResize(true);
 		}
 
 
-		void Minimize_Click(object sender, RoutedEventArgs e)
-		{
-			WindowState = WindowState.Minimized;
-		}
+	
 
-		void Restore_Click(object sender, RoutedEventArgs e)
-		{
-			SwitchWindowState();
-		}
-
+		
 		void Close_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
@@ -111,21 +97,15 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 			var mPoint = Mouse.GetPosition(this);
 			IntPtr windowHandle = new WindowInteropHelper(this).Handle;
-			ReleaseCapture();
+
 			var wpfPoint = PointToScreen(mPoint);
 			var x = Convert.ToInt16(wpfPoint.X);
 			var y = Convert.ToInt16(wpfPoint.Y);
-			var lParam = (int) (uint) x | (y << 16);
+			var lParam = (int)(uint)x | (y << 16);
 
-			SendMessage(windowHandle, WmNclbuttondown, HtCaption, lParam);
-			SetCanResize(true);
-
-			var canResize = ResizeMode == ResizeMode.CanResizeWithGrip || ResizeMode == ResizeMode.CanResize;
-
-			if (e.ClickCount == 2 && canResize)
-			{
-				SwitchWindowState();
-			}
+			const int wmNclbuttondown = 0x00A1;
+			const int htCaption = 0x2;
+			SendMessage(windowHandle, wmNclbuttondown, htCaption, lParam);
 		}
 
 
@@ -227,33 +207,12 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			BottomRight = 8,
 		}
 
-		void SwitchWindowState()
-		{
-			switch (WindowState)
-			{
-				case WindowState.Normal:
-				{
-					// Maximize
-					_restoreButton.Content = 2;
-					WindowState = WindowState.Maximized;
-					SetCanResize(false);
-					break;
-				}
-				case WindowState.Maximized:
-				{
-					// Restore to normal size.
-					_restoreButton.Content = 1;
-					WindowState = WindowState.Normal;
-					SetCanResize(false);
-					break;
-				}
-			}
-		}
+		
 
 
 		void SetCanResize(bool canResize)
 		{
-			var resizeGrid = (Panel) GetTemplateChild("resizeGrid");
+			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
 			if (resizeGrid != null)
 				foreach (UIElement rectangle in resizeGrid.Children)
 				{
@@ -265,12 +224,11 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 		#region interop
 
-		const int WmNclbuttondown = 0x00A1;
-		const int HtCaption = 0x2;
+		
+		
 		HwndSource _hwndSource;
 
-		[DllImportAttribute("user32.dll")]
-		public static extern bool ReleaseCapture();
+	
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]
 		static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
@@ -292,17 +250,17 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 		void ResizeWindow(ResizeDirection direction)
 		{
-			SendMessage(_hwndSource.Handle, 0x112, (IntPtr) (61440 + direction), IntPtr.Zero);
+			SendMessage(_hwndSource.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
 		}
 
 		void OnSourceInitialized(object sender, EventArgs e)
 		{
-			_hwndSource = (HwndSource) PresentationSource.FromVisual(this);
-			if (_hwndSource != null)
-				_hwndSource.AddHook(WindowProc);
+			_hwndSource = (HwndSource)PresentationSource.FromVisual(this);
+			//if (_hwndSource != null)
+			//	_hwndSource.AddHook(WindowProc);
 		}
 
-		static IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+		IntPtr WindowProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
 		{
 			switch (msg)
 			{
@@ -314,7 +272,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			return IntPtr.Zero;
 		}
 
-		static void WmGetMinMaxInfo(IntPtr lParam)
+		void WmGetMinMaxInfo(IntPtr lParam)
 		{
 			POINT lMousePosition;
 			GetCursorPos(out lMousePosition);
@@ -328,7 +286,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 			IntPtr lCurrentScreen = MonitorFromPoint(lMousePosition, MonitorOptions.MONITOR_DEFAULTTONEAREST);
 
-			var lMmi = (MINMAXINFO) Marshal.PtrToStructure(lParam, typeof (MINMAXINFO));
+			var lMmi = (MINMAXINFO)Marshal.PtrToStructure(lParam, typeof(MINMAXINFO));
 
 			if (lPrimaryScreen.Equals(lCurrentScreen))
 			{
@@ -384,7 +342,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		[StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
 		public class MONITORINFO
 		{
-			public int cbSize = Marshal.SizeOf(typeof (MONITORINFO));
+			public int cbSize = Marshal.SizeOf(typeof(MONITORINFO));
 			public RECT rcMonitor = new RECT();
 			public RECT rcWork = new RECT();
 			public int dwFlags = 0;
@@ -406,5 +364,5 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		}
 	}
 
-	#endregion
+		#endregion
 }

@@ -44,7 +44,7 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="TextBox1"
+        <TextBox x:Name="_textBox1"
                  Grid.Column="0"
                  AcceptsReturn="True"
                  AllowDrop="True"
@@ -122,10 +122,10 @@
                             <TextBlock Style="{StaticResource DialogH1Style}" Text="Find" />
                         </TabItem.Header>
                         <StackPanel HorizontalAlignment="Stretch">
-                            <TextBox Margin="5" x:Name="TextBoxFindFindString"
+                            <TextBox Margin="5" x:Name="_textBoxFind"
                                      Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <StackPanel HorizontalAlignment="Right">
-                                <Button IsDefault="True" Command="{Binding FindNextCommand}">
+                                <Button IsDefault="True" Command="{Binding FindNextButtonCommand}">
                                     Find
                                 </Button>
                             </StackPanel>
@@ -149,7 +149,7 @@
                             <TextBlock Style="{StaticResource DialogH1Style}" Text="Replace" />
                         </TabItem.Header>
                         <StackPanel>
-                            <TextBox x:Name="TextBoxReplaceFindString" Margin="5"
+                            <TextBox x:Name="_textBoxFindReplace" Margin="5"
                                      Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
                             <TextBlock Margin="5">Replace with:</TextBlock>
                             <TextBox x:Name="TextBoxReplaceString" Margin="5"
@@ -157,7 +157,7 @@
                             <DockPanel>
                                 <TextBlock Margin="5" Text="{Binding PositionString}" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Command="{Binding FindNextCommand}" IsDefault="True">
+                                    <Button Command="{Binding FindNextButtonCommand}" IsDefault="True">
                                         Find
                                     </Button>
                                     <Button
@@ -197,7 +197,7 @@
                                 <TextBlock Margin="0" Text="{Binding LineCount}" />
                                 <TextBlock Margin="0" Text="):" />
                             </StackPanel>
-                            <TextBox Margin="5" x:Name="TextBoxGotoString"
+                            <TextBox Margin="5" x:Name="_textBoxGoTo"
                                      Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
 
 

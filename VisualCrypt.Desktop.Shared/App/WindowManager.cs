@@ -11,24 +11,18 @@ namespace VisualCrypt.Desktop.Shared.App
 	{
 		static readonly ILoggerFacade Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
 
-		//  for TaskCompletitionSource 
-		public struct Void
+		public static async Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : AppWindow
 		{
-		}
-
-		public static async Task<Void> ShowWindowAsyncAndWaitForClose<T>() where T : AppWindow
-		{
-			var tcs = new TaskCompletionSource<Void>();
+			var tcs = new TaskCompletionSource<object>();
 			try
 			{
 				var appWindow = ServiceLocator.Current.GetInstance<T>();
-				appWindow.Owner = Application.Current.MainWindow;
-				appWindow.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+				
 				appWindow.ShowInTaskbar = true;
+				EnsureCustomWindowConfiguration(appWindow);
 
-				appWindow.Closed += (o, args) => tcs.SetResult(new Void());
+				appWindow.Closed += (o, args) => tcs.SetResult(null);
 				appWindow.Show();
-
 				return await tcs.Task;
 			}
 
@@ -45,30 +39,35 @@ namespace VisualCrypt.Desktop.Shared.App
 			var tcs = new TaskCompletionSource<T>();
 
 			var appDialog = ServiceLocator.Current.GetInstance<T>();
-			appDialog.Owner = Application.Current.MainWindow;
-			appDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 			appDialog.ShowInTaskbar = false;
+			EnsureCustomWindowConfiguration(appDialog);
 
-			appDialog.Closed += (o, args) => tcs.SetResult(appDialog);
 			appDialog.ShowDialog();
-
-			return await tcs.Task.ConfigureAwait(false);
+			tcs.SetResult(appDialog);
+			return await tcs.Task;
 		}
 
 
-		public static async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : AppDialog
+		public static async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : Window
 		{
 			var tcs = new TaskCompletionSource<bool>();
 
 			var appDialog = ServiceLocator.Current.GetInstance<T>();
-			appDialog.Owner = Application.Current.MainWindow;
-			appDialog.WindowStartupLocation = WindowStartupLocation.CenterOwner;
 			appDialog.ShowInTaskbar = false;
+			EnsureCustomWindowConfiguration(appDialog);
 
-			appDialog.Closed += (o, args) => tcs.SetResult(appDialog.DialogResult == true);
-			appDialog.ShowDialog();
+			var result = appDialog.ShowDialog() == true;
+			tcs.SetResult(result);
+			return await tcs.Task;
+		}
 
-			return await tcs.Task.ConfigureAwait(false);
+		static void EnsureCustomWindowConfiguration(Window window)
+		{
+			window.Owner = Application.Current.MainWindow;
+			window.WindowStartupLocation = WindowStartupLocation.CenterOwner;
+			window.WindowStyle = WindowStyle.None;
+			window.AllowsTransparency = true; // important, if not true, painting errors may occur!
+			window.ResizeMode = ResizeMode.NoResize;
 		}
 	}
 }

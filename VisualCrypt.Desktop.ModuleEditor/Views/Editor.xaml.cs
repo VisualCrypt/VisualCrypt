@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.Composition;
-using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
@@ -12,26 +10,13 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 	[PartCreationPolicy(CreationPolicy.NonShared)]
 	public partial class Editor : IEditor
 	{
+		#region Initialization
+
 		public Editor()
 		{
 			InitializeComponent();
 			Loaded += Editor_Loaded;
 		}
-
-		void Editor_Loaded(object sender, RoutedEventArgs e)
-		{
-			ViewModel.OnEditorInitialized(TextBox1, TextBoxFindFindString, TextBoxReplaceFindString, TextBoxGotoString, this);
-			TextBox1.TextChanged += TextBox1_TextChanged;
-			TextBox1.SelectionChanged += TextBox1_SelectionChanged;
-			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
-
-			TextBox1.SpellCheck.SpellingReform = SpellingReform.Postreform;
-			TextBox1.PreviewMouseWheel += TextBox1_PreviewMouseWheel;
-			TextBox1.Focus();
-
-			TabControl.Initialized += (o, args) => TabControl.SelectedIndex = 0;
-		}
-
 
 		[Import]
 		EditorViewModel ViewModel
@@ -39,6 +24,24 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			set { DataContext = value; }
 			get { return DataContext as EditorViewModel; }
 		}
+
+
+		void Editor_Loaded(object sender, RoutedEventArgs e)
+		{
+			ViewModel.OnEditorLoaded();
+
+			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
+			
+			_textBox1.PreviewMouseWheel += TextBox1_PreviewMouseWheel;
+			_textBox1.SpellCheck.SpellingReform = SpellingReform.Postreform;
+			_textBox1.Focus();
+			
+			TabControl.Initialized += (o, args) => TabControl.SelectedIndex = 0;
+		}
+
+		#endregion
+
+		#region Events
 
 		void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
@@ -66,8 +69,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				ViewModel.ExecuteFindPreviousMenuCommand();
 			// Replace
 			if ((e.Key == Key.H && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-			    && ViewModel.CanExecuteReplace())
-				ViewModel.ExecuteReplace();
+			    && ViewModel.CanExecuteReplaceMenuCommand())
+				ViewModel.ExecuteReplaceMenuCommand();
 			// Delete Line
 			if ((e.Key == Key.Delete && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
 			    && ViewModel.CanExecuteDeleteLine())
@@ -120,17 +123,23 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			}
 		}
 
-		void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
+		void ToolArea_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			ViewModel.ExecuteTextChangedCommand();
+			UpdateLayout();
 		}
 
-		void TextBox1_SelectionChanged(object sender, RoutedEventArgs routedEventArgs)
+		void ToolArea_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
 		{
-			ViewModel.ExecuteSelectionChangedCommand();
+			if (e.Property == IsVisibleProperty)
+			{
+				if ((bool)e.NewValue == false)
+					_textBox1.Focus();
+			}
 		}
 
-		#region EditorCommands
+		#endregion
+
+		#region RoutedCommands
 
 		void CanExecuteFind(object sender, CanExecuteRoutedEventArgs e)
 		{
@@ -164,12 +173,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void CanExecuteReplace(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = ViewModel.CanExecuteReplace();
+			e.CanExecute = ViewModel.CanExecuteReplaceMenuCommand();
 		}
 
 		void ExecuteReplace(object sender, ExecutedRoutedEventArgs e)
 		{
-			ViewModel.ExecuteReplace();
+			ViewModel.ExecuteReplaceMenuCommand();
 		}
 
 		void CanExecuteDeleteLine(object sender, CanExecuteRoutedEventArgs e)
@@ -254,25 +263,33 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		void ButtonGoTo_OnClick(object sender, RoutedEventArgs e)
+		#region IEditor
+
+		public TextBox TextBox1
 		{
-			ViewModel.ExecuteGoMenuCommand();
+			get { return _textBox1; }
 		}
 
-		void ToolArea_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+		public TextBox TextBoxFind
 		{
-			UpdateLayout();
+			get { return _textBoxFind; }
 		}
 
-		void ToolArea_OnIsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+		public TextBox TextBoxFindReplace
 		{
-			if (e.Property == IsVisibleProperty)
-			{
-				if ((bool) e.NewValue == false)
-					TextBox1.Focus();
-			}
+			get { return _textBoxFindReplace; }
 		}
 
-		
+		public TextBox TextBoxGoTo
+		{
+			get { return _textBoxGoTo; }
+		}
+
+		public UIElement EditorControl
+		{
+			get { return this; }
+		}
+
+		#endregion
 	}
 }

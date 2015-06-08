@@ -20,12 +20,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 	[Export]
 	public class EditorViewModel : ViewModelBase
 	{
-		TextBox _textBox1;
-		TextBox _textboxFindFindString;
-		TextBox _textbockReplaceFindString;
-		TextBox _textBoxGotoString;
-		UserControl _editorControl;
-		SpellCheck _spellCheck;
+		#region Initialization
+
+		[Import]
+		IEditor _editor;
 
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEventAggregator _eventAggregator;
@@ -35,39 +33,29 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			_eventAggregator = eventAggregator;
 			_messageBoxService = messageBoxService;
-
-
-			// From FRVM
-			SearchOptions = new SearchOptions();
 		}
 
-		public void OnEditorInitialized(TextBox textbox1, TextBox textboxFindFindString, TextBox textBoxReplaceFindString,
-			TextBox textBoxGotoString, UserControl editorControl)
+		public void OnEditorLoaded()
 		{
-			_textBox1 = textbox1;
-			_textboxFindFindString = textboxFindFindString;
-			_textbockReplaceFindString = textBoxReplaceFindString;
-			_textBoxGotoString = textBoxGotoString;
-			_editorControl = editorControl;
-
-			_spellCheck = _textBox1.SpellCheck;
-			_spellCheck.SpellingReform = SpellingReform.Postreform;
-
-
-			SettingsManager.EditorSettings.FontSettings.ApplyTo(_textBox1);
+			SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);
+			SearchOptions = new SearchOptions();
 			ExecuteZoom100();
 
-			OnTextReceived(string.Empty);
-
+			_editor.TextBox1.TextChanged += OnTextChanged;
+			_editor.TextBox1.SelectionChanged += OnSelectionChanged;
 			_eventAggregator.GetEvent<EditorReceivesText>().Subscribe(OnTextReceived);
-			_eventAggregator.GetEvent<EditorShouldSendText>().Subscribe(OnShouldSendText);
+			_eventAggregator.GetEvent<EditorShouldSendText>().Subscribe(OnTextRequested);
+
+			OnTextReceived(string.Empty);
 		}
 
-		#region PubSubEvents
+		#endregion
 
-		void OnShouldSendText(Action<string> callback)
+		#region Events
+
+		void OnTextRequested(Action<string> callback)
 		{
-			var args = new EditorSendsText {Text = _textBox1.Text, Callback = callback};
+			var args = new EditorSendsText { Text = _editor.TextBox1.Text, Callback = callback };
 			_eventAggregator.GetEvent<EditorSendsText>().Publish(args);
 		}
 
@@ -76,42 +64,34 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			if (newText == null)
 				throw new ArgumentNullException("newText");
 
-			_textBox1.IsUndoEnabled = false;
+			_editor.TextBox1.IsUndoEnabled = false;
 
 			var backup = FileManager.FileModel.IsDirty;
-			_textBox1.Text = newText; // triggers Text_Changed which sets FileManager.FileModel.IsDirty = true;
+			_editor.TextBox1.Text = newText; // triggers Text_Changed which sets FileManager.FileModel.IsDirty = true;
 			FileManager.FileModel.IsDirty = backup;
 
 			if (FileManager.FileModel.IsEncrypted)
 			{
-				_textBox1.SpellCheck.IsEnabled = false;
-				_textBox1.IsUndoEnabled = false;
-				_textBox1.IsReadOnly = true;
+				_editor.TextBox1.SpellCheck.IsEnabled = false;
+				_editor.TextBox1.IsUndoEnabled = false;
+				_editor.TextBox1.IsReadOnly = true;
 			}
 			else
 			{
-				_textBox1.SpellCheck.IsEnabled = SettingsManager.EditorSettings.IsSpellCheckingChecked;
-				_textBox1.IsUndoEnabled = true;
-				_textBox1.IsReadOnly = false;
+				_editor.TextBox1.SpellCheck.IsEnabled = SettingsManager.EditorSettings.IsSpellCheckingChecked;
+				_editor.TextBox1.IsUndoEnabled = true;
+				_editor.TextBox1.IsReadOnly = false;
 			}
 			UpdateStatusBar();
 		}
 
-		#endregion
-
-		#region TextChangedCommand
-
-		public void ExecuteTextChangedCommand()
+		void OnTextChanged(object sender, TextChangedEventArgs e)
 		{
 			FileManager.FileModel.IsDirty = true;
 			UpdateStatusBar();
 		}
 
-		#endregion
-
-		#region SelectionChangedCommand
-
-		public void ExecuteSelectionChangedCommand()
+		void OnSelectionChanged(object sender, RoutedEventArgs routedEventArgs)
 		{
 			if ((SettingsManager.EditorSettings.IsStatusBarChecked))
 				UpdateStatusBar();
@@ -123,12 +103,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteZoomIn()
 		{
-			return _textBox1.FontSize < 999;
+			return _editor.TextBox1.FontSize < 999;
 		}
 
 		public void ExecuteZoomIn()
 		{
-			_textBox1.FontSize *= 1.05;
+			_editor.TextBox1.FontSize *= 1.05;
 			UpdateZoomLevelMenuText();
 
 			//Zoom100Command.RaiseCanExecuteChanged();
@@ -139,12 +119,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteZoomOut()
 		{
-			return _textBox1.FontSize > 1;
+			return _editor.TextBox1.FontSize > 1;
 		}
 
 		public void ExecuteZoomOut()
 		{
-			_textBox1.FontSize *= 1/1.05;
+			_editor.TextBox1.FontSize *= 1 / 1.05;
 			UpdateZoomLevelMenuText();
 
 			//Zoom100Command.RaiseCanExecuteChanged();
@@ -160,7 +140,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteZoom100()
 		{
-			_textBox1.FontSize = SettingsManager.EditorSettings.FontSettings.FontSize;
+			_editor.TextBox1.FontSize = SettingsManager.EditorSettings.FontSettings.FontSize;
 			UpdateZoomLevelMenuText();
 
 			//Zoom100Command.RaiseCanExecuteChanged();
@@ -170,12 +150,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void UpdateZoomLevelMenuText()
 		{
-			var zoomLevel = (int) ((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100);
+			var zoomLevel = (int)((_editor.TextBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
 			var zoomLevelMenuText = "_Zoom (" + zoomLevel + "%)";
 			SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
 			SettingsManager.EditorSettings.IsZoom100Checked =
-				Math.Abs(((_textBox1.FontSize/SettingsManager.EditorSettings.FontSettings.FontSize)*100) - 100) < 0.1;
+				Math.Abs(((_editor.TextBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
 		}
 
 		#endregion
@@ -191,7 +171,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			try
 			{
-				var doc = Printer.ConvertToFlowDocument(_textBox1.Text);
+				var doc = Printer.ConvertToFlowDocument(_editor.TextBox1.Text);
 				Printer.PrintFlowDocument(doc, SettingsManager.EditorSettings.PrintMargin);
 			}
 			catch (Exception e)
@@ -202,7 +182,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region TOOLAREA
+		#region CloseToolAreaCommand
 
 		public int ToolAreaSelectedIndex
 		{
@@ -234,7 +214,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteFindMenuCommand()
 		{
-			return _textBox1.Text.Length > 0;
+			return _editor.TextBox1.Text.Length > 0;
 		}
 
 		public void ExecuteFindMenuCommand()
@@ -243,9 +223,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			{
 				SettingsManager.EditorSettings.IsToolAreaChecked = true;
 				ToolAreaSelectedIndex = 0;
-				_editorControl.UpdateLayout();
-				_textboxFindFindString.SelectAll();
-				_textboxFindFindString.Focus();
+				_editor.EditorControl.UpdateLayout();
+				_editor.TextBoxFind.SelectAll();
+				_editor.TextBoxFind.Focus();
 			}
 			catch (Exception e)
 			{
@@ -261,14 +241,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			var oldDirection = SearchOptions.SearchUp;
 			SearchOptions.SearchUp = false;
-			FindNextCommand.Execute();
+			FindNextButtonCommand.Execute();
 			SearchOptions.SearchUp = oldDirection;
 		}
 
 		public bool CanExecuteFindNextMenuCommand()
 		{
-			return FindNextCommand.CanExecute() &&
-			       !string.IsNullOrEmpty(FindString);
+			return FindNextButtonCommand.CanExecute() &&
+				   !string.IsNullOrEmpty(FindString);
 		}
 
 		#endregion
@@ -279,14 +259,32 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			var oldDirection = SearchOptions.SearchUp;
 			SearchOptions.SearchUp = true;
-			FindNextCommand.Execute();
+			FindNextButtonCommand.Execute();
 			SearchOptions.SearchUp = oldDirection;
 		}
 
 		public bool CanExecuteFindPreviousMenuCommand()
 		{
-			return FindNextCommand.CanExecute() &&
-			       !string.IsNullOrEmpty(FindString);
+			return FindNextButtonCommand.CanExecute() &&
+				   !string.IsNullOrEmpty(FindString);
+		}
+
+		#endregion
+
+		#region ReplaceMenuCommand
+
+		public bool CanExecuteReplaceMenuCommand()
+		{
+			return _editor.TextBox1.Text.Length > 0;
+		}
+
+		public void ExecuteReplaceMenuCommand()
+		{
+			SettingsManager.EditorSettings.IsToolAreaChecked = true;
+			ToolAreaSelectedIndex = 1;
+			_editor.EditorControl.UpdateLayout();
+			_editor.TextBoxFindReplace.SelectAll();
+			_editor.TextBoxFindReplace.Focus();
 		}
 
 		#endregion
@@ -299,8 +297,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		int Pos
 		{
-			get { return _textBox1.CaretIndex; }
-			set { _textBox1.CaretIndex = value; }
+			get { return _editor.TextBox1.CaretIndex; }
+			set { _editor.TextBox1.CaretIndex = value; }
 		}
 
 
@@ -313,12 +311,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				_findString = value;
 				OnPropertyChanged(() => FindString);
 
-				FindNextCommand.RaiseCanExecuteChanged();
+				FindNextButtonCommand.RaiseCanExecuteChanged();
 				ReplaceCommand.RaiseCanExecuteChanged();
 				ReplaceAllCommand.RaiseCanExecuteChanged();
 			}
 		}
-
 		string _findString = string.Empty;
 
 		public string ReplaceString
@@ -334,9 +331,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		string _replaceString = string.Empty;
 
-		#region FindCommand
+		#region FindNextButtonCommand
 
-		public DelegateCommand FindNextCommand
+		public DelegateCommand FindNextButtonCommand
 		{
 			get
 			{
@@ -352,7 +349,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			var found = false;
 			if (!SearchOptions.SearchUp)
-				Pos = Pos + _textBox1.SelectionLength;
+				Pos = Pos + _editor.TextBox1.SelectionLength;
 
 			var searchResult = Find(true, false);
 
@@ -393,14 +390,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			var found = false;
 			if (!SearchOptions.SearchUp)
-				Pos = Pos + _textBox1.SelectionLength;
+				Pos = Pos + _editor.TextBox1.SelectionLength;
 
 			var searchResult = Find(true, true);
 
 			if (searchResult.HasValue)
 			{
-				var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
-				_textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
+				var removed = _editor.TextBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
+				_editor.TextBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
 
 				found = true;
 				SelectSearchResult(searchResult.Value.Index, ReplaceString.Length);
@@ -436,13 +433,13 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			Pos = 0;
 			var count = 0;
 
-			start:
+		start:
 			var searchResult = Find(false, false);
 
 			if (searchResult.HasValue)
 			{
-				var removed = _textBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
-				_textBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
+				var removed = _editor.TextBox1.Text.Remove(searchResult.Value.Index, searchResult.Value.Length);
+				_editor.TextBox1.Text = removed.Insert(searchResult.Value.Index, ReplaceString);
 				count++;
 				Pos = searchResult.Value.Index + ReplaceString.Length;
 
@@ -462,7 +459,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SearchResult? searchResult;
 			try
 			{
-				searchResult = SearchStrategy.Search(_textBox1.Text, _findString, Pos, SearchOptions);
+				searchResult = SearchStrategy.Search(_editor.TextBox1.Text, _findString, Pos, SearchOptions);
 			}
 			catch (ArgumentException ae)
 			{
@@ -499,7 +496,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				}
 				else
 				{
-					if (isReplace && Pos != _textBox1.Text.Length)
+					if (isReplace && Pos != _editor.TextBox1.Text.Length)
 					{
 						var result =
 							_messageBoxService.Show("Nothing found - Search again from the bottom of the document?",
@@ -508,7 +505,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 						if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
 							return null;
 					}
-					Pos = _textBox1.Text.Length;
+					Pos = _editor.TextBox1.Text.Length;
 				}
 
 				return SearchRecoursive(true, isReplace);
@@ -519,26 +516,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#endregion
 
-		#region ReplaceCommand
-
-		public bool CanExecuteReplace()
-		{
-			return _textBox1.Text.Length > 0;
-		}
-
-
-		public void ExecuteReplace()
-		{
-			SettingsManager.EditorSettings.IsToolAreaChecked = true;
-			ToolAreaSelectedIndex = 1;
-			_editorControl.UpdateLayout();
-			_textbockReplaceFindString.SelectAll();
-			_textbockReplaceFindString.Focus();
-
-			// Find would focus textbox1 after found
-		}
-
-		#endregion
+		
 
 		#region DeleteLineCommand
 
@@ -557,9 +535,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				var currentColIndex = GetColIndex(currentLineIndex);
 
 				// 2.) Is there a next line?
-				var isNextLine = _textBox1.LineCount > currentLineIndex + 1;
+				var isNextLine = _editor.TextBox1.LineCount > currentLineIndex + 1;
 
-				var currentLineLength = _textBox1.GetLineLength(currentLineIndex);
+				var currentLineLength = _editor.TextBox1.GetLineLength(currentLineIndex);
 				if (currentLineLength < 1)
 					return;
 
@@ -567,7 +545,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				var targetColIndex = 0;
 				if (isNextLine)
 				{
-					var nextLineLength = _textBox1.GetLineLength(currentLineIndex + 1);
+					var nextLineLength = _editor.TextBox1.GetLineLength(currentLineIndex + 1);
 					var nextLineIsAtLeastAsLongAsCurrentLine = nextLineLength >= currentLineLength;
 
 					if (nextLineIsAtLeastAsLongAsCurrentLine)
@@ -576,7 +554,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 					}
 					else
 					{
-						targetColIndex = _textBox1.GetLineLength(currentLineIndex + 1) - 2;
+						targetColIndex = _editor.TextBox1.GetLineLength(currentLineIndex + 1) - 2;
 						if (targetColIndex < 0)
 							targetColIndex = 0;
 					}
@@ -584,12 +562,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				// targetColIndex stays 0 if there is no next line!
 
 
-				var firstPos = _textBox1.GetCharacterIndexFromLineIndex(currentLineIndex);
-				_textBox1.Text = _textBox1.Text.Remove(firstPos, currentLineLength);
+				var firstPos = _editor.TextBox1.GetCharacterIndexFromLineIndex(currentLineIndex);
+				_editor.TextBox1.Text = _editor.TextBox1.Text.Remove(firstPos, currentLineLength);
 
 
-				var newPos = _textBox1.GetCharacterIndexFromLineIndex(currentLineIndex) + targetColIndex;
-				_textBox1.CaretIndex = newPos;
+				var newPos = _editor.TextBox1.GetCharacterIndexFromLineIndex(currentLineIndex) + targetColIndex;
+				_editor.TextBox1.CaretIndex = newPos;
 			}
 			catch (Exception e)
 			{
@@ -620,8 +598,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			get
 			{
-				if (_textBox1 != null)
-					return _textBox1.LineCount;
+				if (_editor.TextBox1 != null)
+					return _editor.TextBox1.LineCount;
 				return 0;
 			}
 		}
@@ -645,7 +623,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				return false;
 			if (lineNo <= 0)
 				return false;
-			if (_textBox1.LineCount < lineNo)
+			if (_editor.TextBox1.LineCount < lineNo)
 				return false;
 			_lineIndex = lineNo - 1;
 			return true;
@@ -655,9 +633,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			try
 			{
-				var index = _textBox1.GetCharacterIndexFromLineIndex(_lineIndex);
-				_textBox1.CaretIndex = index;
-				var lineLength = _textBox1.GetLineLength(_lineIndex);
+				var index = _editor.TextBox1.GetCharacterIndexFromLineIndex(_lineIndex);
+				_editor.TextBox1.CaretIndex = index;
+				var lineLength = _editor.TextBox1.GetLineLength(_lineIndex);
 				SelectSearchResult(index, lineLength);
 			}
 			catch (Exception e)
@@ -668,8 +646,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void SelectSearchResult(int indexInSourceText, int length)
 		{
-			_textBox1.Select(indexInSourceText, length);
-			_textBox1.Focus();
+			_editor.TextBox1.Select(indexInSourceText, length);
+			_editor.TextBox1.Focus();
 		}
 
 		#endregion
@@ -682,10 +660,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			{
 				SettingsManager.EditorSettings.IsToolAreaChecked = true;
 				ToolAreaSelectedIndex = 2;
-
-				_editorControl.UpdateLayout();
-				_textBoxGotoString.SelectAll();
-				_textBoxGotoString.Focus();
+				_editor.EditorControl.UpdateLayout();
+				_editor.TextBoxGoTo.SelectAll();
+				_editor.TextBoxGoTo.Focus();
 			}
 			catch (Exception e)
 			{
@@ -695,7 +672,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteGoMenuCommand()
 		{
-			return _textBox1.LineCount > 0;
+			return _editor.TextBox1.LineCount > 0;
 		}
 
 		#endregion
@@ -713,20 +690,20 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			if (_datePasted.HasValue && DateTime.Now - _datePasted.Value < TimeSpan.FromSeconds(3))
 			{
-				var oldCaretIndex = _textBox1.CaretIndex;
+				var oldCaretIndex = _editor.TextBox1.CaretIndex;
 				var timeStringPattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortTimePattern;
 				var timeString = " " + DateTime.Now.ToString(timeStringPattern);
-				_textBox1.Text = _textBox1.Text.Insert(_textBox1.CaretIndex, timeString);
-				_textBox1.CaretIndex = oldCaretIndex + 1 + timeString.Length;
+				_editor.TextBox1.Text = _editor.TextBox1.Text.Insert(_editor.TextBox1.CaretIndex, timeString);
+				_editor.TextBox1.CaretIndex = oldCaretIndex + 1 + timeString.Length;
 				_datePasted = null;
 			}
 			else
 			{
-				var oldCaretIndex = _textBox1.CaretIndex;
+				var oldCaretIndex = _editor.TextBox1.CaretIndex;
 				var datetringPattern = CultureInfo.CurrentCulture.DateTimeFormat.ShortDatePattern;
 				var dateString = DateTime.Now.ToString(datetringPattern);
-				_textBox1.Text = _textBox1.Text.Insert(_textBox1.CaretIndex, dateString);
-				_textBox1.CaretIndex = oldCaretIndex + dateString.Length;
+				_editor.TextBox1.Text = _editor.TextBox1.Text.Insert(_editor.TextBox1.CaretIndex, dateString);
+				_editor.TextBox1.CaretIndex = oldCaretIndex + dateString.Length;
 				_datePasted = DateTime.Now;
 			}
 		}
@@ -744,14 +721,14 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		{
 			try
 			{
-				ParamsProvider.SetParams(typeof (Font), _textBox1.Text);
+				ParamsProvider.SetParams(typeof(Font), _editor.TextBox1.Text);
 				var fontDialog = await WindowManager.GetDialogFromShowDialogAsyncWhenClosed<Font>();
 
 
 				if (fontDialog.DialogResult == true)
 				{
 					ExecuteZoom100();
-					Map.Copy(SettingsManager.EditorSettings.FontSettings, _textBox1);
+					Map.Copy(SettingsManager.EditorSettings.FontSettings, _editor.TextBox1);
 					SettingsManager.SaveSettings();
 				}
 			}
@@ -783,32 +760,32 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		string GetPositionString()
 		{
-			var rawPos = _textBox1.CaretIndex;
+			var rawPos = _editor.TextBox1.CaretIndex;
 			var lineIndex = GetCurrentLineIndex();
 			var colIndex = GetColIndex(lineIndex);
 
 			return "Ln {0}, Col {1} | Ch {2}/{3}".FormatInvariant(lineIndex + 1, colIndex + 1, rawPos,
-				_textBox1.Text.Length);
+				_editor.TextBox1.Text.Length);
 		}
 
 		int GetColIndex(int lineIndex)
 		{
-			var rawPos = _textBox1.CaretIndex;
+			var rawPos = _editor.TextBox1.CaretIndex;
 			// get col and adjust for silly init values
 			int colIndex;
 			if (rawPos == 0 && lineIndex == 0)
 				colIndex = 0;
 			else
-				colIndex = rawPos - _textBox1.GetCharacterIndexFromLineIndex(lineIndex);
+				colIndex = rawPos - _editor.TextBox1.GetCharacterIndexFromLineIndex(lineIndex);
 			return colIndex;
 		}
 
 		int GetCurrentLineIndex()
 		{
-			var rawPos = _textBox1.CaretIndex;
+			var rawPos = _editor.TextBox1.CaretIndex;
 
 			// get line and adjust for silly init values
-			var lineIndex = _textBox1.GetLineIndexFromCharacterIndex(rawPos);
+			var lineIndex = _editor.TextBox1.GetLineIndexFromCharacterIndex(rawPos);
 			if (lineIndex == -1)
 				lineIndex = 0;
 			return lineIndex;
