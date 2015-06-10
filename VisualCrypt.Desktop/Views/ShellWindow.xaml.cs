@@ -1,14 +1,20 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Windows;
 using System.Windows.Input;
+using Microsoft.Practices.Prism.Regions;
+using Microsoft.Practices.ServiceLocation;
+using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
+using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.Views
 {
 	[Export]
 	public partial class ShellWindow
 	{
+		IRegionManager _regionManager;
 		[Import]
 		ShellViewModel ViewModel
 		{
@@ -16,10 +22,13 @@ namespace VisualCrypt.Desktop.Views
 			get { return DataContext as ShellViewModel; }
 		}
 
-		public ShellWindow()
+		[ImportingConstructor]
+		public ShellWindow(IRegionManager regionManager)
 		{
 			InitializeComponent();
-			
+			_regionManager = regionManager;
+
+			Loaded += ShellWindow_Loaded;
 			
 			PreviewKeyDown += ShellWindow_PreviewKeyDown;
 			Closing += MainWindow_Closing;
@@ -41,7 +50,11 @@ namespace VisualCrypt.Desktop.Views
 			// _shellViewModel.OnMainWindowInitialized();
 		}
 
-		
+		void ShellWindow_Loaded(object sender, RoutedEventArgs routedEventArgs)
+		{
+			ActivateEditor();
+		}
+	
 
 		void MainWindow_Closing(object sender, CancelEventArgs e)
 		{
@@ -167,6 +180,26 @@ namespace VisualCrypt.Desktop.Views
 		{
 			if (ViewModel.SaveCommand.CanExecute())
 				ViewModel.SaveCommand.CanExecute();
+		}
+
+		void ActivateEditor()
+		{
+			var mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
+			if (mainRegion == null)
+				throw new InvalidOperationException(
+					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
+						RegionNames.EditorRegion));
+
+			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
+			if (view == null)
+			{
+				view = ServiceLocator.Current.GetInstance<IEditor>();
+				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
+			}
+			else
+			{
+				mainRegion.Activate(view);
+			}
 		}
 	}
 }

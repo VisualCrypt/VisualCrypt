@@ -1,8 +1,6 @@
 ﻿using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.Practices.Prism.Regions;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using System;
 using System.ComponentModel;
@@ -23,17 +21,16 @@ namespace VisualCrypt.Desktop.Views
 	[Export]
 	public class ShellViewModel : ViewModelBase
 	{
-		readonly IRegionManager _regionManager;
 		readonly IEventAggregator _eventAggregator;
 		readonly ILoggerFacade _logger;
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEncryptionService _encryptionService;
 
 		[ImportingConstructor]
-		public ShellViewModel(IRegionManager regionManager, IEventAggregator eventAggregator, ILoggerFacade logger,
+		public ShellViewModel(IEventAggregator eventAggregator, ILoggerFacade logger,
 			IMessageBoxService messageBoxService, IEncryptionService encryptionService)
 		{
-			_regionManager = regionManager;
+			
 			_eventAggregator = eventAggregator;
 			_logger = logger;
 			_messageBoxService = messageBoxService;
@@ -42,14 +39,16 @@ namespace VisualCrypt.Desktop.Views
 			_eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
 		}
 
-		public void Init()
+
+		public void OpenFromCommandLineOrNew()
 		{
-			ActivateEditor();
-			if (Environment.GetCommandLineArgs().Length >1)
+			var args = Environment.GetCommandLineArgs();
+			if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
 			{
-				_logger.Log("Trying to get file from Commandline {0}".FormatInvariant(Environment.CommandLine), Category.Info,
+				var fileName = args[1];
+				_logger.Log("Loading file from Commandline: {0}".FormatInvariant(fileName), Category.Info,
 					Priority.None);
-				OpenFileFromCommandLine(Environment.GetCommandLineArgs());
+				OpenFileCommon(fileName);
 			}
 			else
 			{
@@ -57,7 +56,6 @@ namespace VisualCrypt.Desktop.Views
 				_logger.Log("Started with new file - Ready.", Category.Info, Priority.None);
 			}
 		}
-
 		void ExecuteEditorSendsTextCallback(EditorSendsText args)
 		{
 			if (args != null && args.Callback != null)
@@ -341,7 +339,7 @@ namespace VisualCrypt.Desktop.Views
 				}
 				if (openFileResponse.Result.SaveEncoding == null)
 				{
-					if (_messageBoxService.Show("This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\n"+
+					if (_messageBoxService.Show("This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\n" +
 						"If file is very large the editor may become less responsive.", "Binary File",
 						MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel)
 						return;
@@ -349,11 +347,13 @@ namespace VisualCrypt.Desktop.Views
 				FileManager.FileModel = openFileResponse.Result;
 				SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
-				_eventAggregator.GetEvent<EditorReceivesText>()
-					.Publish(FileManager.FileModel.IsEncrypted
+				 var ert = _eventAggregator.GetEvent<EditorReceivesText>();
+				var text = FileManager.FileModel.IsEncrypted
 						? FileManager.FileModel.VisualCryptText
-						: FileManager.FileModel.ClearTextContents);
-
+						: FileManager.FileModel.ClearTextContents;
+				ert.Publish(text);
+				
+				
 				// if the loaded file was cleartext we are all done
 				if (!FileManager.FileModel.IsEncrypted)
 					return;
@@ -391,30 +391,6 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(e);
 			}
 		}
-
-
-		void OpenFileFromCommandLine(string[] args)
-		{
-			if (args == null)
-				return;
-
-			var commandline = string.Empty;
-
-			// args is expected to hold one filename only
-			// but can be segmented if it contains spaces.
-			for (int index = 1; index < args.Length; index++)
-			{
-				string a = args[index];
-				commandline += a;
-				commandline += " ";
-			}
-			commandline = commandline.Trim();
-			if (commandline.Length == 0)
-				return;
-
-			OpenFileCommon(commandline);
-		}
-
 
 		public void OpenFileFromDragDrop(string dropFilename)
 		{
@@ -630,7 +606,7 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand SaveAsCommand
 		{
-			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () =>  FileManager.FileModel.SaveEncoding != null); }
+			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () => FileManager.FileModel.SaveEncoding != null); }
 		}
 
 		void ExecuteSaveAsCommand()
@@ -731,26 +707,6 @@ namespace VisualCrypt.Desktop.Views
 					 MessageBoxResult.OK);
 
 			return true;
-		}
-
-		void ActivateEditor()
-		{
-			var mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
-			if (mainRegion == null)
-				throw new InvalidOperationException(
-					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
-						RegionNames.EditorRegion));
-
-			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
-			if (view == null)
-			{
-				view = ServiceLocator.Current.GetInstance<IEditor>();
-				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
-			}
-			else
-			{
-				mainRegion.Activate(view);
-			}
 		}
 
 		static async Task<Tuple<bool, string>> PickFileAsync(string suggestedFilename, DialogFilter diaglogFilter,
