@@ -45,7 +45,7 @@ namespace VisualCrypt.Desktop.Views
 		public void Init()
 		{
 			ActivateEditor();
-			if (!string.IsNullOrWhiteSpace(Environment.CommandLine))
+			if (Environment.GetCommandLineArgs().Length >1)
 			{
 				_logger.Log("Trying to get file from Commandline {0}".FormatInvariant(Environment.CommandLine), Category.Info,
 					Priority.None);
