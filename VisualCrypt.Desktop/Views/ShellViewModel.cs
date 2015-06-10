@@ -67,9 +67,8 @@ namespace VisualCrypt.Desktop.Views
 		async Task<string> EditorSendsTextAsync()
 		{
 			var tcs = new TaskCompletionSource<string>();
-
 			_eventAggregator.GetEvent<EditorShouldSendText>()
-				.Publish(textBufferContents => { tcs.SetResult(textBufferContents); });
+				.Publish(tcs.SetResult);
 			return await tcs.Task;
 		}
 
@@ -201,17 +200,17 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand ExportCommand
 		{
-			get { return CreateCommand(ref _exportCommand, ExecuteExportCommand, () => !FileManager.FileModel.IsEncrypted); }
+			get { return CreateCommand(ref _exportCommand, ExecuteExportCommand, () => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null); }
 		}
 
 		async void ExecuteExportCommand()
 		{
 			try
 			{
-				var editorCleatext = await EditorSendsTextAsync();
+				var editorClearText = await EditorSendsTextAsync();
 
-				if (editorCleatext == null)
-					throw new ArgumentNullException("editorCleatext");
+				if (editorClearText == null)
+					throw new InvalidOperationException("The text received from the editor was null.");
 
 				string title = "Export Clear Text (Encoding: {0})".FormatInvariant(
 					FileManager.FileModel.SaveEncoding.EncodingName);
@@ -221,7 +220,7 @@ namespace VisualCrypt.Desktop.Views
 				var pickFileResult = await PickFileAsync(suggestedFilename, DialogFilter.Text, DialogDirection.Save, title);
 				if (pickFileResult.Item1)
 				{
-					byte[] encodedTextBytes = FileManager.FileModel.SaveEncoding.GetBytes(editorCleatext);
+					byte[] encodedTextBytes = FileManager.FileModel.SaveEncoding.GetBytes(editorClearText);
 					File.WriteAllBytes(pickFileResult.Item2, encodedTextBytes);
 				}
 			}
@@ -340,13 +339,20 @@ namespace VisualCrypt.Desktop.Views
 					_messageBoxService.ShowError(openFileResponse.Error);
 					return;
 				}
+				if (openFileResponse.Result.SaveEncoding == null)
+				{
+					if (_messageBoxService.Show("This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\n"+
+						"If file is very large the editor may become less responsive.", "Binary File",
+						MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel)
+						return;
+				}
 				FileManager.FileModel = openFileResponse.Result;
 				SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
-				if (FileManager.FileModel.IsEncrypted)
-					_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.VisualCryptText);
-				else
-					_eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
+				_eventAggregator.GetEvent<EditorReceivesText>()
+					.Publish(FileManager.FileModel.IsEncrypted
+						? FileManager.FileModel.VisualCryptText
+						: FileManager.FileModel.ClearTextContents);
 
 				// if the loaded file was cleartext we are all done
 				if (!FileManager.FileModel.IsEncrypted)
@@ -387,7 +393,7 @@ namespace VisualCrypt.Desktop.Views
 		}
 
 
-		public void OpenFileFromCommandLine(string[] args)
+		void OpenFileFromCommandLine(string[] args)
 		{
 			if (args == null)
 				return;
@@ -428,7 +434,7 @@ namespace VisualCrypt.Desktop.Views
 			get
 			{
 				return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand,
-					() => !FileManager.FileModel.IsEncrypted);
+					() => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
 			}
 		}
 
@@ -475,7 +481,7 @@ namespace VisualCrypt.Desktop.Views
 			get
 			{
 				return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand,
-					() => FileManager.FileModel.IsEncrypted);
+					() => FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
 			}
 		}
 
@@ -519,7 +525,7 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand SaveCommand
 		{
-			get { return CreateCommand(ref _saveCommand, ExecuteSaveCommand, () => true); }
+			get { return CreateCommand(ref _saveCommand, ExecuteSaveCommand, () => FileManager.FileModel.SaveEncoding != null); }
 		}
 
 		void ExecuteSaveCommand()
@@ -597,7 +603,6 @@ namespace VisualCrypt.Desktop.Views
 			// No we have password and filename, we can now encrypt and save in one step.
 			// We will not replace FileManager.FileModel because we continue editing the same cleartext.
 			string editorClearText = await EditorSendsTextAsync();
-			string visualCryptTextSaved = null;
 
 
 			var encryptAndSaveFileResponse =
@@ -605,7 +610,7 @@ namespace VisualCrypt.Desktop.Views
 			if (!encryptAndSaveFileResponse.Success)
 				throw new Exception(encryptAndSaveFileResponse.Error);
 
-			visualCryptTextSaved = encryptAndSaveFileResponse.Result;
+			string visualCryptTextSaved = encryptAndSaveFileResponse.Result;
 			// We are done with successful saving. Show that we did encrypt the text:
 			_eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
 			await Task.Delay(2000);
@@ -617,18 +622,6 @@ namespace VisualCrypt.Desktop.Views
 			UpdateCanExecuteChanged();
 		}
 
-		static string GetFilenameSafe(string pathString)
-		{
-			try
-			{
-				return Path.GetFileName(pathString);
-			}
-			catch (ArgumentException)
-			{
-				return Constants.UntitledDotVisualCrypt;
-			}
-		}
-
 		#endregion
 
 		#region SaveAsCommand
@@ -637,7 +630,7 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand SaveAsCommand
 		{
-			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () => true); }
+			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () =>  FileManager.FileModel.SaveEncoding != null); }
 		}
 
 		void ExecuteSaveAsCommand()

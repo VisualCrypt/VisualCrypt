@@ -33,8 +33,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 			
 			_textBox1.PreviewMouseWheel += TextBox1_PreviewMouseWheel;
-			SpellCheck.SetIsEnabled(_textBox1,true);
-			_textBox1.SpellCheck.SpellingReform = SpellingReform.Postreform;
+		
 			_textBox1.Focus();
 			
 			TabControl.Initialized += (o, args) => TabControl.SelectedIndex = 0;

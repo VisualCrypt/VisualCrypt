@@ -59,6 +59,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_eventAggregator.GetEvent<EditorSendsText>().Publish(args);
 		}
 
+	
 		void OnTextReceived(string newText)
 		{
 			if (newText == null)
@@ -72,15 +73,22 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			if (FileManager.FileModel.IsEncrypted)
 			{
-				_editor.TextBox1.SpellCheck.IsEnabled = false;
 				_editor.TextBox1.IsUndoEnabled = false;
 				_editor.TextBox1.IsReadOnly = true;
 			}
 			else
 			{
-				_editor.TextBox1.SpellCheck.IsEnabled = SettingsManager.EditorSettings.IsSpellCheckingChecked;
-				_editor.TextBox1.IsUndoEnabled = true;
-				_editor.TextBox1.IsReadOnly = false;
+				if (FileManager.FileModel.SaveEncoding != null)
+				{
+					_editor.TextBox1.IsUndoEnabled = true;
+					_editor.TextBox1.IsReadOnly = false;
+				}
+				else
+				{
+					_editor.TextBox1.IsUndoEnabled = false;
+					_editor.TextBox1.IsReadOnly = true;
+				}
+
 			}
 			UpdateStatusBar();
 		}
@@ -275,7 +283,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteReplaceMenuCommand()
 		{
-			return _editor.TextBox1.Text.Length > 0;
+			return _editor.TextBox1.Text.Length > 0 && FileManager.FileModel.SaveEncoding != null;
 		}
 
 		public void ExecuteReplaceMenuCommand()
@@ -683,7 +691,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteInsertDateTime()
 		{
-			return true;
+			return FileManager.FileModel.SaveEncoding != null;
 		}
 
 		public void ExecuteInsertDateTime()
@@ -755,7 +763,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		static string GetEncodingString()
 		{
-			return FileManager.FileModel.SaveEncoding.EncodingName;
+			return FileManager.FileModel.SaveEncoding != null ? FileManager.FileModel.SaveEncoding.EncodingName : "Hex View";
 		}
 
 		string GetPositionString()

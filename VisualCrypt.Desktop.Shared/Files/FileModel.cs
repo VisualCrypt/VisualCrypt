@@ -71,10 +71,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 			}
 		}
 
-		public void SaveEncrypted()
-		{
-			throw new NotImplementedException();
-		}
+
 
 		public static FileModel EmptyCleartext()
 		{
@@ -112,5 +109,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				CipherV2 = cipherV2
 			};
 		}
+
+		
 	}
 }

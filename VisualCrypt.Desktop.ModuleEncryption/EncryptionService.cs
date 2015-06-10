@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
-using System.Threading.Tasks;
 using VisualCrypt.Cryptography.Net.APIV2.Implementations;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.APIV2.Implementations;

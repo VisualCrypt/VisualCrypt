@@ -13,7 +13,10 @@ namespace VisualCrypt.Desktop.Shared.ValueConverters
 
 		public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
 		{
-			throw new NotImplementedException();
+			var textWrapping = (TextWrapping) value;
+			if (textWrapping == TextWrapping.NoWrap)
+				return false;
+			return true;
 		}
 	}
 }

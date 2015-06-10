@@ -19,16 +19,16 @@ namespace VisualCrypt.Desktop.Views
 		public ShellWindow()
 		{
 			InitializeComponent();
-
+			
 			
 			PreviewKeyDown += ShellWindow_PreviewKeyDown;
 			Closing += MainWindow_Closing;
 			//SizeChanged += MainWindow_SizeChanged;
 
-			//AllowDrop = true;
-			//PreviewDragEnter += MainWindow_PreviewDragEnter;
-			//PreviewDragLeave += MainWindow_PreviewDragLeave;
-			//PreviewDrop += MainWindow_PreviewDrop;
+			AllowDrop = true;
+			PreviewDragEnter += MainWindow_PreviewDragEnter;
+			PreviewDragLeave += MainWindow_PreviewDragLeave;
+			PreviewDrop += MainWindow_PreviewDrop;
 
 			// Hack to preserve text selection visibility when the window is deactivated.
 			// Selection opacity is handled with style triggers.
@@ -76,36 +76,37 @@ namespace VisualCrypt.Desktop.Views
 		//    _shellViewModel.ExitCommand.Execute(e);
 		//}
 
-		//void MainWindow_PreviewDragEnter(object sender, DragEventArgs e)
-		//{
-		//    if (e.Data.GetDataPresent(DataFormats.FileDrop))
-		//    {
-		//        TextBox1.IsHitTestVisible = false;
-		//        e.Effects = DragDropEffects.Copy;
-		//    }
-		//}
+		void MainWindow_PreviewDragEnter(object sender, DragEventArgs e)
+		{
+			if (e.Data.GetDataPresent(DataFormats.FileDrop))
+			{
+				
+				_contentEditorRegion.IsHitTestVisible = false;
+				e.Effects = DragDropEffects.Copy;
+			}
+		}
 
-		//void MainWindow_PreviewDrop(object sender, DragEventArgs e)
-		//{
-		//    try
-		//    {
-		//        if (e.Data.GetDataPresent(DataFormats.FileDrop))
-		//        {
-		//            var files = (string[])e.Data.GetData(DataFormats.FileDrop);
-		//            _shellViewModel.OpenFileFromDragDrop(files[0]);
-		//        }
-		//    }
-		//    finally
-		//    {
-		//        TextBox1.IsHitTestVisible = true;
-		//    }
+		void MainWindow_PreviewDrop(object sender, DragEventArgs e)
+		{
+			try
+			{
+				if (e.Data.GetDataPresent(DataFormats.FileDrop))
+				{
+					var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+					ViewModel.OpenFileFromDragDrop(files[0]);
+				}
+			}
+			finally
+			{
+				_contentEditorRegion.IsHitTestVisible = true;
+			}
 
-		//}
+		}
 
-		//void MainWindow_PreviewDragLeave(object sender, DragEventArgs e)
-		//{
-		//    TextBox1.IsHitTestVisible = true;
-		//}
+		void MainWindow_PreviewDragLeave(object sender, DragEventArgs e)
+		{
+			_contentEditorRegion.IsHitTestVisible = true;
+		}
 
 		//void TextBox1_PreviewKeyDown(object sender, KeyEventArgs e)
 		//{

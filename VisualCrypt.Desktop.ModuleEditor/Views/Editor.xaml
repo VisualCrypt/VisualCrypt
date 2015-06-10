@@ -53,9 +53,9 @@
                  Text=""
                  BorderBrush="{x:Static SystemColors.MenuBarBrush}"
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
-                 TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=OneWay, Converter={StaticResource BoolTextWrappingConverter}}"
+                 TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay, Converter={StaticResource BoolTextWrappingConverter}}"
                  
-                 SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=OneWay}"
+                 SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}"
                  
                 >
                 <!-- TextWrapping="{Binding TextWrapping}"-->

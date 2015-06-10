@@ -53,8 +53,8 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			if (controlCharPercent >= 2)
 			{
 				// yes, this is probaby no text at all, encode it to displayable hex numbers to show the user 'something'.
-				appliedEncoding = Encoding.UTF8;
-				return ByteArrayToHexString.ByteArrayToHexViaLookup32(rawBytesFromFile);
+				appliedEncoding = null;
+				return ByteArrayToHexString.ByteArrayToHex(rawBytesFromFile);
 			}
 
 			// If we are e.g. on Desktop, try injected default encoding.

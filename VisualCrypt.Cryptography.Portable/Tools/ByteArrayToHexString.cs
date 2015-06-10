@@ -1,34 +1,74 @@
-﻿namespace VisualCrypt.Cryptography.Portable.Tools
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace VisualCrypt.Cryptography.Portable.Tools
 {
-	public class ByteArrayToHexString
+	public static class ByteArrayToHexString
 	{
-		// http://stackoverflow.com/questions/311165/how-do-you-convert-byte-array-to-hexadecimal-string-and-vice-versa
-		// http://stackoverflow.com/questions/311165/how-do-you-convert-byte-array-to-hexadecimal-string-and-vice-versa/24343727#24343727
+		const char Dot = '.';
+		const char Spacer = ' ';
+		const int BytesPerLine = 16;
+		static readonly char[] ASCIIChars = CreateASCIITable();
+		static readonly uint[] HexTable = CreateHexTable();
 
-		static readonly uint[] _lookup32 = CreateLookup32();
+		public static string ByteArrayToHex(IEnumerable<byte> bytes)
+		{
+			if(bytes == null)
+				throw new ArgumentNullException("bytes");
 
-		static uint[] CreateLookup32()
+			var allLines = new StringBuilder();
+			var asciiLine = new StringBuilder();
+			var hexLine = new StringBuilder();
+
+			var bytesInLine = 0;
+			foreach (var currentByte in bytes)
+			{
+				var val = HexTable[currentByte];
+				hexLine.Append((char)val);
+				hexLine.Append((char)(val >> 16));
+				hexLine.Append(Spacer);
+
+				asciiLine.Append(ASCIIChars[currentByte]);
+				bytesInLine++;
+
+				if (bytesInLine == BytesPerLine)
+				{
+					allLines.Append(hexLine);
+					allLines.AppendLine(asciiLine.ToString());
+					hexLine.Clear();
+					asciiLine.Clear();
+					bytesInLine = 0;
+				}
+			}
+			return allLines.ToString();
+		}
+
+		static char[] CreateASCIITable()
+		{
+			var encoding = Encoding.UTF8;
+			var asciiChars = new Char[256];
+			var index = 0;
+			for (int i = 0; i < asciiChars.Length; i++)
+			{
+				if (index > 126 || index < 32)
+					asciiChars[index] = Dot;
+				else
+					asciiChars[index] = encoding.GetChars(new[] {(byte) index})[0];
+				index++;
+			}
+			return asciiChars;
+		}
+
+		static uint[] CreateHexTable()
 		{
 			var result = new uint[256];
 			for (int i = 0; i < 256; i++)
 			{
 				string s = i.ToString("X2");
-				result[i] = ((uint) s[0]) + ((uint) s[1] << 16);
+				result[i] = s[0] + ((uint)s[1] << 16);
 			}
 			return result;
-		}
-
-		public static string ByteArrayToHexViaLookup32(byte[] bytes)
-		{
-			var lookup32 = _lookup32;
-			var result = new char[bytes.Length*2];
-			for (int i = 0; i < bytes.Length; i++)
-			{
-				var val = lookup32[bytes[i]];
-				result[2*i] = (char) val;
-				result[2*i + 1] = (char) (val >> 16);
-			}
-			return new string(result);
 		}
 	}
 }
