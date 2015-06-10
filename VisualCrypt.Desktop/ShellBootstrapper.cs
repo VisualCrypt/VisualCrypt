@@ -1,9 +1,11 @@
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using System.Diagnostics;
 using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions;
 using Microsoft.Practices.Prism.Modularity;
+using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 
@@ -15,7 +17,11 @@ namespace VisualCrypt.Desktop
 
 		public override void Run(bool runWithDefaultConfiguration)
 		{
+			var stopWatch = new Stopwatch();
+			stopWatch.Start();
 			base.Run(runWithDefaultConfiguration);
+			stopWatch.Stop();
+			_replayLogger.Log("Loading completed after {0}ms.".FormatInvariant(stopWatch.ElapsedMilliseconds),Category.Info, Priority.Low);
 			Container.GetExportedValue<ShellViewModel>().Init();
 		}
 
