@@ -21,7 +21,7 @@ namespace VisualCrypt.Desktop.Tests
 			var rnd = new Random();
 			var buffer = new byte[1024];
 			rnd.NextBytes(buffer);
-			var t3 = ByteArrayToHexString.ByteArrayToHex(buffer);
+			var t3 = buffer.ToHexView();
 			Test_Mono_Hash_Equals_Microsoft_SHA256_Core(t0);
 			Test_Mono_Hash_Equals_Microsoft_SHA256_Core(t1);
 			Test_Mono_Hash_Equals_Microsoft_SHA256_Core(t2);

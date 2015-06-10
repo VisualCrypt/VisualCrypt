@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->
-    <Folder Include="Editor\Enums\" />
+    <Folder Include="Editor\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIV2\DataTypes\MD16E.cs" />
@@ -62,9 +62,9 @@
     <Compile Include="APIV2\Implementations\SHA256ManagedMono.cs" />
     <Compile Include="APIV2\Implementations\Base64Encoder.cs" />
     <Compile Include="APIV2\DataTypes\ContentKind.cs" />
-    <Compile Include="Tools\ByteArrayExtensions.cs" />
-    <Compile Include="Tools\ByteArrayToHexString.cs" />
-    <Compile Include="Tools\StringExtensions.cs" />
+    <Compile Include="Tools\FillWithZeros.cs" />
+    <Compile Include="Tools\ToHexView.cs" />
+    <Compile Include="Tools\FormatInvariant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -23,7 +23,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		public static void Clear()
 		{
 			if (_sha256Pw32 != null)
-				_sha256Pw32.Value.OverwriteWithZeros();
+				_sha256Pw32.Value.FillWithZeros();
 			_sha256Pw32 = null;
 		}
 	}

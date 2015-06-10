@@ -2,9 +2,9 @@
 
 namespace VisualCrypt.Cryptography.Portable.Tools
 {
-	public static class ByteArrayExtensions
+	public static class ByteArrayFillWithZeros
 	{
-		public static void OverwriteWithZeros(this byte[] byteArray)
+		public static void FillWithZeros(this byte[] byteArray)
 		{
 			if (byteArray == null)
 				throw new ArgumentNullException("byteArray");

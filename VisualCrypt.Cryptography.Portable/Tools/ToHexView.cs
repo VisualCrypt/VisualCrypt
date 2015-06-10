@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VisualCrypt.Cryptography.Portable.Tools
 {
-	public static class ByteArrayToHexString
+	public static class ByteArrayToHexView
 	{
 		const char Dot = '.';
 		const char Spacer = ' ';
@@ -12,7 +12,7 @@ namespace VisualCrypt.Cryptography.Portable.Tools
 		static readonly char[] ASCIIChars = CreateASCIITable();
 		static readonly uint[] HexTable = CreateHexTable();
 
-		public static string ByteArrayToHex(IEnumerable<byte> bytes)
+		public static string ToHexView(this IEnumerable<byte> bytes)
 		{
 			if(bytes == null)
 				throw new ArgumentNullException("bytes");
