@@ -85,6 +85,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				}
 				else
 				{
+					SettingsManager.EditorSettings.IsWordWrapChecked = false;
 					_editor.TextBox1.IsUndoEnabled = false;
 					_editor.TextBox1.IsReadOnly = true;
 				}
@@ -523,8 +524,6 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 		#endregion
-
-
 
 		#region DeleteLineCommand
 
