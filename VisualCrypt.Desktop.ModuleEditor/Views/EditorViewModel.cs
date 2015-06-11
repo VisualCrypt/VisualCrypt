@@ -750,7 +750,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		#region Private methods
 
-		void UpdateStatusBar()
+		internal void UpdateStatusBar()
 		{
 			OnPropertyChanged(() => LineCount);
 

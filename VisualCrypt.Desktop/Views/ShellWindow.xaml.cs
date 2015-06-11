@@ -14,7 +14,8 @@ namespace VisualCrypt.Desktop.Views
 	[Export]
 	public partial class ShellWindow
 	{
-		IRegionManager _regionManager;
+		readonly IRegionManager _regionManager;
+
 		[Import]
 		ShellViewModel ViewModel
 		{
@@ -32,8 +33,7 @@ namespace VisualCrypt.Desktop.Views
 			
 			PreviewKeyDown += ShellWindow_PreviewKeyDown;
 			Closing += MainWindow_Closing;
-			//SizeChanged += MainWindow_SizeChanged;
-
+			
 			AllowDrop = true;
 			PreviewDragEnter += MainWindow_PreviewDragEnter;
 			PreviewDragLeave += MainWindow_PreviewDragLeave;
@@ -79,15 +79,6 @@ namespace VisualCrypt.Desktop.Views
 				SettingsManager.EditorSettings.IsSpellCheckingChecked = !SettingsManager.EditorSettings.IsSpellCheckingChecked;
 		}
 
-		//void MainWindow_SizeChanged(object sender, SizeChangedEventArgs e)
-		//{
-		//    _shellViewModel.UpdateStatusBar();
-		//}
-
-		//void MainWindow_Closing(object sender, CancelEventArgs e)
-		//{
-		//    _shellViewModel.ExitCommand.Execute(e);
-		//}
 
 		void MainWindow_PreviewDragEnter(object sender, DragEventArgs e)
 		{
@@ -120,49 +111,6 @@ namespace VisualCrypt.Desktop.Views
 		{
 			_contentEditorRegion.IsHitTestVisible = true;
 		}
-
-		//void TextBox1_PreviewKeyDown(object sender, KeyEventArgs e)
-		//{
-		//    if ((e.Key == Key.Delete && (Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
-		//        && _shellViewModel.DeleteLineCommand.CanExecute())
-		//        _shellViewModel.DeleteLineCommand.Execute();
-
-		//    if ((e.Key == Key.OemPlus && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-		//        && _shellViewModel.ZoomInCommand.CanExecute())
-		//        _shellViewModel.ZoomInCommand.Execute();
-
-		//    if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-		//        && _shellViewModel.ClearPasswordCommand.CanExecute())
-		//        _shellViewModel.ClearPasswordCommand.Execute();
-		//}
-
-		//void TextBox1_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
-		//{
-		//    if (Keyboard.IsKeyDown(Key.RightCtrl) || Keyboard.IsKeyDown(Key.LeftCtrl))
-		//    {
-		//        if (e.Delta > 0)
-		//        {
-		//            if (_shellViewModel.ZoomInCommand.CanExecute())
-		//                _shellViewModel.ZoomInCommand.Execute();
-		//        }
-		//        else
-		//        {
-		//            if (_shellViewModel.ZoomOutCommand.CanExecute())
-		//                _shellViewModel.ZoomOutCommand.Execute();
-		//        }
-		//    }
-		//}
-
-		//void TextBox1_TextChanged(object sender, TextChangedEventArgs e)
-		//{
-		//    _shellViewModel.TextChangedCommand.Execute(e);
-		//}
-
-		//void TextBox1_SelectionChanged(object sender, RoutedEventArgs routedEventArgs)
-		//{
-		//    _shellViewModel.SelectionChangedCommand.Execute(routedEventArgs);
-		//}
-
 
 		void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
 		{

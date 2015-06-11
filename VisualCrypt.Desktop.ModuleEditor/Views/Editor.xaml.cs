@@ -33,15 +33,23 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			Application.Current.MainWindow.PreviewKeyDown += MainWindow_PreviewKeyDown;
 			
 			_textBox1.PreviewMouseWheel += TextBox1_PreviewMouseWheel;
+			_textBox1.SizeChanged += _textBox1_SizeChanged;
 		
 			_textBox1.Focus();
 			
 			TabControl.Initialized += (o, args) => TabControl.SelectedIndex = 0;
 		}
 
+		
+
 		#endregion
 
 		#region Events
+
+		void _textBox1_SizeChanged(object sender, SizeChangedEventArgs e)
+		{
+			ViewModel.UpdateStatusBar();
+		}
 
 		void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
 		{
