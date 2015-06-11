@@ -24,7 +24,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		IEditor _editor;
 
-		readonly IMessageBoxService _messageBoxService;
+		public IMessageBoxService _messageBoxService;
 		readonly IEventAggregator _eventAggregator;
 
 		[ImportingConstructor]

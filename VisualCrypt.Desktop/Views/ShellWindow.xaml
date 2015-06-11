@@ -10,6 +10,7 @@
                     xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:prismSupport="clr-namespace:VisualCrypt.Desktop.Shared.PrismSupport;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared"
                     Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
                     Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
                     Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
@@ -19,7 +20,15 @@
                     WindowStyle="None"
                     ResizeMode="CanResizeWithGrip"
                     AllowsTransparency="True" d:DataContext="{d:DesignInstance views:ShellViewModel}">
-
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary
+                    Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/VisualCryptColors.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
+        </ResourceDictionary>
+    </Window.Resources>
 
     <Window.InputBindings>
         <!-- File -->

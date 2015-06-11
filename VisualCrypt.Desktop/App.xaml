@@ -6,15 +6,8 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-
-
-                <!--<ResourceDictionary
-                    Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Fonts.xaml" />
-                <ResourceDictionary
-                    Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/Colors.xaml" />-->
                 <ResourceDictionary
                     Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/VisualCryptColors.xaml" />
-
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
         </ResourceDictionary>

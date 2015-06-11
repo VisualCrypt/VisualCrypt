@@ -1,9 +1,11 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Windows;
 using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Tests
 {
+	[Export(typeof(IMessageBoxService))]
 	internal class FakeOkMessageBoxService : IMessageBoxService
 	{
 		public MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton buttons, MessageBoxImage image)
