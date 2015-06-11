@@ -39,15 +39,8 @@ namespace VisualCrypt.Desktop.Views
 			PreviewDragLeave += MainWindow_PreviewDragLeave;
 			PreviewDrop += MainWindow_PreviewDrop;
 
-			// Hack to preserve text selection visibility when the window is deactivated.
-			// Selection opacity is handled with style triggers.
-			//Activated += (s, e) => TextBox1.Focus();
-			//Deactivated += (s, e) => Button1.Focus(); // zero size dummy button
-			//TextBox1.LostFocus += (s, e) => e.Handled = true;
-			// end hack.
+			
 
-
-			// _shellViewModel.OnMainWindowInitialized();
 		}
 
 		void ShellWindow_Loaded(object sender, RoutedEventArgs routedEventArgs)

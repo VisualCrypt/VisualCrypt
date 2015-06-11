@@ -26,7 +26,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		}
 
 
-		void Editor_Loaded(object sender, RoutedEventArgs e)
+		void Editor_Loaded(object sender, RoutedEventArgs args)
 		{
 			ViewModel.OnEditorLoaded(this);
 
@@ -37,7 +37,16 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		
 			_textBox1.Focus();
 			
-			TabControl.Initialized += (o, args) => TabControl.SelectedIndex = 0;
+			TabControl.Initialized += (s, e) => TabControl.SelectedIndex = 0;
+
+			// Hack to preserve text selection visibility when the window is deactivated.
+			// Selection opacity is handled with style trigger on IsFocused.
+			Application.Current.MainWindow.Activated += (s, e) => _textBox1.Focus();
+			// Zero-size dummy button used to unfocus the TextBox.
+			Application.Current.MainWindow.Deactivated += (s, e) => _focusSink.Focus();
+			// Stop TextBox from reacting to LostFocus.
+			_textBox1.LostFocus += (s, e) => e.Handled = true;
+			// end hack.
 		}
 
 		

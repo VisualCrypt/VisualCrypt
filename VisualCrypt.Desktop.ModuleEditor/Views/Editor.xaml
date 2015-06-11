@@ -44,7 +44,8 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="_textBox1"
+        <Button x:Name="_focusSink" x:FieldModifier="private" Width="0" Height="0"/>
+        <TextBox x:Name="_textBox1" x:FieldModifier="private"
                  Grid.Column="0"
                  AcceptsReturn="True"
                  AllowDrop="True"
@@ -54,15 +55,11 @@
                  BorderBrush="{x:Static SystemColors.MenuBarBrush}"
                  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto"
                  TextWrapping="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay, Converter={StaticResource BoolTextWrappingConverter}}"
-                 
                  SpellCheck.IsEnabled="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}"
-                 
-                >
-                <!-- TextWrapping="{Binding TextWrapping}"-->
+                 >
             <TextBox.Style>
                 <Style TargetType="TextBox">
                     <Setter Property="VerticalScrollBarVisibility" Value="Visible" />
-
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type TextBox}">
@@ -125,8 +122,9 @@
                             <TextBlock Style="{StaticResource DialogH1Style}" Text="Find" />
                         </TabItem.Header>
                         <StackPanel HorizontalAlignment="Stretch">
-                            <TextBox Margin="5" x:Name="_textBoxFind"
-                                     Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox Margin="5" x:Name="_textBoxFind" x:FieldModifier="private"
+                                     Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                      />
                             <StackPanel HorizontalAlignment="Right">
                                 <Button IsDefault="True" Command="{Binding FindNextButtonCommand}">
                                     Find
@@ -152,13 +150,13 @@
                             <TextBlock Style="{StaticResource DialogH1Style}" Text="Replace" />
                         </TabItem.Header>
                         <StackPanel>
-                            <TextBox x:Name="_textBoxFindReplace" Margin="5"
-                                     Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                            <TextBox x:Name="_textBoxFindReplace" x:FieldModifier="private" Margin="5"
+                                     Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                     />
                             <TextBlock Margin="5">Replace with:</TextBlock>
-                            <TextBox x:Name="TextBoxReplaceString" Margin="5"
+                            <TextBox  Margin="5"
                                      Text="{Binding ReplaceString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <DockPanel>
-                                <TextBlock Margin="5" Text="{Binding PositionString}" />
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                                     <Button Command="{Binding FindNextButtonCommand}" IsDefault="True">
                                         Find
@@ -200,10 +198,9 @@
                                 <TextBlock Margin="0" Text="{Binding LineCount}" />
                                 <TextBlock Margin="0" Text="):" />
                             </StackPanel>
-                            <TextBox Margin="5" x:Name="_textBoxGoTo"
-                                     Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
-
-
+                            <TextBox Margin="5" x:Name="_textBoxGoTo" x:FieldModifier="private"
+                                     Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                      />
                             <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" Width="65"
                                     Command="{Binding GoButtonCommand}">
                                 Go
