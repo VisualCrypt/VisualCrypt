@@ -22,10 +22,6 @@
                     AllowsTransparency="True" d:DataContext="{d:DesignInstance views:ShellViewModel}">
     <Window.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
-                    Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/VisualCryptColors.xaml" />
-            </ResourceDictionary.MergedDictionaries>
             <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
         </ResourceDictionary>
     </Window.Resources>
@@ -52,7 +48,7 @@
         <!-- Help -->
         <KeyBinding Key="F1" Command="{Binding HelpCommand}" />
         <KeyBinding Key="F1" Modifiers="Shift" Command="{Binding AboutCommand}" />
-        <KeyBinding Key="A" Modifiers="Shift" Command="{Binding LogCommand}" />
+        <KeyBinding Key="F9" Command="{Binding LogCommand}" />
     </Window.InputBindings>
     <Grid AllowDrop="True" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="AliceBlue">
         <Grid.RowDefinitions>
@@ -143,7 +139,7 @@
 
             <MenuItem Header="_Help">
                 <MenuItem Header="View _Help Online" Command="{Binding HelpCommand}" InputGestureText="F1" />
-                <MenuItem Header="QA _Log" Command="{Binding LogCommand}" InputGestureText="Shift+A" />
+                <MenuItem Header="_Log" Command="{Binding LogCommand}" InputGestureText="F9" />
                 <Separator />
                 <MenuItem Header="_About VisualCrypt Editor" Command="{Binding AboutCommand}"
                           InputGestureText="Shift+F1" />

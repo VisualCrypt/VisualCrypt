@@ -457,7 +457,7 @@ namespace VisualCrypt.Desktop.Views
 			get
 			{
 				return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand,
-					() => FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
+					() => FileManager.FileModel.SaveEncoding != null);
 			}
 		}
 

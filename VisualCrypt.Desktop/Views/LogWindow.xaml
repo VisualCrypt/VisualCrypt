@@ -5,7 +5,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     mc:Ignorable="d"
-                    Title="QA Log"
+                    Title="Log"
                     WindowStartupLocation="CenterScreen"
                     Background="{DynamicResource BarColorBrush}"
                     Width="500" Height="300">
@@ -28,7 +28,7 @@
                 <Grid x:Name="ContentRow" Grid.Row="0">
                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel DockPanel.Dock="Top">
-                            <TextBlock Style="{StaticResource DialogH1Style}" Text="QA Log" />
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Log" />
 
                             <TextBlock>This debug information will not be saved to a file.</TextBlock>
                             <TextBlock />
