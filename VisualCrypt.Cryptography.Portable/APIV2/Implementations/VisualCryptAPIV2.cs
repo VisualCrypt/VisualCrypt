@@ -60,7 +60,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			}
 		}
 
-		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32)
+		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf)
 		{
 			if (clearText == null)
 				return new Response<CipherV2> {Error = "Argument null: clearText"};
@@ -78,7 +78,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				IV16 iv16 = _coreAPI.GenerateIV(16);
 
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, BCrypt.GensaltDefaultLog2Rounds);
+				BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value);
 
 				AESKey32 aesKey32;
 				using (var sha = new SHA256ManagedMono())
@@ -88,6 +88,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				}
 
 				CipherV2 cipherV2 = _coreAPI.AESEncryptMessage(paddedData, aesKey32, iv16);
+				cipherV2.BWF = bwf.Value;
 
 				MD32 md32;
 				using (var sha = new SHA256ManagedMono())
@@ -158,7 +159,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			try
 			{
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, BCrypt.GensaltDefaultLog2Rounds);
+				BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, cipherV2.BWF);
 
 				AESKey32 aesKey32;
 				using (var sha = new SHA256ManagedMono())

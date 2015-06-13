@@ -9,7 +9,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 
 		Response<SHA256PW32> CreateSHA256PW32(string utf16LEPassword);
 
-		Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32);
+		Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf);
 
 		Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2);
 

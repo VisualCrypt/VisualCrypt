@@ -36,7 +36,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		/// <param name="iv16">The salt to hash with.</param>
 		/// <param name="logRounds">Between [4..31].</param>
 		/// <returns>The hash.</returns>
-		public static BCrypt24 CreateHash(IV16 iv16, SHA256PW32 sha256PW32, int logRounds)
+		public static BCrypt24 CreateHash(IV16 iv16, SHA256PW32 sha256PW32, byte logRounds)
 		{
 			if (iv16 == null)
 				throw new ArgumentNullException("iv16");

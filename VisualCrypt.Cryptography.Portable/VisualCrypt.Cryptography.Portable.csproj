@@ -38,6 +38,7 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="APIV2\DataTypes\BWF.cs" />
     <Compile Include="APIV2\DataTypes\MD16E.cs" />
     <Compile Include="APIV2\DataTypes\MD16.cs" />
     <Compile Include="APIV2\DataTypes\PaddedData.cs" />

@@ -43,7 +43,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result);
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(5));
 				if (encryptResponse.Success)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -94,7 +94,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result);
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(5));
 				if (encryptResponse.Success)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);

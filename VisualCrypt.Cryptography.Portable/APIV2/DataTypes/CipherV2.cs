@@ -4,6 +4,8 @@
 	{
 		public const byte Version = 2;
 
+		public byte BWF  = 10; // BCrypt Work Factor
+
 		public byte Padding;
 
 		public IV16 IV16;

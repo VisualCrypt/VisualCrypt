@@ -19,7 +19,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			var visualCryptTextV2Bytes = new byte[1 + 1 + 16 + 16 + cipherV2.CipherBytes.Length];
 
 			visualCryptTextV2Bytes[0] = CipherV2.Version;
-			visualCryptTextV2Bytes[1] = cipherV2.Padding;
+
+
+			byte paddingNibbleLeft = (byte) (cipherV2.Padding & 0x0F);
+			byte bwfNibbleRight = (byte) ((cipherV2.BWF << 4));
+			byte combined = (byte)(paddingNibbleLeft | bwfNibbleRight);
+			visualCryptTextV2Bytes[1] = combined;
+			
 			Buffer.BlockCopy(cipherV2.IV16.Value, 0, visualCryptTextV2Bytes, 2, 16);
 			Buffer.BlockCopy(cipherV2.MD16E.Value, 0, visualCryptTextV2Bytes, 18, 16);
 			Buffer.BlockCopy(cipherV2.CipherBytes, 0, visualCryptTextV2Bytes, 34, cipherV2.CipherBytes.Length);
@@ -73,11 +79,21 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					throw new FormatException(
 						"The data is not in VisualCrypt/text V2 format. Expected a version byte at index 0 of value '2'.");
 
-				if (visualCryptTextV2Bytes[1] > 15)
+
+				var paddingAndBWF = visualCryptTextV2Bytes[1];
+				var padding = (byte)(paddingAndBWF & 0x0F);
+				var bwf = (byte)(paddingAndBWF >> 4);
+
+
+				if (padding > 15)
 					throw new FormatException(
 						"The data is not in VisualCrypt/text V2 format. The value at the padding byte at index 1 is invalid.");
 
-				var cipher = new CipherV2 {Padding = visualCryptTextV2Bytes[1]};
+				if (bwf > 31)
+					throw new FormatException(
+						"The data is not in VisualCrypt/text V2 format. The value for the Bcyrpt work factor at index 1 is invalid.");
+
+				var cipher = new CipherV2 { Padding = padding , BWF = new BWF(bwf).Value};
 
 
 				var iv16 = new byte[16];
