@@ -1,9 +1,13 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using VisualCrypt.Cryptography.Net.Tools;
+using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
@@ -92,7 +96,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				var setPasswordResponse = _encryptionService.SetPassword(PwBox.SecurePassword.ToUTF16ByteArray());
+				var setPasswordResponse = _encryptionService.SetPassword(Encoding.Unicode.GetBytes(PwBox.Text));
 				if (!setPasswordResponse.Success)
 				{
 					PasswordManager.PasswordInfo.IsPasswordSet = false;
@@ -109,16 +113,14 @@ namespace VisualCrypt.Desktop.Views
 			}
 			finally
 			{
-				PwBox.Password = string.Empty;
-				PwBox2.Password = string.Empty;
+				PwBox.Text = string.Empty;
+
 			}
 		}
 
 		bool CanExecuteSetPasswordCommand()
 		{
-			if (PwBox.SecurePassword.IsEqualTo(PwBox2.SecurePassword))
-				return true;
-			return false;
+			return true;
 		}
 
 		DelegateCommand _clearPasswordCommand;
@@ -136,15 +138,13 @@ namespace VisualCrypt.Desktop.Views
 
 		void ExecuteClearPasswordCommand()
 		{
-			PwBox.SecurePassword.Clear();
-			PwBox.Password = string.Empty;
-			PwBox2.SecurePassword.Clear();
-			PwBox2.Password = string.Empty;
+			PwBox.Text = string.Empty;
+
 		}
 
 		bool CanExecuteClearPasswordCommand()
 		{
-			if (PwBox.SecurePassword.Length > 0 || PwBox2.SecurePassword.Length > 0)
+			if (PwBox.Text.Length > 0)
 			{
 				return true;
 			}
@@ -163,10 +163,52 @@ namespace VisualCrypt.Desktop.Views
 			ClearPasswordCommand.RaiseCanExecuteChanged();
 		}
 
-		void Password2_Changed(object sender, RoutedEventArgs e)
+
+		void Hyperlink_CreatePassword_OnClick(object sender, RoutedEventArgs e)
 		{
-			SetPasswordCommand.RaiseCanExecuteChanged();
-			ClearPasswordCommand.RaiseCanExecuteChanged();
+			PwBox.Text = GenerateRandomPassword();
+		}
+
+		string GenerateRandomPassword()
+		{
+			var passwordBytes = new byte[32];
+
+			using (var rng = new RNGCryptoServiceProvider())
+				rng.GetBytes(passwordBytes);
+
+			char[] passwordChars = Base64Encoder.EncodeDataToBase64CharArray(passwordBytes);
+
+			string passwordString = new string(passwordChars).Remove(43).Replace("/", "$");
+			var sb = new StringBuilder();
+
+			int group = 0;
+			int groups = 0;
+			foreach (var ch in passwordString)
+			{
+				sb.Append(ch);
+				group++;
+
+				if (group == 5)
+				{
+					groups++;
+					if (groups == 5)
+					{
+						sb.Append(Environment.NewLine);
+						groups = 0;
+						group = 0;
+					}
+					else
+					{
+						sb.Append(" ");
+						group = 0;
+					}
+					
+					
+				}
+
+			}
+			return sb.ToString();
+
 		}
 	}
 }

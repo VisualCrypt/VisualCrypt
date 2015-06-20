@@ -23,7 +23,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			var message = _messages[0];
 
-			for (var i = 0; i <= 35; i++)
+			for (var i = 0; i <= 300; i++)
 			{
 				message += "1";
 				_messages.Add(message);
@@ -43,7 +43,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(5));
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(4));
 				if (encryptResponse.Success)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
