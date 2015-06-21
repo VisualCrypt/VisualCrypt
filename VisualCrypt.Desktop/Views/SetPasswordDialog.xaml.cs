@@ -181,34 +181,17 @@ namespace VisualCrypt.Desktop.Views
 			string passwordString = new string(passwordChars).Remove(43).Replace("/", "$");
 			var sb = new StringBuilder();
 
-			int group = 0;
-			int groups = 0;
-			foreach (var ch in passwordString)
+			for (var i = 0; i != passwordString.Length; ++i)
 			{
-				sb.Append(ch);
-				group++;
-
-				if (group == 5)
-				{
-					groups++;
-					if (groups == 5)
-					{
-						sb.Append(Environment.NewLine);
-						groups = 0;
-						group = 0;
-					}
-					else
-					{
-						sb.Append(" ");
-						group = 0;
-					}
-					
-					
-				}
-
+				sb.Append(passwordString[i]);
+				var insertSpace = (i + 1) % 5 == 0;
+				var insertNewLine = (i + 1) % 25 == 0;
+				if (insertNewLine)
+					sb.Append(Environment.NewLine);
+				else if (insertSpace)
+					sb.Append(" ");
 			}
 			return sb.ToString();
-
 		}
 	}
 }
