@@ -134,11 +134,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\EncryptedBar.xaml.cs">
+      <DependentUpon>EncryptedBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ImportEncodingDialog.xaml.cs">
       <DependentUpon>ImportEncodingDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AboutDialog.xaml.cs">
       <DependentUpon>AboutDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\PlainTextBar.xaml.cs">
+      <DependentUpon>PlainTextBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SetPasswordDialog.xaml.cs">
       <DependentUpon>SetPasswordDialog.xaml</DependentUpon>
@@ -148,6 +154,13 @@
       <DependentUpon>ShellWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ShellViewModel.cs" />
+    <Compile Include="Views\WorkingBar.xaml.cs">
+      <DependentUpon>WorkingBar.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Views\EncryptedBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\LogWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -170,6 +183,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\PlainTextBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SetPasswordDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -177,6 +194,10 @@
     <Page Include="Views\ShellWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\WorkingBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

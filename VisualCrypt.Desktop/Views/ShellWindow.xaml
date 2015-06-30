@@ -148,39 +148,15 @@
         <ContentControl x:Name="_contentEditorRegion" Grid.Row="1" regions:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-        <!--<Button Grid.Row="1" Height="0" Width="0" HorizontalAlignment="Left" x:Name="Button1" MinHeight="0"
-                MinWidth="0" />-->
-        <DockPanel Grid.Row="2" Width="Auto" Height="23" Background="{DynamicResource BarColorBrush}"
-                   Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
-            <DockPanel.Resources>
-                <Style x:Key="X" TargetType="TextBlock">
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="FontWeight" Value="Bold" />
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Foreground" Value="Red" />
-                        </Trigger>
-                    </Style.Triggers>
-                </Style>
-            </DockPanel.Resources>
-            <TextBlock DockPanel.Dock="Left" Margin="5,0" Text="{Binding StatusBarText}" TextAlignment="Left"
-                       VerticalAlignment="Center" />
-            <TextBlock VerticalAlignment="Center"
-                       Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}"
-                       ToolTip="Clear Password   Ctrl+R"
-                       DockPanel.Dock="Right" Margin="3,0" Text="x" FontWeight="Bold" Foreground="#A5FF0000"
-                       Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown" />
-            <TextBlock DockPanel.Dock="Right" Margin="5,0" VerticalAlignment="Center"
-                       Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}" />
-            <TextBlock DockPanel.Dock="Right" VerticalAlignment="Center">
-                <Hyperlink Click="Hyperlink_SetPassword_Click" ToolTip="Ctrl+P">
-                    <TextBlock
-                        Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}" />
-                </Hyperlink>
-            </TextBlock>
-            <Image Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S" VerticalAlignment="Center"
-                   MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown"
-                   Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}" />
-        </DockPanel>
+        <Border Grid.Row="2" Height="50"  Background="{DynamicResource BarColorBrush}"
+             Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
+            <StackPanel>
+                <views:PlainTextBar Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=PlainTextBarVisibility}"></views:PlainTextBar>
+                <views:WorkingBar Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=WorkingBarVisibility}"></views:WorkingBar>
+                <views:EncryptedBar Visibility="{Binding  Source={x:Static files:FileManager.BindableFileInfo}, Path=EncryptedBarVisibility}"></views:EncryptedBar>
+            </StackPanel>
+           
+        </Border>
+
     </Grid>
 </controls:AppWindow>

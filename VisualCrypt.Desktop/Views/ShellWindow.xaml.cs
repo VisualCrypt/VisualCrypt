@@ -105,23 +105,7 @@ namespace VisualCrypt.Desktop.Views
 			_contentEditorRegion.IsHitTestVisible = true;
 		}
 
-		void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
-		{
-			if (ViewModel.ShowSetPasswordDialogCommand.CanExecute())
-				ViewModel.ShowSetPasswordDialogCommand.Execute();
-		}
-
-		void TextBlock_ClearPassword_MouseDown(object sender, MouseButtonEventArgs e)
-		{
-			if (ViewModel.ClearPasswordCommand.CanExecute())
-				ViewModel.ClearPasswordCommand.Execute();
-		}
-
-		void Image_IsDirty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-		{
-			if (ViewModel.SaveCommand.CanExecute())
-				ViewModel.SaveCommand.CanExecute();
-		}
+		
 
 		void ActivateEditor()
 		{

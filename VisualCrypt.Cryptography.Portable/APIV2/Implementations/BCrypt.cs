@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Threading;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
@@ -35,8 +36,10 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		/// <param name="sha256PW32">The data to hash.</param>
 		/// <param name="iv16">The salt to hash with.</param>
 		/// <param name="logRounds">Between [4..31].</param>
+		/// <param name="progress"></param>
+		/// <param name="cToken"></param>
 		/// <returns>The hash.</returns>
-		public static BCrypt24 CreateHash(IV16 iv16, SHA256PW32 sha256PW32, byte logRounds)
+		public static BCrypt24 CreateHash(IV16 iv16, SHA256PW32 sha256PW32, byte logRounds, IProgress<int> progress, CancellationToken cToken)
 		{
 			if (iv16 == null)
 				throw new ArgumentNullException("iv16");
@@ -47,7 +50,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			if (logRounds < 4 || logRounds > 31)
 				throw new ArgumentOutOfRangeException("logRounds", logRounds, "logRounds must be between 4 and 31 (inclusive)");
 
-			var hash = new BCrypt().CryptRaw(sha256PW32.Value, iv16.Value, logRounds);
+			var hash = new BCrypt(progress, cToken).CryptRaw(sha256PW32.Value, iv16.Value, logRounds);
 			return new BCrypt24(hash);
 		}
 
@@ -56,7 +59,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		#region const
 
 		// BCrypt parameters
-		public const int GensaltDefaultLog2Rounds = 10;
+		public const int GensaltDefaultLog2Rounds = 14;
 		const int BcryptSaltLen = 16;
 
 		// Blowfish parameters
@@ -372,6 +375,14 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		uint[] _p;
 		uint[] _s;
 
+		IProgress<int> _progress;
+		CancellationToken _cToken;
+		BCrypt(IProgress<int> progress, CancellationToken cToken)
+		{
+			_progress = progress;
+			_cToken = cToken;
+		}
+
 		/// <summary>Blowfish encipher a single 64-bit block encoded as two 32-bit halves.</summary>
 		/// <param name="blockArray">An array containing the two 32-bit half blocks.</param>
 		/// <param name="offset">    The position in the array of the blocks.</param>
@@ -505,12 +516,26 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			for (int i = 0; i < rounds; i++)
 			{
+				// START Progress
+				_cToken.ThrowIfCancellationRequested();
+				decimal progressValue = i/(decimal)(rounds-1) *100m;
+				Debug.WriteLine(progressValue);
+				_progress.Report((int)progressValue);
+				// END Progress
+
 				Key(inputBytes);
 				Key(saltBytes);
 			}
 
 			for (int i = 0; i < 64; i++)
 			{
+				// START Progress
+				_cToken.ThrowIfCancellationRequested();
+				decimal progressValue = i / 63m * 100m;
+				Debug.WriteLine(progressValue);
+				_progress.Report(Convert.ToInt32(progressValue));
+				// END Progress
+
 				for (int j = 0; j < (clen >> 1); j++)
 					Encipher(cdata, j << 1);
 			}
@@ -518,6 +543,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			byte[] ret = new byte[clen*4];
 			for (int i = 0, j = 0; i < clen; i++)
 			{
+				// START Progress
+				_cToken.ThrowIfCancellationRequested();
+				decimal progressValue = i / (decimal)(clen-1) * 100m;
+				Debug.WriteLine(progressValue);
+				_progress.Report(Convert.ToInt32(progressValue));
+				// END Progress
+
 				ret[j++] = (byte) ((cdata[i] >> 24) & 0xff);
 				ret[j++] = (byte) ((cdata[i] >> 16) & 0xff);
 				ret[j++] = (byte) ((cdata[i] >> 8) & 0xff);

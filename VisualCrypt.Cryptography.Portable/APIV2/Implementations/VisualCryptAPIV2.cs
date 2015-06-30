@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
 
@@ -60,7 +61,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			}
 		}
 
-		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf)
+		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
 		{
 			if (clearText == null)
 				return new Response<CipherV2> {Error = "Argument null: clearText"};
@@ -78,7 +79,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				IV16 iv16 = _coreAPI.GenerateIV(16);
 
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value);
+				BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value, progress, cToken);
 
 				AESKey32 aesKey32;
 				using (var sha = new SHA256ManagedMono())
@@ -153,13 +154,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			return response;
 		}
 
-		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32)
+		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken )
 		{
 			var response = new Response<ClearText>();
 
 			try
 			{
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, cipherV2.BWF);
+				BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, cipherV2.BWF, progress, cToken);
 
 				AESKey32 aesKey32;
 				using (var sha = new SHA256ManagedMono())
