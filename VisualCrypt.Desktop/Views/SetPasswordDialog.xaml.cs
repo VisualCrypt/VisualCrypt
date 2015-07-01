@@ -97,7 +97,7 @@ namespace VisualCrypt.Desktop.Views
 			try
 			{
 				var setPasswordResponse = _encryptionService.SetPassword(Encoding.Unicode.GetBytes(PwBox.Text));
-				if (!setPasswordResponse.Success)
+				if (!setPasswordResponse.IsSuccess)
 				{
 					PasswordManager.PasswordInfo.IsPasswordSet = false;
 					_messageBoxService.ShowError(setPasswordResponse.Error);

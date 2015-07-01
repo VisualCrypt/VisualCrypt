@@ -12,7 +12,7 @@ using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.ModuleEncryption
 {
-	[Export(typeof (IEncryptionService))]
+	[Export(typeof(IEncryptionService))]
 	public class EncryptionService : IEncryptionService
 	{
 		readonly IVisualCryptAPIV2 _visualCryptApiv2;
@@ -36,17 +36,17 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				Response<string, Encoding> getStringResponse = _visualCryptApiv2.GetStringFromFileBytes(rawBytesFromFile,
 					Encoding.Default);
 
-				if (!getStringResponse.Success) // we do not even have a string.
+				if (!getStringResponse.IsSuccess) // we do not even have a string.
 				{
 					// in this case we return no FileModel,just return the error.
-					response.Error = getStringResponse.Error;
+					response.SetError(getStringResponse.Error);
 					return response;
 				}
 
 				// if we are here we have a string. Is it VisualCrypt/text or just Cleartext?
 				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(getStringResponse.Result);
 
-				if (decodeResponse.Success)
+				if (!decodeResponse.IsSuccess)
 				{
 					// it's VisualCrypt!
 					var encryptedFileModel = FileModel.Encrypted(decodeResponse.Result, filename, getStringResponse.Result);
@@ -58,11 +58,11 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					var cleartextFileModel = FileModel.Cleartext(filename, getStringResponse.Result, getStringResponse.Result2);
 					response.Result = cleartextFileModel;
 				}
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -83,28 +83,26 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 
 				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), progress, cToken);
 				cToken.ThrowIfCancellationRequested();
-				if (encryptResponse.Success)
+				if (encryptResponse.IsSuccess)
 				{
 					//progress.Report(70);
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);
-					if (encodeResponse.Success)
+					if (encodeResponse.IsSuccess)
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
 						CipherV2 cipherV2 = encryptResponse.Result;
 						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, visualCryptText.Value);
 						encryptedFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = encryptedFileModel;
-						response.Success = true;
-						//progress.Report(100);
-						Thread.Sleep(500);
+						response.SetSuccess();
 					}
-					else response.Error = encodeResponse.Error;
+					else response.SetError(encodeResponse.Error);
 				}
-				else response.Error = encryptResponse.Error;
+				else response.SetError(encryptResponse.Error);
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -115,17 +113,17 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			try
 			{
 				var sha256Response = _visualCryptApiv2.CreateSHA256PW32(utf16LEPassword);
-				if (sha256Response.Success)
+				if (sha256Response.IsSuccess)
 				{
 					KeyStore.SetSHA256PW32(sha256Response.Result);
-					response.Success = true;
+					response.SetSuccess();
 				}
 				else
-					response.Error = sha256Response.Error;
+					response.SetError(sha256Response.Error);
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -136,16 +134,16 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			try
 			{
 				KeyStore.Clear();
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
 
-		public Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken )
+		public Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken)
 		{
 			var response = new Response<FileModel>();
 			try
@@ -157,24 +155,24 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					throw new ArgumentNullException("textBufferContents");
 
 				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(textBufferContents);
-				if (decodeResponse.Success)
+				if (decodeResponse.IsSuccess)
 				{
 					var decrpytResponse = _visualCryptApiv2.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), progress, cToken);
-					if (decrpytResponse.Success)
+					if (decrpytResponse.IsSuccess)
 					{
 						ClearText clearText = decrpytResponse.Result;
 						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, clearText.Value, fileModel.SaveEncoding);
 						clearTextFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = clearTextFileModel;
-						response.Success = true;
+						response.SetSuccess();
 					}
-					else response.Error = decrpytResponse.Error;
+					else response.SetError(decrpytResponse.Error);
 				}
-				else response.Error = decodeResponse.Error;
+				else response.SetError(decodeResponse.Error);
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -191,16 +189,16 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (!fileModel.IsEncrypted)
 					throw new Exception("Aborting Save - IsEncrypted is false.");
 
-				if (!_visualCryptApiv2.TryDecodeVisualCryptText(fileModel.VisualCryptText).Success)
+				if (!_visualCryptApiv2.TryDecodeVisualCryptText(fileModel.VisualCryptText).IsSuccess)
 					throw new Exception("Aborting Save -  The data being saved is not valid VisualCrypt format.");
 
 				byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(fileModel.VisualCryptText);
 				File.WriteAllBytes(fileModel.Filename, visualCryptTextBytes);
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -219,24 +217,24 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
 				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), progress, cToken);
-				if (encryptResponse.Success)
+				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);
-					if (encodeResponse.Success)
+					if (encodeResponse.IsSuccess)
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
 						byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(visualCryptText.Value);
 						File.WriteAllBytes(fileModel.Filename, visualCryptTextBytes);
 						response.Result = visualCryptText.Value;
-						response.Success = true;
+						response.SetSuccess();
 					}
-					else response.Error = encodeResponse.Error;
+					else response.SetError(encodeResponse.Error);
 				}
-				else response.Error = encryptResponse.Error;
+				else response.SetError(encryptResponse.Error);
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}

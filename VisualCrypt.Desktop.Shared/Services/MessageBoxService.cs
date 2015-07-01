@@ -65,8 +65,8 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		public void ShowError(Exception e, [CallerMemberName] string callerMemberName = "")
 		{
-			var messageBoxText = "Error in {0}:\r\n\r\n{1}".FormatInvariant(callerMemberName, e.Message);
-			Show(messageBoxText, "Error (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
+			var messageBoxText = "SetError in {0}:\r\n\r\n{1}".FormatInvariant(callerMemberName, e.Message);
+			Show(messageBoxText, "SetError (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 
@@ -76,7 +76,7 @@ namespace VisualCrypt.Desktop.Shared.Services
 				error = "There was an error but the error message is missing.";
 
 
-			Show(error, "Error (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
+			Show(error, "SetError (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 	}
 }

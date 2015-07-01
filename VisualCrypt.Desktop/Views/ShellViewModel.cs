@@ -336,7 +336,7 @@ namespace VisualCrypt.Desktop.Views
 			try
 			{
 				var openFileResponse = _encryptionService.OpenFile(filename);
-				if (!openFileResponse.Success)
+				if (!openFileResponse.IsSuccess)
 				{
 					_messageBoxService.ShowError(openFileResponse.Error);
 					return;
@@ -381,7 +381,7 @@ namespace VisualCrypt.Desktop.Views
 
 				var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
 					FileManager.FileModel.VisualCryptText, progress, _cancellationTokenSource.Token));
-				if (decryptForDisplayResult.Success)
+				if (decryptForDisplayResult.IsSuccess)
 				{
 					// we were lucky, the password we have is correct!
 					FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
@@ -447,7 +447,7 @@ namespace VisualCrypt.Desktop.Views
 
 				var createEncryptedFileResponse =
 					await Task.Run(() => _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, progress, _cancellationTokenSource.Token));
-				if (createEncryptedFileResponse.Success)
+				if (createEncryptedFileResponse.IsSuccess)
 				{
 					FileManager.FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
 					_eventAggregator.GetEvent<EditorReceivesText>().Publish(createEncryptedFileResponse.Result.VisualCryptText);
@@ -503,7 +503,7 @@ namespace VisualCrypt.Desktop.Views
 
 				var decryptForDisplayResult =
 					await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, progress, _cancellationTokenSource.Token));
-				if (decryptForDisplayResult.Success)
+				if (decryptForDisplayResult.IsSuccess)
 				{
 					FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
 					_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
@@ -544,7 +544,7 @@ namespace VisualCrypt.Desktop.Views
 				if (FileManager.FileModel.IsEncrypted && !isSaveAs && FileManager.FileModel.CheckFilenameForQuickSave())
 				{
 					var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
-					if (!response.Success)
+					if (!response.IsSuccess)
 						throw new Exception(response.Error);
 					FileManager.FileModel.IsDirty = false;
 				}
@@ -560,7 +560,7 @@ namespace VisualCrypt.Desktop.Views
 					{
 						FileManager.FileModel.Filename = pickFileResult.Item2;
 						var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
-						if (!response.Success)
+						if (!response.IsSuccess)
 							throw new Exception(response.Error);
 						FileManager.FileModel.IsDirty = false;
 					}
@@ -615,7 +615,7 @@ namespace VisualCrypt.Desktop.Views
 
 			var encryptAndSaveFileResponse =
 				await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText,progress, _cancellationTokenSource.Token));
-			if (!encryptAndSaveFileResponse.Success)
+			if (!encryptAndSaveFileResponse.IsSuccess)
 				throw new Exception(encryptAndSaveFileResponse.Error);
 
 			string visualCryptTextSaved = encryptAndSaveFileResponse.Result;
@@ -707,7 +707,7 @@ namespace VisualCrypt.Desktop.Views
 			try
 			{
 				var clearPasswordResponse = _encryptionService.ClearPassword();
-				if (!clearPasswordResponse.Success)
+				if (!clearPasswordResponse.IsSuccess)
 				{
 					_messageBoxService.ShowError(clearPasswordResponse.Error);
 					return;

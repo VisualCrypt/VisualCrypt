@@ -26,8 +26,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			if (utf16LEPassword == null)
 			{
-				response.Error = "Argument null: 'utf16LEPassword'";
-				return response;
+				return new Response<SHA256PW32>("Argument null: 'utf16LEPassword'");
 			}
 			try
 			{
@@ -36,11 +35,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					var hash = sha.ComputeHash(utf16LEPassword);
 					response.Result = new SHA256PW32(hash);
 				}
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -48,7 +47,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		public Response<SHA256PW32> CreateSHA256PW32(string utf16LEPassword)
 		{
 			if (utf16LEPassword == null)
-				return new Response<SHA256PW32> {Error = "Argument null: 'utf16LEPassword'"};
+				return new Response<SHA256PW32>("Argument null: 'utf16LEPassword'");
 
 			try
 			{
@@ -57,17 +56,17 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			}
 			catch (EncoderFallbackException e)
 			{
-				return new Response<SHA256PW32> {Error = e.Message};
+				return new Response<SHA256PW32>(e.Message);
 			}
 		}
 
 		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
 		{
 			if (clearText == null)
-				return new Response<CipherV2> {Error = "Argument null: clearText"};
+				return new Response<CipherV2>("Argument null: clearText");
 
 			if (sha256PW32 == null)
-				return new Response<CipherV2> {Error = "Argument null: sha256PW32"};
+				return new Response<CipherV2>("Argument null: sha256PW32");
 
 			var response = new Response<CipherV2>();
 
@@ -105,11 +104,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				_coreAPI.AESEncryptMessageDigest(cipherV2, md16, aesKey32);
 
 				response.Result = cipherV2;
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -117,7 +116,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		public Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2)
 		{
 			if (cipherV2 == null)
-				return new Response<VisualCryptText> {Error = "Argument null: cipherV2"};
+				return new Response<VisualCryptText>("Argument null: cipherV2");
 
 			var response = new Response<VisualCryptText>();
 
@@ -125,11 +124,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			{
 				var formatter = new VisualCryptFormatter();
 				response.Result = formatter.CreateVisualCryptText(cipherV2);
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -137,7 +136,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		public Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText)
 		{
 			if (visualCryptText == null)
-				return new Response<CipherV2> {Error = "Argument null: visualCryptText"};
+				return new Response<CipherV2>("Argument null: visualCryptText");
 
 			var response = new Response<CipherV2>();
 
@@ -145,16 +144,16 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			{
 				var formatter = new VisualCryptFormatter();
 				response.Result = formatter.DissectVisualCryptText(visualCryptText);
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
 
-		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken )
+		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken)
 		{
 			var response = new Response<ClearText>();
 
@@ -184,7 +183,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				if (!md16a.Value.SequenceEqual(md16b.Value))
 				{
-					response.Error = "The password is wrong or the data has been corrupted.";
+					response.SetError("The password is wrong or the data has been corrupted.");
 					return response;
 				}
 
@@ -195,11 +194,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				ClearText clearText = _coreAPI.Decompress(compressed);
 
 				response.Result = clearText;
-				response.Success = true;
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}
@@ -211,7 +210,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			if (rawBytesFromFile == null)
 			{
-				response.Error = "Argument null: ' rawBytesFromFile'";
+				response.SetError("Argument null: ' rawBytesFromFile'");
 				return response;
 			}
 
@@ -224,12 +223,12 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				{
 					response.Result = decodeFileResult;
 					response.Result2 = encoding;
-					response.Success = true;
+					response.SetSuccess();
 				}
 			}
 			catch (Exception e)
 			{
-				response.Error = e.Message;
+				response.SetError(e);
 			}
 			return response;
 		}

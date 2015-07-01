@@ -81,7 +81,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				ClearTextContents = string.Empty,
 				IsEncrypted = false,
 				SaveEncoding = DefaultClearTextSaveEncoding,
-				VisualCryptText = "Error: VisualCryptText is not valid in this context."
+				VisualCryptText = "SetError: VisualCryptText is not valid in this context."
 			};
 		}
 
@@ -93,7 +93,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				ClearTextContents = clearTextContents,
 				IsEncrypted = false,
 				SaveEncoding = saveEncoding,
-				VisualCryptText = "Error: VisualCryptText is not valid in this context."
+				VisualCryptText = "SetError: VisualCryptText is not valid in this context."
 			};
 		}
 
@@ -102,7 +102,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 			return new FileModel
 			{
 				Filename = filename,
-				ClearTextContents = "Error: ClearTextContents is not valid in this context.",
+				ClearTextContents = "SetError: ClearTextContents is not valid in this context.",
 				IsEncrypted = true,
 				SaveEncoding = VisualCryptTextSaveEncoding,
 				VisualCryptText = visualCryptText,
