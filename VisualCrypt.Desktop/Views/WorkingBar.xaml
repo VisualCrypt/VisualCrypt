@@ -13,7 +13,9 @@
     <Grid>
         <StackPanel Orientation="Horizontal">
             <TextBlock>Working</TextBlock>
-            <ProgressBar Width="100" Height="15" IsIndeterminate="False" Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}"></ProgressBar><Button Click="WorkingBAr_Cancel_Click">Cancel</Button>
+            <ProgressBar Width="100" Height="15" IsIndeterminate="False" Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}"></ProgressBar>
+            <TextBlock Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressBarText}"/>
+            <Button Click="WorkingBAr_Cancel_Click">Cancel</Button>
         </StackPanel>
           
     </Grid>

@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
@@ -32,7 +33,7 @@ namespace VisualCrypt.Desktop.Views
 		public ShellViewModel(IEventAggregator eventAggregator, ILoggerFacade logger,
 			IMessageBoxService messageBoxService, IEncryptionService encryptionService)
 		{
-			
+
 			_eventAggregator = eventAggregator;
 			_logger = logger;
 			_messageBoxService = messageBoxService;
@@ -92,7 +93,7 @@ namespace VisualCrypt.Desktop.Views
 
 		string _statusBarText;
 
-	
+
 
 		#endregion
 
@@ -351,13 +352,13 @@ namespace VisualCrypt.Desktop.Views
 				FileManager.FileModel = openFileResponse.Result;
 				SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
-				 var ert = _eventAggregator.GetEvent<EditorReceivesText>();
+				var ert = _eventAggregator.GetEvent<EditorReceivesText>();
 				var text = FileManager.FileModel.IsEncrypted
 						? FileManager.FileModel.VisualCryptText
 						: FileManager.FileModel.ClearTextContents;
 				ert.Publish(text);
-				
-				
+
+
 				// if the loaded file was cleartext we are all done
 				if (!FileManager.FileModel.IsEncrypted)
 					return;
@@ -374,13 +375,11 @@ namespace VisualCrypt.Desktop.Views
 				// We have a password, but we don't know if it's the right one. We must try!
 
 				// START: Progress / WorkingBar / Cancellation
-				FileManager.BindableFileInfo.WorkingBarVisibility = Visibility.Visible;
-				_cancellationTokenSource = new CancellationTokenSource();
-				var progress = new Progress<int>(i => FileManager.BindableFileInfo.ProgressPercent = i);
+				var context = StartLongRunnungOperation("Trying to decrypt opened file.");
 				// END:  Progress / WorkingBar / Cancellation
 
 				var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
-					FileManager.FileModel.VisualCryptText, progress, _cancellationTokenSource.Token));
+					FileManager.FileModel.VisualCryptText, context));
 				if (decryptForDisplayResult.IsSuccess)
 				{
 					// we were lucky, the password we have is correct!
@@ -455,7 +454,8 @@ namespace VisualCrypt.Desktop.Views
 				}
 				else
 				{
-					_messageBoxService.ShowError(createEncryptedFileResponse.Error);
+					if (!createEncryptedFileResponse.IsCancelled)
+						_messageBoxService.ShowError(createEncryptedFileResponse.Error);
 					FileManager.BindableFileInfo.WorkingBarVisibility = Visibility.Collapsed;
 					FileManager.BindableFileInfo.PlainTextBarVisibility = Visibility.Visible;
 				}
@@ -496,28 +496,41 @@ namespace VisualCrypt.Desktop.Views
 				string textBufferContents = await EditorSendsTextAsync();
 
 				// START: Progress / WorkingBar / Cancellation
-				FileManager.BindableFileInfo.WorkingBarVisibility = Visibility.Visible;
-				_cancellationTokenSource = new CancellationTokenSource();
-				var progress = new Progress<int>(i => FileManager.BindableFileInfo.ProgressPercent = i);
-				// END:  Progress / WorkingBar / Cancellation
-
-				var decryptForDisplayResult =
-					await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, progress, _cancellationTokenSource.Token));
-				if (decryptForDisplayResult.IsSuccess)
+				using (var context = StartLongRunnungOperation("Decryption"))
 				{
-					FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
-					_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
-					UpdateCanExecuteChanged();
+					var decryptForDisplayResult =
+					await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, context));
+					if (decryptForDisplayResult.IsSuccess)
+					{
+						FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
+						_eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
+						UpdateCanExecuteChanged();
+					}
+					else
+					{
+						if (!decryptForDisplayResult.IsCancelled)
+							_messageBoxService.ShowError(decryptForDisplayResult.Error);
+						FileManager.BindableFileInfo.WorkingBarVisibility = Visibility.Collapsed;
+					}
 				}
-				else
-				{
-					_messageBoxService.ShowError(decryptForDisplayResult.Error);
-				}
+					
 			}
 			catch (Exception e)
 			{
 				_messageBoxService.ShowError(e);
 			}
+		}
+
+		LongRunningOperationContext StartLongRunnungOperation(string description)
+		{
+			FileManager.BindableFileInfo.WorkingBarVisibility = Visibility.Visible;
+		
+			FileManager.BindableFileInfo.ProgressBarText = description;
+
+			return new LongRunningOperationContext
+			{
+				Progress = new Progress<int>(i => FileManager.BindableFileInfo.ProgressPercent = i),
+			};
 		}
 
 		#endregion
@@ -614,7 +627,7 @@ namespace VisualCrypt.Desktop.Views
 			// END:  Progress / WorkingBar / Cancellation
 
 			var encryptAndSaveFileResponse =
-				await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText,progress, _cancellationTokenSource.Token));
+				await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText, progress, _cancellationTokenSource.Token));
 			if (!encryptAndSaveFileResponse.IsSuccess)
 				throw new Exception(encryptAndSaveFileResponse.Error);
 

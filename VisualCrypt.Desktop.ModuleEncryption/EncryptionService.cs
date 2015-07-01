@@ -143,7 +143,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			return response;
 		}
 
-		public Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken)
+		public Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context)
 		{
 			var response = new Response<FileModel>();
 			try
@@ -157,7 +157,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(textBufferContents);
 				if (decodeResponse.IsSuccess)
 				{
-					var decrpytResponse = _visualCryptApiv2.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), progress, cToken);
+					var decrpytResponse = _visualCryptApiv2.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context.Progress, context.CancellationToken);
 					if (decrpytResponse.IsSuccess)
 					{
 						ClearText clearText = decrpytResponse.Result;

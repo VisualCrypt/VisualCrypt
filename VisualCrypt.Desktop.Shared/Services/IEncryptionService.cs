@@ -15,7 +15,7 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken);
 
-		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken);
+		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
 
 		Response SetPassword(byte[] utf16LEPassword);
 

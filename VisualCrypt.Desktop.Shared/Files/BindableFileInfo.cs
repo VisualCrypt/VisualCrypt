@@ -107,6 +107,20 @@ namespace VisualCrypt.Desktop.Shared.Files
 		}
 		int _progressPercent;
 
+
+
+		public string ProgressBarText
+		{
+			get { return _progressBarText; }
+			set
+			{
+				if (_progressBarText == value) return;
+				_progressBarText = value;
+				OnPropertyChanged();
+			}
+		}
+		string _progressBarText;
+
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -115,5 +129,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 			if (handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
+
+
 	}
 }
