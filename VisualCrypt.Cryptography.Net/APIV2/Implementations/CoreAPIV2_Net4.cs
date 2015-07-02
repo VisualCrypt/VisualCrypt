@@ -25,10 +25,12 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (compressed == null)
 				throw new ArgumentNullException("compressed");
 
-			if (compressed.Value.Length == 0)
-				return new PaddedData(compressed.Value, 0);
-
-			var requiredPadding = 16 - compressed.Value.Length%16;
+			int requiredPadding;
+			if (compressed.Value.Length%16 == 0)
+				requiredPadding = 0;
+			else
+				requiredPadding = 16 - compressed.Value.Length % 16;
+		
 			var paddingBytes = new byte[requiredPadding];
 
 			using (var rng = new RNGCryptoServiceProvider())

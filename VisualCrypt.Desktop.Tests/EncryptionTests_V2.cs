@@ -15,7 +15,7 @@ namespace VisualCrypt.Desktop.Tests
 	{
 		readonly IVisualCryptAPIV2 _visualCryptAPI;
 		readonly ICoreAPIV2 _visualCryptCoreAPI;
-		readonly List<string> _messages = new List<string> {""};
+		readonly List<string> _messages = new List<string> { "" };
 
 		public EncryptionTests_V2()
 		{
@@ -66,7 +66,7 @@ namespace VisualCrypt.Desktop.Tests
 				if (decodeResponse.IsSuccess)
 				{
 					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
-						hashPasswordResponse.Result, new Progress<int>(),new CancellationTokenSource().Token );
+						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 					if (decryptResponse.IsSuccess)
 						decryptedMessage = decryptResponse.Result.Value;
 					else
@@ -131,7 +131,7 @@ namespace VisualCrypt.Desktop.Tests
 		[TestMethod]
 		public void PaddingIsAppliedCorrectlyBeforeEncryption()
 		{
-			var stringWhereTheErrorOccures ="vyxvxvxyvxvyvcxyvyx";
+			var stringWhereTheErrorOccures = "vyxvxvxyvxvyvcxyvyx";
 
 			var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password");
 
@@ -164,7 +164,16 @@ namespace VisualCrypt.Desktop.Tests
 			}
 			else
 				throw new Exception(decodeResponse.Error);
-		
+
+		}
+
+		[TestMethod]
+		public void ModuloTest()
+		{
+			var res = 0 % 16;
+			Console.WriteLine(res);
+			Assert.IsTrue(res == 0);
+
 		}
 	}
 }
