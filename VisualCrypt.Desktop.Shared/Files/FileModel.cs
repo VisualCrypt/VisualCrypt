@@ -32,9 +32,37 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		bool _isDirty;
 
-		public string Filename { get; set; }
 
-		public bool IsEncrypted { get; private set; }
+		public string Filename
+		{
+			get { return _filename; }
+			set
+			{
+				if (_filename != value)
+				{
+					_filename = value;
+					OnPropertyChanged();
+				}
+
+			}
+		}
+		string _filename;
+
+
+		public bool IsEncrypted
+		{
+			get { return _isEncrypted; }
+			private set
+			{
+				if (_isEncrypted != value)
+				{
+					_isEncrypted = value;
+					OnPropertyChanged();
+				}
+
+			}
+		}
+		bool _isEncrypted;
 
 
 		public string ClearTextContents { get; private set; }
@@ -110,6 +138,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			};
 		}
 
-		
+
 	}
 }

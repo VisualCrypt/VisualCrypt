@@ -33,7 +33,7 @@ namespace VisualCrypt.Desktop.Views
 
 		void WorkingBAr_Cancel_Click(object sender, RoutedEventArgs e)
 		{
-			ViewModel.CancelWork();
+			ViewModel.CancelLongRunningOperation();
 		}
 	}
 }

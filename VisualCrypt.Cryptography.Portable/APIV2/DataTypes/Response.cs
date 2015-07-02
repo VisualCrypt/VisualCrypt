@@ -40,8 +40,8 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 			{
 				CheckStateHasBeenSet();
 
-				if(_state == Cancelled || _state == Success)
-					throw new InvalidOperationException(string.Format("State of Response is '{0}'. Please check IsSuccess and IsCancelled before accessing Respose.Error unnecessarily.",_state));
+				if(_state == Success)
+					throw new InvalidOperationException(string.Format("State of Response is '{0}'. Please check IsSuccess before accessing Respose.Error unnecessarily.",_state));
 
 				return _state;
 			}

@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
-using System.Threading;
 using VisualCrypt.Cryptography.Net.APIV2.Implementations;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
@@ -46,7 +45,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				// if we are here we have a string. Is it VisualCrypt/text or just Cleartext?
 				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(getStringResponse.Result);
 
-				if (!decodeResponse.IsSuccess)
+				if (decodeResponse.IsSuccess)
 				{
 					// it's VisualCrypt!
 					var encryptedFileModel = FileModel.Encrypted(decodeResponse.Result, filename, getStringResponse.Result);
@@ -67,7 +66,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			return response;
 		}
 
-		public Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken)
+		public Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context)
 		{
 			var response = new Response<FileModel>();
 
@@ -79,13 +78,10 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				//progress.Report(0);
-
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), progress, cToken);
-				cToken.ThrowIfCancellationRequested();
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), context.Progress, context.CancellationToken);
+				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
-					//progress.Report(70);
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);
 					if (encodeResponse.IsSuccess)
 					{
@@ -204,7 +200,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		}
 
 
-		public Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken)
+		public Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, LongRunningOperationContext context)
 		{
 			var response = new Response<string>();
 
@@ -216,7 +212,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), progress, cToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), context.Progress, context.CancellationToken);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);

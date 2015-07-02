@@ -13,7 +13,7 @@ namespace VisualCrypt.Desktop.Shared.Services
 		/// </summary>
 		Response<FileModel> OpenFile(string filename);
 
-		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken);
+		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
 
 		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
 
@@ -23,6 +23,6 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response SaveEncryptedFile(FileModel fileModel);
 
-		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, IProgress<int> progress, CancellationToken cToken);
+		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
 	}
 }

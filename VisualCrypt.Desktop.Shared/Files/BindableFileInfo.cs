@@ -36,18 +36,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			set
 			{
 				_isEncrypted = value;
-				if (_isEncrypted)
-				{
-					PlainTextBarVisibility = Visibility.Collapsed;
-					EncryptedBarVisibility = Visibility.Visible;
-					WorkingBarVisibility = Visibility.Collapsed;
-				}
-				else
-				{
-					PlainTextBarVisibility = Visibility.Visible;
-					EncryptedBarVisibility = Visibility.Collapsed;
-					WorkingBarVisibility = Visibility.Collapsed;
-				}
 				OnPropertyChanged();
 			}
 		}
@@ -73,11 +61,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			{
 				if (_workingBarVisibility == value) return;
 				_workingBarVisibility = value;
-				if (_workingBarVisibility == Visibility.Visible)
-				{
-					PlainTextBarVisibility = Visibility.Collapsed;
-					EncryptedBarVisibility = Visibility.Collapsed;
-				}
 				OnPropertyChanged();
 			}
 		}
