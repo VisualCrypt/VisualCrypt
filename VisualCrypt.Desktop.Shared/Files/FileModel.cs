@@ -3,6 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
+using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 
 namespace VisualCrypt.Desktop.Shared.Files
@@ -71,7 +72,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		public Encoding SaveEncoding { get; private set; }
 
-		public object CipherV2 { get; private set; }
+		public CipherV2 CipherV2 { get; private set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
@@ -134,7 +135,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				IsEncrypted = true,
 				SaveEncoding = VisualCryptTextSaveEncoding,
 				VisualCryptText = visualCryptText,
-				CipherV2 = cipherV2
+				CipherV2 = (CipherV2) cipherV2
 			};
 		}
 

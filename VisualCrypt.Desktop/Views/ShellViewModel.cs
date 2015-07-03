@@ -748,6 +748,28 @@ namespace VisualCrypt.Desktop.Views
 
 		#endregion
 
+		#region CopyAllCommand
+		public DelegateCommand CopyAllCommand
+		{
+			get { return CreateCommand(ref _copyAllCommand, ExecuteCopyAllCommand, () => true); }
+		}
+
+		DelegateCommand _copyAllCommand;
+
+		void ExecuteCopyAllCommand()
+		{
+			try
+			{
+				var cipherText = FileManager.FileModel.VisualCryptText;
+				Clipboard.SetText(cipherText, TextDataFormat.Text);
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e.Message);
+			}
+		}
+		#endregion
+
 		#region private methods
 
 		void UpdateCanExecuteChanged()

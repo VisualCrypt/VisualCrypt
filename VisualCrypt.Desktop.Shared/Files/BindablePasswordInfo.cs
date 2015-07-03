@@ -10,8 +10,8 @@ namespace VisualCrypt.Desktop.Shared.Files
 			get { return _isPasswordSet; }
 			set
 			{
-				if (_isPasswordSet == value)
-					return;
+				//if (_isPasswordSet == value)
+				//	return;
 				_isPasswordSet = value;
 				OnPropertyChanged(() => IsPasswordSet);
 				OnPropertyChanged(() => TextBlockClearPasswordVisibility);
@@ -30,7 +30,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		public string PasswordStatus
 		{
-			get { return _isPasswordSet ? new string('\u25CF' /* 'BLACK CIRCLE' */, 5) : ""; }
+			get { return _isPasswordSet ? "Password " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5) : "Set Password..."; }
 		}
 
 		public string HyperlinkPasswordText

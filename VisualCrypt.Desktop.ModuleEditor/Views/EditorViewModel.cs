@@ -756,7 +756,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			var pos = GetPositionString();
 			var enc = GetEncodingString();
 
-			var statusBarText = "{0} | {1} | Encrypted: {2}".FormatInvariant(enc, pos, FileManager.FileModel.IsEncrypted);
+			var statusBarText = "Plaintext | {0} | {1}".FormatInvariant(pos, enc);
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
 		}
 

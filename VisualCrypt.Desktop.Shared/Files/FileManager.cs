@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 
 namespace VisualCrypt.Desktop.Shared.Files
@@ -23,10 +24,20 @@ namespace VisualCrypt.Desktop.Shared.Files
 				BindableFileInfo.Filename = Constants.ProductName + " - " + _fileModel.Filename;
 				BindableFileInfo.IsEncrypted = _fileModel.IsEncrypted;
 				if (_fileModel.IsEncrypted)
+				{
+					CreateEncryptedBarText(_fileModel);
 					ShowEncryptedBar();
+					
+				}
 				else 
 					ShowPlainTextBar();
 			}
+		}
+
+		static void CreateEncryptedBarText(FileModel fileModel)
+		{
+			string text = string.Format("VisualCrypt {0}, AES-256 Bit, BCrypt Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.BWF, _fileModel.VisualCryptText.Length);
+			BindableFileInfo.EncrytedBarText = text;
 		}
 
 		public static void ShowWorkingBar(string description)

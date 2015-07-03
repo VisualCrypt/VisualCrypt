@@ -25,16 +25,28 @@ namespace VisualCrypt.Desktop.Views
 				ViewModel.ShowSetPasswordDialogCommand.Execute();
 		}
 
-		void TextBlock_ClearPassword_MouseDown(object sender, MouseButtonEventArgs e)
+		void Hyperlink_ClearPassword_MouseDown(object sender, RoutedEventArgs e)
 		{
 			if (ViewModel.ClearPasswordCommand.CanExecute())
 				ViewModel.ClearPasswordCommand.Execute();
 		}
 
-		void Image_IsDirty_OnMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+		void Hyperlink_Encrypt_Click(object sender, RoutedEventArgs e)
+		{
+			if (ViewModel.EncryptEditorContentsCommand.CanExecute())
+				ViewModel.EncryptEditorContentsCommand.Execute();
+		}
+
+		void Hyperlink_Decrypt_Click(object sender, RoutedEventArgs e)
+		{
+			if (ViewModel.DecryptEditorContentsCommand.CanExecute())
+				ViewModel.DecryptEditorContentsCommand.Execute();
+		}
+
+		void Hyperlink_Save_Click(object sender, RoutedEventArgs e)
 		{
 			if (ViewModel.SaveCommand.CanExecute())
-				ViewModel.SaveCommand.CanExecute();
+				ViewModel.SaveCommand.Execute();
 		}
 	}
 }

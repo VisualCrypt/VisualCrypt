@@ -4,44 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
+             xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance views:ShellViewModel}">
     <UserControl.Resources>
-        <!--<ResourceDictionary
-            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />-->
+        <ResourceDictionary
+            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/BarStyles.xaml" />
     </UserControl.Resources>
     <Grid>
-        <Grid.Resources>
-            <Style x:Key="X" TargetType="TextBlock">
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="true">
-                        <Setter Property="FontWeight" Value="Bold" />
-                        <Setter Property="Cursor" Value="Hand" />
-                        <Setter Property="Foreground" Value="Red" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </Grid.Resources>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
-            <TextBlock Margin="10">Plain Text</TextBlock>
-            <TextBlock Margin="10" Text="{Binding StatusBarText}" />
-            <TextBlock Margin="10" Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}"
-                       ToolTip="Clear Password   Ctrl+R"
-                       Text="x" FontWeight="Bold" Foreground="#A5FF0000"
-                       Style="{StaticResource X}" MouseDown="TextBlock_ClearPassword_MouseDown" />
-            <TextBlock Margin="10" Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus}" />
-            <TextBlock Margin="10">
-                <Hyperlink Click="Hyperlink_SetPassword_Click" ToolTip="Ctrl+P">
-                    <TextBlock
-                        Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=HyperlinkPasswordText}" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{Binding StatusBarText}" />
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock>
+                <Hyperlink Click="Hyperlink_SetPassword_Click">
+                    <Run Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus, Mode=OneWay}" />
+                </Hyperlink>
+                <Hyperlink  Click="Hyperlink_ClearPassword_MouseDown">
+                    <TextBlock Padding="0" Margin="0" FontWeight="Normal" FontFamily="WebDings" Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}">
+                        r</TextBlock>
                 </Hyperlink>
             </TextBlock>
-
-            <Image Margin="10" Source="../Images/save_16x4.png" ToolTip="Save Ctrl+S" VerticalAlignment="Center"
-                   MouseLeftButtonDown="Image_IsDirty_OnMouseLeftButtonDown"
-                   Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty, Converter={StaticResource BoolVisibilityConverter}}" />
         </StackPanel>
-           
-     
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock>
+                <Hyperlink Click="Hyperlink_Encrypt_Click">Encrypt
+                </Hyperlink>
+                <Run xml:space="preserve"> </Run>
+                <Hyperlink  Click="Hyperlink_Decrypt_Click">
+                  Decrypt
+                </Hyperlink>
+                 <Run xml:space="preserve"> </Run>
+                 <Hyperlink  Click="Hyperlink_Save_Click" IsEnabled="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty}">
+                  Save
+                </Hyperlink>
+                 <Run xml:space="preserve"> </Run>
+            </TextBlock>
+        </StackPanel>
     </Grid>
 </UserControl>

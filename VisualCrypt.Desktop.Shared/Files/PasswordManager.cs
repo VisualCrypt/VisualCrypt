@@ -2,6 +2,6 @@
 {
 	public static class PasswordManager
 	{
-		public static BindablePasswordInfo PasswordInfo = new BindablePasswordInfo();
+		public static readonly BindablePasswordInfo PasswordInfo = new BindablePasswordInfo();
 	}
 }

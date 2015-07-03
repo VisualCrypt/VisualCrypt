@@ -146,6 +146,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Styles\InUse\BarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Styles\InUse\VisualCryptColors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

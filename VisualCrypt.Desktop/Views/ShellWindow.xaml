@@ -148,7 +148,7 @@
         <ContentControl x:Name="_contentEditorRegion" Grid.Row="1" regions:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
-        <Border Grid.Row="2" Height="50"  Background="{DynamicResource BarColorBrush}"
+        <Border Grid.Row="2" Height="28"  Background="{DynamicResource AccentColorBrush}"
              Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <StackPanel>
                 <views:PlainTextBar Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=PlainTextBarVisibility}"></views:PlainTextBar>

@@ -47,7 +47,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			get { return _plainTextBarVisibility; }
 			set
 			{
-				if (_plainTextBarVisibility == value) return;
 				_plainTextBarVisibility = value;
 				OnPropertyChanged();
 			}
@@ -59,7 +58,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			get { return _workingBarVisibility; }
 			set
 			{
-				if (_workingBarVisibility == value) return;
 				_workingBarVisibility = value;
 				OnPropertyChanged();
 			}
@@ -71,7 +69,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			get { return _encryptedBarVisibility; }
 			set
 			{
-				if (_encryptedBarVisibility == value) return;
 				_encryptedBarVisibility = value;
 				OnPropertyChanged();
 			}
@@ -83,7 +80,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			get { return _progressPercent; }
 			set
 			{
-				if (_progressPercent == value) return;
 				_progressPercent = value;
 				OnPropertyChanged();
 			}
@@ -97,12 +93,23 @@ namespace VisualCrypt.Desktop.Shared.Files
 			get { return _progressBarText; }
 			set
 			{
-				if (_progressBarText == value) return;
 				_progressBarText = value;
 				OnPropertyChanged();
 			}
 		}
 		string _progressBarText;
+
+		public string EncrytedBarText
+		{
+			get { return _encryptedBarText; }
+			set
+			{
+				_encryptedBarText = value;
+				OnPropertyChanged();
+			}
+		}
+		string _encryptedBarText;
+
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

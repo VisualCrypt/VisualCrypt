@@ -8,14 +8,18 @@
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <ResourceDictionary
-            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
+            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/BarStyles.xaml" />
     </UserControl.Resources>
     <Grid>
-        <StackPanel Orientation="Horizontal">
-            <TextBlock>Working</TextBlock>
-            <ProgressBar Width="100" Height="15" IsIndeterminate="False" Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}"></ProgressBar>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Column="0">
             <TextBlock Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressBarText}"/>
-            <Button Click="WorkingBAr_Cancel_Click">Cancel</Button>
+            <ProgressBar Width="150" Height="8" Margin="5,4,5,0" IsIndeterminate="False" Foreground="#FF77FF77"  BorderThickness="0" Background="{DynamicResource BarColorBrush}" Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}"></ProgressBar>
+            <TextBlock><Hyperlink Click="WorkingBAr_Cancel_Click">Cancel</Hyperlink></TextBlock>
         </StackPanel>
           
     </Grid>
