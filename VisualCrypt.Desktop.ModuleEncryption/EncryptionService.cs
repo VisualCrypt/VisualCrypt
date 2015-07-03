@@ -78,7 +78,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.DefaultBCryptRoundsLog2), context.Progress, context.CancellationToken);
 				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
@@ -212,7 +212,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.GensaltDefaultLog2Rounds), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.DefaultBCryptRoundsLog2), context.Progress, context.CancellationToken);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);

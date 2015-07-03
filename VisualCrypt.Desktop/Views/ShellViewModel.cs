@@ -527,13 +527,11 @@ namespace VisualCrypt.Desktop.Views
 
 			Action<int> updateProgressBar = i => FileManager.BindableFileInfo.ProgressPercent = i;
 
-			Action switchBackToPreviousBar;
-			if (FileManager.FileModel.IsEncrypted)
-				switchBackToPreviousBar = FileManager.ShowEncryptedBar;
-			else
-				switchBackToPreviousBar = FileManager.ShowPlainTextBar;
-			return new LongRunningOperation(updateProgressBar, switchBackToPreviousBar);
+			var switchBackToPreviousBar = FileManager.FileModel.IsEncrypted
+				? (Action) FileManager.ShowEncryptedBar
+				: FileManager.ShowPlainTextBar;
 
+			return new LongRunningOperation(updateProgressBar, switchBackToPreviousBar);
 		}
 
 
@@ -809,7 +807,7 @@ namespace VisualCrypt.Desktop.Views
 
 		#endregion
 
-		internal void CancelLongRunningOperation()
+		public void CancelLongRunningOperation()
 		{
 			_longRunningOperation.Cancel();
 		}

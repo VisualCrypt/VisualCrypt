@@ -13,23 +13,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 		{
 			_cancellationTokenSource = new CancellationTokenSource();
 			_switchBackToPreviousBar = switchBackToPreviousBar;
-			_context = new LongRunningOperationContext
-			{
-				CancellationToken = _cancellationTokenSource.Token,
-				Progress = new Progress<int>(reportAction)
-			};
+			_context = new LongRunningOperationContext(_cancellationTokenSource.Token, new Progress<int>(reportAction));
 		}
 		public LongRunningOperationContext Context
 		{
 			get { return _context; }
 		}
 
-	
-
-
-
-
-		public string Description { get; set; }
 
 		public void Cancel()
 		{
