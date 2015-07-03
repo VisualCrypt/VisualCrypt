@@ -7,9 +7,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 {
 	public class VisualCryptFormatter
 	{
-		public const string VisualCryptSlashBinary = "VisualCrypt/binary*";
-
-		public const string VisualCryptSlashText = "VisualCrypt/text*";
+		const string VisualCryptSlashText = "VisualCrypt/";
 
 		public VisualCryptText CreateVisualCryptText(CipherV2 cipherV2)
 		{
