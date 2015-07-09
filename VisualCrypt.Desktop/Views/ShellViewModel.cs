@@ -719,6 +719,37 @@ namespace VisualCrypt.Desktop.Views
 
 		#endregion
 
+		#region ShowSettingsDialogCommand
+
+		DelegateCommand _showSettingsDialogCommand;
+
+		public DelegateCommand ShowSettingsDialogCommand
+		{
+			get
+			{
+				if (_showSettingsDialogCommand == null)
+					_showSetPasswordDialogCommand = DelegateCommand.FromAsyncHandler(ExecuteShowSettingsDialogCommand, () => true);
+				return _showSetPasswordDialogCommand;
+			}
+		}
+
+		async Task ExecuteShowSettingsDialogCommand()
+		{
+			try
+			{
+			
+				var result =  await WindowManager.GetBoolFromShowDialogAsyncWhenClosed<SettingsDialog>();
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e);
+			}
+		}
+
+
+
+		#endregion
+
 		#region ClearPasswordCommand
 
 		public DelegateCommand ClearPasswordCommand

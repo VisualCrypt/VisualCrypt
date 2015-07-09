@@ -27,6 +27,10 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="15,0,15,10" />
     </Style>
+    <Style TargetType="Slider">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="15,0,15,10" />
+    </Style>
     <Style TargetType="Button">
         <Setter Property="Height" Value="30" />
         <Setter Property="Width" Value="Auto" />

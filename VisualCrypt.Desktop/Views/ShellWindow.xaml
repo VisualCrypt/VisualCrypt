@@ -16,6 +16,8 @@
                     Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
                     WindowStartupLocation="CenterScreen"
                     AllowDrop="True"
+                    MinHeight="150"
+                    MinWidth="450"
                     BorderThickness="0"
                     WindowStyle="None"
                     ResizeMode="CanResizeWithGrip"
@@ -39,6 +41,7 @@
         <KeyBinding Key="P" Modifiers="Control" Command="{Binding ShowSetPasswordDialogCommand}" />
         <KeyBinding Key="E" Modifiers="Control" Command="{Binding EncryptEditorContentsCommand}" />
         <KeyBinding Key="D" Modifiers="Control" Command="{Binding DecryptEditorContentsCommand}" />
+        <KeyBinding Key="P" Modifiers="Control+Shift" Command="{Binding ShowSettingsDialogCommand}" />
         <!-- Edit -->
         <!-- see Editorxaml.cs -->
         <!-- Format -->
@@ -87,6 +90,9 @@
                           InputGestureText="Ctrl+E" />
                 <MenuItem Header="_Decrypt Editor ClearTextContents" Command="{Binding DecryptEditorContentsCommand}"
                           InputGestureText="Ctrl+D" />
+                <Separator />
+                <MenuItem Header="_Settings..." Command="{Binding ShowSettingsDialogCommand}"
+                          InputGestureText="Ctrl+Shift+P" />
             </MenuItem>
             <MenuItem Header="_Edit">
                 <MenuItem Header="_Undo" Command="Undo" CommandTarget="{Binding ElementName=TextBox1}" />
