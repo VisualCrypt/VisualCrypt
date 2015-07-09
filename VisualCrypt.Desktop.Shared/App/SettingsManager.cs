@@ -92,7 +92,8 @@ namespace VisualCrypt.Desktop.Shared.App
 					FontStretch = FontStretches.Normal,
 					FontStyle = FontStyles.Normal,
 					FontWeight = FontWeights.Normal
-				}
+				},
+				CryptographySettings = new CryptographySettings {  LogRounds = 10}
 			};
 		}
 

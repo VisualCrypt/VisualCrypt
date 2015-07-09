@@ -85,6 +85,9 @@ namespace VisualCrypt.Desktop.Shared.App
 		[DataMember]
 		public FontSettings FontSettings { get; set; }
 
+		[DataMember]
+		public CryptographySettings CryptographySettings { get; set; }
+
 		public bool IsZoom100Checked
 		{
 			get { return _isZoom100Checked; }

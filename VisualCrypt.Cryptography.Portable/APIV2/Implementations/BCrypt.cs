@@ -59,7 +59,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		#region const
 
 		// BCrypt parameters
-		const int GensaltDefaultLog2Rounds = 14;
+		const int GensaltDefaultLog2Rounds = 13;
 
 		public static byte DefaultBCryptRoundsLog2
 		{

@@ -750,7 +750,7 @@ namespace VisualCrypt.Desktop.Views
 
 		#endregion
 
-		#region ClearPasswordCommand
+		#region DefaultsCommand
 
 		public DelegateCommand ClearPasswordCommand
 		{

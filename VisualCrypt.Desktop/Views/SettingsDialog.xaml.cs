@@ -1,13 +1,13 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Microsoft.Practices.Prism.Commands;
 using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.Security.Cryptography;
-using System.Text;
 using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
+using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Views
@@ -29,13 +29,14 @@ namespace VisualCrypt.Desktop.Views
 			InitializeComponent();
 			DataContext = this;
 
-		
+			LogRounds = SettingsManager.EditorSettings.CryptographySettings.LogRounds;
+
 
 			PreviewKeyDown += CloseWithEscape;
-			
+
 		}
 
-	
+
 
 		void CloseWithEscape(object sender, KeyEventArgs e)
 		{
@@ -44,31 +45,24 @@ namespace VisualCrypt.Desktop.Views
 		}
 
 
-		public DelegateCommand SetPasswordCommand
+		public DelegateCommand SaveCommand
 		{
 			get
 			{
-				if (_setPasswordCommand != null)
-					return _setPasswordCommand;
-				_setPasswordCommand = new DelegateCommand(ExecuteSetPasswordCommand, CanExecuteSetPasswordCommand);
-				return _setPasswordCommand;
+				if (_saveCommand != null)
+					return _saveCommand;
+				_saveCommand = new DelegateCommand(ExecuteSaveCommand, () => true);
+				return _saveCommand;
 			}
 		}
 
-		DelegateCommand _setPasswordCommand;
+		DelegateCommand _saveCommand;
 
-		void ExecuteSetPasswordCommand()
+		void ExecuteSaveCommand()
 		{
 			try
 			{
-				//var setPasswordResponse = _encryptionService.SetPassword(Encoding.Unicode.GetBytes(PwBox.Text));
-				//if (!setPasswordResponse.IsSuccess)
-				//{
-				//	PasswordManager.PasswordInfo.IsPasswordSet = false;
-				//	_messageBoxService.ShowError(setPasswordResponse.Error);
-				//	return;
-				//}
-				//PasswordManager.PasswordInfo.IsPasswordSet = true;
+				SettingsManager.EditorSettings.CryptographySettings.LogRounds = LogRounds;
 				DialogResult = true;
 				Close();
 			}
@@ -76,44 +70,32 @@ namespace VisualCrypt.Desktop.Views
 			{
 				_messageBoxService.ShowError(e);
 			}
-			finally
-			{
-				
 
-			}
 		}
 
-		bool CanExecuteSetPasswordCommand()
-		{
-			return true;
-		}
+	
 
-		DelegateCommand _clearPasswordCommand;
+		DelegateCommand _defaultsCommand;
 
-		public DelegateCommand ClearPasswordCommand
+		public DelegateCommand DefaultsCommand
 		{
 			get
 			{
-				if (_clearPasswordCommand != null)
-					return _clearPasswordCommand;
-				_clearPasswordCommand = new DelegateCommand(ExecuteClearPasswordCommand, CanExecuteClearPasswordCommand);
-				return _clearPasswordCommand;
+				if (_defaultsCommand != null)
+					return _defaultsCommand;
+				_defaultsCommand = new DelegateCommand(ExecuteDefaultsCommand, CanExecuteDefaultsCommand);
+				return _defaultsCommand;
 			}
 		}
 
-		void ExecuteClearPasswordCommand()
+		void ExecuteDefaultsCommand()
 		{
-			
-
+			LogRounds = BCrypt.DefaultBCryptRoundsLog2;
 		}
 
-		bool CanExecuteClearPasswordCommand()
+		bool CanExecuteDefaultsCommand()
 		{
-			if (1 > 0)
-			{
-				return true;
-			}
-			
+			return LogRounds != BCrypt.DefaultBCryptRoundsLog2;
 		}
 
 		void Button_Click(object sender, RoutedEventArgs e)
@@ -122,57 +104,60 @@ namespace VisualCrypt.Desktop.Views
 			Close();
 		}
 
-		void Password_Changed(object sender, RoutedEventArgs e)
-		{
-			SetPasswordCommand.RaiseCanExecuteChanged();
-			ClearPasswordCommand.RaiseCanExecuteChanged();
-		}
-
-
-		void Hyperlink_CreatePassword_OnClick(object sender, RoutedEventArgs e)
-		{
 		
-		}
 
-		string GenerateRandomPassword()
+
+		void Hyperlink_Spec_OnClick(object sender, RoutedEventArgs e)
 		{
-			var passwordBytes = new byte[32];
-
-			using (var rng = new RNGCryptoServiceProvider())
-				rng.GetBytes(passwordBytes);
-
-			char[] passwordChars = Base64Encoder.EncodeDataToBase64CharArray(passwordBytes);
-
-			string passwordString = new string(passwordChars).Remove(43).Replace("/", "$");
-			var sb = new StringBuilder();
-
-			for (var i = 0; i != passwordString.Length; ++i)
+			try
 			{
-				sb.Append(passwordString[i]);
-				var insertSpace = (i + 1) % 5 == 0;
-				var insertNewLine = (i + 1) % 25 == 0;
-				if (insertNewLine)
-					sb.Append(Environment.NewLine);
-				else if (insertSpace)
-					sb.Append(" ");
+				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.SpecUrl } })
+					process.Start();
 			}
-			return sb.ToString();
+			catch (Exception ex)
+			{
+				_messageBoxService.ShowError(ex);
+			}
 		}
 
-		public int LogRounds
+		void Hyperlink_Source_OnClick(object sender, RoutedEventArgs e)
+		{
+			try
+			{
+				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.SourceUrl } })
+					process.Start();
+			}
+			catch (Exception ex)
+			{
+				_messageBoxService.ShowError(ex);
+			}
+		}
+	
+
+		public byte LogRounds
 		{
 			get { return _logRounds; }
 			set
 			{
-				if (_logRounds != value)
-				{
 					_logRounds = value;
 					OnPropertyChanged();
-				}
+					SetWarningText(value);
+					DefaultsCommand.RaiseCanExecuteChanged();
 			}
 		}
+		byte _logRounds;
 
-		int _logRounds;
+		void SetWarningText(byte logRounds)
+		{
+			if (logRounds == BCrypt.DefaultBCryptRoundsLog2)
+			{ 
+				TextBlockWarning.Text = "Influences the required computational work to create the BCrypt hash. A higher value means more work.";
+				return;
+			}
+			TextBlockWarning.Text = logRounds > BCrypt.DefaultBCryptRoundsLog2 
+				? "Warning: A high value will turn encryption and decryption into a very time consuming operation." 
+				: "Warning: A low value faciliates brute force and dictionary attacks.";
+		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

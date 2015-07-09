@@ -5,6 +5,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:implementations="clr-namespace:VisualCrypt.Cryptography.Portable.APIV2.Implementations;assembly=VisualCrypt.Cryptography.Portable"
                     mc:Ignorable="d"
                     Title="Settings" Height="300" Width="500" WindowStartupLocation="CenterOwner"
                     d:DataContext="{d:DesignInstance views:SettingsDialog}"
@@ -31,28 +32,29 @@
                         <ComboBox>
                             <ComboBoxItem IsSelected="True">VisualCrypt 2 (AES 256 Bit, BCrypt)</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock>Read the <Hyperlink Click="Hyperlink_CreatePassword_OnClick">Spec</Hyperlink> or view the
-                            <Hyperlink Click="Hyperlink_CreatePassword_OnClick">Source Code</Hyperlink> (opens web browser).</TextBlock>
+                        <TextBlock>Read the <Hyperlink Click="Hyperlink_Spec_OnClick">Spec</Hyperlink> or view the
+                            <Hyperlink Click="Hyperlink_Source_OnClick">Source Code</Hyperlink> (opens web browser).</TextBlock>
 <TextBlock></TextBlock>
                         <StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                     <TextBlock>
-                            <TextBlock Margin="0">BCrypt log2 Rounds</TextBlock>
+                            <TextBlock Margin="0">BCrypt Rounds:</TextBlock>
                            
-                            <TextBlock Margin="0">:</TextBlock>
                                 </TextBlock>
                                 </StackPanel>
 
                                 <StackPanel Orientation="Horizontal">
-                                    <Slider  Margin="15, 0, 0, 0" 
+                                    <Slider  Margin="15, 5, 0, 0" 
                                           Width="100" Orientation="Horizontal" HorizontalAlignment="Left" 
                                           Value="{Binding LogRounds}" Minimum="4" Maximum="31" 
                                           SmallChange="1" LargeChange="10"
                                           TickPlacement="BottomRight" TickFrequency="10"/>
-                                    <TextBlock  Text="{Binding LogRounds}"></TextBlock>
-                                <TextBlock>(Default value:  10)</TextBlock>
+                                <TextBlock Margin="0">2<Run BaselineAlignment="Superscript" FontSize="10" Text="{Binding LogRounds}"></Run></TextBlock>
+
+
+                                <TextBlock>Default:  2<Run BaselineAlignment="Superscript" FontSize="10" Text="{Binding Source={x:Static implementations:BCrypt.DefaultBCryptRoundsLog2},Mode=OneWay}"></Run></TextBlock>
                             </StackPanel>
-                            <TextBlock TextWrapping="Wrap">Warning: A high value will turn encryption and decryption into a very time consuming operation.</TextBlock>
+                            <TextBlock x:Name="TextBlockWarning" TextWrapping="Wrap"></TextBlock>
                         </StackPanel>
                       
 
@@ -61,12 +63,12 @@
                 </Grid>
                 <Grid x:Name="ButtonRow" Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Content="Clear" Command="{Binding ClearPasswordCommand}" />
+                        <Button Content="Defaults" Command="{Binding DefaultsCommand}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Content="Cancel" Click="Button_Click" />
-                        <Button HorizontalAlignment="Right" Content="Set" x:Name="ButtonOk" IsDefault="True"
-                                Command="{Binding SetPasswordCommand}" />
+                        <Button HorizontalAlignment="Right" Content="Save" x:Name="ButtonOk" IsDefault="True"
+                                Command="{Binding SaveCommand}" />
 
                     </StackPanel>
                 </Grid>

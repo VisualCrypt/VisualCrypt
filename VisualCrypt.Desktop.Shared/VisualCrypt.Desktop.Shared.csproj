@@ -101,6 +101,7 @@
     <Compile Include="Services\IEncryptionService.cs" />
     <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Settings\CryptographySettings.cs" />
     <Compile Include="Settings\FontSettings.cs" />
     <Compile Include="Settings\FontSizeListItem.cs" />
     <Compile Include="Settings\Map.cs" />

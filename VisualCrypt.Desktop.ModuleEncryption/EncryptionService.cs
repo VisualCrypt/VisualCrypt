@@ -6,6 +6,7 @@ using VisualCrypt.Cryptography.Net.APIV2.Implementations;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
 using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
+using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.Services;
 
@@ -19,6 +20,11 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		public EncryptionService()
 		{
 			_visualCryptApiv2 = new VisualCryptAPIV2(new CoreAPIV2_Net4());
+		}
+
+		BWF GetV2LogRoundsSetting()
+		{
+			return new BWF(SettingsManager.EditorSettings.CryptographySettings.LogRounds);
 		}
 
 		public Response<FileModel> OpenFile(string filename)
@@ -78,7 +84,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.DefaultBCryptRoundsLog2), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
 				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
@@ -212,7 +218,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), new BWF(BCrypt.DefaultBCryptRoundsLog2), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);
