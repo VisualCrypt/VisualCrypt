@@ -728,7 +728,7 @@ namespace VisualCrypt.Desktop.Views
 			get
 			{
 				if (_showSettingsDialogCommand == null)
-					_showSetPasswordDialogCommand = DelegateCommand.FromAsyncHandler(ExecuteShowSettingsDialogCommand, () => true);
+					_showSettingsDialogCommand = DelegateCommand.FromAsyncHandler(ExecuteShowSettingsDialogCommand, () => true);
 				return _showSetPasswordDialogCommand;
 			}
 		}
@@ -737,8 +737,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-			
-				var result =  await WindowManager.GetBoolFromShowDialogAsyncWhenClosed<SettingsDialog>();
+				await WindowManager.GetBoolFromShowDialogAsyncWhenClosed<SettingsDialog>();
 			}
 			catch (Exception e)
 			{

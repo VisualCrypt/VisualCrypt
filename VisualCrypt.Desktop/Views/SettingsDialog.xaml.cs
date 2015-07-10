@@ -151,7 +151,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			if (logRounds == BCrypt.DefaultBCryptRoundsLog2)
 			{ 
-				TextBlockWarning.Text = "Influences the required computational work to create the BCrypt hash. A higher value means more work.";
+				TextBlockWarning.Text = "The setting influences the required computational work to create the BCrypt hash. A higher value means more work.";
 				return;
 			}
 			TextBlockWarning.Text = logRounds > BCrypt.DefaultBCryptRoundsLog2 
