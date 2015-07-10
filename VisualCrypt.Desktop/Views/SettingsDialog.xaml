@@ -6,6 +6,7 @@
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:implementations="clr-namespace:VisualCrypt.Cryptography.Portable.APIV2.Implementations;assembly=VisualCrypt.Cryptography.Portable"
+                    xmlns:app="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
                     mc:Ignorable="d"
                     Title="Settings" Height="300" Width="500" WindowStartupLocation="CenterOwner"
                     d:DataContext="{d:DesignInstance views:SettingsDialog}"
@@ -32,8 +33,8 @@
                         <ComboBox>
                             <ComboBoxItem IsSelected="True">VisualCrypt 2 (AES 256 Bit, BCrypt)</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock>Read the <Hyperlink Click="Hyperlink_Spec_OnClick">Spec</Hyperlink> or view the
-                            <Hyperlink Click="Hyperlink_Source_OnClick">Source Code</Hyperlink> (opens web browser).</TextBlock>
+                        <TextBlock>Read the <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SpecUrl}, Mode=OneWay}"  Click="Hyperlink_Spec_OnClick">Spec</Hyperlink> or view the
+                            <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SourceUrl}, Mode=OneWay}"  Click="Hyperlink_Source_OnClick">Source Code</Hyperlink>.</TextBlock>
 <TextBlock></TextBlock>
                         <StackPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">

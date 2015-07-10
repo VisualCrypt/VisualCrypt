@@ -1,13 +1,13 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Security.Cryptography;
-using System.Text;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
-using VisualCrypt.Cryptography.Net.Tools;
-using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
+using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
@@ -16,7 +16,7 @@ namespace VisualCrypt.Desktop.Views
 {
 	[Export]
 	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public sealed partial class SetPasswordDialog
+	public sealed partial class SetPasswordDialog : INotifyPropertyChanged
 	{
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEncryptionService _encryptionService;
@@ -31,11 +31,38 @@ namespace VisualCrypt.Desktop.Views
 			InitializeComponent();
 			DataContext = this;
 
+			PwBox.TextChanged += PwBox_TextChanged;
+			PwBox.Text = string.Empty;
+			PwBox_TextChanged(null, null);
+
 			PwBox.Focus();
 
 			PreviewKeyDown += CloseWithEscape;
 			SetMode(paramsProvider.GetParams<SetPasswordDialog, SetPasswordDialogMode>());
 		}
+
+		void PwBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+		{
+			try
+			{
+				var response = _encryptionService.SanitizePassword(PwBox.Text);
+				if (response.IsSuccess)
+				{
+					var sigCount = response.Result.Length;
+					SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"), SanitizedPassword.MaxSanitizedPasswordLength.ToString("N0"));
+				}
+				else
+				{
+					_messageBoxService.ShowError(response.Error);
+				}
+			}
+			catch (Exception ex)
+			{
+				_messageBoxService.ShowError(ex);
+			}
+		}
+
+
 
 		void SetMode(SetPasswordDialogMode setPasswordDialogMode)
 		{
@@ -96,7 +123,27 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				var setPasswordResponse = _encryptionService.SetPassword(Encoding.Unicode.GetBytes(PwBox.Text));
+				var response = _encryptionService.SanitizePassword(PwBox.Text);
+				if (!response.IsSuccess)
+				{
+					_messageBoxService.ShowError(response.Error);
+					return;
+				}
+
+				var sigCount = response.Result.Length;
+				if (sigCount == 0)
+				{
+					string warningMessage = PwBox.Text.Length == sigCount
+						? "Use empty password?"
+						: "The password is effectively empty - are you sure?";
+					var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?", MessageBoxButton.OKCancel,
+						MessageBoxImage.Warning) == MessageBoxResult.OK;
+					if (!okClicked)
+						return;
+
+				}
+
+				var setPasswordResponse = _encryptionService.SetPassword(PwBox.Text);
 				if (!setPasswordResponse.IsSuccess)
 				{
 					PasswordManager.PasswordInfo.IsPasswordSet = false;
@@ -114,7 +161,6 @@ namespace VisualCrypt.Desktop.Views
 			finally
 			{
 				PwBox.Text = string.Empty;
-
 			}
 		}
 
@@ -136,15 +182,42 @@ namespace VisualCrypt.Desktop.Views
 			}
 		}
 
+		public string SignificantCharCountText
+		{
+			get { return _significantCharCountText; }
+			set
+			{
+				_significantCharCountText = value;
+				OnPropertyChanged();
+			}
+		}
+
+		string _significantCharCountText;
+
 		void ExecuteClearPasswordCommand()
 		{
-			PwBox.Text = string.Empty;
+			try
+			{
+				var setPasswordResponse = _encryptionService.SetPassword(string.Empty);
+				if (setPasswordResponse.IsSuccess)
+				{
+					PasswordManager.PasswordInfo.IsPasswordSet = false;
+					PwBox.Text = string.Empty;
+					DialogResult = true;
+					Close();
+				}
+
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e);
+			}
 
 		}
 
 		bool CanExecuteClearPasswordCommand()
 		{
-			if (PwBox.Text.Length > 0)
+			if (PwBox.Text.Length > 0 || PasswordManager.PasswordInfo.IsPasswordSet)
 			{
 				return true;
 			}
@@ -166,32 +239,41 @@ namespace VisualCrypt.Desktop.Views
 
 		void Hyperlink_CreatePassword_OnClick(object sender, RoutedEventArgs e)
 		{
-			PwBox.Text = GenerateRandomPassword();
+			try
+			{
+				var response = _encryptionService.GenerateRandomPassword();
+				if (response.IsSuccess)
+					PwBox.Text = response.Result;
+				else
+					_messageBoxService.ShowError(response.Error);
+			}
+			catch (Exception ex)
+			{
+				_messageBoxService.ShowError(ex);
+			}
 		}
 
-		string GenerateRandomPassword()
+
+		void Hyperlink_ReadPWSpec_OnClick(object sender, RoutedEventArgs e)
 		{
-			var passwordBytes = new byte[32];
-
-			using (var rng = new RNGCryptoServiceProvider())
-				rng.GetBytes(passwordBytes);
-
-			char[] passwordChars = Base64Encoder.EncodeDataToBase64CharArray(passwordBytes);
-
-			string passwordString = new string(passwordChars).Remove(43).Replace("/", "$");
-			var sb = new StringBuilder();
-
-			for (var i = 0; i != passwordString.Length; ++i)
+			try
 			{
-				sb.Append(passwordString[i]);
-				var insertSpace = (i + 1) % 5 == 0;
-				var insertNewLine = (i + 1) % 25 == 0;
-				if (insertNewLine)
-					sb.Append(Environment.NewLine);
-				else if (insertSpace)
-					sb.Append(" ");
+				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.PWSpecUrl } })
+					process.Start();
 			}
-			return sb.ToString();
+			catch (Exception ex)
+			{
+				_messageBoxService.ShowError(ex);
+			}
+		}
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		void OnPropertyChanged([CallerMemberName] string propertyName = null)
+		{
+			PropertyChangedEventHandler handler = PropertyChanged;
+			if (handler != null)
+				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
 	}
 }

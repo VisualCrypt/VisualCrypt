@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
 using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
 
 namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
@@ -204,6 +205,31 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			var deflate = new Deflate();
 			var clearText = deflate.Decompress(compressed.Value, Encoding.UTF8);
 			return new ClearText(clearText);
+		}
+
+		public string GenerateRandomPassword()
+		{
+			var passwordBytes = new byte[32];
+
+			using (var rng = new RNGCryptoServiceProvider())
+				rng.GetBytes(passwordBytes);
+
+			char[] passwordChars = Base64Encoder.EncodeDataToBase64CharArray(passwordBytes);
+
+			string passwordString = new string(passwordChars).Remove(43).Replace("/", "$");
+			var sb = new StringBuilder();
+
+			for (var i = 0; i != passwordString.Length; ++i)
+			{
+				sb.Append(passwordString[i]);
+				var insertSpace = (i + 1) % 5 == 0;
+				var insertNewLine = (i + 1) % 25 == 0;
+				if (insertNewLine)
+					sb.Append(Environment.NewLine);
+				else if (insertSpace)
+					sb.Append(" ");
+			}
+			return sb.ToString();
 		}
 	}
 }

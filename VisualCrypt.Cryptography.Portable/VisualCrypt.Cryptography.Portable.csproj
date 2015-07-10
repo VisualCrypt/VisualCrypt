@@ -39,6 +39,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="APIV2\DataTypes\BWF.cs" />
+    <Compile Include="APIV2\DataTypes\SanitizedPassword.cs" />
     <Compile Include="APIV2\DataTypes\LongRunningOperation.cs" />
     <Compile Include="APIV2\DataTypes\LongRunningOperationContext.cs" />
     <Compile Include="APIV2\DataTypes\MD16E.cs" />

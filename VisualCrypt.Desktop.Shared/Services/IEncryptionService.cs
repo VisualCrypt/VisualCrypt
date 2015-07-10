@@ -17,12 +17,16 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
 
-		Response SetPassword(byte[] utf16LEPassword);
+		Response SetPassword(string unsanitizedUTF16LEPassword);
 
 		Response ClearPassword();
 
 		Response SaveEncryptedFile(FileModel fileModel);
 
 		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
+
+		Response<string> GenerateRandomPassword();
+
+		Response<string> SanitizePassword(string unsanitizedPassword);
 	}
 }

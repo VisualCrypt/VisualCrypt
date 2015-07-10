@@ -21,5 +21,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 		Compressed RemovePadding(PaddedData paddedData);
 
 		ClearText Decompress(Compressed compressed);
+
+		string GenerateRandomPassword();
 	}
 }

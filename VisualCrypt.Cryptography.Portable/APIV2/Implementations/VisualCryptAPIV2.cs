@@ -18,46 +18,40 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			_coreAPI = coreAPI;
 		}
+		
 
-
-		public Response<SHA256PW32> CreateSHA256PW32(byte[] utf16LEPassword)
+		public Response<SHA256PW32> CreateSHA256PW32(string unsanitizedUTF16LEPassword)
 		{
 			var response = new Response<SHA256PW32>();
 
-			if (utf16LEPassword == null)
-			{
-				return new Response<SHA256PW32>("Argument null: 'utf16LEPassword'");
-			}
 			try
 			{
+				if (unsanitizedUTF16LEPassword == null)
+				{
+					response.SetError("Argument null: 'unsanitizedUTF16LEPassword'");
+					return response;
+				}
+
+				var sanitizedPasswordResponse = SanitizePassword(unsanitizedUTF16LEPassword);
+				if (!sanitizedPasswordResponse.IsSuccess)
+				{
+					response.SetError(sanitizedPasswordResponse.Error);
+					return response;
+				}
+
+				var utf16LEBytes = Encoding.Unicode.GetBytes(sanitizedPasswordResponse.Result.Value);
 				using (var sha = new SHA256ManagedMono())
 				{
-					var hash = sha.ComputeHash(utf16LEPassword);
+					var hash = sha.ComputeHash(utf16LEBytes);
 					response.Result = new SHA256PW32(hash);
+					response.SetSuccess();
 				}
-				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
 				response.SetError(e);
 			}
 			return response;
-		}
-
-		public Response<SHA256PW32> CreateSHA256PW32(string utf16LEPassword)
-		{
-			if (utf16LEPassword == null)
-				return new Response<SHA256PW32>("Argument null: 'utf16LEPassword'");
-
-			try
-			{
-				var bytes = Encoding.Unicode.GetBytes(utf16LEPassword);
-				return CreateSHA256PW32(bytes);
-			}
-			catch (EncoderFallbackException e)
-			{
-				return new Response<SHA256PW32>(e.Message);
-			}
 		}
 
 		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
@@ -225,6 +219,53 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					response.Result2 = encoding;
 					response.SetSuccess();
 				}
+			}
+			catch (Exception e)
+			{
+				response.SetError(e);
+			}
+			return response;
+		}
+
+
+		public Response<string> GenerateRandomPassword()
+		{
+			var response = new Response<string>();
+			try
+			{
+				response.Result = _coreAPI.GenerateRandomPassword();
+				response.SetSuccess();
+			}
+			catch (Exception e)
+			{
+				response.SetError(e);
+			}
+			return response;
+			
+		}
+
+		public Response<SanitizedPassword> SanitizePassword(string unsanitizedPassword)
+		{
+			var response = new Response<SanitizedPassword>();
+			try
+			{
+				if (unsanitizedPassword == null)
+					throw new ArgumentNullException("unsanitizedPassword");
+
+				string trimmedPassword = unsanitizedPassword.Trim();
+				char[] trimmedPasswordChars = trimmedPassword.ToCharArray();
+				const char chTab = '\t';
+				const char chLineFeed = '\r';
+				const char chCarriageReturn = '\n';
+
+				var sb = new StringBuilder();
+				foreach (var ch in trimmedPasswordChars)
+				{
+					if (ch != chTab && ch != chCarriageReturn && ch != chLineFeed)
+						sb.Append(ch);
+				}
+				response.Result = new SanitizedPassword(sb.ToString());
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{

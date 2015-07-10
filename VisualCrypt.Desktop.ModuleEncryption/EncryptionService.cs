@@ -109,12 +109,12 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			return response;
 		}
 
-		public Response SetPassword(byte[] utf16LEPassword)
+		public Response SetPassword(string unsanitizedUTF16LEPassword)
 		{
 			var response = new Response();
 			try
 			{
-				var sha256Response = _visualCryptApiv2.CreateSHA256PW32(utf16LEPassword);
+				var sha256Response = _visualCryptApiv2.CreateSHA256PW32(unsanitizedUTF16LEPassword);
 				if (sha256Response.IsSuccess)
 				{
 					KeyStore.SetSHA256PW32(sha256Response.Result);
@@ -239,6 +239,36 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				response.SetError(e);
 			}
 			return response;
+		}
+
+		public Response<string> GenerateRandomPassword()
+		{
+			return _visualCryptApiv2.GenerateRandomPassword();
+		}
+
+
+		public Response<string> SanitizePassword(string unsanitizedPassword)
+		{
+			var response = new Response<string>();
+			try
+			{
+				var sanitizePasswordResponse = _visualCryptApiv2.SanitizePassword(unsanitizedPassword);
+				if (sanitizePasswordResponse.IsSuccess)
+				{
+					response.Result = sanitizePasswordResponse.Result.Value;
+					response.SetSuccess();
+				}
+				else
+				{
+					response.SetError(sanitizePasswordResponse.Error);
+				}
+			}
+			catch (Exception e)
+			{
+				response.SetError(e);
+			}
+			return response;
+
 		}
 	}
 }
