@@ -244,6 +244,14 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			
 		}
 
+		/// <summary>
+		/// Removes 'control' and 'whitespace' characters from the password string taken from the textbox.
+		/// The control characters are specifically the Unicode values U+0000 to U+001F and U+007F to U+009F;
+		/// whitespace characters as defined by Char.IsWhiteSpace in .net 4.5.
+		/// </summary>
+		/// <param name="unsanitizedPassword">The password string obtained from textBox.Text.</param>
+		/// <returns>The sanitized UTF-16 password string, the bytes of which are used as input for the password hash function.</returns>
+		/// <see cref="http://www.unicode.org/Public/UNIDATA/UnicodeData.txt"/>
 		public Response<SanitizedPassword> SanitizePassword(string unsanitizedPassword)
 		{
 			var response = new Response<SanitizedPassword>();
@@ -251,17 +259,16 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			{
 				if (unsanitizedPassword == null)
 					throw new ArgumentNullException("unsanitizedPassword");
-
+				// from msdn: White-space characters are defined by the Unicode standard. 
+				// The Trim() method removes any leading and trailing characters that produce 
+				// a return value of true when they are passed to the Char.IsWhiteSpace method.
 				string trimmedPassword = unsanitizedPassword.Trim();
 				char[] trimmedPasswordChars = trimmedPassword.ToCharArray();
-				const char chTab = '\t';
-				const char chLineFeed = '\r';
-				const char chCarriageReturn = '\n';
 
 				var sb = new StringBuilder();
 				foreach (var ch in trimmedPasswordChars)
 				{
-					if (ch != chTab && ch != chCarriageReturn && ch != chLineFeed)
+					if (!char.IsControl(ch) && !char.IsWhiteSpace(ch))
 						sb.Append(ch);
 				}
 				response.Result = new SanitizedPassword(sb.ToString());
