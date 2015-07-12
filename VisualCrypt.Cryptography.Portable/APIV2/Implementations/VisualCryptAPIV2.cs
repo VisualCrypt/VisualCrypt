@@ -18,7 +18,6 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			_coreAPI = coreAPI;
 		}
-		
 
 		public Response<SHA256PW32> CreateSHA256PW32(string unsanitizedUTF16LEPassword)
 		{
@@ -241,7 +240,6 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				response.SetError(e);
 			}
 			return response;
-			
 		}
 
 		/// <summary>
@@ -262,16 +260,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				// from msdn: White-space characters are defined by the Unicode standard. 
 				// The Trim() method removes any leading and trailing characters that produce 
 				// a return value of true when they are passed to the Char.IsWhiteSpace method.
-				string trimmedPassword = unsanitizedPassword.Trim();
-				char[] trimmedPasswordChars = trimmedPassword.ToCharArray();
+				string sanitized =
+					unsanitizedPassword
+						.Trim()
+						.FilterControlCharacters()
+						.CondenseWhiteSpace();
 
-				var sb = new StringBuilder();
-				foreach (var ch in trimmedPasswordChars)
-				{
-					if (!char.IsControl(ch) && !char.IsWhiteSpace(ch))
-						sb.Append(ch);
-				}
-				response.Result = new SanitizedPassword(sb.ToString());
+				response.Result = new SanitizedPassword(sanitized);
 				response.SetSuccess();
 			}
 			catch (Exception e)
@@ -279,6 +274,39 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				response.SetError(e);
 			}
 			return response;
+		}
+	}
+
+	internal static class SanitizationStringExtensions
+	{
+		public static string FilterControlCharacters(this string unsanitized)
+		{
+			var charArray =
+				unsanitized
+					.ToCharArray()
+					.Where(c => !char.IsControl(c))
+					.ToArray();
+
+			return new string(charArray);
+		}
+
+		public static string CondenseWhiteSpace(this string unsanitized)
+		{
+			return
+				unsanitized
+					.ToCharArray()
+					.Select(c => char.IsWhiteSpace(c) ? ' ' : c)
+					.Aggregate(new StringBuilder(),
+						(sb, next) =>
+						{
+							if (sb.Length == 0)
+								return sb.Append(next);
+							var previous = sb[sb.Length - 1];
+							if (previous == ' ' && next == ' ')
+								return sb;
+							return sb.Append(next);
+						})
+					.ToString();
 		}
 	}
 }
