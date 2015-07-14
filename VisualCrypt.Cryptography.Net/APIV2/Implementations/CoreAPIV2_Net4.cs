@@ -27,11 +27,11 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 				throw new ArgumentNullException("compressed");
 
 			int requiredPadding;
-			if (compressed.Value.Length%16 == 0)
+			if (compressed.Value.Length % 16 == 0)
 				requiredPadding = 0;
 			else
 				requiredPadding = 16 - compressed.Value.Length % 16;
-		
+
 			var paddingBytes = new byte[requiredPadding];
 
 			using (var rng = new RNGCryptoServiceProvider())
@@ -55,7 +55,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			}
 		}
 
-		public CipherV2 AESEncryptMessage(PaddedData paddedData, AESKey32 aesKey32, IV16 iv16)
+		public CipherV2 AESEncryptMessage(PaddedData paddedData, AESKey32 aesKey32, IV16 outerIV16)
 		{
 			if (paddedData == null)
 				throw new ArgumentNullException("paddedData");
@@ -63,27 +63,92 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (aesKey32 == null)
 				throw new ArgumentNullException("aesKey32");
 
-			if (iv16 == null)
-				throw new ArgumentNullException("iv16");
+			if (outerIV16 == null)
+				throw new ArgumentNullException("outerIV16");
 
 			var aes = new AesManaged
 			{
 				KeySize = 256,
 				BlockSize = 128,
 				Padding = PaddingMode.None,
-				IV = iv16.Value,
+				IV = outerIV16.Value,
 				Key = aesKey32.Value,
 				Mode = CipherMode.CBC
 			};
 
 
-			var cipher = new CipherV2 {Padding = paddedData.Padding, IV16 = iv16};
+			var cipher = new CipherV2 { Padding = paddedData.Padding, IV16 = outerIV16 };
 
 			using (var stream = new MemoryStream())
 			using (var encryptor = aes.CreateEncryptor())
 			using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
 			{
 				encrypt.Write(paddedData.DataBytes, 0, paddedData.DataBytes.Length);
+				encrypt.FlushFinalBlock();
+				cipher.CipherBytes = stream.ToArray();
+
+				return cipher;
+			}
+		}
+
+		public CipherV2 AESEncryptMessage2(PaddedData paddedData, AESKey32 aesKey32, IV16 innerIV16,IV16 outerIV16)
+		{
+			if (paddedData == null)
+				throw new ArgumentNullException("paddedData");
+
+			if (aesKey32 == null)
+				throw new ArgumentNullException("aesKey32");
+
+			if (innerIV16 == null)
+				throw new ArgumentNullException("innerIV16");
+
+			if (outerIV16 == null)
+				throw new ArgumentNullException("outerIV16");
+
+
+			byte[] innerCipher;
+
+			var innerAES = new AesManaged
+			{
+				KeySize = 256,
+				BlockSize = 128,
+				Padding = PaddingMode.None,
+				IV = innerIV16.Value,
+				Key = aesKey32.Value,
+				Mode = CipherMode.CBC
+			};
+
+			using (innerAES)
+			using (var stream = new MemoryStream())
+			using (var encryptor = innerAES.CreateEncryptor())
+			using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
+			{
+				encrypt.Write(paddedData.DataBytes, 0, paddedData.DataBytes.Length);
+				encrypt.FlushFinalBlock();
+				innerCipher = stream.ToArray();
+			}
+
+			byte[] innerCipherAndIV = new byte[innerCipher.Length + innerIV16.Value.Length];
+			Buffer.BlockCopy(innerCipher, 0, innerCipherAndIV, 0, innerCipher.Length);
+			Buffer.BlockCopy(innerIV16.Value, 0, innerCipherAndIV, innerCipher.Length, innerIV16.Value.Length);
+
+			var outerAES = new AesManaged
+			{
+				KeySize = 256,
+				BlockSize = 128,
+				Padding = PaddingMode.None,
+				IV = outerIV16.Value,
+				Key = aesKey32.Value,
+				Mode = CipherMode.CBC
+			};
+
+			var cipher = new CipherV2 { Padding = paddedData.Padding, IV16 = outerIV16 };
+
+			using (var stream = new MemoryStream())
+			using (var encryptor = outerAES.CreateEncryptor())
+			using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
+			{
+				encrypt.Write(innerCipherAndIV, 0, innerCipherAndIV.Length);
 				encrypt.FlushFinalBlock();
 				cipher.CipherBytes = stream.ToArray();
 
@@ -183,6 +248,66 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 				decrypt.FlushFinalBlock();
 				return new PaddedData(stream.ToArray(), cipherV2.Padding);
 			}
+		}
+
+		public PaddedData AESDecryptMessage2(CipherV2 cipherV2, IV16 outerIV16, AESKey32 aesKey32)
+		{
+			if (cipherV2 == null)
+				throw new ArgumentNullException("cipherV2");
+
+			if (outerIV16 == null)
+				throw new ArgumentNullException("outerIV16");
+
+			if (aesKey32 == null)
+				throw new ArgumentNullException("aesKey32");
+
+			var outerAES = new AesManaged
+			{
+				KeySize = 256,
+				BlockSize = 128,
+				Padding = PaddingMode.None,
+				IV = outerIV16.Value,
+				Key = aesKey32.Value,
+				Mode = CipherMode.CBC
+			};
+
+			byte[] innerCipherAndIV;
+
+			using (var stream = new MemoryStream())
+			using (var decryptor = outerAES.CreateDecryptor())
+			using (var decrypt = new CryptoStream(stream, decryptor, CryptoStreamMode.Write))
+			{
+				decrypt.Write(cipherV2.CipherBytes, 0, cipherV2.CipherBytes.Length);
+				decrypt.FlushFinalBlock();
+				innerCipherAndIV = stream.ToArray();
+				
+			}
+			var innerCipher = new byte[innerCipherAndIV.Length - 16];
+			var innerIV = new byte[16];
+			Buffer.BlockCopy(innerCipherAndIV,0,innerCipher,0,innerCipher.Length);
+			Buffer.BlockCopy(innerCipherAndIV,innerCipher.Length,innerIV,0,innerIV.Length);
+
+			var innerAES = new AesManaged
+			{
+				KeySize = 256,
+				BlockSize = 128,
+				Padding = PaddingMode.None,
+				IV = innerIV,
+				Key = aesKey32.Value,
+				Mode = CipherMode.CBC
+			};
+
+			using (var stream = new MemoryStream())
+			using (var decryptor = innerAES.CreateDecryptor())
+			using (var decrypt = new CryptoStream(stream, decryptor, CryptoStreamMode.Write))
+			{
+				decrypt.Write(innerCipher, 0, innerCipher.Length);
+				decrypt.FlushFinalBlock();
+				return new PaddedData(stream.ToArray(), cipherV2.Padding);
+
+			}
+
+			
 		}
 
 		public Compressed RemovePadding(PaddedData paddedData)

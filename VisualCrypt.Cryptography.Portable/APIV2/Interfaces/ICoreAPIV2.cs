@@ -10,13 +10,17 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 
 		PaddedData ApplyRandomPadding(Compressed compressed);
 
-		CipherV2 AESEncryptMessage(PaddedData paddedData, AESKey32 aesKey32, IV16 iv16);
+		//CipherV2 AESEncryptMessage(PaddedData paddedData, AESKey32 aesKey32, IV16 outerIV16);
+
+		CipherV2 AESEncryptMessage2(PaddedData paddedData, AESKey32 aesKey32,IV16 innerIV16, IV16 outerIV16);
 
 		void AESEncryptMessageDigest(CipherV2 cipherv2, MD16 md16, AESKey32 aesKey32);
 
 		MD16 AESDecryptMessageDigest(MD16E mD16E, IV16 iV16, AESKey32 aesKey32);
 
-		PaddedData AESDecryptMessage(CipherV2 cipherV2, IV16 iV16, AESKey32 aesKey32);
+		//PaddedData AESDecryptMessage(CipherV2 cipherV2, IV16 iV16, AESKey32 aesKey32);
+
+		PaddedData AESDecryptMessage2(CipherV2 cipherV2, IV16 outerIV16, AESKey32 aesKey32);
 
 		Compressed RemovePadding(PaddedData paddedData);
 

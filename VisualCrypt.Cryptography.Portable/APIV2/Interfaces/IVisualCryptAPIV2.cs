@@ -10,13 +10,17 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 
 		Response<SHA256PW32> CreateSHA256PW32(string unsanitizedUTF16LEPassword);
 
-		Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken);
+		//Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken);
+
+		Response<CipherV2> Encrypt2(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken);
 
 		Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2);
 
 		Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText);
 
-		Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken);
+		//Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken);
+
+		Response<ClearText> Decrypt2(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken);
 
 		Response<string, Encoding> GetStringFromFileBytes(byte[] rawBytesFromFile, Encoding platformDefaultEncoding = null);
 

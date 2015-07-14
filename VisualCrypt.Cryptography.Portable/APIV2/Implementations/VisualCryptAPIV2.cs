@@ -53,7 +53,60 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			return response;
 		}
 
-		public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
+		//public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
+		//{
+		//	if (clearText == null)
+		//		return new Response<CipherV2>("Argument null: clearText");
+
+		//	if (sha256PW32 == null)
+		//		return new Response<CipherV2>("Argument null: sha256PW32");
+
+		//	var response = new Response<CipherV2>();
+
+		//	try
+		//	{
+		//		Compressed compressed = _coreAPI.Compress(clearText);
+
+		//		PaddedData paddedData = _coreAPI.ApplyRandomPadding(compressed);
+
+		//		IV16 iv16 = _coreAPI.GenerateIV(16);
+
+		//		BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value, progress, cToken);
+
+		//		AESKey32 aesKey32;
+		//		using (var sha = new SHA256ManagedMono())
+		//		{
+		//			var hash = sha.ComputeHash(bcrypt24.Value);
+		//			aesKey32 = new AESKey32(hash);
+		//		}
+
+		//		CipherV2 cipherV2 = _coreAPI.AESEncryptMessage(paddedData, aesKey32, iv16);
+		//		cipherV2.BWF = bwf.Value;
+
+		//		MD32 md32;
+		//		using (var sha = new SHA256ManagedMono())
+		//		{
+		//			var hash = sha.ComputeHash(cipherV2.CipherBytes);
+		//			md32 = new MD32(hash);
+		//		}
+
+		//		var first16 = new byte[16];
+		//		Buffer.BlockCopy(md32.Value, 0, first16, 0, 16);
+		//		MD16 md16 = new MD16(first16);
+
+		//		_coreAPI.AESEncryptMessageDigest(cipherV2, md16, aesKey32);
+
+		//		response.Result = cipherV2;
+		//		response.SetSuccess();
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		response.SetError(e);
+		//	}
+		//	return response;
+		//}
+
+		public Response<CipherV2> Encrypt2(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
 		{
 			if (clearText == null)
 				return new Response<CipherV2>("Argument null: clearText");
@@ -69,9 +122,12 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				PaddedData paddedData = _coreAPI.ApplyRandomPadding(compressed);
 
-				IV16 iv16 = _coreAPI.GenerateIV(16);
+				IV16 innerIV = _coreAPI.GenerateIV(16);
 
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value, progress, cToken);
+			
+				IV16 outerIV = _coreAPI.GenerateIV(16);
+
+				BCrypt24 bcrypt24 = BCrypt.CreateHash(outerIV, sha256PW32, bwf.Value, progress, cToken);
 
 				AESKey32 aesKey32;
 				using (var sha = new SHA256ManagedMono())
@@ -80,8 +136,12 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					aesKey32 = new AESKey32(hash);
 				}
 
-				CipherV2 cipherV2 = _coreAPI.AESEncryptMessage(paddedData, aesKey32, iv16);
+
+				CipherV2 cipherV2 = _coreAPI.AESEncryptMessage2(paddedData, aesKey32, innerIV, outerIV);
 				cipherV2.BWF = bwf.Value;
+
+
+
 
 				MD32 md32;
 				using (var sha = new SHA256ManagedMono())
@@ -146,7 +206,57 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			return response;
 		}
 
-		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken)
+		//public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken)
+		//{
+		//	var response = new Response<ClearText>();
+
+		//	try
+		//	{
+		//		BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, cipherV2.BWF, progress, cToken);
+
+		//		AESKey32 aesKey32;
+		//		using (var sha = new SHA256ManagedMono())
+		//		{
+		//			var hash = sha.ComputeHash(bcrypt24.Value);
+		//			aesKey32 = new AESKey32(hash);
+		//		}
+
+		//		MD16 md16a = _coreAPI.AESDecryptMessageDigest(cipherV2.MD16E, cipherV2.IV16, aesKey32);
+
+		//		MD32 md32;
+		//		using (var sha = new SHA256ManagedMono())
+		//		{
+		//			var hash = sha.ComputeHash(cipherV2.CipherBytes);
+		//			md32 = new MD32(hash);
+		//		}
+
+		//		var first16 = new byte[16];
+		//		Buffer.BlockCopy(md32.Value, 0, first16, 0, 16);
+		//		MD16 md16b = new MD16(first16);
+
+		//		if (!md16a.Value.SequenceEqual(md16b.Value))
+		//		{
+		//			response.SetError("The password is wrong or the data has been corrupted.");
+		//			return response;
+		//		}
+
+		//		PaddedData paddedData = _coreAPI.AESDecryptMessage(cipherV2, cipherV2.IV16, aesKey32);
+
+		//		Compressed compressed = _coreAPI.RemovePadding(paddedData);
+
+		//		ClearText clearText = _coreAPI.Decompress(compressed);
+
+		//		response.Result = clearText;
+		//		response.SetSuccess();
+		//	}
+		//	catch (Exception e)
+		//	{
+		//		response.SetError(e);
+		//	}
+		//	return response;
+		//}
+
+		public Response<ClearText> Decrypt2(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken)
 		{
 			var response = new Response<ClearText>();
 
@@ -180,7 +290,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					return response;
 				}
 
-				PaddedData paddedData = _coreAPI.AESDecryptMessage(cipherV2, cipherV2.IV16, aesKey32);
+				PaddedData paddedData = _coreAPI.AESDecryptMessage2(cipherV2, cipherV2.IV16, aesKey32);
 
 				Compressed compressed = _coreAPI.RemovePadding(paddedData);
 
@@ -243,7 +353,9 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		}
 
 		/// <summary>
-		/// Removes 'control' and 'whitespace' characters from the password string taken from the textbox.
+		/// Removes all leading and trailing Unicode whitespace characters and replaces the remaining whitespace characters
+		/// with u\0020 space characters. Adjacent whitespace is condensed to a single u\0020 character. Other Unicode
+		/// control characters are stripped completely.
 		/// The control characters are specifically the Unicode values U+0000 to U+001F and U+007F to U+009F;
 		/// whitespace characters as defined by Char.IsWhiteSpace in .net 4.5.
 		/// </summary>

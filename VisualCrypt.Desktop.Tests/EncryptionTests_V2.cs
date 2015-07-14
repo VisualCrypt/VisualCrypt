@@ -44,7 +44,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(4), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt2(new ClearText(m), hashPasswordResponse.Result, new BWF(4), new Progress<int>(), new CancellationTokenSource().Token);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -65,7 +65,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				if (decodeResponse.IsSuccess)
 				{
-					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
+					var decryptResponse = _visualCryptAPI.Decrypt2(decodeResponse.Result,
 						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 					if (decryptResponse.IsSuccess)
 						decryptedMessage = decryptResponse.Result.Value;
@@ -95,7 +95,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt2(new ClearText(m), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -117,7 +117,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				if (decodeResponse.IsSuccess)
 				{
-					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
+					var decryptResponse = _visualCryptAPI.Decrypt2(decodeResponse.Result,
 						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 					if (decryptResponse.IsSuccess)
 						Assert.Fail("decryptResponse.SUCCESS MUST NOT be true with wrong password!");
@@ -137,7 +137,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			// do the encryption
 			string visualCrypt;
-			var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
+			var encryptResponse = _visualCryptAPI.Encrypt2(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
 			if (encryptResponse.IsSuccess)
 			{
 				var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -157,7 +157,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			if (decodeResponse.IsSuccess)
 			{
-				var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
+				var decryptResponse = _visualCryptAPI.Decrypt2(decodeResponse.Result,
 					hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 				if (!decryptResponse.IsSuccess)
 					Assert.Fail("Expecteed decryption to work!");
