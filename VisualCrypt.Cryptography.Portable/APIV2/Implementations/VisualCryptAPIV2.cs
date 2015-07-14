@@ -263,7 +263,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				string sanitized =
 					unsanitizedPassword
 						.Trim()
-						.FilterControlCharacters()
+						.FilterNonWhitespaceControlCharacters()
 						.CondenseWhiteSpace();
 
 				response.Result = new SanitizedPassword(sanitized);
@@ -279,12 +279,12 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 	internal static class SanitizationStringExtensions
 	{
-		public static string FilterControlCharacters(this string unsanitized)
+		public static string FilterNonWhitespaceControlCharacters(this string unsanitized)
 		{
 			var charArray =
 				unsanitized
 					.ToCharArray()
-					.Where(c => !char.IsControl(c))
+					.Where(c => !(char.IsControl(c) && !char.IsWhiteSpace(c)))
 					.ToArray();
 
 			return new string(charArray);

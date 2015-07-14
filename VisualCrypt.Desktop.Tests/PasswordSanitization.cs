@@ -9,7 +9,7 @@ namespace VisualCrypt.Desktop.Tests
 		[TestMethod]
 		public void FilterControlCharacters()
 		{
-			var filtered = "\bHello\b\bWorld\b".FilterControlCharacters();
+			var filtered = "\bHello\b\bWorld\b".FilterNonWhitespaceControlCharacters();
 			Assert.AreEqual("HelloWorld", filtered);
 		}
 
