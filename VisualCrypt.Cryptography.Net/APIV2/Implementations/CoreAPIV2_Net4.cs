@@ -91,70 +91,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			}
 		}
 
-		public CipherV2 AESEncryptMessage2(PaddedData paddedData, AESKey32 aesKey32, IV16 innerIV16,IV16 outerIV16)
-		{
-			if (paddedData == null)
-				throw new ArgumentNullException("paddedData");
-
-			if (aesKey32 == null)
-				throw new ArgumentNullException("aesKey32");
-
-			if (innerIV16 == null)
-				throw new ArgumentNullException("innerIV16");
-
-			if (outerIV16 == null)
-				throw new ArgumentNullException("outerIV16");
-
-
-			byte[] innerCipher;
-
-			var innerAES = new AesManaged
-			{
-				KeySize = 256,
-				BlockSize = 128,
-				Padding = PaddingMode.None,
-				IV = innerIV16.Value,
-				Key = aesKey32.Value,
-				Mode = CipherMode.CBC
-			};
-
-			using (innerAES)
-			using (var stream = new MemoryStream())
-			using (var encryptor = innerAES.CreateEncryptor())
-			using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
-			{
-				encrypt.Write(paddedData.DataBytes, 0, paddedData.DataBytes.Length);
-				encrypt.FlushFinalBlock();
-				innerCipher = stream.ToArray();
-			}
-
-			byte[] innerCipherAndIV = new byte[innerCipher.Length + innerIV16.Value.Length];
-			Buffer.BlockCopy(innerCipher, 0, innerCipherAndIV, 0, innerCipher.Length);
-			Buffer.BlockCopy(innerIV16.Value, 0, innerCipherAndIV, innerCipher.Length, innerIV16.Value.Length);
-
-			var outerAES = new AesManaged
-			{
-				KeySize = 256,
-				BlockSize = 128,
-				Padding = PaddingMode.None,
-				IV = outerIV16.Value,
-				Key = aesKey32.Value,
-				Mode = CipherMode.CBC
-			};
-
-			var cipher = new CipherV2 { Padding = paddedData.Padding, IV16 = outerIV16 };
-
-			using (var stream = new MemoryStream())
-			using (var encryptor = outerAES.CreateEncryptor())
-			using (var encrypt = new CryptoStream(stream, encryptor, CryptoStreamMode.Write))
-			{
-				encrypt.Write(innerCipherAndIV, 0, innerCipherAndIV.Length);
-				encrypt.FlushFinalBlock();
-				cipher.CipherBytes = stream.ToArray();
-
-				return cipher;
-			}
-		}
+	
 
 		public void AESEncryptMessageDigest(CipherV2 cipherv2, MD16 md16, AESKey32 aesKey32)
 		{
