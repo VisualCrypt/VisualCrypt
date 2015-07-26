@@ -73,6 +73,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value, progress, cToken);
 
+				// Expand the hash to 32 256 Bit for use with AES
 				AESKey32 aesKey32;
 				using (var sha = new SHA256ManagedMono())
 				{
@@ -80,9 +81,16 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					aesKey32 = new AESKey32(hash);
 				}
 
+				// Do not use the clear IV, use Bcrypt(iv)
 				CipherV2 cipherV2 = _coreAPI.AESEncryptMessage(paddedData, aesKey32, iv16);
+				// Create BCrypt(cipherBytes) and transform this to another IV
+				// cipher2 = Encrypt again with secondary IV, store only secondary IV
 				cipherV2.BWF = bwf.Value;
-
+				// decrpyt with secondary IV
+				// create bycrypt hash of output and transform to IV
+				// decrpyt with this primary IV
+				// ---> the goal is to make decrpytion time consuming even if the password is in a dictionary of popular passwords
+				// Replace this with slow BCrypt hash
 				MD32 md32;
 				using (var sha = new SHA256ManagedMono())
 				{
