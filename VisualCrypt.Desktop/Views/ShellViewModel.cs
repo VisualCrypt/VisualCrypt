@@ -729,7 +729,7 @@ namespace VisualCrypt.Desktop.Views
 			{
 				if (_showSettingsDialogCommand == null)
 					_showSettingsDialogCommand = DelegateCommand.FromAsyncHandler(ExecuteShowSettingsDialogCommand, () => true);
-				return _showSetPasswordDialogCommand;
+				return _showSettingsDialogCommand;
 			}
 		}
 
