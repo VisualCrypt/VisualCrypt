@@ -37,7 +37,7 @@ namespace VisualCrypt.Desktop.Tests
 		{
 			foreach (var m in _messages)
 			{
-				var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password" + m);
+				var hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Password" + m);
 
 				if (!hashPasswordResponse.IsSuccess)
 					Assert.Fail("Password hashing failed");
@@ -91,7 +91,7 @@ namespace VisualCrypt.Desktop.Tests
 				if (password.Equals(string.Empty))
 					continue;
 
-				var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password" + m);
+				var hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Password" + m);
 
 				// do the encryption
 				string visualCrypt;
@@ -110,7 +110,7 @@ namespace VisualCrypt.Desktop.Tests
 					throw new Exception(encryptResponse.Error);
 
 				// set a wrong password
-				hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Wrong Password");
+				hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Wrong Password");
 
 				// do the decryption
 				var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(visualCrypt);
@@ -133,7 +133,7 @@ namespace VisualCrypt.Desktop.Tests
 		{
 			var stringWhereTheErrorOccures = "vyxvxvxyvxvyvcxyvyx";
 
-			var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password");
+			var hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Password");
 
 			// do the encryption
 			string visualCrypt;

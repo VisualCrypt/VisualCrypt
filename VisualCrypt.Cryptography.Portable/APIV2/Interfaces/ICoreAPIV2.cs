@@ -6,22 +6,38 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 	{
 		Compressed Compress(ClearText clearText);
 
-		IV16 GenerateIV(int length);
+		byte[] GenerateRandomBytes(int length);
 
 		PaddedData ApplyRandomPadding(Compressed compressed);
 
-		CipherV2 AESEncryptMessage(PaddedData paddedData, AESKey32 aesKey32, IV16 outerIV16);
 
-		void AESEncryptMessageDigest(CipherV2 cipherv2, MD16 md16, AESKey32 aesKey32);
+		void AESEncryptRandomKeyWithPasswordDerivedKey(PasswordDerivedKey32 passwordDerivedKey, RandomKey32 randomKey, CipherV2 cipherV2);
 
-		MD16 AESDecryptMessageDigest(MD16E mD16E, IV16 iV16, AESKey32 aesKey32);
+		void AESEncryptMessageWithRandomKey(PaddedData paddedData, RandomKey32 randomKey, CipherV2 cipherV2);
+		
 
-		PaddedData AESDecryptMessage(CipherV2 cipherV2, IV16 iV16, AESKey32 aesKey32);
+
+		void AESEncryptMACWithRandomKey(CipherV2 cipherv2, MAC16 mac, RandomKey32 randomKey);
+
+		MAC16 AESDecryptMAC(CipherV2 cipherV2, RandomKey32 randomKey);
+
+
+		RandomKey32 AESDecryptRandomKeyWithPasswordDerivedKey(CipherV2 cipherV2, PasswordDerivedKey32 passwordDerivedKey);
+
+		PaddedData AESDecryptMessage(CipherV2 cipherV2, IV16 iV16, RandomKey32 randomKey);
+
+	
+
 
 		Compressed RemovePadding(PaddedData paddedData);
 
 		ClearText Decompress(Compressed compressed);
 
 		string GenerateRandomPassword();
+
+
+		byte[] ComputeSHA512(byte[] bytesToHash);
+
+		byte[] ComputeSHA256(byte[] bytesToHash);
 	}
 }

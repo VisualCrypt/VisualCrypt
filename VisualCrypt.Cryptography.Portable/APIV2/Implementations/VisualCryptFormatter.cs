@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO.Compression;
 using System.Text;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.Tools;
@@ -14,17 +15,18 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			if (cipherV2 == null)
 				throw new ArgumentNullException("cipherV2");
 
-										// Version + BWF + Padding + IV + MD16 + CipherBytes
-			var visualCryptTextV2Bytes = new byte[1 + 1 +1 + 16 + 16 + cipherV2.CipherBytes.Length];
-
+			var visualCryptTextV2Bytes = ByteArrays.Concatenate(
+												// len			Sum(len)		Start Index
+				new[] {CipherV2.Version},		// 1			1				0
+				new[] {cipherV2.BWF.Value},		// 1			2				1
+				new[] {cipherV2.Padding},		// 1			3				2
+				cipherV2.IV16.Value,			// 16			19				3
+				cipherV2.MACCipher,				// 16			35				19
+				cipherV2.RandomKeyCipher,		// 32			67				35
+				cipherV2.MessageCipher			// len			67 + len		67
+				);
 			
-			visualCryptTextV2Bytes[0] = CipherV2.Version;
-			visualCryptTextV2Bytes[1] = cipherV2.BWF;
-			visualCryptTextV2Bytes[2] = cipherV2.Padding;
 			
-			Buffer.BlockCopy(cipherV2.IV16.Value, 0, visualCryptTextV2Bytes, 3, 16);
-			Buffer.BlockCopy(cipherV2.MD16E.Value, 0, visualCryptTextV2Bytes, 19, 16);
-			Buffer.BlockCopy(cipherV2.CipherBytes, 0, visualCryptTextV2Bytes, 35, cipherV2.CipherBytes.Length);
 
 			var visualCryptTextV2Base64 = Base64Encoder.EncodeDataToBase64CharArray(visualCryptTextV2Bytes);
 
@@ -71,7 +73,17 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				var visualCryptTextV2Bytes = Base64Encoder.DecodeBase64StringToBinary(visualCryptTextV2Base64);
 
-				
+				//var visualCryptTextV2Bytes = ByteArrays.Concatenate(
+				//									// len			Sum(len)		Start Index
+				//new[] { CipherV2.Version },		// 1			1				0
+				//new[] { cipherV2.BWF.Value },		// 1			2				1
+				//new[] { cipherV2.Padding },		// 1			3				2
+				//cipherV2.IV16.Value,				// 16			19				3
+				//cipherV2.MACCipher,				// 16			35				19
+				//cipherV2.RandomKeyCipher,			// 32			67				35
+				//cipherV2.MessageCipher			// len			67 + len		67
+				//);
+			
 
 
 				var version = visualCryptTextV2Bytes[0];
@@ -92,20 +104,24 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 						"The data is not in VisualCrypt/text V2 format. The value at the padding byte at index 1 is invalid.");
 
 		
-				var cipher = new CipherV2 { Padding = padding , BWF = new BWF(bwf).Value};
+				var cipher = new CipherV2 { Padding = padding , BWF = new BWF(bwf)};
 
 
 				var iv16 = new byte[16];
 				Buffer.BlockCopy(visualCryptTextV2Bytes, 3, iv16, 0, 16);
 				cipher.IV16 = new IV16(iv16);
 
-				var md16E = new byte[16];
-				Buffer.BlockCopy(visualCryptTextV2Bytes, 19, md16E, 0, 16);
-				cipher.MD16E = new MD16E(md16E);
+				var macCipher = new byte[16];
+				Buffer.BlockCopy(visualCryptTextV2Bytes, 19, macCipher, 0, 16);
+				cipher.MACCipher = macCipher;
 
-				var cipherBytes = new byte[visualCryptTextV2Bytes.Length - 35];
-				Buffer.BlockCopy(visualCryptTextV2Bytes, 35, cipherBytes, 0, cipherBytes.Length);
-				cipher.CipherBytes = cipherBytes;
+				var randomKeyCipher = new byte[32];
+				Buffer.BlockCopy(visualCryptTextV2Bytes, 35, randomKeyCipher, 0, 32);
+				cipher.RandomKeyCipher = randomKeyCipher;
+
+				var cipherBytes = new byte[visualCryptTextV2Bytes.Length - 67];
+				Buffer.BlockCopy(visualCryptTextV2Bytes, 67, cipherBytes, 0, cipherBytes.Length);
+				cipher.MessageCipher = cipherBytes;
 
 				return cipher;
 			}

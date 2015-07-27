@@ -4,14 +4,18 @@
 	{
 		public const byte Version = 2;
 
-		public byte BWF  = 10; // BCrypt Work Factor
+		public BWF BWF; // BCrypt Work Factor
 
 		public byte Padding;
 
 		public IV16 IV16;
 
-		public byte[] CipherBytes;
+		public byte[] RandomKeyCipher;
 
-		public MD16E MD16E;
+		public byte[] MessageCipher;
+
+		public byte[] MACCipher;
+
+		
 	}
 }

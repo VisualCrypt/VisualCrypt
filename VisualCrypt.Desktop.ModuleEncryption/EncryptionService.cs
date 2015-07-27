@@ -114,7 +114,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			var response = new Response();
 			try
 			{
-				var sha256Response = _visualCryptApiv2.CreateSHA256PW32(unsanitizedUTF16LEPassword);
+				var sha256Response = _visualCryptApiv2.CreateSHA512PW64(unsanitizedUTF16LEPassword);
 				if (sha256Response.IsSuccess)
 				{
 					KeyStore.SetSHA256PW32(sha256Response.Result);
