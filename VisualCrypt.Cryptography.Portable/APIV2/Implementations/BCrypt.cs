@@ -33,24 +33,24 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		/// <summary>'Hash a password using the OpenBSD bcrypt scheme'. Adapted for VisualCrypt.</summary>
 		/// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or
 		/// illegal values.</exception>
-		/// <param name="sha256PW32">The data to hash.</param>
+		/// <param name="inputBytes">The data to hash.</param>
 		/// <param name="iv16">The salt to hash with.</param>
 		/// <param name="logRounds">Between [4..31].</param>
 		/// <param name="progress">Object for progress indicator</param>
 		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>The hash.</returns>
-		public static BCrypt24 CreateHash(IV16 iv16, SHA256PW32 sha256PW32, byte logRounds, IProgress<int> progress, CancellationToken cancellationToken)
+		public static BCrypt24 CreateHash(IV16 iv16, byte[] inputBytes, byte logRounds, IProgress<int> progress, CancellationToken cancellationToken)
 		{
 			if (iv16 == null)
 				throw new ArgumentNullException("iv16");
 
-			if (sha256PW32 == null)
-				throw new ArgumentNullException("sha256PW32");
+			if (inputBytes == null)
+				throw new ArgumentNullException("inputBytes");
 
 			if (logRounds < 4 || logRounds > 31)
 				throw new ArgumentOutOfRangeException("logRounds", logRounds, "logRounds must be between 4 and 31 (inclusive)");
 
-			var hash = new BCrypt(progress, cancellationToken).CryptRaw(sha256PW32.Value, iv16.Value, logRounds);
+			var hash = new BCrypt(progress, cancellationToken).CryptRaw(inputBytes, iv16.Value, logRounds);
 			return new BCrypt24(hash);
 		}
 
@@ -549,5 +549,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		}
 
 		#endregion
+
+
 	}
 }

@@ -84,7 +84,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt2(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
 				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
@@ -114,7 +114,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			var response = new Response();
 			try
 			{
-				var sha256Response = _visualCryptApiv2.CreateSHA256PW32(unsanitizedUTF16LEPassword);
+				var sha256Response = _visualCryptApiv2.CreateSHA512PW64(unsanitizedUTF16LEPassword);
 				if (sha256Response.IsSuccess)
 				{
 					KeyStore.SetSHA256PW32(sha256Response.Result);
@@ -159,7 +159,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(textBufferContents);
 				if (decodeResponse.IsSuccess)
 				{
-					var decrpytResponse = _visualCryptApiv2.Decrypt2(decodeResponse.Result, KeyStore.GetSHA256PW32(), context.Progress, context.CancellationToken);
+					var decrpytResponse = _visualCryptApiv2.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context.Progress, context.CancellationToken);
 					if (decrpytResponse.IsSuccess)
 					{
 						ClearText clearText = decrpytResponse.Result;
@@ -218,7 +218,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt2(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);

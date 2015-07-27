@@ -3,20 +3,20 @@ using System.Linq;
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 {
-	public sealed class SHA256PW32
+	public sealed class MAC16
 	{
 		/// <summary>
 		/// The non-null Value.
 		/// </summary>
 		public readonly byte[] Value;
 
-		public SHA256PW32(byte[] value)
+		public MAC16(byte[] value)
 		{
 			if (value == null)
 				throw new ArgumentNullException("value");
 
-			if (value.Length != 32)
-				throw new ArgumentOutOfRangeException("value", "The length must be 32 bytes.");
+			if (value.Length != 16)
+				throw new ArgumentOutOfRangeException("value", "The length must be 16 bytes.");
 
 			var allBytesZero = value.All(b => b == 0);
 

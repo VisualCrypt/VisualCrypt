@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
+using VisualCrypt.Cryptography.Portable.Tools;
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 {
@@ -19,9 +21,9 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			_coreAPI = coreAPI;
 		}
 
-		public Response<SHA256PW32> CreateSHA256PW32(string unsanitizedUTF16LEPassword)
+		public Response<SHA512PW64> CreateSHA512PW64(string unsanitizedUTF16LEPassword)
 		{
-			var response = new Response<SHA256PW32>();
+			var response = new Response<SHA512PW64>();
 
 			try
 			{
@@ -39,12 +41,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				}
 
 				var utf16LEBytes = Encoding.Unicode.GetBytes(sanitizedPasswordResponse.Result.Value);
-				using (var sha = new SHA256ManagedMono())
-				{
-					var hash = sha.ComputeHash(utf16LEBytes);
-					response.Result = new SHA256PW32(hash);
-					response.SetSuccess();
-				}
+
+				var sha512 = _coreAPI.ComputeSHA512(utf16LEBytes);
+
+				response.Result = new SHA512PW64(sha512);
+				response.SetSuccess();
 			}
 			catch (Exception e)
 			{
@@ -53,66 +54,15 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			return response;
 		}
 
-		//public Response<CipherV2> Encrypt(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
-		//{
-		//	if (clearText == null)
-		//		return new Response<CipherV2>("Argument null: clearText");
 
-		//	if (sha256PW32 == null)
-		//		return new Response<CipherV2>("Argument null: sha256PW32");
 
-		//	var response = new Response<CipherV2>();
-
-		//	try
-		//	{
-		//		Compressed compressed = _coreAPI.Compress(clearText);
-
-		//		PaddedData paddedData = _coreAPI.ApplyRandomPadding(compressed);
-
-		//		IV16 iv16 = _coreAPI.GenerateIV(16);
-
-		//		BCrypt24 bcrypt24 = BCrypt.CreateHash(iv16, sha256PW32, bwf.Value, progress, cToken);
-
-		//		AESKey32 aesKey32;
-		//		using (var sha = new SHA256ManagedMono())
-		//		{
-		//			var hash = sha.ComputeHash(bcrypt24.Value);
-		//			aesKey32 = new AESKey32(hash);
-		//		}
-
-		//		CipherV2 cipherV2 = _coreAPI.AESEncryptMessage(paddedData, aesKey32, iv16);
-		//		cipherV2.BWF = bwf.Value;
-
-		//		MD32 md32;
-		//		using (var sha = new SHA256ManagedMono())
-		//		{
-		//			var hash = sha.ComputeHash(cipherV2.CipherBytes);
-		//			md32 = new MD32(hash);
-		//		}
-
-		//		var first16 = new byte[16];
-		//		Buffer.BlockCopy(md32.Value, 0, first16, 0, 16);
-		//		MD16 md16 = new MD16(first16);
-
-		//		_coreAPI.AESEncryptMessageDigest(cipherV2, md16, aesKey32);
-
-		//		response.Result = cipherV2;
-		//		response.SetSuccess();
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		response.SetError(e);
-		//	}
-		//	return response;
-		//}
-
-		public Response<CipherV2> Encrypt2(ClearText clearText, SHA256PW32 sha256PW32, BWF bwf, IProgress<int> progress, CancellationToken cToken)
+		public Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, BWF bwf, IProgress<int> progress, CancellationToken cToken)
 		{
 			if (clearText == null)
 				return new Response<CipherV2>("Argument null: clearText");
 
-			if (sha256PW32 == null)
-				return new Response<CipherV2>("Argument null: sha256PW32");
+			if (sha512PW64 == null)
+				return new Response<CipherV2>("Argument null: SHA512PW64");
 
 			var response = new Response<CipherV2>();
 
@@ -122,39 +72,20 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				PaddedData paddedData = _coreAPI.ApplyRandomPadding(compressed);
 
-				IV16 innerIV = _coreAPI.GenerateIV(16);
+				IV16 iv = new IV16(_coreAPI.GenerateRandomBytes(16));
 
-			
-				IV16 outerIV = _coreAPI.GenerateIV(16);
+				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, bwf, progress, cToken);
 
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(outerIV, sha256PW32, bwf.Value, progress, cToken);
+				RandomKey32 randomKey = new RandomKey32(_coreAPI.GenerateRandomBytes(32));
 
-				AESKey32 aesKey32;
-				using (var sha = new SHA256ManagedMono())
-				{
-					var hash = sha.ComputeHash(bcrypt24.Value);
-					aesKey32 = new AESKey32(hash);
-				}
+				var cipherV2 = new CipherV2 { BWF = bwf, IV16 = iv };
+				_coreAPI.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2);
 
+				_coreAPI.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2);
 
-				CipherV2 cipherV2 = _coreAPI.AESEncryptMessage2(paddedData, aesKey32, innerIV, outerIV);
-				cipherV2.BWF = bwf.Value;
+				MAC16 mac = CreateMAC(cipherV2, progress, cToken);
 
-
-
-
-				MD32 md32;
-				using (var sha = new SHA256ManagedMono())
-				{
-					var hash = sha.ComputeHash(cipherV2.CipherBytes);
-					md32 = new MD32(hash);
-				}
-
-				var first16 = new byte[16];
-				Buffer.BlockCopy(md32.Value, 0, first16, 0, 16);
-				MD16 md16 = new MD16(first16);
-
-				_coreAPI.AESEncryptMessageDigest(cipherV2, md16, aesKey32);
+				_coreAPI.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey);
 
 				response.Result = cipherV2;
 				response.SetSuccess();
@@ -164,6 +95,53 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				response.SetError(e);
 			}
 			return response;
+		}
+
+		MAC16 CreateMAC(CipherV2 cipherV2, IProgress<int> progress, CancellationToken cToken)
+		{
+			if (cipherV2 == null)
+				throw new ArgumentNullException("cipherV2");
+
+			if (progress == null)
+				throw new ArgumentNullException("progress");
+
+			if (cToken == null)
+				throw new ArgumentNullException("cToken");
+
+			if (cipherV2.MessageCipher == null)
+				throw new ArgumentException("cipherV2.MessageCipher must not be null at this point.");
+
+			if (cipherV2.IV16 == null)
+				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
+
+			// Create the MAC only for items that, while decrypting, have not been used up to this point but do include the version.
+			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher, new[] { cipherV2.Padding }, new[] { CipherV2.Version });
+
+			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.BWF.Value, progress, cToken);
+
+			// See e.g. http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf Chapter 7 for hash truncation.
+			var truncatedMAC = new byte[16];
+			Buffer.BlockCopy(slowMAC.Value, 0, truncatedMAC, 0, 16);
+			return new MAC16(truncatedMAC);
+		}
+
+
+		PasswordDerivedKey32 CreatePasswordDerivedKey(IV16 iv, SHA512PW64 sha512PW64, BWF bwf, IProgress<int> progress, CancellationToken cToken)
+		{
+			var leftSHA512 = new byte[32];
+			var rightSHA512 = new byte[32];
+			Buffer.BlockCopy(sha512PW64.Value, 0, leftSHA512, 0, 32);
+			Buffer.BlockCopy(sha512PW64.Value, 32, rightSHA512, 0, 32);
+
+			BCrypt24 leftBCrypt = BCrypt.CreateHash(iv, leftSHA512, bwf.Value, progress, cToken);
+			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, bwf.Value, progress, cToken);
+
+			var combinedHashes = ByteArrays.Concatenate(sha512PW64.Value, leftBCrypt.Value, rightBCrypt.Value);
+			Debug.Assert(combinedHashes.Length == 64 + 24 + 24);
+
+			var condensedHash = _coreAPI.ComputeSHA256(combinedHashes);
+			return new PasswordDerivedKey32(condensedHash);
+
 		}
 
 		public Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2)
@@ -206,91 +184,27 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			return response;
 		}
 
-		//public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken)
-		//{
-		//	var response = new Response<ClearText>();
-
-		//	try
-		//	{
-		//		BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, cipherV2.BWF, progress, cToken);
-
-		//		AESKey32 aesKey32;
-		//		using (var sha = new SHA256ManagedMono())
-		//		{
-		//			var hash = sha.ComputeHash(bcrypt24.Value);
-		//			aesKey32 = new AESKey32(hash);
-		//		}
-
-		//		MD16 md16a = _coreAPI.AESDecryptMessageDigest(cipherV2.MD16E, cipherV2.IV16, aesKey32);
-
-		//		MD32 md32;
-		//		using (var sha = new SHA256ManagedMono())
-		//		{
-		//			var hash = sha.ComputeHash(cipherV2.CipherBytes);
-		//			md32 = new MD32(hash);
-		//		}
-
-		//		var first16 = new byte[16];
-		//		Buffer.BlockCopy(md32.Value, 0, first16, 0, 16);
-		//		MD16 md16b = new MD16(first16);
-
-		//		if (!md16a.Value.SequenceEqual(md16b.Value))
-		//		{
-		//			response.SetError("The password is wrong or the data has been corrupted.");
-		//			return response;
-		//		}
-
-		//		PaddedData paddedData = _coreAPI.AESDecryptMessage(cipherV2, cipherV2.IV16, aesKey32);
-
-		//		Compressed compressed = _coreAPI.RemovePadding(paddedData);
-
-		//		ClearText clearText = _coreAPI.Decompress(compressed);
-
-		//		response.Result = clearText;
-		//		response.SetSuccess();
-		//	}
-		//	catch (Exception e)
-		//	{
-		//		response.SetError(e);
-		//	}
-		//	return response;
-		//}
-
-		public Response<ClearText> Decrypt2(CipherV2 cipherV2, SHA256PW32 sha256PW32, IProgress<int> progress, CancellationToken cToken)
+		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA512PW64 sha512PW64, IProgress<int> progress, CancellationToken cToken)
 		{
 			var response = new Response<ClearText>();
 
 			try
 			{
-				BCrypt24 bcrypt24 = BCrypt.CreateHash(cipherV2.IV16, sha256PW32, cipherV2.BWF, progress, cToken);
+				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.BWF, progress, cToken);
 
-				AESKey32 aesKey32;
-				using (var sha = new SHA256ManagedMono())
-				{
-					var hash = sha.ComputeHash(bcrypt24.Value);
-					aesKey32 = new AESKey32(hash);
-				}
+				RandomKey32 randomKey = _coreAPI.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey);
 
-				MD16 md16a = _coreAPI.AESDecryptMessageDigest(cipherV2.MD16E, cipherV2.IV16, aesKey32);
+				MAC16 decryptedMAC = _coreAPI.AESDecryptMAC(cipherV2, randomKey);
 
-				MD32 md32;
-				using (var sha = new SHA256ManagedMono())
-				{
-					var hash = sha.ComputeHash(cipherV2.CipherBytes);
-					md32 = new MD32(hash);
-				}
+				MAC16 actualMAC = CreateMAC(cipherV2, progress, cToken);
 
-				var first16 = new byte[16];
-				Buffer.BlockCopy(md32.Value, 0, first16, 0, 16);
-				MD16 md16b = new MD16(first16);
-
-				if (!md16a.Value.SequenceEqual(md16b.Value))
+				if (!actualMAC.Value.SequenceEqual(decryptedMAC.Value))
 				{
 					response.SetError("The password is wrong or the data has been corrupted.");
 					return response;
 				}
 
-				PaddedData paddedData = _coreAPI.AESDecryptMessage2(cipherV2, cipherV2.IV16, aesKey32);
+				PaddedData paddedData = _coreAPI.AESDecryptMessage(cipherV2, cipherV2.IV16, randomKey);
 
 				Compressed compressed = _coreAPI.RemovePadding(paddedData);
 
@@ -305,6 +219,8 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			}
 			return response;
 		}
+
+
 
 		public Response<string, Encoding> GetStringFromFileBytes(byte[] rawBytesFromFile,
 			Encoding platformDefaultEncoding = null)

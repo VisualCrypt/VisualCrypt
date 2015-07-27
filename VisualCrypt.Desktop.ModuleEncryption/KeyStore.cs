@@ -6,25 +6,25 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 {
 	internal static class KeyStore
 	{
-		static SHA256PW32 _sha256Pw32;
+		static SHA512PW64 _sha512PW64;
 
-		public static SHA256PW32 GetSHA256PW32()
+		public static SHA512PW64 GetSHA256PW32()
 		{
-			if (_sha256Pw32 == null)
-				throw new InvalidOperationException("KeyStore: _sha256Pw32 is null.");
-			return _sha256Pw32;
+			if (_sha512PW64 == null)
+				throw new InvalidOperationException("KeyStore: _sha512PW64 is null.");
+			return _sha512PW64;
 		}
 
-		public static void SetSHA256PW32(SHA256PW32 sha256Pw32)
+		public static void SetSHA256PW32(SHA512PW64 sha512PW64)
 		{
-			_sha256Pw32 = sha256Pw32;
+			_sha512PW64 = sha512PW64;
 		}
 
 		public static void Clear()
 		{
-			if (_sha256Pw32 != null)
-				_sha256Pw32.Value.FillWithZeros();
-			_sha256Pw32 = null;
+			if (_sha512PW64 != null)
+				_sha512PW64.Value.FillWithZeros();
+			_sha512PW64 = null;
 		}
 	}
 }

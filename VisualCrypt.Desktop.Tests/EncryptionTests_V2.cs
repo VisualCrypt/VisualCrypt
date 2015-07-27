@@ -37,14 +37,14 @@ namespace VisualCrypt.Desktop.Tests
 		{
 			foreach (var m in _messages)
 			{
-				var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password" + m);
+				var hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Password" + m);
 
 				if (!hashPasswordResponse.IsSuccess)
 					Assert.Fail("Password hashing failed");
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt2(new ClearText(m), hashPasswordResponse.Result, new BWF(4), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(4), new Progress<int>(), new CancellationTokenSource().Token);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -65,7 +65,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				if (decodeResponse.IsSuccess)
 				{
-					var decryptResponse = _visualCryptAPI.Decrypt2(decodeResponse.Result,
+					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
 						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 					if (decryptResponse.IsSuccess)
 						decryptedMessage = decryptResponse.Result.Value;
@@ -91,11 +91,11 @@ namespace VisualCrypt.Desktop.Tests
 				if (password.Equals(string.Empty))
 					continue;
 
-				var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password" + m);
+				var hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Password" + m);
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt2(new ClearText(m), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -110,14 +110,14 @@ namespace VisualCrypt.Desktop.Tests
 					throw new Exception(encryptResponse.Error);
 
 				// set a wrong password
-				hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Wrong Password");
+				hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Wrong Password");
 
 				// do the decryption
 				var decodeResponse = _visualCryptAPI.TryDecodeVisualCryptText(visualCrypt);
 
 				if (decodeResponse.IsSuccess)
 				{
-					var decryptResponse = _visualCryptAPI.Decrypt2(decodeResponse.Result,
+					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
 						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 					if (decryptResponse.IsSuccess)
 						Assert.Fail("decryptResponse.SUCCESS MUST NOT be true with wrong password!");
@@ -133,11 +133,11 @@ namespace VisualCrypt.Desktop.Tests
 		{
 			var stringWhereTheErrorOccures = "vyxvxvxyvxvyvcxyvyx";
 
-			var hashPasswordResponse = _visualCryptAPI.CreateSHA256PW32("Password");
+			var hashPasswordResponse = _visualCryptAPI.CreateSHA512PW64("Password");
 
 			// do the encryption
 			string visualCrypt;
-			var encryptResponse = _visualCryptAPI.Encrypt2(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
+			var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
 			if (encryptResponse.IsSuccess)
 			{
 				var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -157,7 +157,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			if (decodeResponse.IsSuccess)
 			{
-				var decryptResponse = _visualCryptAPI.Decrypt2(decodeResponse.Result,
+				var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
 					hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 				if (!decryptResponse.IsSuccess)
 					Assert.Fail("Expecteed decryption to work!");
