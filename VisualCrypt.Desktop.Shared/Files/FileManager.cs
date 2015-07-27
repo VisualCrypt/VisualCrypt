@@ -36,7 +36,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		static void CreateEncryptedBarText(FileModel fileModel)
 		{
-			string text = string.Format("VisualCrypt {0}, AES-256 Bit, BCrypt Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.BWF, _fileModel.VisualCryptText.Length);
+			string text = string.Format("VisualCrypt {0}, AES-256 Bit, BCrypt Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.BWF.Value, _fileModel.VisualCryptText.Length);
 			BindableFileInfo.EncrytedBarText = text;
 		}
 
