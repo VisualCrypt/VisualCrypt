@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
@@ -108,30 +109,52 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			cipherV2.MACCipher16 = new MACCipher16(ComputeAES(AESDir.Encrypt, cipherV2.IV16, mac.DataBytes, randomKey.DataBytes, cipherV2.RoundsExp.ByteValue));
 		}
 
-		static byte[] ComputeAES(AESDir aesDir, IV16 iv, byte[] dataBytes, byte[] keyBytes, byte rounds)
+		
+		byte[] ComputeAES(AESDir aesDir, IV16 iv, byte[] dataBytes, byte[] keyBytes, byte roundsExp)
 		{
+			var rounds = 1u << roundsExp;
 
-			byte[] input = dataBytes;
-			byte[] result = null;
+			if (_ivCache == null || _ivCache.Item1.DataBytes.SequenceEqual(iv.DataBytes) == false)
+				_ivCache = CreateIVTable(iv, rounds);
+
+			byte[] inputData = dataBytes;
+			byte[] aesResult = null;
 			while (rounds > 0)
 			{
-				// vary the iv with each round
-				result = ComputeAESRound(aesDir, iv, input, keyBytes);
-				input = result;
+				var currentIV = _ivCache.Item2[rounds - 1];
+
+				aesResult = ComputeAESRound(aesDir, currentIV.DataBytes, inputData, keyBytes);
+				inputData = aesResult;
 				rounds--;
 			}
-			return result;
+			return aesResult;
 
 		}
 
-		private static byte[] ComputeAESRound(AESDir aesDir, IV16 iv, byte[] input, byte[] keyBytes)
+		Tuple<IV16, IV16[]> _ivCache;
+		Tuple<IV16, IV16[]> CreateIVTable(IV16 iv, uint rounds)
+		{
+			var ivRounds = rounds;
+			var ivTable = new IV16[rounds];
+			var ivInput = iv.DataBytes;
+			while (ivRounds > 0)
+			{
+				ivTable[ivTable.Length - ivRounds] = new IV16(ComputeSHA256(ivInput).Take(16).ToArray());
+
+				ivRounds = ivRounds - 1;
+			}
+			return new Tuple<IV16, IV16[]>(iv, ivTable);
+		}
+
+
+		private static byte[] ComputeAESRound(AESDir aesDir, byte[] iv, byte[] input, byte[] keyBytes)
 		{
 			var aes = new AesManaged
 			{
 				KeySize = 256,
 				BlockSize = 128,
 				Padding = PaddingMode.None,
-				IV = iv.DataBytes,
+				IV = iv,
 				Key = keyBytes,
 				Mode = CipherMode.CBC
 			};
