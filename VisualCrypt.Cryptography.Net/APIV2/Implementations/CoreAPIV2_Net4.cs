@@ -121,7 +121,10 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			byte[] aesResult = null;
 			while (rounds > 0)
 			{
-				var currentIV = _ivCache.Item2[rounds - 1];
+				 IV16 currentIV = 
+					 aesDir == AESDir.Encrypt
+						? _ivCache.Item2[rounds - 1] 
+						: _ivCache.Item2[_ivCache.Item2.Length - rounds];
 
 				aesResult = ComputeAESRound(aesDir, currentIV.DataBytes, inputData, keyBytes);
 				inputData = aesResult;
@@ -136,10 +139,13 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 		{
 			var ivRounds = rounds;
 			var ivTable = new IV16[rounds];
-			var ivInput = iv.DataBytes;
+			byte[] ivInput = iv.DataBytes;
 			while (ivRounds > 0)
 			{
-				ivTable[ivTable.Length - ivRounds] = new IV16(ComputeSHA256(ivInput).Take(16).ToArray());
+
+				ivTable[ivTable.Length - ivRounds] = new IV16(ivInput);
+					
+				ivInput = 	ComputeSHA256(ivInput).Take(16).ToArray();
 
 				ivRounds = ivRounds - 1;
 			}
