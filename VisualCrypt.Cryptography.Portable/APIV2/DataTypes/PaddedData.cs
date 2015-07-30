@@ -2,25 +2,22 @@
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 {
-	public sealed class PaddedData
+	public sealed class PaddedData : SecureBytes
 	{
-		/// <summary>
-		/// The non-null DataBytes.
-		/// </summary>
-		public readonly byte[] DataBytes;
-
-		public readonly byte Padding;
-
-		public PaddedData(byte[] dataBytes, int padding)
+		public PlainTextPadding PlainTextPadding
 		{
-			if (dataBytes == null)
-				throw new ArgumentNullException("dataBytes");
+			get { return _plainTextPadding; }
+		}
+		readonly PlainTextPadding _plainTextPadding;
 
-			if (padding < 0 || padding > 15)
-				throw new ArgumentException("The padding amount must be >= 0 and < 16", "padding");
+		public PaddedData(byte[] dataBytes, PlainTextPadding plainTextPadding)
+			: base(dataBytes)
+		{
+			// perform datatype-specific validation here
+			if (plainTextPadding == null)
+				throw new ArgumentNullException("plainTextPadding");
 
-			DataBytes = dataBytes;
-			Padding = (byte) padding;
+			_plainTextPadding =  plainTextPadding;
 		}
 	}
 }

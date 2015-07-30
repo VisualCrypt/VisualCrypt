@@ -22,9 +22,9 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			_visualCryptApiv2 = new VisualCryptAPIV2(new CoreAPIV2_Net4());
 		}
 
-		BWF GetV2LogRoundsSetting()
+		RoundsExp GetV2LogRoundsSetting()
 		{
-			return new BWF(SettingsManager.EditorSettings.CryptographySettings.LogRounds);
+			return new RoundsExp(SettingsManager.EditorSettings.CryptographySettings.LogRounds);
 		}
 
 		public Response<FileModel> OpenFile(string filename)
@@ -93,7 +93,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
 						CipherV2 cipherV2 = encryptResponse.Result;
-						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, visualCryptText.Value);
+						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, visualCryptText.StringValue);
 						encryptedFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = encryptedFileModel;
 						response.SetSuccess();
@@ -163,7 +163,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					if (decrpytResponse.IsSuccess)
 					{
 						ClearText clearText = decrpytResponse.Result;
-						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, clearText.Value, fileModel.SaveEncoding);
+						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, clearText.StringValue, fileModel.SaveEncoding);
 						clearTextFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = clearTextFileModel;
 						response.SetSuccess();
@@ -225,9 +225,9 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					if (encodeResponse.IsSuccess)
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
-						byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(visualCryptText.Value);
+						byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(visualCryptText.StringValue);
 						File.WriteAllBytes(fileModel.Filename, visualCryptTextBytes);
-						response.Result = visualCryptText.Value;
+						response.Result = visualCryptText.StringValue;
 						response.SetSuccess();
 					}
 					else response.SetError(encodeResponse.Error);
@@ -255,7 +255,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				var sanitizePasswordResponse = _visualCryptApiv2.SanitizePassword(unsanitizedPassword);
 				if (sanitizePasswordResponse.IsSuccess)
 				{
-					response.Result = sanitizePasswordResponse.Result.Value;
+					response.Result = sanitizePasswordResponse.Result.StringValue;
 					response.SetSuccess();
 				}
 				else

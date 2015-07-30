@@ -18,12 +18,12 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			var visualCryptTextV2Bytes = ByteArrays.Concatenate(
 												// len			Sum(len)		Start Index
 				new[] {CipherV2.Version},		// 1			1				0
-				new[] {cipherV2.BWF.Value},		// 1			2				1
-				new[] {cipherV2.Padding},		// 1			3				2
-				cipherV2.IV16.Value,			// 16			19				3
-				cipherV2.MACCipher,				// 16			35				19
-				cipherV2.RandomKeyCipher,		// 32			67				35
-				cipherV2.MessageCipher			// len			67 + len		67
+				new[] {cipherV2.RoundsExp.ByteValue},		// 1			2				1
+				new[] {cipherV2.Padding.ByteValue},		// 1			3				2
+				cipherV2.IV16.DataBytes,			// 16			19				3
+				cipherV2.MACCipher16.DataBytes,				// 16			35				19
+				cipherV2.RandomKeyCipher32.DataBytes,		// 32			67				35
+				cipherV2.MessageCipher.DataBytes			// len			67 + len		67
 				);
 			
 			
@@ -76,11 +76,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				//var visualCryptTextV2Bytes = ByteArrays.Concatenate(
 				//									// len			Sum(len)		Start Index
 				//new[] { CipherV2.Version },		// 1			1				0
-				//new[] { cipherV2.BWF.Value },		// 1			2				1
-				//new[] { cipherV2.Padding },		// 1			3				2
-				//cipherV2.IV16.Value,				// 16			19				3
-				//cipherV2.MACCipher,				// 16			35				19
-				//cipherV2.RandomKeyCipher,			// 32			67				35
+				//new[] { cipherV2.RoundsExp.DataBytes },		// 1			2				1
+				//new[] { cipherV2.PlainTextPadding },		// 1			3				2
+				//cipherV2.IV16.DataBytes,				// 16			19				3
+				//cipherV2.MACCipher16,				// 16			35				19
+				//cipherV2.RandomKeyCipher32,			// 32			67				35
 				//cipherV2.MessageCipher			// len			67 + len		67
 				//);
 			
@@ -97,14 +97,13 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				if (bwf > 31 || bwf < 4)
 					throw new FormatException(
 						"The data is not in VisualCrypt/text V2 format. The value for the Bcyrpt work factor at index 1 is invalid.");
-
 				
 				if (padding > 15)
 					throw new FormatException(
 						"The data is not in VisualCrypt/text V2 format. The value at the padding byte at index 1 is invalid.");
 
 		
-				var cipher = new CipherV2 { Padding = padding , BWF = new BWF(bwf)};
+				var cipher = new CipherV2 { Padding = new PlainTextPadding(padding) , RoundsExp = new RoundsExp(bwf)};
 
 
 				var iv16 = new byte[16];
@@ -113,15 +112,15 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				var macCipher = new byte[16];
 				Buffer.BlockCopy(visualCryptTextV2Bytes, 19, macCipher, 0, 16);
-				cipher.MACCipher = macCipher;
+				cipher.MACCipher16 = new MACCipher16(macCipher);
 
 				var randomKeyCipher = new byte[32];
 				Buffer.BlockCopy(visualCryptTextV2Bytes, 35, randomKeyCipher, 0, 32);
-				cipher.RandomKeyCipher = randomKeyCipher;
+				cipher.RandomKeyCipher32 = new RandomKeyCipher32(randomKeyCipher);
 
 				var cipherBytes = new byte[visualCryptTextV2Bytes.Length - 67];
 				Buffer.BlockCopy(visualCryptTextV2Bytes, 67, cipherBytes, 0, cipherBytes.Length);
-				cipher.MessageCipher = cipherBytes;
+				cipher.MessageCipher = new MessageCipher(cipherBytes);
 
 				return cipher;
 			}

@@ -5,7 +5,6 @@ using System.Text;
 using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
 using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
 using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
-using VisualCrypt.Cryptography.Portable.Tools;
 
 namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 {
@@ -17,7 +16,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 				throw new ArgumentNullException("clearText");
 
 			var deflate = new Deflate();
-			byte[] compressed = deflate.Compress(clearText.Value, Encoding.UTF8);
+			byte[] compressed = deflate.Compress(clearText.StringValue, Encoding.UTF8);
 
 			return new Compressed(compressed);
 		}
@@ -28,21 +27,21 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 				throw new ArgumentNullException("compressed");
 
 			int requiredPadding;
-			if (compressed.Value.Length % 16 == 0)
+			if (compressed.DataBytes.Length % 16 == 0)
 				requiredPadding = 0;
 			else
-				requiredPadding = 16 - compressed.Value.Length % 16;
+				requiredPadding = 16 - compressed.DataBytes.Length % 16;
 
 			var paddingBytes = new byte[requiredPadding];
 
 			using (var rng = new RNGCryptoServiceProvider())
 				rng.GetBytes(paddingBytes);
 
-			var paddedDataBytes = new byte[compressed.Value.Length + requiredPadding];
-			Buffer.BlockCopy(compressed.Value, 0, paddedDataBytes, 0, compressed.Value.Length);
-			Buffer.BlockCopy(paddingBytes, 0, paddedDataBytes, compressed.Value.Length, paddingBytes.Length);
+			var paddedDataBytes = new byte[compressed.DataBytes.Length + requiredPadding];
+			Buffer.BlockCopy(compressed.DataBytes, 0, paddedDataBytes, 0, compressed.DataBytes.Length);
+			Buffer.BlockCopy(paddingBytes, 0, paddedDataBytes, compressed.DataBytes.Length, paddingBytes.Length);
 
-			return new PaddedData(paddedDataBytes, requiredPadding);
+			return new PaddedData(paddedDataBytes, new PlainTextPadding(requiredPadding));
 		}
 
 		public byte[] GenerateRandomBytes(int length)
@@ -67,8 +66,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (cipherV2 == null)
 				throw new ArgumentNullException("cipherV2");
 
-			cipherV2.RandomKeyCipher = ComputeAES(AESDir.Encrypt, cipherV2.IV16, randomKey.Value, passwordDerivedKey.Value, cipherV2.BWF.Value);
-			
+			cipherV2.RandomKeyCipher32 = new RandomKeyCipher32(ComputeAES(AESDir.Encrypt, cipherV2.IV16, randomKey.DataBytes, passwordDerivedKey.DataBytes, cipherV2.RoundsExp.ByteValue));
 		}
 
 
@@ -86,9 +84,9 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (cipherV2.IV16 == null)
 				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
 
-			cipherV2.Padding = paddedData.Padding;
+			cipherV2.Padding = paddedData.PlainTextPadding;
 
-			cipherV2.MessageCipher = ComputeAES(AESDir.Encrypt, cipherV2.IV16, paddedData.DataBytes, randomKey.Value,cipherV2.BWF.Value);
+			cipherV2.MessageCipher = new MessageCipher(ComputeAES(AESDir.Encrypt, cipherV2.IV16, paddedData.DataBytes, randomKey.DataBytes, cipherV2.RoundsExp.ByteValue));
 
 		}
 
@@ -107,16 +105,17 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (cipherV2.IV16 == null)
 				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
 
-			cipherV2.MACCipher = ComputeAES(AESDir.Encrypt, cipherV2.IV16, mac.Value, randomKey.Value, cipherV2.BWF.Value);
+			cipherV2.MACCipher16 = new MACCipher16(ComputeAES(AESDir.Encrypt, cipherV2.IV16, mac.DataBytes, randomKey.DataBytes, cipherV2.RoundsExp.ByteValue));
 		}
 
 		static byte[] ComputeAES(AESDir aesDir, IV16 iv, byte[] dataBytes, byte[] keyBytes, byte rounds)
 		{
-			
+
 			byte[] input = dataBytes;
 			byte[] result = null;
 			while (rounds > 0)
 			{
+				// vary the iv with each round
 				result = ComputeAESRound(aesDir, iv, input, keyBytes);
 				input = result;
 				rounds--;
@@ -132,7 +131,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 				KeySize = 256,
 				BlockSize = 128,
 				Padding = PaddingMode.None,
-				IV = iv.Value,
+				IV = iv.DataBytes,
 				Key = keyBytes,
 				Mode = CipherMode.CBC
 			};
@@ -176,10 +175,10 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (cipherV2.IV16 == null)
 				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
 
-			if (cipherV2.MACCipher == null)
-				throw new ArgumentException("cipherV2.MACCipher must not be null at this point.");
+			if (cipherV2.MACCipher16 == null)
+				throw new ArgumentException("cipherV2.MACCipher16 must not be null at this point.");
 
-			var mac16 = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MACCipher, randomKey.Value, cipherV2.BWF.Value);
+			var mac16 = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MACCipher16.DataBytes, randomKey.DataBytes, cipherV2.RoundsExp.ByteValue);
 			return new MAC16(mac16);
 
 		}
@@ -192,10 +191,10 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (cipherV2.IV16 == null)
 				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
 
-			if (cipherV2.RandomKeyCipher == null)
-				throw new ArgumentException("cipherV2.RandomKeyCipher must not be null at this point.");
+			if (cipherV2.RandomKeyCipher32 == null)
+				throw new ArgumentException("cipherV2.RandomKeyCipher32 must not be null at this point.");
 
-			var randomKey = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.RandomKeyCipher, passwordDerivedKey.Value, cipherV2.BWF.Value);
+			var randomKey = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.RandomKeyCipher32.DataBytes, passwordDerivedKey.DataBytes, cipherV2.RoundsExp.ByteValue);
 			return new RandomKey32(randomKey);
 		}
 
@@ -211,7 +210,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (randomKey == null)
 				throw new ArgumentNullException("randomKey");
 
-			var paddedData = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MessageCipher, randomKey.Value, cipherV2.BWF.Value);
+			var paddedData = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MessageCipher.DataBytes, randomKey.DataBytes, cipherV2.RoundsExp.ByteValue);
 			return new PaddedData(paddedData, cipherV2.Padding);
 		}
 
@@ -220,7 +219,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 			if (paddedData == null)
 				throw new ArgumentNullException("paddedData");
 
-			var paddingRemoved = new byte[paddedData.DataBytes.Length - paddedData.Padding];
+			var paddingRemoved = new byte[paddedData.DataBytes.Length - paddedData.PlainTextPadding.ByteValue];
 
 			Buffer.BlockCopy(paddedData.DataBytes, 0, paddingRemoved, 0, paddingRemoved.Length);
 
@@ -233,7 +232,7 @@ namespace VisualCrypt.Cryptography.Net.APIV2.Implementations
 				throw new ArgumentNullException("compressed");
 
 			var deflate = new Deflate();
-			var clearText = deflate.Decompress(compressed.Value, Encoding.UTF8);
+			var clearText = deflate.Decompress(compressed.DataBytes, Encoding.UTF8);
 			return new ClearText(clearText);
 		}
 

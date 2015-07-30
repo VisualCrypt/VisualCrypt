@@ -23,7 +23,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		public static void Clear()
 		{
 			if (_sha512PW64 != null)
-				_sha512PW64.Value.FillWithZeros();
+				_sha512PW64.DataBytes.FillWithZeros();
 			_sha512PW64 = null;
 		}
 	}

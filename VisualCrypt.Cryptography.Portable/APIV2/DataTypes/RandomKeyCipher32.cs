@@ -2,9 +2,10 @@
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 {
-	public sealed class PasswordDerivedKey32 : SecureBytes
+	public sealed class RandomKeyCipher32 : SecureBytes
 	{
-		public PasswordDerivedKey32(byte[] dataBytes) : base(dataBytes)
+		public RandomKeyCipher32(byte[] dataBytes)
+			: base(dataBytes)
 		{
 			// perform datatype-specific validation here
 			if (dataBytes.Length != 32)

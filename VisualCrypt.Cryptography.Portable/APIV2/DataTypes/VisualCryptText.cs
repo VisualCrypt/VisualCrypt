@@ -5,16 +5,16 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 	public sealed class VisualCryptText
 	{
 		/// <summary>
-		/// The non-null DataBytes.
+		/// Guaranteed to be non-null.
 		/// </summary>
-		public readonly string Value;
+		public readonly string StringValue;
 
-		public VisualCryptText(string value)
+		public VisualCryptText(string stringValue)
 		{
-			if (value == null)
-				throw new ArgumentNullException("value");
+			if (stringValue == null)
+				throw new ArgumentNullException("stringValue");
 
-			Value = value;
+			StringValue = stringValue;
 		}
 	}
 }

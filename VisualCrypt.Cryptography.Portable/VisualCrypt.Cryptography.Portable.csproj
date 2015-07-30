@@ -38,26 +38,28 @@
     <!-- A reference to the entire .NET Framework is automatically included -->
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="APIV2\DataTypes\BWF.cs" />
+    <Compile Include="APIV2\DataTypes\MACCipher16.cs" />
+    <Compile Include="APIV2\DataTypes\MessageCipher.cs" />
+    <Compile Include="APIV2\DataTypes\RandomKeyCipher32.cs" />
+    <Compile Include="APIV2\DataTypes\PlainTextPadding.cs" />
+    <Compile Include="APIV2\DataTypes\RoundsExp.cs" />
     <Compile Include="APIV2\DataTypes\RandomKey32.cs" />
+    <Compile Include="APIV2\DataTypes\SecureBytes.cs" />
     <Compile Include="APIV2\DataTypes\SanitizedPassword.cs" />
     <Compile Include="APIV2\DataTypes\LongRunningOperation.cs" />
     <Compile Include="APIV2\DataTypes\LongRunningOperationContext.cs" />
-    <Compile Include="APIV2\DataTypes\MD16E.cs" />
     <Compile Include="APIV2\DataTypes\MAC16.cs" />
     <Compile Include="APIV2\DataTypes\PaddedData.cs" />
     <Compile Include="APIV2\DataTypes\IV16.cs" />
     <Compile Include="APIV2\DataTypes\Compressed.cs" />
     <Compile Include="APIV2\DataTypes\BCrypt24.cs" />
     <Compile Include="APIV2\DataTypes\PasswordDerivedKey32.cs" />
-    <Compile Include="APIV2\DataTypes\MD32.cs" />
     <Compile Include="APIV2\Implementations\FileContentsDetection.cs" />
     <Compile Include="APIV2\Implementations\VisualCryptAPIV2.cs" />
     <Compile Include="APIV2\Implementations\VisualCryptFormatter.cs" />
     <Compile Include="APIV2\Interfaces\ICoreAPIV2.cs" />
     <Compile Include="APIV2\DataTypes\CipherV2.cs" />
     <Compile Include="APIV2\DataTypes\ClearText.cs" />
-    <Compile Include="APIV2\DataTypes\DecodeFileResult.cs" />
     <Compile Include="APIV2\DataTypes\VisualCryptText.cs" />
     <Compile Include="APIV2\DataTypes\SHA512PW64.cs" />
     <Compile Include="APIV2\DataTypes\Response.cs" />
@@ -65,7 +67,6 @@
     <Compile Include="APIV2\Implementations\BCrypt.cs" />
     <Compile Include="APIV2\Implementations\SHA256ManagedMono.cs" />
     <Compile Include="APIV2\Implementations\Base64Encoder.cs" />
-    <Compile Include="APIV2\DataTypes\ContentKind.cs" />
     <Compile Include="Tools\ByteArrays.cs" />
     <Compile Include="Tools\FillWithZeros.cs" />
     <Compile Include="Tools\ToHexView.cs" />

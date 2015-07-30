@@ -1,20 +1,10 @@
-﻿using System;
-
-namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
+﻿namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 {
-	public sealed class Compressed
+	public sealed class Compressed : SecureBytes
 	{
-		/// <summary>
-		/// The non-null DataBytes.
-		/// </summary>
-		public readonly byte[] Value;
-
-		public Compressed(byte[] value)
+		public Compressed(byte[] dataBytes) : base(dataBytes)
 		{
-			if (value == null)
-				throw new ArgumentNullException("value");
-
-			Value = value;
+			// perform datatype-specific validation here
 		}
 	}
 }

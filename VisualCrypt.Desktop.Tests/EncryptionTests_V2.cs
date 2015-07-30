@@ -44,13 +44,13 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(4), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new RoundsExp(4), new Progress<int>(), new CancellationTokenSource().Token);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
 					if (encodeResponse.IsSuccess)
 					{
-						visualCrypt = encodeResponse.Result.Value;
+						visualCrypt = encodeResponse.Result.StringValue;
 					}
 					else
 						throw new Exception(encodeResponse.Error);
@@ -68,7 +68,7 @@ namespace VisualCrypt.Desktop.Tests
 					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
 						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
 					if (decryptResponse.IsSuccess)
-						decryptedMessage = decryptResponse.Result.Value;
+						decryptedMessage = decryptResponse.Result.StringValue;
 					else
 						throw new Exception(decryptResponse.Error);
 				}
@@ -95,13 +95,13 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new RoundsExp(5), new Progress<int>(), new CancellationTokenSource().Token);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
 					if (encodeResponse.IsSuccess)
 					{
-						visualCrypt = encodeResponse.Result.Value;
+						visualCrypt = encodeResponse.Result.StringValue;
 					}
 					else
 						throw new Exception(encodeResponse.Error);
@@ -137,13 +137,13 @@ namespace VisualCrypt.Desktop.Tests
 
 			// do the encryption
 			string visualCrypt;
-			var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new BWF(5), new Progress<int>(), new CancellationTokenSource().Token);
+			var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new RoundsExp(5), new Progress<int>(), new CancellationTokenSource().Token);
 			if (encryptResponse.IsSuccess)
 			{
 				var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
 				if (encodeResponse.IsSuccess)
 				{
-					visualCrypt = encodeResponse.Result.Value;
+					visualCrypt = encodeResponse.Result.StringValue;
 				}
 				else
 					throw new Exception(encodeResponse.Error);

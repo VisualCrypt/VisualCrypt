@@ -6,26 +6,26 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.DataTypes
 	{
 		public const int MaxSanitizedPasswordLength = 1000000;
 
-		public const int MinSanitizedPasswordLength = 0;
+		const int MinSanitizedPasswordLength = 0;
 
 		/// <summary>
-		/// The non-null SanitizedPassword.
+		/// Guaranteed to be non-null.
 		/// </summary>
-		public readonly string Value;
+		public readonly string StringValue;
 
-		public SanitizedPassword(string value)
+		public SanitizedPassword(string stringValue)
 		{
-			if (value == null)
-				throw new ArgumentNullException("value");
+			if (stringValue == null)
+				throw new ArgumentNullException("stringValue");
 
-			if (value.Length > MaxSanitizedPasswordLength)
-				throw new ArgumentOutOfRangeException("value", string.Format("The password is {0} characters too long.", value.Length - MaxSanitizedPasswordLength));
+			if (stringValue.Length > MaxSanitizedPasswordLength)
+				throw new ArgumentOutOfRangeException("stringValue", string.Format("The password is {0} characters too long.", stringValue.Length - MaxSanitizedPasswordLength));
 
-			if (value.Length < MinSanitizedPasswordLength)
-				throw new ArgumentOutOfRangeException("value",
+			if (stringValue.Length < MinSanitizedPasswordLength)
+				throw new ArgumentOutOfRangeException("stringValue",
 					string.Format("Passwords with a length shorter than {0} are not supported.", MinSanitizedPasswordLength));
 
-			Value = value;
+			StringValue = stringValue;
 		}
 	}
 }

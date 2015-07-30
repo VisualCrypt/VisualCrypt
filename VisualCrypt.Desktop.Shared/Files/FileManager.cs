@@ -25,7 +25,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				BindableFileInfo.IsEncrypted = _fileModel.IsEncrypted;
 				if (_fileModel.IsEncrypted)
 				{
-					CreateEncryptedBarText(_fileModel);
+					UpdateEncryptedBarText();
 					ShowEncryptedBar();
 					
 				}
@@ -34,9 +34,9 @@ namespace VisualCrypt.Desktop.Shared.Files
 			}
 		}
 
-		static void CreateEncryptedBarText(FileModel fileModel)
+		static void UpdateEncryptedBarText()
 		{
-			string text = string.Format("VisualCrypt {0}, AES-256 Bit, BCrypt Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.BWF.Value, _fileModel.VisualCryptText.Length);
+			string text = string.Format("VisualCrypt {0}, AES-256 Bit, Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.RoundsExp.ByteValue, _fileModel.VisualCryptText.Length);
 			BindableFileInfo.EncrytedBarText = text;
 		}
 

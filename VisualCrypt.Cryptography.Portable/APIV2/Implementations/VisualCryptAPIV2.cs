@@ -40,7 +40,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 					return response;
 				}
 
-				var utf16LEBytes = Encoding.Unicode.GetBytes(sanitizedPasswordResponse.Result.Value);
+				var utf16LEBytes = Encoding.Unicode.GetBytes(sanitizedPasswordResponse.Result.StringValue);
 
 				var sha512 = _coreAPI.ComputeSHA512(utf16LEBytes);
 
@@ -56,7 +56,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 
 
-		public Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, BWF bwf, IProgress<int> progress, CancellationToken cToken)
+		public Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, RoundsExp roundsExp, IProgress<int> progress, CancellationToken cToken)
 
 		{
 			if (clearText == null)
@@ -76,11 +76,11 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				IV16 iv = new IV16(_coreAPI.GenerateRandomBytes(16));
 
-				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, bwf, progress, cToken);
+				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, roundsExp, progress, cToken);
 
 				RandomKey32 randomKey = new RandomKey32(_coreAPI.GenerateRandomBytes(32));
 
-				var cipherV2 = new CipherV2 { BWF = bwf, IV16 = iv };
+				var cipherV2 = new CipherV2 { RoundsExp = roundsExp, IV16 = iv };
 				_coreAPI.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2);
 
 				_coreAPI.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2);
@@ -119,28 +119,28 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
 
 			// Create the MAC only for items that, while decrypting, have not been used up to this point but do include the version.
-			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher, new[] { cipherV2.Padding }, new[] { CipherV2.Version });
+			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.DataBytes, new[] { cipherV2.Padding.ByteValue }, new[] { CipherV2.Version });
 
-			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.BWF.Value, progress, cToken);
+			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.RoundsExp.ByteValue, progress, cToken);
 
 			// See e.g. http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf Chapter 7 for hash truncation.
 			var truncatedMAC = new byte[16];
-			Buffer.BlockCopy(slowMAC.Value, 0, truncatedMAC, 0, 16);
+			Buffer.BlockCopy(slowMAC.DataBytes, 0, truncatedMAC, 0, 16);
 			return new MAC16(truncatedMAC);
 		}
 
 
-		PasswordDerivedKey32 CreatePasswordDerivedKey(IV16 iv, SHA512PW64 sha512PW64, BWF bwf, IProgress<int> progress, CancellationToken cToken)
+		PasswordDerivedKey32 CreatePasswordDerivedKey(IV16 iv, SHA512PW64 sha512PW64, RoundsExp roundsExp, IProgress<int> progress, CancellationToken cToken)
 		{
 			var leftSHA512 = new byte[32];
 			var rightSHA512 = new byte[32];
-			Buffer.BlockCopy(sha512PW64.Value, 0, leftSHA512, 0, 32);
-			Buffer.BlockCopy(sha512PW64.Value, 32, rightSHA512, 0, 32);
+			Buffer.BlockCopy(sha512PW64.DataBytes, 0, leftSHA512, 0, 32);
+			Buffer.BlockCopy(sha512PW64.DataBytes, 32, rightSHA512, 0, 32);
 
-			BCrypt24 leftBCrypt = BCrypt.CreateHash(iv, leftSHA512, bwf.Value, progress, cToken);
-			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, bwf.Value, progress, cToken);
+			BCrypt24 leftBCrypt = BCrypt.CreateHash(iv, leftSHA512, roundsExp.ByteValue, progress, cToken);
+			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, roundsExp.ByteValue, progress, cToken);
 
-			var combinedHashes = ByteArrays.Concatenate(sha512PW64.Value, leftBCrypt.Value, rightBCrypt.Value);
+			var combinedHashes = ByteArrays.Concatenate(sha512PW64.DataBytes, leftBCrypt.DataBytes, rightBCrypt.DataBytes);
 			Debug.Assert(combinedHashes.Length == 64 + 24 + 24);
 
 			var condensedHash = _coreAPI.ComputeSHA256(combinedHashes);
@@ -196,7 +196,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 			try
 			{
-				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.BWF, progress, cToken);
+				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.RoundsExp, progress, cToken);
 
 				RandomKey32 randomKey = _coreAPI.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey);
 
@@ -204,7 +204,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 
 				MAC16 actualMAC = CreateMAC(cipherV2, progress, cToken);
 
-				if (!actualMAC.Value.SequenceEqual(decryptedMAC.Value))
+				if (!actualMAC.DataBytes.SequenceEqual(decryptedMAC.DataBytes))
 				{
 					response.SetError("The password is wrong or the data has been corrupted.");
 					return response;

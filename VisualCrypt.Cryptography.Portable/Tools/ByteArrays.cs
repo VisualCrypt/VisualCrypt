@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace VisualCrypt.Cryptography.Portable.Tools
 {
@@ -23,7 +24,6 @@ namespace VisualCrypt.Cryptography.Portable.Tools
 				offset += byteArray.Length;
 			}
 			return ret;
-
 		}
 	}
 }

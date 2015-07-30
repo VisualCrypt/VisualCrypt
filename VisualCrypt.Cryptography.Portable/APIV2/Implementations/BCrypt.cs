@@ -50,7 +50,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 			if (logRounds < 4 || logRounds > 31)
 				throw new ArgumentOutOfRangeException("logRounds", logRounds, "logRounds must be between 4 and 31 (inclusive)");
 
-			var hash = new BCrypt(progress, cancellationToken).CryptRaw(inputBytes, iv16.Value, logRounds);
+			var hash = new BCrypt(progress, cancellationToken).CryptRaw(inputBytes, iv16.DataBytes, logRounds);
 			return new BCrypt24(hash);
 		}
 

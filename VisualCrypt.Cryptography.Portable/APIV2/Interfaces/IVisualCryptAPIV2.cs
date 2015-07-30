@@ -10,7 +10,7 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Interfaces
 
 		Response<SHA512PW64> CreateSHA512PW64(string unsanitizedUTF16LEPassword);
 
-		Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, BWF bwf, IProgress<int> progress, CancellationToken cToken);
+		Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, RoundsExp roundsExp, IProgress<int> progress, CancellationToken cToken);
 
 		Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2);
 
