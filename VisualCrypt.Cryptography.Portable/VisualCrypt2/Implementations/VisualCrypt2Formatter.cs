@@ -67,7 +67,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 						"The data is not in VisualCrypt/text V2 format (because it does not start with '{0}').".FormatInvariant(
 							VisualCryptSlashText));
 
-				var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length);
+				var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length).Replace('$','/');
 
 				var visualCryptTextV2Bytes = Base64Encoder.DecodeBase64StringToBinary(visualCryptTextV2Base64);
 
