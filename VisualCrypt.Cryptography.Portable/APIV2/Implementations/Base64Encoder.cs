@@ -3,27 +3,25 @@ using System.Diagnostics;
 
 namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 {
-	public class Base64Encoder
+	public static class Base64Encoder
 	{
 		/// <summary>
 		/// Converts a 8-bit unsigned integer array to an equivalent subset of a Unicode character array encoded with base-64 digits. 
 		/// </summary>
-		public static char[] EncodeDataToBase64CharArray(byte[] rawBinaryData)
+		public static char[] EncodeDataToBase64CharArray(byte[] inputBytes)
 		{
-			if (rawBinaryData == null)
-				return new char[0];
+			if (inputBytes == null)
+				throw new ArgumentNullException("inputBytes");
 
-			var rawBinaryLengthInBytes = rawBinaryData.Length;
-			var base64CharArrayLengthInChars = EstimateBase64EncodedLengthInBytes(rawBinaryLengthInBytes);
-			var base64CharArray = new char[base64CharArrayLengthInChars];
+			var estimatedOutputCharCount = EstimateBase64EncodedLengthInChars(inputBytes.Length);
+			var outputChars = new char[estimatedOutputCharCount];
 
-			//  A 32-bit signed integer containing the number of chars (not bytes!!!) in outArray.
-			var anotherCount = Convert.ToBase64CharArray(inArray: rawBinaryData, offsetIn: 0, length: rawBinaryLengthInBytes,
-				outArray: base64CharArray, offsetOut: 0);
+			//  actualOutputCharCount: A 32-bit signed integer containing the number of chars () in outArray.
+			var actualOutputCharCount = Convert.ToBase64CharArray(inputBytes, 0, inputBytes.Length, outputChars, 0);
 
-			Debug.Assert(anotherCount == base64CharArrayLengthInChars);
+			Debug.Assert(actualOutputCharCount == estimatedOutputCharCount);
 
-			return base64CharArray;
+			return outputChars;
 		}
 
 		/// <summary>
@@ -31,25 +29,21 @@ namespace VisualCrypt.Cryptography.Portable.APIV2.Implementations
 		/// </summary>
 		public static byte[] DecodeBase64StringToBinary(string base64EncodedBinary)
 		{
-			var binaryBytes = Convert.FromBase64String(base64EncodedBinary);
-			return binaryBytes;
+			return Convert.FromBase64String(base64EncodedBinary);
 		}
 
-		static int EstimateBase64EncodedLengthInBytes(int rawBinaryLength)
+		static int EstimateBase64EncodedLengthInChars(int rawBinaryLength)
 		{
-			// Convert the binary input into Base64 UUEncoded output. 
-			// Each 3 byte sequence in the source data becomes a 4 char (not byte!!!) 
+			// Each 3 byte sequence in the source data becomes a 4 char (not byte) 
 			// sequence in the character array.  
-			int arrayLengthInChars = (int) ((4.0d/3.0d)*rawBinaryLength);
+			int arrayLengthInChars = (int)((4.0d / 3.0d) * rawBinaryLength);
 
 			// If array length is not divisible by 4, go up to the next 
 			// multiple of 4. 
-			if (arrayLengthInChars%4 != 0)
+			if (arrayLengthInChars % 4 != 0)
 			{
-				arrayLengthInChars += 4 - arrayLengthInChars%4;
+				arrayLengthInChars += 4 - arrayLengthInChars % 4;
 			}
-
-
 			return arrayLengthInChars;
 		}
 	}
