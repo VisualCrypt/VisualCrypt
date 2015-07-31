@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using System.Globalization;
+using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Win32;
@@ -9,7 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
@@ -48,7 +49,7 @@ namespace VisualCrypt.Desktop.Views
 			if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
 			{
 				var fileName = args[1];
-				_logger.Log("Loading file from Commandline: {0}".FormatInvariant(fileName), Category.Info,
+				_logger.Log(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}", fileName), Category.Info,
 					Priority.None);
 				OpenFileCommon(fileName);
 			}
@@ -176,7 +177,7 @@ namespace VisualCrypt.Desktop.Views
 
 					var selectedEncoding = importEncoding.SelectedEncodingInfo.GetEncoding();
 
-					string title = "Import With Encoding: {0})".FormatInvariant(selectedEncoding);
+					string title = string.Format(CultureInfo.InvariantCulture, "Import With Encoding: {0})", selectedEncoding);
 
 					var pickFileResult = await PickFileAsync(null, DialogFilter.Text, DialogDirection.Open, title);
 					if (pickFileResult.Item1)
@@ -214,8 +215,7 @@ namespace VisualCrypt.Desktop.Views
 				if (editorClearText == null)
 					throw new InvalidOperationException("The text received from the editor was null.");
 
-				string title = "Export Clear Text (Encoding: {0})".FormatInvariant(
-					FileManager.FileModel.SaveEncoding.EncodingName);
+				string title = string.Format(CultureInfo.InvariantCulture, "Export Clear Text (Encoding: {0})", FileManager.FileModel.SaveEncoding.EncodingName);
 
 				string suggestedFilename = FileManager.FileModel.Filename.ReplaceCaseInsensitive(Constants.DotVisualCrypt,
 					string.Empty);
@@ -385,7 +385,7 @@ namespace VisualCrypt.Desktop.Views
 						UpdateCanExecuteChanged();
 						return; // exit from this goto-loop, we have a new decrypted file
 					}
-					if (decryptForDisplayResult.IsCancelled)
+					if (decryptForDisplayResult.IsCanceled)
 					{
 						return; // we also exit from whole procedure (we could also move on to redisplay 
 						// the password entry, as below, in case of error, which we interpret as wrong password).
@@ -454,7 +454,7 @@ namespace VisualCrypt.Desktop.Views
 						UpdateCanExecuteChanged();
 						return;
 					}
-					if (createEncryptedFileResponse.IsCancelled)
+					if (createEncryptedFileResponse.IsCanceled)
 						return;
 					// other error, switch back to PlainTextBar and show error
 					FileManager.ShowPlainTextBar();
@@ -507,7 +507,7 @@ namespace VisualCrypt.Desktop.Views
 						UpdateCanExecuteChanged();
 						return;
 					}
-					if (decryptForDisplayResult.IsCancelled)
+					if (decryptForDisplayResult.IsCanceled)
 						return;
 					// other error, switch back to EncryptedBar
 					FileManager.ShowEncryptedBar();
@@ -644,7 +644,7 @@ namespace VisualCrypt.Desktop.Views
 					UpdateCanExecuteChanged();
 					return;
 				}
-				if (encryptAndSaveFileResponse.IsCancelled)
+				if (encryptAndSaveFileResponse.IsCanceled)
 				{
 					return; // Cancel means the user can continue editing clear text
 				}

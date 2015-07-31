@@ -2,7 +2,7 @@
 using System.Security;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Cryptography.Net.Tools;
+using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
 
 namespace VisualCrypt.Desktop.Tests
 {

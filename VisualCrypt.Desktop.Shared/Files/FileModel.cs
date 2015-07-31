@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Runtime.CompilerServices;
 using System.Text;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 
 namespace VisualCrypt.Desktop.Shared.Files

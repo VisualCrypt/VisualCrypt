@@ -2,10 +2,10 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
-using VisualCrypt.Cryptography.Net.APIV2.Implementations;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
-using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
-using VisualCrypt.Cryptography.Portable.APIV2.Interfaces;
+using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.Services;
@@ -15,16 +15,16 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 	[Export(typeof(IEncryptionService))]
 	public class EncryptionService : IEncryptionService
 	{
-		readonly IVisualCryptAPIV2 _visualCryptApiv2;
+		readonly IVisualCrypt2API _visualCrypt2API;
 
 		public EncryptionService()
 		{
-			_visualCryptApiv2 = new VisualCryptAPIV2(new CoreAPIV2_Net4());
+			_visualCrypt2API = new VisualCrypt2API(new CoreAPI2_Net4());
 		}
 
-		RoundsExp GetV2LogRoundsSetting()
+		RoundsExponent GetV2LogRoundsSetting()
 		{
-			return new RoundsExp(SettingsManager.EditorSettings.CryptographySettings.LogRounds);
+			return new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds);
 		}
 
 		public Response<FileModel> OpenFile(string filename)
@@ -38,7 +38,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 
 				var rawBytesFromFile = File.ReadAllBytes(filename);
 
-				Response<string, Encoding> getStringResponse = _visualCryptApiv2.GetStringFromFileBytes(rawBytesFromFile,
+				Response<string, Encoding> getStringResponse = _visualCrypt2API.GetStringFromFile(rawBytesFromFile,
 					Encoding.Default);
 
 				if (!getStringResponse.IsSuccess) // we do not even have a string.
@@ -49,7 +49,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				}
 
 				// if we are here we have a string. Is it VisualCrypt/text or just Cleartext?
-				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(getStringResponse.Result);
+				var decodeResponse = _visualCrypt2API.TryDecodeVisualCryptText(getStringResponse.Result);
 
 				if (decodeResponse.IsSuccess)
 				{
@@ -84,16 +84,16 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCrypt2API.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
 				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
-					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);
+					var encodeResponse = _visualCrypt2API.EncodeToVisualCryptText(encryptResponse.Result);
 					if (encodeResponse.IsSuccess)
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
 						CipherV2 cipherV2 = encryptResponse.Result;
-						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, visualCryptText.StringValue);
+						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, visualCryptText.Text);
 						encryptedFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = encryptedFileModel;
 						response.SetSuccess();
@@ -109,19 +109,19 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			return response;
 		}
 
-		public Response SetPassword(string unsanitizedUTF16LEPassword)
+		public Response SetPassword(string unprunedUTF16LEPassword)
 		{
 			var response = new Response();
 			try
 			{
-				var sha256Response = _visualCryptApiv2.CreateSHA512PW64(unsanitizedUTF16LEPassword);
-				if (sha256Response.IsSuccess)
+				Response<SHA512PW64> sha512PW64Response = _visualCrypt2API.CreateSHA512PW64(unprunedUTF16LEPassword);
+				if (sha512PW64Response.IsSuccess)
 				{
-					KeyStore.SetSHA256PW32(sha256Response.Result);
+					KeyStore.SetSHA256PW32(sha512PW64Response.Result);
 					response.SetSuccess();
 				}
 				else
-					response.SetError(sha256Response.Error);
+					response.SetError(sha512PW64Response.Error);
 			}
 			catch (Exception e)
 			{
@@ -156,14 +156,14 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (textBufferContents == null)
 					throw new ArgumentNullException("textBufferContents");
 
-				var decodeResponse = _visualCryptApiv2.TryDecodeVisualCryptText(textBufferContents);
+				var decodeResponse = _visualCrypt2API.TryDecodeVisualCryptText(textBufferContents);
 				if (decodeResponse.IsSuccess)
 				{
-					var decrpytResponse = _visualCryptApiv2.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context.Progress, context.CancellationToken);
+					var decrpytResponse = _visualCrypt2API.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context.Progress, context.CancellationToken);
 					if (decrpytResponse.IsSuccess)
 					{
 						ClearText clearText = decrpytResponse.Result;
-						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, clearText.StringValue, fileModel.SaveEncoding);
+						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, clearText.Text, fileModel.SaveEncoding);
 						clearTextFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = clearTextFileModel;
 						response.SetSuccess();
@@ -191,7 +191,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (!fileModel.IsEncrypted)
 					throw new Exception("Aborting Save - IsEncrypted is false.");
 
-				if (!_visualCryptApiv2.TryDecodeVisualCryptText(fileModel.VisualCryptText).IsSuccess)
+				if (!_visualCrypt2API.TryDecodeVisualCryptText(fileModel.VisualCryptText).IsSuccess)
 					throw new Exception("Aborting Save -  The data being saved is not valid VisualCrypt format.");
 
 				byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(fileModel.VisualCryptText);
@@ -218,16 +218,16 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCryptApiv2.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCrypt2API.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
 				if (encryptResponse.IsSuccess)
 				{
-					var encodeResponse = _visualCryptApiv2.EncodeToVisualCryptText(encryptResponse.Result);
+					var encodeResponse = _visualCrypt2API.EncodeToVisualCryptText(encryptResponse.Result);
 					if (encodeResponse.IsSuccess)
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
-						byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(visualCryptText.StringValue);
+						byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(visualCryptText.Text);
 						File.WriteAllBytes(fileModel.Filename, visualCryptTextBytes);
-						response.Result = visualCryptText.StringValue;
+						response.Result = visualCryptText.Text;
 						response.SetSuccess();
 					}
 					else response.SetError(encodeResponse.Error);
@@ -243,7 +243,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 
 		public Response<string> GenerateRandomPassword()
 		{
-			return _visualCryptApiv2.GenerateRandomPassword();
+			return _visualCrypt2API.GenerateRandomPassword();
 		}
 
 
@@ -252,10 +252,10 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			var response = new Response<string>();
 			try
 			{
-				var sanitizePasswordResponse = _visualCryptApiv2.SanitizePassword(unsanitizedPassword);
+				var sanitizePasswordResponse = _visualCrypt2API.PrunePassword(unsanitizedPassword);
 				if (sanitizePasswordResponse.IsSuccess)
 				{
-					response.Result = sanitizePasswordResponse.Result.StringValue;
+					response.Result = sanitizePasswordResponse.Result.Text;
 					response.SetSuccess();
 				}
 				else

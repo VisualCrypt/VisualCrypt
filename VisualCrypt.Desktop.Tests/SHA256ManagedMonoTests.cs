@@ -3,8 +3,8 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
-using VisualCrypt.Cryptography.Portable.Tools;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Desktop.Tests.Tools;
 
 namespace VisualCrypt.Desktop.Tests
 {

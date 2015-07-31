@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Cryptography.Portable.APIV2.Implementations;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 
 namespace VisualCrypt.Desktop.Tests
 {

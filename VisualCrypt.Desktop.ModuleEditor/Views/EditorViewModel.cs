@@ -7,7 +7,6 @@ using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
-using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
@@ -59,7 +58,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_eventAggregator.GetEvent<EditorSendsText>().Publish(args);
 		}
 
-	
+
 		void OnTextReceived(string newText)
 		{
 			if (newText == null)
@@ -369,11 +368,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			}
 
 			if (!found && SearchOptions.UseRegEx == false)
-				_messageBoxService.Show("'{0}' is not in the document.".FormatInvariant(FindString), "Find",
+				_messageBoxService.Show(string.Format("'{0}' is not in the document.", FindString), "Find",
 					MessageBoxButton.OK, MessageBoxImage.Exclamation);
 			if (!found && SearchOptions.UseRegEx)
 				_messageBoxService.Show(
-					"The expression '{0}' yields no matches in the document.".FormatInvariant(FindString), "Find",
+					string.Format("The expression '{0}' yields no matches in the document.", FindString), "Find",
 					MessageBoxButton.OK, MessageBoxImage.Exclamation);
 		}
 
@@ -413,10 +412,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			}
 
 			if (!found && SearchOptions.UseRegEx == false)
-				_messageBoxService.Show("'{0}' could not be found.".FormatInvariant(FindString), "Replace",
+				_messageBoxService.Show(string.Format("'{0}' could not be found.", FindString), "Replace",
 					MessageBoxButton.OK, MessageBoxImage.Exclamation);
 			if (!found && SearchOptions.UseRegEx)
-				_messageBoxService.Show("No match for '{0}' could be found.".FormatInvariant(FindString), "Replace",
+				_messageBoxService.Show(string.Format("No match for '{0}' could be found.", FindString), "Replace",
 					MessageBoxButton.OK, MessageBoxImage.Exclamation);
 		}
 
@@ -457,7 +456,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			var image = (count > 0) ? MessageBoxImage.Information : MessageBoxImage.Exclamation;
 
 
-			_messageBoxService.Show("{0} occurrences were replaced.".FormatInvariant(count), "Replace All",
+			_messageBoxService.Show(string.Format("{0} occurrences were replaced.", count), "Replace All",
 				MessageBoxButton.OK, image);
 		}
 
@@ -756,7 +755,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			var pos = GetPositionString();
 			var enc = GetEncodingString();
 
-			var statusBarText = "Plaintext | {0} | {1}".FormatInvariant(pos, enc);
+			var statusBarText = string.Format(CultureInfo.InvariantCulture, "Plaintext | {0} | {1}", pos, enc);
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
 		}
 
@@ -771,7 +770,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			var lineIndex = GetCurrentLineIndex();
 			var colIndex = GetColIndex(lineIndex);
 
-			return "Ln {0}, Col {1} | Ch {2}/{3}".FormatInvariant(lineIndex + 1, colIndex + 1, rawPos,
+			return string.Format(CultureInfo.InvariantCulture, "Ln {0}, Col {1} | Ch {2}/{3}", lineIndex + 1, colIndex + 1, rawPos,
 				_editor.TextBox1.Text.Length);
 		}
 

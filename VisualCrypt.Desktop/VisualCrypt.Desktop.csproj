@@ -86,6 +86,12 @@
   <PropertyGroup>
     <ApplicationIcon>Images\logo_rounded_16-256.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>YourKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Interop.Shell32">
       <HintPath>..\VisualCrypt.Desktop\obj\Debug\Interop.Shell32.dll</HintPath>
@@ -225,6 +231,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="YourKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">

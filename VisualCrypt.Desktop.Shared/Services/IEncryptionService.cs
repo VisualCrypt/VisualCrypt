@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared.Files;
 
 namespace VisualCrypt.Desktop.Shared.Services
@@ -17,7 +17,7 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
 
-		Response SetPassword(string unsanitizedUTF16LEPassword);
+		Response SetPassword(string unprunedUTF16LEPassword);
 
 		Response ClearPassword();
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 
 namespace VisualCrypt.Desktop.Shared.Files
@@ -36,7 +36,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		static void UpdateEncryptedBarText()
 		{
-			string text = string.Format("VisualCrypt {0}, AES-256 Bit, Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.RoundsExp.ByteValue, _fileModel.VisualCryptText.Length);
+			string text = string.Format("VisualCrypt {0}, AES-256 Bit, Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.RoundsExponent.Value, _fileModel.VisualCryptText.Length);
 			BindableFileInfo.EncrytedBarText = text;
 		}
 

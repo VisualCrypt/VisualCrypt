@@ -1,10 +1,10 @@
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
+using System.Globalization;
 using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions;
-using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 
@@ -20,7 +20,7 @@ namespace VisualCrypt.Desktop
 			stopWatch.Start();
 			base.Run(runWithDefaultConfiguration);
 			stopWatch.Stop();
-			_replayLogger.Log("Loading completed after {0}ms.".FormatInvariant(stopWatch.ElapsedMilliseconds),Category.Info, Priority.Low);
+			_replayLogger.Log(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",stopWatch.ElapsedMilliseconds),Category.Info, Priority.Low);
 			Container.GetExportedValue<ShellViewModel>().OpenFromCommandLineOrNew();
 		}
 

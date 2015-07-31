@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
-using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 
@@ -30,16 +30,16 @@ namespace VisualCrypt.Desktop.Views
 			_regionManager = regionManager;
 
 			Loaded += ShellWindow_Loaded;
-			
+
 			PreviewKeyDown += ShellWindow_PreviewKeyDown;
 			Closing += MainWindow_Closing;
-			
+
 			AllowDrop = true;
 			PreviewDragEnter += MainWindow_PreviewDragEnter;
 			PreviewDragLeave += MainWindow_PreviewDragLeave;
 			PreviewDrop += MainWindow_PreviewDrop;
 
-			
+
 
 		}
 
@@ -47,7 +47,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			ActivateEditor();
 		}
-	
+
 
 		void MainWindow_Closing(object sender, CancelEventArgs e)
 		{
@@ -58,7 +58,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			// This was in TextBox1_PreviewKeyDown, does this still work?
 			if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-			    && ViewModel.ClearPasswordCommand.CanExecute())
+				&& ViewModel.ClearPasswordCommand.CanExecute())
 				ViewModel.ClearPasswordCommand.Execute();
 
 			if (e.Key == Key.F12)
@@ -77,7 +77,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
 			{
-				
+
 				_contentEditorRegion.IsHitTestVisible = false;
 				e.Effects = DragDropEffects.Copy;
 			}
@@ -105,14 +105,14 @@ namespace VisualCrypt.Desktop.Views
 			_contentEditorRegion.IsHitTestVisible = true;
 		}
 
-		
+
 
 		void ActivateEditor()
 		{
 			var mainRegion = _regionManager.Regions[RegionNames.EditorRegion];
 			if (mainRegion == null)
 				throw new InvalidOperationException(
-					"The region {0} is missing and has probably not been defined in Xaml.".FormatInvariant(
+					string.Format(CultureInfo.InvariantCulture, "The region {0} is missing and has probably not been defined in Xaml.",
 						RegionNames.EditorRegion));
 
 			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;

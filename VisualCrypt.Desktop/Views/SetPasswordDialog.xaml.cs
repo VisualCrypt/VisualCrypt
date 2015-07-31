@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
@@ -49,7 +49,7 @@ namespace VisualCrypt.Desktop.Views
 				if (response.IsSuccess)
 				{
 					var sigCount = response.Result.Length;
-					SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"), SanitizedPassword.MaxSanitizedPasswordLength.ToString("N0"));
+					SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"), PrunedPassword.MaxSanitizedPasswordLength.ToString("N0"));
 				}
 				else
 				{

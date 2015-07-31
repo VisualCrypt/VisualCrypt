@@ -1,6 +1,6 @@
 ﻿using System;
-using VisualCrypt.Cryptography.Portable.APIV2.DataTypes;
-using VisualCrypt.Cryptography.Portable.Tools;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Desktop.ModuleEncryption
 {
@@ -23,7 +23,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		public static void Clear()
 		{
 			if (_sha512PW64 != null)
-				_sha512PW64.DataBytes.FillWithZeros();
+				_sha512PW64.GetBytes().FillWithZeros();
 			_sha512PW64 = null;
 		}
 	}

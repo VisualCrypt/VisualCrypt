@@ -9,6 +9,7 @@ using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using Shell32;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
