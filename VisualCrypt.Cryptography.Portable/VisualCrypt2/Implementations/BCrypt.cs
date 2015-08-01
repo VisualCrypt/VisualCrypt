@@ -23,6 +23,7 @@ using System;
 using System.Diagnostics;
 using System.Threading;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
@@ -36,11 +37,9 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// <param name="data">The data to hash.</param>
 		/// <param name="iv16">The salt to hash with.</param>
 		/// <param name="logRounds">Between [4..31].</param>
-		/// <param name="progress">Object for progress indicator</param>
-		/// <param name="cancellationToken">CancellationToken</param>
+		/// <param name="context">Object for progress indicator and cancelation</param>
 		/// <returns>The hash.</returns>
-		public static BCrypt24 CreateHash(IV16 iv16, byte[] data, byte logRounds, IProgress<int> progress,
-			CancellationToken cancellationToken)
+		public static BCrypt24 CreateHash(IV16 iv16, byte[] data, byte logRounds, LongRunningOperationContext context)
 		{
 			if (iv16 == null)
 				throw new ArgumentNullException("iv16");
@@ -51,7 +50,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			if (logRounds < 4 || logRounds > 31)
 				throw new ArgumentOutOfRangeException("logRounds", logRounds, "logRounds must be between 4 and 31 (inclusive)");
 
-			var hash = new BCrypt(progress, cancellationToken).CryptRaw(data, iv16.GetBytes(), logRounds);
+			var hash = new BCrypt(context).CryptRaw(data, iv16.GetBytes(), logRounds);
 			return new BCrypt24(hash);
 		}
 
@@ -385,10 +384,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		readonly IProgress<int> _progress;
 		CancellationToken _cancellationToken; // this is a struct
 
-		BCrypt(IProgress<int> progress, CancellationToken cancellationToken)
+		BCrypt(LongRunningOperationContext context)
 		{
-			_progress = progress;
-			_cancellationToken = cancellationToken;
+			if(context == null)
+				throw new ArgumentNullException("context");
+
+			_progress = context.Progress;
+			_cancellationToken = context.CancellationToken;
 		}
 
 		/// <summary>Blowfish encipher a single 64-bit block encoded as two 32-bit halves.</summary>

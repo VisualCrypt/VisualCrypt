@@ -59,7 +59,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				}
 				else
 				{
-					// it's ClearText
+					// it's Cleartext
 					var cleartextFileModel = FileModel.Cleartext(filename, getStringResponse.Result, getStringResponse.Result2);
 					response.Result = cleartextFileModel;
 				}
@@ -84,7 +84,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCrypt2API.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCrypt2API.Encrypt(new Cleartext(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context);
 				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
@@ -156,14 +156,17 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (textBufferContents == null)
 					throw new ArgumentNullException("textBufferContents");
 
+				if (context == null)
+					throw new ArgumentNullException("context");
+
 				var decodeResponse = _visualCrypt2API.TryDecodeVisualCryptText(textBufferContents);
 				if (decodeResponse.IsSuccess)
 				{
-					var decrpytResponse = _visualCrypt2API.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context.Progress, context.CancellationToken);
+					var decrpytResponse = _visualCrypt2API.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context);
 					if (decrpytResponse.IsSuccess)
 					{
-						ClearText clearText = decrpytResponse.Result;
-						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, clearText.Text, fileModel.SaveEncoding);
+						Cleartext cleartext = decrpytResponse.Result;
+						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, cleartext.Text, fileModel.SaveEncoding);
 						clearTextFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = clearTextFileModel;
 						response.SetSuccess();
@@ -218,7 +221,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCrypt2API.Encrypt(new ClearText(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context.Progress, context.CancellationToken);
+				var encryptResponse = _visualCrypt2API.Encrypt(new Cleartext(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCrypt2API.EncodeToVisualCryptText(encryptResponse.Result);

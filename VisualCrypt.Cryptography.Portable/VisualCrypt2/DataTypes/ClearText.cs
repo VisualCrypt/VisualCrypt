@@ -3,7 +3,7 @@ using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
 {
-	public sealed class ClearText
+	public sealed class Cleartext
 	{
 		const int MaxClearTextLength = 1024 * 1024 * 10;
 
@@ -18,7 +18,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
 		}
 		readonly string _text;
 
-		public ClearText(string text)
+		public Cleartext(string text)
 		{
 			if (text == null)
 				throw new ArgumentNullException("text");

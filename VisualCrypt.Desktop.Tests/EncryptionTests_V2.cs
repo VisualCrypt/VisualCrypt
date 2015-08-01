@@ -44,7 +44,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new RoundsExponent(4), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt(new Cleartext(m), hashPasswordResponse.Result, new RoundsExponent(4), CreateContext());
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -66,7 +66,7 @@ namespace VisualCrypt.Desktop.Tests
 				if (decodeResponse.IsSuccess)
 				{
 					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
-						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
+						hashPasswordResponse.Result, CreateContext());
 					if (decryptResponse.IsSuccess)
 						decryptedMessage = decryptResponse.Result.Text;
 					else
@@ -79,6 +79,11 @@ namespace VisualCrypt.Desktop.Tests
 					"The decrypted message ('{0}') does not equal the original message".FormatInvariant(decryptedMessage));
 				Console.WriteLine("Testing with m/pw length: " + m.Length + " Message: " + m);
 			}
+		}
+
+		LongRunningOperationContext CreateContext()
+		{
+			return new LongRunningOperationContext(new CancellationTokenSource().Token, new Progress<int>());
 		}
 
 		[TestMethod]
@@ -95,7 +100,7 @@ namespace VisualCrypt.Desktop.Tests
 
 				// do the encryption
 				string visualCrypt;
-				var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(m), hashPasswordResponse.Result, new RoundsExponent(5), new Progress<int>(), new CancellationTokenSource().Token);
+				var encryptResponse = _visualCryptAPI.Encrypt(new Cleartext(m), hashPasswordResponse.Result, new RoundsExponent(5), CreateContext());
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -118,7 +123,7 @@ namespace VisualCrypt.Desktop.Tests
 				if (decodeResponse.IsSuccess)
 				{
 					var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
-						hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
+						hashPasswordResponse.Result, CreateContext());
 					if (decryptResponse.IsSuccess)
 						Assert.Fail("decryptResponse.SUCCESS MUST NOT be true with wrong password!");
 					Console.WriteLine("Cannot decrypt with wrong password - OK!");
@@ -137,7 +142,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			// do the encryption
 			string visualCrypt;
-			var encryptResponse = _visualCryptAPI.Encrypt(new ClearText(stringWhereTheErrorOccures), hashPasswordResponse.Result, new RoundsExponent(5), new Progress<int>(), new CancellationTokenSource().Token);
+			var encryptResponse = _visualCryptAPI.Encrypt(new Cleartext(stringWhereTheErrorOccures), hashPasswordResponse.Result, new RoundsExponent(5),  CreateContext());
 			if (encryptResponse.IsSuccess)
 			{
 				var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);
@@ -158,7 +163,7 @@ namespace VisualCrypt.Desktop.Tests
 			if (decodeResponse.IsSuccess)
 			{
 				var decryptResponse = _visualCryptAPI.Decrypt(decodeResponse.Result,
-					hashPasswordResponse.Result, new Progress<int>(), new CancellationTokenSource().Token);
+					hashPasswordResponse.Result, CreateContext());
 				if (!decryptResponse.IsSuccess)
 					Assert.Fail("Expecteed decryption to work!");
 			}

@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
@@ -20,7 +19,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			_coreAPI2 = coreAPI2;
 		}
 
-		
+
 		public Response<SHA512PW64> CreateSHA512PW64(string unpruned)
 		{
 			var response = new Response<SHA512PW64>();
@@ -33,14 +32,14 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 					return response;
 				}
 
-				var sanitizedPasswordResponse = PrunePassword(unpruned);
-				if (!sanitizedPasswordResponse.IsSuccess)
+				var prunedPasswordResponse = PrunePassword(unpruned);
+				if (!prunedPasswordResponse.IsSuccess)
 				{
-					response.SetError(sanitizedPasswordResponse.Error);
+					response.SetError(prunedPasswordResponse.Error);
 					return response;
 				}
 
-				var utf16LEBytes = Encoding.Unicode.GetBytes(sanitizedPasswordResponse.Result.Text);
+				var utf16LEBytes = Encoding.Unicode.GetBytes(prunedPasswordResponse.Result.Text);
 
 				var sha512 = _coreAPI2.ComputeSHA512(utf16LEBytes);
 
@@ -55,37 +54,38 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		}
 
 
-		public Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, RoundsExponent roundsExponent,
-			IProgress<int> progress, CancellationToken token)
-
+		public Response<CipherV2> Encrypt(Cleartext cleartext, SHA512PW64 sha512PW64, RoundsExponent roundsExponent,
+			LongRunningOperationContext context)
 		{
-			if (clearText == null)
-				return new Response<CipherV2>("Argument null: clearText");
-
-			if (sha512PW64 == null)
-				return new Response<CipherV2>("Argument null: SHA512PW64");
-
 			var response = new Response<CipherV2>();
 
 			try
 			{
-				Compressed compressed = _coreAPI2.Compress(clearText);
+				if (cleartext == null)
+					throw new ArgumentNullException("cleartext");
+
+				if (sha512PW64 == null)
+					throw new ArgumentNullException("sha512PW64");
+
+				if (context == null)
+					throw new ArgumentNullException("context");
+
+				Compressed compressed = _coreAPI2.Compress(cleartext);
 
 				PaddedData paddedData = _coreAPI2.ApplyRandomPadding(compressed);
 
-
 				IV16 iv = new IV16(_coreAPI2.GenerateRandomBytes(16));
 
-				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, roundsExponent, progress, token);
+				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, roundsExponent, context);
 
 				RandomKey32 randomKey = new RandomKey32(_coreAPI2.GenerateRandomBytes(32));
 
-				var cipherV2 = new CipherV2 {RoundsExponent = roundsExponent, IV16 = iv};
+				var cipherV2 = new CipherV2 { RoundsExponent = roundsExponent, IV16 = iv };
 				_coreAPI2.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2);
 
 				_coreAPI2.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2);
 
-				MAC16 mac = CreateMAC(cipherV2, progress, token);
+				MAC16 mac = CreateMAC(cipherV2, context);
 
 				_coreAPI2.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey);
 
@@ -100,16 +100,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		}
 
 
-		static MAC16 CreateMAC(CipherV2 cipherV2, IProgress<int> progress, CancellationToken cToken)
+		static MAC16 CreateMAC(CipherV2 cipherV2, LongRunningOperationContext context)
 		{
-			if (cipherV2 == null)
+			if(cipherV2 == null)
 				throw new ArgumentNullException("cipherV2");
 
-			if (progress == null)
-				throw new ArgumentNullException("progress");
-
-			if (cToken == null)
-				throw new ArgumentNullException("cToken");
+			if (context == null)
+				throw new ArgumentNullException("context");
 
 			if (cipherV2.MessageCipher == null)
 				throw new ArgumentException("cipherV2.MessageCipher must not be null at this point.");
@@ -118,10 +115,10 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
 
 			// Create the MAC only for items that, while decrypting, have not been used up to this point but do include the version.
-			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] {cipherV2.Padding.ByteValue},
-				new[] {CipherV2.Version});
+			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.Padding.ByteValue },
+				new[] { CipherV2.Version });
 
-			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.RoundsExponent.Value, progress, cToken);
+			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.RoundsExponent.Value, context);
 
 			// See e.g. http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf Chapter 7 for hash truncation.
 			var truncatedMAC = new byte[16];
@@ -131,15 +128,15 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 
 		PasswordDerivedKey32 CreatePasswordDerivedKey(IV16 iv, SHA512PW64 sha512PW64, RoundsExponent roundsExponent,
-			IProgress<int> progress, CancellationToken cToken)
+			LongRunningOperationContext context)
 		{
 			var leftSHA512 = new byte[32];
 			var rightSHA512 = new byte[32];
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 0, leftSHA512, 0, 32);
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 32, rightSHA512, 0, 32);
 
-			BCrypt24 leftBCrypt = BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, progress, cToken);
-			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, roundsExponent.Value, progress, cToken);
+			BCrypt24 leftBCrypt = BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context);
+			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, roundsExponent.Value, context);
 
 			var combinedHashes = ByteArrays.Concatenate(sha512PW64.GetBytes(), leftBCrypt.GetBytes(), rightBCrypt.GetBytes());
 			Debug.Assert(combinedHashes.Length == 64 + 24 + 24);
@@ -151,13 +148,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2)
 		{
-			if (cipherV2 == null)
-				return new Response<VisualCryptText>("Argument null: cipherV2");
-
 			var response = new Response<VisualCryptText>();
 
 			try
 			{
+				if (cipherV2 == null)
+					throw new ArgumentNullException("cipherV2");
+
 				response.Result = VisualCrypt2Formatter.CreateVisualCryptText(cipherV2);
 				response.SetSuccess();
 			}
@@ -170,13 +167,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText)
 		{
-			if (visualCryptText == null)
-				return new Response<CipherV2>("Argument null: visualCryptText");
-
 			var response = new Response<CipherV2>();
 
 			try
 			{
+				if (visualCryptText == null)
+					throw new ArgumentNullException("visualCryptText");
+
 				response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText);
 				response.SetSuccess();
 			}
@@ -188,24 +185,23 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		}
 
 
-		public Response<ClearText> Decrypt(CipherV2 cipherV2, SHA512PW64 sha512PW64, IProgress<int> progress,
-			CancellationToken token)
+		public Response<Cleartext> Decrypt(CipherV2 cipherV2, SHA512PW64 sha512PW64, LongRunningOperationContext context)
 		{
-			var response = new Response<ClearText>();
+			var response = new Response<Cleartext>();
 
 			try
 			{
-				if(cipherV2 == null)
+				if (cipherV2 == null)
 					throw new ArgumentNullException("cipherV2");
 
 				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.RoundsExponent,
-					progress, token);
+					context);
 
 				RandomKey32 randomKey = _coreAPI2.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey);
 
 				MAC16 decryptedMAC = _coreAPI2.AESDecryptMAC(cipherV2, randomKey);
 
-				MAC16 actualMAC = CreateMAC(cipherV2, progress, token);
+				MAC16 actualMAC = CreateMAC(cipherV2, context);
 
 				if (!actualMAC.GetBytes().SequenceEqual(decryptedMAC.GetBytes()))
 				{
@@ -218,9 +214,9 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 				Compressed compressed = _coreAPI2.RemovePadding(paddedData);
 
-				ClearText clearText = _coreAPI2.Decompress(compressed);
+				Cleartext cleartext = _coreAPI2.Decompress(compressed);
 
-				response.Result = clearText;
+				response.Result = cleartext;
 				response.SetSuccess();
 			}
 			catch (Exception e)

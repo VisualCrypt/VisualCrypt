@@ -9,15 +9,6 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
 
 		string _state;
 
-		public Response()
-		{
-		}
-
-		public Response(string errorMessage)
-		{
-			_state = errorMessage;
-		}
-
 		public bool IsSuccess
 		{
 			get
@@ -97,27 +88,11 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
 
 	public sealed class Response<T> : Response
 	{
-		public Response()
-		{
-		}
-
-		public Response(string errorMessage) : base(errorMessage)
-		{
-		}
-
 		public T Result { get; set; }
 	}
 
 	public sealed class Response<T, T2> : Response
 	{
-		public Response()
-		{
-		}
-
-		public Response(string errorMessage) : base(errorMessage)
-		{
-		}
-
 		public T Result { get; set; }
 		public T2 Result2 { get; set; }
 	}

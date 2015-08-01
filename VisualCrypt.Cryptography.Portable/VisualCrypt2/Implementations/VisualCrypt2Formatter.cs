@@ -72,14 +72,14 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				var visualCryptTextV2Bytes = Base64Encoder.DecodeBase64StringToBinary(visualCryptTextV2Base64);
 
 				//var visualCryptTextV2Bytes = ByteArrays.Concatenate(
-				//									// len			Sum(len)		Start Index
-				//new[] { CipherV2.Version },		// 1			1				0
-				//new[] { cipherV2.RoundsExponent.GetBytes },		// 1			2				1
-				//new[] { cipherV2.PlaintextPadding },		// 1			3				2
-				//cipherV2.IV16.GetBytes,				// 16			19				3
-				//cipherV2.MACCipher16,				// 16			35				19
-				//cipherV2.RandomKeyCipher32,			// 32			67				35
-				//cipherV2.MessageCipher			// len			67 + len		67
+				//												// len			Sum(len)		Start Index
+				//new[] { CipherV2.Version },					// 1			1				0
+				//new[] { cipherV2.RoundsExponent.GetBytes },	// 1			2				1
+				//new[] { cipherV2.PlaintextPadding },			// 1			3				2
+				//cipherV2.IV16.GetBytes,						// 16			19				3
+				//cipherV2.MACCipher16,							// 16			35				19
+				//cipherV2.RandomKeyCipher32,					// 32			67				35
+				//cipherV2.MessageCipher						// len			67 + len		67
 				//);
 
 

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Text;
-using System.Threading;
+﻿using System.Text;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
@@ -10,15 +8,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 	{
 		Response<SHA512PW64> CreateSHA512PW64(string unpruned);
 
-		Response<CipherV2> Encrypt(ClearText clearText, SHA512PW64 sha512PW64, RoundsExponent roundsExponent, IProgress<int> progress,
-			CancellationToken token);
+		Response<CipherV2> Encrypt(Cleartext cleartext, SHA512PW64 sha512PW64, RoundsExponent roundsExponent, LongRunningOperationContext context);
 
 		Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2);
 
 		Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText);
 
-		Response<ClearText> Decrypt(CipherV2 cipherV2, SHA512PW64 sha512PW64, IProgress<int> progress,
-			CancellationToken token);
+		Response<Cleartext> Decrypt(CipherV2 cipherV2, SHA512PW64 sha512PW64, LongRunningOperationContext context);
 
 		Response<string, Encoding> GetStringFromFile(byte[] data, Encoding platformDefaultEncoding);
 

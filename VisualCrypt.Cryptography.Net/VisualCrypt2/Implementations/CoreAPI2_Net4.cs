@@ -10,12 +10,12 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 {
 	public class CoreAPI2_Net4 : ICoreAPI2
 	{
-		public Compressed Compress(ClearText clearText)
+		public Compressed Compress(Cleartext cleartext)
 		{
-			if (clearText == null)
-				throw new ArgumentNullException("clearText");
+			if (cleartext == null)
+				throw new ArgumentNullException("cleartext");
 
-			byte[] compressed = Deflate.Compress(clearText.Text, Encoding.UTF8);
+			byte[] compressed = Deflate.Compress(cleartext.Text, Encoding.UTF8);
 
 			return new Compressed(compressed);
 		}
@@ -256,13 +256,13 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 			return new Compressed(paddingRemoved);
 		}
 
-		public ClearText Decompress(Compressed compressed)
+		public Cleartext Decompress(Compressed compressed)
 		{
 			if (compressed == null)
 				throw new ArgumentNullException("compressed");
 
 			var clearText = Deflate.Decompress(compressed.GetBytes(), Encoding.UTF8);
-			return new ClearText(clearText);
+			return new Cleartext(clearText);
 		}
 
 		public string GenerateRandomPassword()

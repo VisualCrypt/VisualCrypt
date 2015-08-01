@@ -4,7 +4,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
 	public interface ICoreAPI2
 	{
-		Compressed Compress(ClearText clearText);
+		Compressed Compress(Cleartext cleartext);
 
 		byte[] GenerateRandomBytes(int length);
 
@@ -29,7 +29,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		Compressed RemovePadding(PaddedData paddedData);
 
-		ClearText Decompress(Compressed compressed);
+		Cleartext Decompress(Compressed compressed);
 
 		string GenerateRandomPassword();
 
