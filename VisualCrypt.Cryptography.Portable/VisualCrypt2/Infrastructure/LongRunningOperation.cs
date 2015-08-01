@@ -9,11 +9,11 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
 		readonly LongRunningOperationContext _context;
 		readonly Action _switchbackToPreviousBar;
 
-		public LongRunningOperation(Action<int> reportAction, Action switchbackToPreviousBar)
+		public LongRunningOperation(Action<EncryptionProgress> reportAction, Action switchbackToPreviousBar)
 		{
 			_cancellationTokenSource = new CancellationTokenSource();
 			_switchbackToPreviousBar = switchbackToPreviousBar;
-			_context = new LongRunningOperationContext(_cancellationTokenSource.Token, new Progress<int>(reportAction));
+			_context = new LongRunningOperationContext(_cancellationTokenSource.Token, new EncryptionProgress(reportAction));
 		}
 
 		public LongRunningOperationContext Context

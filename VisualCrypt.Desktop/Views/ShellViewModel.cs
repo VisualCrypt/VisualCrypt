@@ -525,7 +525,12 @@ namespace VisualCrypt.Desktop.Views
 		{
 			FileManager.ShowWorkingBar(description);
 
-			Action<int> updateProgressBar = i => FileManager.BindableFileInfo.ProgressPercent = i;
+			Action<EncryptionProgress> updateProgressBar = encryptionProgress =>
+			{
+				FileManager.BindableFileInfo.ProgressPercent = encryptionProgress.Percent;
+				FileManager.BindableFileInfo.ProgressMessage = encryptionProgress.Message;
+				
+			} ;
 
 			var switchBackToPreviousBar = FileManager.FileModel.IsEncrypted
 				? (Action) FileManager.ShowEncryptedBar

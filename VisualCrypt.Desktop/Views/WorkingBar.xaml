@@ -20,6 +20,7 @@
             <TextBlock Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressBarText}"/>
             <ProgressBar Width="150" Height="8" Margin="5,4,5,0" IsIndeterminate="False" Foreground="#FF77FF77"  BorderThickness="0" Background="{DynamicResource BarColorBrush}" Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}"></ProgressBar>
             <TextBlock><Hyperlink Click="WorkingBAr_Cancel_Click">Cancel</Hyperlink></TextBlock>
+            <TextBlock Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressMessage}"/>
         </StackPanel>
           
     </Grid>

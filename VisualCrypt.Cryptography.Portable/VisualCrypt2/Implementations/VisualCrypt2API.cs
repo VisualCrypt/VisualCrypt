@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
@@ -81,13 +82,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				RandomKey32 randomKey = new RandomKey32(_coreAPI2.GenerateRandomBytes(32));
 
 				var cipherV2 = new CipherV2 { RoundsExponent = roundsExponent, IV16 = iv };
-				_coreAPI2.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2);
+				_coreAPI2.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2, context);
 
-				_coreAPI2.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2);
+				_coreAPI2.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2, context);
 
 				MAC16 mac = CreateMAC(cipherV2, context);
 
-				_coreAPI2.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey);
+				_coreAPI2.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey, context);
 
 				response.Result = cipherV2;
 				response.SetSuccess();
@@ -102,7 +103,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		static MAC16 CreateMAC(CipherV2 cipherV2, LongRunningOperationContext context)
 		{
-			if(cipherV2 == null)
+			if (cipherV2 == null)
 				throw new ArgumentNullException("cipherV2");
 
 			if (context == null)
@@ -118,6 +119,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.Padding.ByteValue },
 				new[] { CipherV2.Version });
 
+			context.EncryptionProgress.Message = "Calculating MAC...";
 			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.RoundsExponent.Value, context);
 
 			// See e.g. http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf Chapter 7 for hash truncation.
@@ -135,10 +137,19 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 0, leftSHA512, 0, 32);
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 32, rightSHA512, 0, 32);
 
-			BCrypt24 leftBCrypt = BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context);
+			context.EncryptionProgress.Message = "Deriving Key...";
+
+			// Compute the left side on a background thread
+			var task = Task.Factory.StartNew(()=>BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context));
+
+			// Compute the right side after dispatching the work for the right side
 			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, roundsExponent.Value, context);
 
-			var combinedHashes = ByteArrays.Concatenate(sha512PW64.GetBytes(), leftBCrypt.GetBytes(), rightBCrypt.GetBytes());
+			// Wait for the left side result
+			task.Wait(context.CancellationToken);
+
+			// Use the results
+			var combinedHashes = ByteArrays.Concatenate(sha512PW64.GetBytes(), task.Result.GetBytes(), rightBCrypt.GetBytes());
 			Debug.Assert(combinedHashes.Length == 64 + 24 + 24);
 
 			var condensedHash = _coreAPI2.ComputeSHA256(combinedHashes);
@@ -197,9 +208,9 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.RoundsExponent,
 					context);
 
-				RandomKey32 randomKey = _coreAPI2.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey);
+				RandomKey32 randomKey = _coreAPI2.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey, context);
 
-				MAC16 decryptedMAC = _coreAPI2.AESDecryptMAC(cipherV2, randomKey);
+				MAC16 decryptedMAC = _coreAPI2.AESDecryptMAC(cipherV2, randomKey, context);
 
 				MAC16 actualMAC = CreateMAC(cipherV2, context);
 
@@ -210,7 +221,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				}
 
 
-				PaddedData paddedData = _coreAPI2.AESDecryptMessage(cipherV2, cipherV2.IV16, randomKey);
+				PaddedData paddedData = _coreAPI2.AESDecryptMessage(cipherV2, cipherV2.IV16, randomKey, context);
 
 				Compressed compressed = _coreAPI2.RemovePadding(paddedData);
 

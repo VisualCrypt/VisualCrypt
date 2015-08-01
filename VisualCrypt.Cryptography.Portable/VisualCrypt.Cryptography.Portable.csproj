@@ -55,6 +55,8 @@
     <Compile Include="VisualCrypt2\DataTypes\RandomKey32.cs" />
     <Compile Include="VisualCrypt2\DataTypes\SecureBytes.cs" />
     <Compile Include="VisualCrypt2\DataTypes\PrunedPassword.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\EncryptionProgress.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\IEncryptionProgress.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\LongRunningOperation.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\LongRunningOperationContext.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MAC16.cs" />

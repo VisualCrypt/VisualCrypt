@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -86,7 +87,16 @@ namespace VisualCrypt.Desktop.Shared.Files
 		}
 		int _progressPercent;
 
-
+		public string ProgressMessage
+		{
+			get { return _progressMessage; }
+			set
+			{
+				_progressMessage = value;
+				OnPropertyChanged();
+			}
+		}
+		string _progressMessage;
 
 		public string ProgressBarText
 		{
@@ -121,5 +131,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 		}
 
 
+
+	
 	}
 }

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
@@ -83,7 +82,7 @@ namespace VisualCrypt.Desktop.Tests
 
 		LongRunningOperationContext CreateContext()
 		{
-			return new LongRunningOperationContext(new CancellationTokenSource().Token, new Progress<int>());
+			return new LongRunningOperationContext(new CancellationTokenSource().Token, new EncryptionProgress(reportAction => { }));
 		}
 
 		[TestMethod]
@@ -142,7 +141,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			// do the encryption
 			string visualCrypt;
-			var encryptResponse = _visualCryptAPI.Encrypt(new Cleartext(stringWhereTheErrorOccures), hashPasswordResponse.Result, new RoundsExponent(5),  CreateContext());
+			var encryptResponse = _visualCryptAPI.Encrypt(new Cleartext(stringWhereTheErrorOccures), hashPasswordResponse.Result, new RoundsExponent(5), CreateContext());
 			if (encryptResponse.IsSuccess)
 			{
 				var encodeResponse = _visualCryptAPI.EncodeToVisualCryptText(encryptResponse.Result);

@@ -5,18 +5,20 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
 {
 	public class LongRunningOperationContext
 	{
-		readonly IProgress<int> _progress;
+		readonly EncryptionProgress _encryptionProgress;
 		readonly CancellationToken _cancellationToken;
 
-		public LongRunningOperationContext(CancellationToken token, IProgress<int> progress)
+		public LongRunningOperationContext(CancellationToken token, EncryptionProgress encryptionProgress)
 		{
-			_progress = progress;
+			if(encryptionProgress == null)
+				throw new ArgumentNullException("encryptionProgress");
+			_encryptionProgress = encryptionProgress;
 			_cancellationToken = token;
 		}
 
-		public IProgress<int> Progress
+		public EncryptionProgress EncryptionProgress
 		{
-			get { return _progress; }
+			get { return _encryptionProgress; }
 		}
 
 		public CancellationToken CancellationToken

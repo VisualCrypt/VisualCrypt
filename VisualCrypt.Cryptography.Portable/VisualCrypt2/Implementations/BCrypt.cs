@@ -37,7 +37,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// <param name="data">The data to hash.</param>
 		/// <param name="iv16">The salt to hash with.</param>
 		/// <param name="logRounds">Between [4..31].</param>
-		/// <param name="context">Object for progress indicator and cancelation</param>
+		/// <param name="context">Object for encryptionProgress indicator and cancelation</param>
 		/// <returns>The hash.</returns>
 		public static BCrypt24 CreateHash(IV16 iv16, byte[] data, byte logRounds, LongRunningOperationContext context)
 		{
@@ -381,7 +381,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		uint[] _p;
 		uint[] _s;
 
-		readonly IProgress<int> _progress;
+		readonly EncryptionProgress _encryptionProgress;
 		CancellationToken _cancellationToken; // this is a struct
 
 		BCrypt(LongRunningOperationContext context)
@@ -389,7 +389,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			if(context == null)
 				throw new ArgumentNullException("context");
 
-			_progress = context.Progress;
+			_encryptionProgress = context.EncryptionProgress;
 			_cancellationToken = context.CancellationToken;
 		}
 
@@ -526,11 +526,12 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			for (int i = 0; i < rounds; i++)
 			{
-				// START Progress / Cancellation
+				// START encryptionProgress / Cancellation
 				_cancellationToken.ThrowIfCancellationRequested();
 				var progressValue = i/(decimal) (rounds - 1)*100m;
-				_progress.Report((int) progressValue);
-				// END Progress
+				_encryptionProgress.Percent = (int) progressValue;
+				_encryptionProgress.Report(_encryptionProgress);
+				// END encryptionProgress
 
 				Key(inputBytes);
 				Key(saltBytes);

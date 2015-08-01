@@ -2,8 +2,8 @@
 <Dictionary>
   <Words>
     <DiscreteExceptions>
-      <Term>sha512</Term>
-      <Term>sha256</Term>
+      <Term>Cleartext</Term>
+      <Term>SHA</Term>
     </DiscreteExceptions>
   </Words>
   <Acronyms>

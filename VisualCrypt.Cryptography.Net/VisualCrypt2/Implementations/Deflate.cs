@@ -22,6 +22,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 				using (var deflateStream = new DeflateStream(outputStream, CompressionMode.Compress))
 				{
 					inputStream.CopyTo(deflateStream);
+
 				}
 				return outputStream.ToArray();
 			}
@@ -41,8 +42,8 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 				using (var deflateStream = new DeflateStream(inputStream, CompressionMode.Decompress))
 				{
 					deflateStream.CopyTo(outputStream);
+					return encoding.GetString(outputStream.ToArray());
 				}
-				return encoding.GetString(outputStream.ToArray());
 			}
 		}
 	}
