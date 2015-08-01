@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
@@ -10,8 +11,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// </summary>
 		public static char[] EncodeDataToBase64CharArray(byte[] data)
 		{
-			if (data == null)
-				throw new ArgumentNullException("data");
+			Guard.NotNull(new object[] { data });
 
 			var estimatedOutputCharCount = EstimateBase64EncodedLengthInChars(data.Length);
 			var base64 = new char[estimatedOutputCharCount];
@@ -29,6 +29,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// </summary>
 		public static byte[] DecodeBase64StringToBinary(string base64)
 		{
+			Guard.NotNull(new object[] { base64 });
 			return Convert.FromBase64String(base64);
 		}
 
@@ -36,13 +37,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		{
 			// Each 3 byte sequence in the source data becomes a 4 char (not byte) 
 			// sequence in the character array.  
-			int arrayLengthInChars = (int) ((4.0d/3.0d)*rawBinaryLength);
+			int arrayLengthInChars = (int)((4.0d / 3.0d) * rawBinaryLength);
 
 			// If array length is not divisible by 4, go up to the next 
 			// multiple of 4. 
-			if (arrayLengthInChars%4 != 0)
+			if (arrayLengthInChars % 4 != 0)
 			{
-				arrayLengthInChars += 4 - arrayLengthInChars%4;
+				arrayLengthInChars += 4 - arrayLengthInChars % 4;
 			}
 			return arrayLengthInChars;
 		}

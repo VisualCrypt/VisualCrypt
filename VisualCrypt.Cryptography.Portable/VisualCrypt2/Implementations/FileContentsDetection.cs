@@ -15,8 +15,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		internal static string GetTextDetectingEncoding(byte[] rawBytesFromFile, out Encoding appliedEncoding,
 			Encoding optionalPlatformDefaultEncoding)
 		{
-			if (rawBytesFromFile == null)
-				throw new ArgumentNullException("rawBytesFromFile");
+			Guard.NotNull(new object[] { rawBytesFromFile });  // optionalPlatformDefaultEncoding is allowed to be null
 
 			var byteCount = rawBytesFromFile.Length;
 
@@ -54,7 +53,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			{
 				// yes, this is probaby no text at all, encode it to displayable hex numbers to show the user 'something'.
 				appliedEncoding = null;
-					// null has the special meaning it's Hex View (can't create a custom encoding with EncodingName property in portable class library)
+				// null has the special meaning it's Hex View (can't create a custom encoding with EncodingName property in portable class library)
 				return rawBytesFromFile.ToHexView();
 			}
 
@@ -123,7 +122,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 					illegalCharCount++;
 			}
 
-			return illegalCharCount/totalChars*100;
+			return illegalCharCount / totalChars * 100;
 		}
 
 		/// <summary>
@@ -166,8 +165,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 						if (rawBytesFromFile[1] == 0xFE)
 						{
 							if (rawBytesFromFile.Length > 3 &&
-							    rawBytesFromFile[2] == 0x00 &&
-							    rawBytesFromFile[3] == 0x00) // FF FE 00 00 ->  Unicode (UTF-32 LE) 12000
+								rawBytesFromFile[2] == 0x00 &&
+								rawBytesFromFile[3] == 0x00) // FF FE 00 00 ->  Unicode (UTF-32 LE) 12000
 								encoding = Encoding.GetEncoding("utf-32"); // new UTF32Encoding(false, true, throwOnErrors);
 							else
 								encoding = new UnicodeEncoding(false, true, throwOnErrors);
@@ -192,9 +191,9 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				else if (rawBytesFromFile[0] == 0x00)
 				{
 					if (rawBytesFromFile.Length > 3 &&
-					    rawBytesFromFile[1] == 0x00 &&
-					    rawBytesFromFile[2] == 0xFE &&
-					    rawBytesFromFile[3] == 0xFF) // 00 00 FE FF -> Unicode (UTF-32 Big-Endian) 12001
+						rawBytesFromFile[1] == 0x00 &&
+						rawBytesFromFile[2] == 0xFE &&
+						rawBytesFromFile[3] == 0xFF) // 00 00 FE FF -> Unicode (UTF-32 Big-Endian) 12001
 						encoding = Encoding.GetEncoding("utf-32BE"); //new UTF32Encoding(true, true, throwOnErrors);
 				}
 			}

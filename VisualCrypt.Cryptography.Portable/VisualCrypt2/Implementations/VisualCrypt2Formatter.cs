@@ -11,8 +11,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public static VisualCryptText CreateVisualCryptText(CipherV2 cipherV2)
 		{
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
+			Guard.NotNull(new object[] { cipherV2 });
 
 			var visualCryptTextV2Bytes = ByteArrays.Concatenate(
 				// len			Sum(len)		Start Index
@@ -55,8 +54,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public static CipherV2 DissectVisualCryptText(string visualCryptText)
 		{
-			if (visualCryptText == null)
-				throw new ArgumentNullException("visualCryptText");
+			Guard.NotNull(new object[] { visualCryptText });
 
 			try
 			{
@@ -67,7 +65,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 						"The data is not in VisualCrypt/text V2 format (because it does not start with '{0}').".FormatInvariant(
 							VisualCryptSlashText));
 
-				var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length).Replace('$','/');
+				var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length).Replace('$', '/');
 
 				var visualCryptTextV2Bytes = Base64Encoder.DecodeBase64StringToBinary(visualCryptTextV2Base64);
 

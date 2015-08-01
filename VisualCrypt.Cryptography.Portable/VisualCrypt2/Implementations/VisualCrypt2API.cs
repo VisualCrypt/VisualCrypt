@@ -62,14 +62,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				if (cleartext == null)
-					throw new ArgumentNullException("cleartext");
-
-				if (sha512PW64 == null)
-					throw new ArgumentNullException("sha512PW64");
-
-				if (context == null)
-					throw new ArgumentNullException("context");
+				Guard.NotNull(new object[] { cleartext, sha512PW64, roundsExponent, context });
 
 				Compressed compressed = _coreAPI2.Compress(cleartext);
 
@@ -103,17 +96,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		static MAC16 CreateMAC(CipherV2 cipherV2, LongRunningOperationContext context)
 		{
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (context == null)
-				throw new ArgumentNullException("context");
-
-			if (cipherV2.MessageCipher == null)
-				throw new ArgumentException("cipherV2.MessageCipher must not be null at this point.");
-
-			if (cipherV2.IV16 == null)
-				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
+			Guard.NotNull(new object[] { cipherV2, context });
 
 			// Create the MAC only for items that, while decrypting, have not been used up to this point but do include the version.
 			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.Padding.ByteValue },
@@ -132,6 +115,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		PasswordDerivedKey32 CreatePasswordDerivedKey(IV16 iv, SHA512PW64 sha512PW64, RoundsExponent roundsExponent,
 			LongRunningOperationContext context)
 		{
+			Guard.NotNull(new object[] { iv, sha512PW64, roundsExponent, context });
+
 			var leftSHA512 = new byte[32];
 			var rightSHA512 = new byte[32];
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 0, leftSHA512, 0, 32);
@@ -140,7 +125,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			context.EncryptionProgress.Message = "Deriving Key...";
 
 			// Compute the left side on a background thread
-			var task = Task.Factory.StartNew(()=>BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context));
+			var task = Task.Factory.StartNew(() => BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context));
 
 			// Compute the right side after dispatching the work for the right side
 			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, roundsExponent.Value, context);
@@ -163,8 +148,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				if (cipherV2 == null)
-					throw new ArgumentNullException("cipherV2");
+				Guard.NotNull(new object[] { cipherV2 });
 
 				response.Result = VisualCrypt2Formatter.CreateVisualCryptText(cipherV2);
 				response.SetSuccess();
@@ -182,8 +166,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				if (visualCryptText == null)
-					throw new ArgumentNullException("visualCryptText");
+				Guard.NotNull(new object[] { visualCryptText });
 
 				response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText);
 				response.SetSuccess();
@@ -202,8 +185,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				if (cipherV2 == null)
-					throw new ArgumentNullException("cipherV2");
+				Guard.NotNull(new object[] { cipherV2, sha512PW64, context });
 
 				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.RoundsExponent,
 					context);
@@ -243,14 +225,10 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		{
 			var response = new Response<string, Encoding>();
 
-			if (data == null)
-			{
-				response.SetError("Argument null: ' data'");
-				return response;
-			}
-
 			try
 			{
+				Guard.NotNull(new object[] { data }); // platformDefaultEncoding is allowed to be null
+
 				Encoding encoding;
 				var decodeFileResult = FileContentsDetection.GetTextDetectingEncoding(data, out encoding, platformDefaultEncoding);
 				if (decodeFileResult != null)
@@ -298,8 +276,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			var response = new Response<PrunedPassword>();
 			try
 			{
-				if (unprunedPassword == null)
-					throw new ArgumentNullException("unprunedPassword");
+				Guard.NotNull(new object[] { unprunedPassword });
+
 				// from msdn: White-space characters are defined by the Unicode standard. 
 				// The Trim() method removes any leading and trailing characters that produce 
 				// a return value of true when they are passed to the Char.IsWhiteSpace method.
@@ -322,10 +300,12 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 	internal static class SanitizationStringExtensions
 	{
-		public static string FilterNonWhitespaceControlCharacters(this string unsanitized)
+		public static string FilterNonWhitespaceControlCharacters(this string unprunedPassword)
 		{
+			Guard.NotNull(new object[] { unprunedPassword });
+
 			var charArray =
-				unsanitized
+				unprunedPassword
 					.ToCharArray()
 					.Where(c => !(char.IsControl(c) && !char.IsWhiteSpace(c)))
 					.ToArray();
@@ -335,6 +315,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public static string CondenseWhiteSpace(this string unsanitized)
 		{
+			Guard.NotNull(new object[] { unsanitized });
+
 			return
 				unsanitized
 					.ToCharArray()

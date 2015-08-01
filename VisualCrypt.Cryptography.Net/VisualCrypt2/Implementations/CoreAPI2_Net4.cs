@@ -13,8 +13,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 	{
 		public Compressed Compress(Cleartext cleartext)
 		{
-			if (cleartext == null)
-				throw new ArgumentNullException("cleartext");
+			Guard.NotNull(new object[] { cleartext });
 
 			byte[] compressed = Deflate.Compress(cleartext.Text, Encoding.UTF8);
 
@@ -23,8 +22,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public PaddedData ApplyRandomPadding(Compressed compressed)
 		{
-			if (compressed == null)
-				throw new ArgumentNullException("compressed");
+			Guard.NotNull(new object[] { compressed });
 
 			int requiredPadding;
 			if (compressed.GetBytes().Length % 16 == 0)
@@ -46,6 +44,9 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public byte[] GenerateRandomBytes(int length)
 		{
+			if (length < 1)
+				throw new ArgumentOutOfRangeException("length");
+
 			var randomBytes = new byte[length];
 
 			using (var rng = new RNGCryptoServiceProvider())
@@ -57,17 +58,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public void AESEncryptRandomKeyWithPasswordDerivedKey(PasswordDerivedKey32 passwordDerivedKey, RandomKey32 randomKey, CipherV2 cipherV2, LongRunningOperationContext context)
 		{
-			if (passwordDerivedKey == null)
-				throw new ArgumentNullException("passwordDerivedKey");
-
-			if (randomKey == null)
-				throw new ArgumentNullException("randomKey");
-
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (context == null)
-				throw new ArgumentNullException("context");
+			Guard.NotNull(new object[] { passwordDerivedKey, randomKey, cipherV2, context });
 
 			context.EncryptionProgress.Message = "Encrypting Random Key...";
 
@@ -77,40 +68,19 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public void AESEncryptMessageWithRandomKey(PaddedData paddedData, RandomKey32 randomKey, CipherV2 cipherV2, LongRunningOperationContext context)
 		{
-			if (paddedData == null)
-				throw new ArgumentNullException("paddedData");
-
-			if (randomKey == null)
-				throw new ArgumentNullException("randomKey");
-
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (cipherV2.IV16 == null)
-				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
+			Guard.NotNull(new object[] { paddedData, randomKey, cipherV2, context });
 
 			context.EncryptionProgress.Message = "Encrypting Message...";
 
 			cipherV2.Padding = paddedData.PlaintextPadding;
 
 			cipherV2.MessageCipher = new MessageCipher(ComputeAES(AESDir.Encrypt, cipherV2.IV16, paddedData.GetBytes(), randomKey.GetBytes(), cipherV2.RoundsExponent.Value, context));
-
 		}
 
 
 		public void AESEncryptMACWithRandomKey(CipherV2 cipherV2, MAC16 mac, RandomKey32 randomKey, LongRunningOperationContext context)
 		{
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (mac == null)
-				throw new ArgumentNullException("mac");
-
-			if (randomKey == null)
-				throw new ArgumentNullException("randomKey");
-
-			if (cipherV2.IV16 == null)
-				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
+			Guard.NotNull(new object[] { cipherV2, mac, randomKey, context });
 
 			context.EncryptionProgress.Message = "Encrypting MAC...";
 
@@ -120,22 +90,24 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		byte[] ComputeAES(AESDir aesDir, IV16 iv, byte[] dataBytes, byte[] keyBytes, byte roundsExp, LongRunningOperationContext context)
 		{
+			Guard.NotNull(new object[] { aesDir, iv, dataBytes, keyBytes, roundsExp, context });
+
 			var rounds = 1u << roundsExp;
 			var roundsToGo = rounds;
 
-			if (_ivCache == null || _ivCache.Item1.GetBytes().SequenceEqual(iv.GetBytes()) == false)
+			if (_ivCache == null || _ivCache.Item1.SequenceEqual(iv.GetBytes()) == false)
 				_ivCache = CreateIVTable(iv, rounds);
 
 			byte[] inputData = dataBytes;
 			byte[] aesResult = null;
 			while (roundsToGo > 0)
 			{
-				IV16 currentIV =
+				byte[] currentIV =
 					aesDir == AESDir.Encrypt
 					   ? _ivCache.Item2[roundsToGo - 1]
 					   : _ivCache.Item2[_ivCache.Item2.Length - roundsToGo];
 
-				aesResult = ComputeAESRound(aesDir, currentIV.GetBytes(), inputData, keyBytes);
+				aesResult = ComputeAESRound(aesDir, currentIV, inputData, keyBytes);
 				inputData = aesResult;
 
 				// START encryptionProgress / Cancellation
@@ -148,30 +120,33 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 				roundsToGo--;
 			}
 			return aesResult;
-
 		}
 
-		Tuple<IV16, IV16[]> _ivCache;
-		Tuple<IV16, IV16[]> CreateIVTable(IV16 iv, uint rounds)
+		Tuple<byte[], byte[][]> _ivCache;
+		Tuple<byte[], byte[][]> CreateIVTable(IV16 iv, uint rounds)
 		{
+			Guard.NotNull(new object[] { iv });
+
 			var ivRounds = rounds;
-			var ivTable = new IV16[rounds];
+			var ivTable = new byte[rounds][];
 			byte[] ivInput = iv.GetBytes();
 			while (ivRounds > 0)
 			{
 
-				ivTable[ivTable.Length - ivRounds] = new IV16(ivInput);
+				ivTable[ivTable.Length - ivRounds] = ivInput;
 
 				ivInput = ComputeSHA256(ivInput).Take(16).ToArray();
 
 				ivRounds = ivRounds - 1;
 			}
-			return new Tuple<IV16, IV16[]>(iv, ivTable);
+			return new Tuple<byte[], byte[][]>(iv.GetBytes(), ivTable);
 		}
 
 
 		static byte[] ComputeAESRound(AESDir aesDir, byte[] iv, byte[] input, byte[] keyBytes)
 		{
+			Guard.NotNull(new object[] { iv, input, keyBytes });
+
 			switch (aesDir)
 			{
 				case AESDir.Encrypt:
@@ -204,6 +179,8 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		static AesManaged CreateAesManaged(byte[] iv, byte[] keyBytes)
 		{
+			Guard.NotNull(new object[] { iv, keyBytes });
+
 			return new AesManaged
 			{
 				KeySize = 256,
@@ -216,27 +193,14 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		}
 
 
-		private enum AESDir
+		enum AESDir
 		{
 			Encrypt, Decrpyt
 		}
 
 		public MAC16 AESDecryptMAC(CipherV2 cipherV2, RandomKey32 randomKey, LongRunningOperationContext context)
 		{
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (randomKey == null)
-				throw new ArgumentNullException("randomKey");
-
-			if (cipherV2.IV16 == null)
-				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
-
-			if (cipherV2.MACCipher16 == null)
-				throw new ArgumentException("cipherV2.MACCipher16 must not be null at this point.");
-
-			if (context == null)
-				throw new ArgumentNullException("context");
+			Guard.NotNull(new object[] { cipherV2, randomKey, context });
 
 			context.EncryptionProgress.Message = "Decrypting MAC...";
 
@@ -247,17 +211,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public RandomKey32 AESDecryptRandomKeyWithPasswordDerivedKey(CipherV2 cipherV2, PasswordDerivedKey32 passwordDerivedKey, LongRunningOperationContext context)
 		{
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (passwordDerivedKey == null)
-				throw new ArgumentNullException("passwordDerivedKey");
-
-			if (cipherV2.IV16 == null)
-				throw new ArgumentException("cipherV2.IV16 must not be null at this point.");
-
-			if (cipherV2.RandomKeyCipher32 == null)
-				throw new ArgumentException("cipherV2.RandomKeyCipher32 must not be null at this point.");
+			Guard.NotNull(new object[] { cipherV2, passwordDerivedKey, context });
 
 			context.EncryptionProgress.Message = "Decrypting Random Key...";
 
@@ -268,14 +222,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public PaddedData AESDecryptMessage(CipherV2 cipherV2, IV16 iv16, RandomKey32 randomKey, LongRunningOperationContext context)
 		{
-			if (cipherV2 == null)
-				throw new ArgumentNullException("cipherV2");
-
-			if (iv16 == null)
-				throw new ArgumentNullException("iv16");
-
-			if (randomKey == null)
-				throw new ArgumentNullException("randomKey");
+			Guard.NotNull(new object[] { cipherV2, iv16, randomKey, context });
 
 			context.EncryptionProgress.Message = "Decrypting Message...";
 
@@ -285,8 +232,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public Compressed RemovePadding(PaddedData paddedData)
 		{
-			if (paddedData == null)
-				throw new ArgumentNullException("paddedData");
+			Guard.NotNull(new object[] { paddedData });
 
 			var paddingRemoved = new byte[paddedData.GetBytes().Length - paddedData.PlaintextPadding.ByteValue];
 
@@ -297,8 +243,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public Cleartext Decompress(Compressed compressed)
 		{
-			if (compressed == null)
-				throw new ArgumentNullException("compressed");
+			Guard.NotNull(new object[] { compressed });
 
 			var clearText = Deflate.Decompress(compressed.GetBytes(), Encoding.UTF8);
 			return new Cleartext(clearText);
@@ -331,6 +276,8 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public byte[] ComputeSHA512(byte[] data)
 		{
+			Guard.NotNull(new object[] { data });
+
 			using (var sha = new SHA512Managed())
 			{
 				return sha.ComputeHash(data);
@@ -339,6 +286,8 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public byte[] ComputeSHA256(byte[] data)
 		{
+			Guard.NotNull(new object[] { data });
+
 			using (var sha = new SHA256Managed())
 			{
 				return sha.ComputeHash(data);

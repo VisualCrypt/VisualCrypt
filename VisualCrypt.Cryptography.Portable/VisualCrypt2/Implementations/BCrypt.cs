@@ -41,11 +41,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// <returns>The hash.</returns>
 		public static BCrypt24 CreateHash(IV16 iv16, byte[] data, byte logRounds, LongRunningOperationContext context)
 		{
-			if (iv16 == null)
-				throw new ArgumentNullException("iv16");
-
-			if (data == null)
-				throw new ArgumentNullException("data");
+			Guard.NotNull(new object[] { iv16, data, context });
 
 			if (logRounds < 4 || logRounds > 31)
 				throw new ArgumentOutOfRangeException("logRounds", logRounds, "logRounds must be between 4 and 31 (inclusive)");
@@ -367,8 +363,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			for (i = 0; i < 4; i++)
 			{
-				word = (word << 8) | (uint) (data[offset] & 0xff);
-				offset = (offset + 1)%data.Length;
+				word = (word << 8) | (uint)(data[offset] & 0xff);
+				offset = (offset + 1) % data.Length;
 			}
 			return word;
 		}
@@ -386,7 +382,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		BCrypt(LongRunningOperationContext context)
 		{
-			if(context == null)
+			if (context == null)
 				throw new ArgumentNullException("context");
 
 			_encryptionProgress = context.EncryptionProgress;
@@ -406,7 +402,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			block ^= _p[0];
 			unchecked
 			{
-				for (round = 0; round <= BlowfishNumRounds - 2;)
+				for (round = 0; round <= BlowfishNumRounds - 2; )
 				{
 					// Feistel substitution on left word
 					n = _s[(block >> 24) & 0xff];
@@ -442,7 +438,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		{
 			int i;
 			int koffp = 0;
-			uint[] lr = {0, 0};
+			uint[] lr = { 0, 0 };
 			int plen = _p.Length, slen = _s.Length;
 
 			for (i = 0; i < plen; i++)
@@ -474,7 +470,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			int i;
 			int passwordOffset = 0,
 				saltOffset = 0;
-			uint[] lr = {0, 0};
+			uint[] lr = { 0, 0 };
 			int plen = _p.Length, slen = _s.Length;
 
 			for (i = 0; i < plen; i++)
@@ -528,8 +524,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			{
 				// START encryptionProgress / Cancellation
 				_cancellationToken.ThrowIfCancellationRequested();
-				var progressValue = i/(decimal) (rounds - 1)*100m;
-				_encryptionProgress.Percent = (int) progressValue;
+				var progressValue = i / (decimal)(rounds - 1) * 100m;
+				_encryptionProgress.Percent = (int)progressValue;
 				_encryptionProgress.Report(_encryptionProgress);
 				// END encryptionProgress
 
@@ -543,13 +539,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 					Encipher(cdata, j << 1);
 			}
 
-			byte[] ret = new byte[clen*4];
+			byte[] ret = new byte[clen * 4];
 			for (int i = 0, j = 0; i < clen; i++)
 			{
-				ret[j++] = (byte) ((cdata[i] >> 24) & 0xff);
-				ret[j++] = (byte) ((cdata[i] >> 16) & 0xff);
-				ret[j++] = (byte) ((cdata[i] >> 8) & 0xff);
-				ret[j++] = (byte) (cdata[i] & 0xff);
+				ret[j++] = (byte)((cdata[i] >> 24) & 0xff);
+				ret[j++] = (byte)((cdata[i] >> 16) & 0xff);
+				ret[j++] = (byte)((cdata[i] >> 8) & 0xff);
+				ret[j++] = (byte)(cdata[i] & 0xff);
 			}
 			return ret;
 		}
