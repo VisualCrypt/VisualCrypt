@@ -10,6 +10,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
@@ -797,6 +798,27 @@ namespace VisualCrypt.Desktop.Views
 			{
 				var cipherText = FileManager.FileModel.VisualCryptText;
 				Clipboard.SetText(cipherText, TextDataFormat.Text);
+			}
+			catch (Exception e)
+			{
+				_messageBoxService.ShowError(e.Message);
+			}
+		}
+		#endregion
+
+		#region SwitchLanguageCommand
+		public DelegateCommand<string> SwitchLanguageCommand
+		{
+			get { return CreateCommand<string>(ref _switchLanguageCommand, ExecuteSwitchLanguageCommand, (s) => true); }
+		}
+
+		DelegateCommand<string> _switchLanguageCommand;
+
+		void ExecuteSwitchLanguageCommand(string loc)
+		{
+			try
+			{
+				Loc.SetLanguage(loc);
 			}
 			catch (Exception e)
 			{

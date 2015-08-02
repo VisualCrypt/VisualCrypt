@@ -11,6 +11,7 @@
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:prismSupport="clr-namespace:VisualCrypt.Desktop.Shared.PrismSupport;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:portable="clr-namespace:VisualCrypt.Cryptography.Portable;assembly=VisualCrypt.Cryptography.Portable"
                     Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
                     Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
                     Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
@@ -131,6 +132,10 @@
                 <MenuItem Header="_Tool Area" IsCheckable="True"
                           IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsToolAreaChecked, Mode=TwoWay}"
                           InputGestureText="ESC" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miLanguage,Mode=OneWay}">
+                   <MenuItem Header="English" Command="{Binding SwitchLanguageCommand}" CommandParameter="EN" IsChecked="{Binding Source={x:Static portable:Loc.Strings}, Path=IsEN, Mode=OneWay}"></MenuItem>
+                    <MenuItem Header="Deutsch" Command="{Binding SwitchLanguageCommand}" CommandParameter="DE" IsChecked="{Binding Source={x:Static portable:Loc.Strings}, Path=IsDE,Mode=OneWay}"></MenuItem>
+               </MenuItem>
                 <MenuItem
                     Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">
                     <MenuItem Header="Zoom _in" InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn" />
