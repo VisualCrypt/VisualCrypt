@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Runtime.InteropServices;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
@@ -23,10 +22,18 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
 			if (data == null)
 				throw new ArgumentNullException("data");
 
-			var allBytesZero = data.All(b => b == 0);
+			var nonZeroBytesPresent = false;
+			foreach (var b in data)
+			{
+				if (b != 0)
+				{
+					nonZeroBytesPresent = true;
+					break;
+				}
+			}
 
-			if (allBytesZero)
-				throw new ArgumentException("The hash must not have all bytes zero.", "data");
+			if (data.Length >0 && !nonZeroBytesPresent)
+				throw new ArgumentException("Invalid data: all bytes zero.", "data");
 
 			_data = data;
 			_gcHandle = GCHandle.Alloc(_data, GCHandleType.Pinned);
