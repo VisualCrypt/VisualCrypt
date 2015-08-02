@@ -48,7 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Loc.cs" />
+    <Compile Include="LocalizationExtensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Strings.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RandomKeyCipher32.cs" />

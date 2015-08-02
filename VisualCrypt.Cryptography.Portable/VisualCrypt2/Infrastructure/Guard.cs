@@ -15,5 +15,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
 				}
 			}
 		}
+
+		public static void NotNull(object arg, [CallerMemberName] string method = "")
+		{
+			if (arg == null)
+			{
+				throw new ArgumentNullException(string.Format("Parameter of method {0}", method));
+			}
+		}
 	}
 }

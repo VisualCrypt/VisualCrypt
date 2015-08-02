@@ -68,7 +68,7 @@
                     <Setter Property="IsTabStop" Value="False" />
                 </Style>
             </Menu.Resources>
-            <MenuItem Header="_File">
+            <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFile,Mode=OneWay}">
                 <MenuItem Header="_New" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
                 <MenuItem Header="_Open..." Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
                 <MenuItem Header="_Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
