@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel;
-using System.Dynamic;
 using System.Runtime.CompilerServices;
 using System.Windows;
 
@@ -98,16 +97,16 @@ namespace VisualCrypt.Desktop.Shared.Files
 		}
 		string _progressMessage;
 
-		public string ProgressBarText
+		public string ProgressBarOpName
 		{
-			get { return _progressBarText; }
+			get { return _progressBarOpName; }
 			set
 			{
-				_progressBarText = value;
+				_progressBarOpName = value;
 				OnPropertyChanged();
 			}
 		}
-		string _progressBarText;
+		string _progressBarOpName;
 
 		public string EncrytedBarText
 		{

@@ -38,7 +38,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		public string PasswordStatus
 		{
-			get { return _isPasswordSet ? "Password " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5) : "Set Password..."; }
+			get { return _isPasswordSet ? Loc.Strings.termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5) : Loc.Strings.termSetPassword + "..."; }
 		}
 
 		public string HyperlinkPasswordText

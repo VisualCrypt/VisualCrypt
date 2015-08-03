@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 
@@ -9,6 +10,16 @@ namespace VisualCrypt.Desktop.Shared.Files
 	{
 		public static readonly BindableFileInfo BindableFileInfo = new BindableFileInfo();
 		static FileModel _fileModel = FileModel.EmptyCleartext();
+
+		static FileManager()
+		{
+			Loc.LocaleChanged += delegate
+			{
+				if (_fileModel != null && _fileModel.CipherV2 != null && _fileModel.IsEncrypted)
+					UpdateEncryptedBarText();
+			};
+		}
+		
 
 
 		public static FileModel FileModel
@@ -27,16 +38,16 @@ namespace VisualCrypt.Desktop.Shared.Files
 				{
 					UpdateEncryptedBarText();
 					ShowEncryptedBar();
-					
+
 				}
-				else 
+				else
 					ShowPlainTextBar();
 			}
 		}
 
 		static void UpdateEncryptedBarText()
 		{
-			string text = string.Format("VisualCrypt {0}, AES-256 Bit, Rounds 2^{1}, {2} Ch.", CipherV2.Version, _fileModel.CipherV2.RoundsExponent.Value, _fileModel.VisualCryptText.Length);
+			string text = string.Format(Loc.Strings.encrpytedStatusbarText, CipherV2.Version, _fileModel.CipherV2.RoundsExponent.Value, _fileModel.VisualCryptText.Length);
 			BindableFileInfo.EncrytedBarText = text;
 		}
 
@@ -45,7 +56,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 			BindableFileInfo.WorkingBarVisibility = Visibility.Visible;
 			BindableFileInfo.PlainTextBarVisibility = Visibility.Collapsed;
 			BindableFileInfo.EncryptedBarVisibility = Visibility.Collapsed;
-			BindableFileInfo.ProgressBarText = description;
+			BindableFileInfo.ProgressBarOpName = description;
 		}
 
 		public static void ShowPlainTextBar()
@@ -66,7 +77,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		static void _fileModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			var fileModel = (FileModel) sender;
+			var fileModel = (FileModel)sender;
 			switch (e.PropertyName)
 			{
 				case "IsDirty":
@@ -83,6 +94,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 			}
 		}
 
-		
+
 	}
 }

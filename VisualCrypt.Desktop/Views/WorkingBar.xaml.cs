@@ -31,7 +31,7 @@ namespace VisualCrypt.Desktop.Views
 			get { return DataContext as ShellViewModel; }
 		}
 
-		void WorkingBAr_Cancel_Click(object sender, RoutedEventArgs e)
+		void WorkingBar_Cancel_Click(object sender, RoutedEventArgs e)
 		{
 			ViewModel.CancelLongRunningOperation();
 		}

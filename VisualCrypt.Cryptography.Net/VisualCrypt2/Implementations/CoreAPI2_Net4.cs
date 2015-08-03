@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
@@ -60,7 +61,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		{
 			Guard.NotNull(new object[] { passwordDerivedKey, randomKey, cipherV2, context });
 
-			context.EncryptionProgress.Message = "Encrypting Random Key...";
+			context.EncryptionProgress.Message = Loc.Strings.encProgr_EncryptingRandomKey;
 
 			cipherV2.RandomKeyCipher32 = new RandomKeyCipher32(ComputeAES(AESDir.Encrypt, cipherV2.IV16, randomKey.GetBytes(), passwordDerivedKey.GetBytes(), cipherV2.RoundsExponent.Value, context));
 		}
@@ -70,7 +71,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		{
 			Guard.NotNull(new object[] { paddedData, randomKey, cipherV2, context });
 
-			context.EncryptionProgress.Message = "Encrypting Message...";
+			context.EncryptionProgress.Message = Loc.Strings.encProgr_EncryptingMessage;
 
 			cipherV2.Padding = paddedData.PlaintextPadding;
 
@@ -82,7 +83,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		{
 			Guard.NotNull(new object[] { cipherV2, mac, randomKey, context });
 
-			context.EncryptionProgress.Message = "Encrypting MAC...";
+			context.EncryptionProgress.Message = Loc.Strings.encProgr_EncryptingMAC;
 
 			cipherV2.MACCipher16 = new MACCipher16(ComputeAES(AESDir.Encrypt, cipherV2.IV16, mac.GetBytes(), randomKey.GetBytes(), cipherV2.RoundsExponent.Value, context));
 		}
@@ -202,7 +203,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		{
 			Guard.NotNull(new object[] { cipherV2, randomKey, context });
 
-			context.EncryptionProgress.Message = "Decrypting MAC...";
+			context.EncryptionProgress.Message = Loc.Strings.encProgr_DecryptingMAC;
 
 			var mac16 = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MACCipher16.GetBytes(), randomKey.GetBytes(), cipherV2.RoundsExponent.Value, context);
 			return new MAC16(mac16);
@@ -213,7 +214,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		{
 			Guard.NotNull(new object[] { cipherV2, passwordDerivedKey, context });
 
-			context.EncryptionProgress.Message = "Decrypting Random Key...";
+			context.EncryptionProgress.Message = Loc.Strings.encProgr_DecryptingRandomKey;
 
 			var randomKey = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.RandomKeyCipher32.GetBytes(), passwordDerivedKey.GetBytes(), cipherV2.RoundsExponent.Value, context);
 			return new RandomKey32(randomKey);
@@ -224,7 +225,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 		{
 			Guard.NotNull(new object[] { cipherV2, iv16, randomKey, context });
 
-			context.EncryptionProgress.Message = "Decrypting Message...";
+			context.EncryptionProgress.Message = Loc.Strings.encProgr_DecryptingMessage;
 
 			var paddedData = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MessageCipher.GetBytes(), randomKey.GetBytes(), cipherV2.RoundsExponent.Value, context);
 			return new PaddedData(paddedData, cipherV2.Padding);
@@ -286,7 +287,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public byte[] ComputeSHA256(byte[] data)
 		{
-			Guard.NotNull(new object[] { data });
+			Guard.NotNull(data);
 
 			using (var sha = new SHA256Managed())
 			{

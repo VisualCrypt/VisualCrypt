@@ -374,7 +374,7 @@ namespace VisualCrypt.Desktop.Views
 			tryDecryptLoadFileWithCurrentPassword:
 
 				// We have a password, but we don't know if it's the right one. We must try!
-				using (_longRunningOperation = StartLongRunnungOperation("Trying to decrypt opened file"))
+				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryptOpenedFile))
 				{
 					var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
 				FileManager.FileModel.VisualCryptText, _longRunningOperation.Context));
@@ -444,7 +444,7 @@ namespace VisualCrypt.Desktop.Views
 
 				string textBufferContents = await EditorSendsTextAsync();
 
-				using (_longRunningOperation = StartLongRunnungOperation("Encrypting"))
+				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryption))
 				{
 					var createEncryptedFileResponse =
 					await Task.Run(() => _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
@@ -497,7 +497,7 @@ namespace VisualCrypt.Desktop.Views
 
 				string textBufferContents = await EditorSendsTextAsync();
 
-				using (_longRunningOperation = StartLongRunnungOperation("Decryption"))
+				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryption))
 				{
 					var decryptForDisplayResult =
 					await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
@@ -629,7 +629,7 @@ namespace VisualCrypt.Desktop.Views
 			// We will not replace FileManager.FileModel because we continue editing the same cleartext.
 			string editorClearText = await EditorSendsTextAsync();
 
-			using (_longRunningOperation = StartLongRunnungOperation("Encrypt and then save."))
+			using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryptAndSave))
 			{
 				var encryptAndSaveFileResponse =
 				await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText, _longRunningOperation.Context));
@@ -809,7 +809,7 @@ namespace VisualCrypt.Desktop.Views
 		#region SwitchLanguageCommand
 		public DelegateCommand<string> SwitchLanguageCommand
 		{
-			get { return CreateCommand<string>(ref _switchLanguageCommand, ExecuteSwitchLanguageCommand, (s) => true); }
+			get { return CreateCommand(ref _switchLanguageCommand, ExecuteSwitchLanguageCommand, s => true); }
 		}
 
 		DelegateCommand<string> _switchLanguageCommand;

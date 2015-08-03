@@ -40,7 +40,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);
 			SearchOptions = new SearchOptions();
 			ExecuteZoom100();
-			Loc.LocaleChanged += (sender, args) => UpdateZoomLevelMenuText();
+			Loc.LocaleChanged += delegate
+			{
+				UpdateZoomLevelMenuText();
+				UpdateStatusBar();
+			};
 
 
 			_editor.TextBox1.TextChanged += OnTextChanged;
@@ -761,7 +765,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			var pos = GetPositionString();
 			var enc = GetEncodingString();
 
-			var statusBarText = string.Format(CultureInfo.InvariantCulture, "Plaintext | {0} | {1}", pos, enc);
+			var statusBarText = string.Format(CultureInfo.InvariantCulture, Loc.Strings.plaintextStatusbarText, pos, enc);
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
 		}
 
@@ -776,7 +780,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			var lineIndex = GetCurrentLineIndex();
 			var colIndex = GetColIndex(lineIndex);
 
-			return string.Format(CultureInfo.InvariantCulture, "Ln {0}, Col {1} | Ch {2}/{3}", lineIndex + 1, colIndex + 1, rawPos,
+			return string.Format(CultureInfo.InvariantCulture, Loc.Strings.plaintextStatusbarPositionInfo, lineIndex + 1, colIndex + 1, rawPos,
 				_editor.TextBox1.Text.Length);
 		}
 

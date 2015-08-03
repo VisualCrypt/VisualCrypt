@@ -403,9 +403,200 @@ namespace VisualCrypt.Cryptography.Portable
 			}
 		}
 
+		public string termEncrypt
+		{
+			get
+			{
+				return new[] { "Encrypt", "Verschlüsseln" }.GetLocalizedString();
+			}
+		}
+
+		public string termDecrypt
+		{
+			get
+			{
+				return new[] { "Decrypt", "Entschlüsseln" }.GetLocalizedString();
+			}
+		}
+
+		public string termPassword
+		{
+			get
+			{
+				return new[] { "Password", "Passwort" }.GetLocalizedString();
+			}
+		}
+
+		public string termSetPassword
+		{
+			get
+			{
+				return new[] { "Set Password", "Passwort setzen" }.GetLocalizedString();
+			}
+		}
+
+		public string termSave
+		{
+			get
+			{
+				return new[] { "Save", "Speichern" }.GetLocalizedString();
+			}
+		}
+
+		public string termCopyToClipboard
+		{
+			get
+			{
+				return new[] { "Copy to Clipboard", "in die Zwischenablage" }.GetLocalizedString();
+			}
+		}
+
+		public string termCancel
+		{
+			get
+			{
+				return new[] { "Cancel", "Abbrechen" }.GetLocalizedString();
+			}
+		}
+
+		#region Status Bars
+
+		public string plaintextStatusbarText
+		{
+			get
+			{
+				return new[] { "Plaintext | {0} | {1}", "Klartext | {0} | {1}" }.GetLocalizedString();
+			}
+		}
+
+		public string plaintextStatusbarPositionInfo
+		{
+			get
+			{
+				return new[] { "Ln {0}, Col {1} | Pos {2}/{3}", "Zl {0}, Sp {1} | Pos {2}/{3}" }.GetLocalizedString();
+			}
+		}
+
+		public string encrpytedStatusbarText
+		{
+			get
+			{
+				return new[] { "VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.", "VisualCrypt {0}, AES 256 Bit, 2^{1}-fach, {2} Zeichen" }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_EncryptingRandomKey
+		{
+			get
+			{
+				return new[] { "Encrypting Random Key..., ", "Random Key verschlüsseln..." }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_EncryptingMessage
+		{
+			get
+			{
+				return new[] { "Encrypting Message..., ", "Text verschlüsseln..." }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_EncryptingMAC
+		{
+			get
+			{
+				return new[] { "Encrypting MAC..., ", "MAC verschlüsseln..." }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_DecryptingMAC
+		{
+			get
+			{
+				return new[] { "Decrypting MAC..., ", "MAC entschlüsseln..." }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_DecryptingRandomKey
+		{
+			get
+			{
+				return new[] { "Decrypting Random Key..., ", "Random Key entschlüsseln..." }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_DecryptingMessage
+		{
+			get
+			{
+				return new[] { "Decrypting Message...", "Text entschlüsseln..." }.GetLocalizedString();
+			}
+		}
+		public string encProgr_CalculatingMAC
+		{
+			get
+			{
+				return new[] { "Calculating MAC...", "MAC berechnen..." }.GetLocalizedString();
+			}
+		}
+
+		public string encProgr_ProcessingKey
+		{
+			get
+			{
+				return new[] { "Processing Key...", "Schlüssel verarbeiten..." }.GetLocalizedString();
+			}
+		}
+
+		public string operationEncryption
+		{
+			get
+			{
+				return new[] { "Encrypting:", "Verschlüsseln:" }.GetLocalizedString();
+			}
+		}
+
+		public string operationDecryption
+		{
+			get
+			{
+				return new[] { "Decrypting:", "Entschlüsseln:" }.GetLocalizedString();
+			}
+		}
+
+		public string operationEncryptAndSave
+		{
+			get
+			{
+				return new[] { "Encrypting and saving:", "Verschlüsseln und speichern:" }.GetLocalizedString();
+			}
+		}
+
+		public string operationDecryptOpenedFile
+		{
+			get
+			{
+				return new[] { "Decrypting the file being opened:", "Entschlüsseln der ladenden Datei:" }.GetLocalizedString();
+			}
+		}
+
+		public string msgPasswordError
+		{
+			get
+			{
+				return new[] { "Incorrect password or corrupted/forged message.", "Falsches Passwort oder beschädigte/verfälschte Daten." }.GetLocalizedString();
+			}
+		}
+
+		
+		
 
 
+		
+		
 
+
+		#endregion
 
 
 

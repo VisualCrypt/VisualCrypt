@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
+             xmlns:portable="clr-namespace:VisualCrypt.Cryptography.Portable;assembly=VisualCrypt.Cryptography.Portable"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -30,15 +31,15 @@
         </StackPanel>
         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock>
-                <Hyperlink Click="Hyperlink_CopyAll_Click">Copy to Clipboard
+                <Hyperlink Click="Hyperlink_CopyAll_Click"> <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termCopyToClipboard,Mode=OneWay}"></Run>
                 </Hyperlink>
                 <Run xml:space="preserve"> </Run>
                 <Hyperlink  Click="Hyperlink_Decrypt_Click">
-                  Decrypt
+                  <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termDecrypt,Mode=OneWay}"></Run>
                 </Hyperlink>
                  <Run xml:space="preserve"> </Run>
                  <Hyperlink  Click="Hyperlink_Save_Click" IsEnabled="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty}">
-                  Save
+                   <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termSave,Mode=OneWay}"></Run>
                 </Hyperlink>
                  <Run xml:space="preserve"> </Run>
             </TextBlock>

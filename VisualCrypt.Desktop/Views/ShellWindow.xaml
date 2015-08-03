@@ -159,8 +159,6 @@
                 <views:WorkingBar Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=WorkingBarVisibility}"></views:WorkingBar>
                 <views:EncryptedBar Visibility="{Binding  Source={x:Static files:FileManager.BindableFileInfo}, Path=EncryptedBarVisibility}"></views:EncryptedBar>
             </StackPanel>
-           
         </Border>
-
     </Grid>
 </controls:AppWindow>

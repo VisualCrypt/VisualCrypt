@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
+             xmlns:portable="clr-namespace:VisualCrypt.Cryptography.Portable;assembly=VisualCrypt.Cryptography.Portable"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -11,17 +12,19 @@
             Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/BarStyles.xaml" />
     </UserControl.Resources>
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-            <ColumnDefinition Width="Auto"></ColumnDefinition>
-            <ColumnDefinition Width="*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Column="0">
-            <TextBlock Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressBarText}"/>
+            <TextBlock>
+                <Hyperlink Click="WorkingBar_Cancel_Click">
+                 <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termCancel,Mode=OneWay}"></Run>
+            </Hyperlink>
+            </TextBlock>
+
             <ProgressBar Width="150" Height="8" Margin="5,4,5,0" IsIndeterminate="False" Foreground="#FF77FF77"  BorderThickness="0" Background="{DynamicResource BarColorBrush}" Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}"></ProgressBar>
-            <TextBlock><Hyperlink Click="WorkingBAr_Cancel_Click">Cancel</Hyperlink></TextBlock>
-            <TextBlock Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressMessage}"/>
+            <TextBlock>
+                 <Run Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressBarOpName}"/>
+            <Run Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressMessage}"/>
+            </TextBlock>
         </StackPanel>
-          
+
     </Grid>
 </UserControl>
