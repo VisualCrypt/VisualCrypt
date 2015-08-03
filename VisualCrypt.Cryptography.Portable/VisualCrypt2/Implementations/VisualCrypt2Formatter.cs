@@ -11,7 +11,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public static VisualCryptText CreateVisualCryptText(CipherV2 cipherV2)
 		{
-			Guard.NotNull(new object[] { cipherV2 });
+			Guard.NotNull(cipherV2);
 
 			var visualCryptTextV2Bytes = ByteArrays.Concatenate(
 				// len			Sum(len)		Start Index
@@ -54,7 +54,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 		public static CipherV2 DissectVisualCryptText(string visualCryptText)
 		{
-			Guard.NotNull(new object[] { visualCryptText });
+			Guard.NotNull(visualCryptText);
 
 			try
 			{

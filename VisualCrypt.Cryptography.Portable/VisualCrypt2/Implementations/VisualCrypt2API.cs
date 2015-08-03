@@ -148,7 +148,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				Guard.NotNull(new object[] { cipherV2 });
+				Guard.NotNull(cipherV2);
 
 				response.Result = VisualCrypt2Formatter.CreateVisualCryptText(cipherV2);
 				response.SetSuccess();
@@ -166,7 +166,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				Guard.NotNull(new object[] { visualCryptText });
+				Guard.NotNull(visualCryptText);
 
 				response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText);
 				response.SetSuccess();
@@ -227,7 +227,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			try
 			{
-				Guard.NotNull(new object[] { data }); // platformDefaultEncoding is allowed to be null
+				Guard.NotNull(data); // platformDefaultEncoding is allowed to be null
 
 				Encoding encoding;
 				var decodeFileResult = FileContentsDetection.GetTextDetectingEncoding(data, out encoding, platformDefaultEncoding);
@@ -276,7 +276,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			var response = new Response<PrunedPassword>();
 			try
 			{
-				Guard.NotNull(new object[] { unprunedPassword });
+				Guard.NotNull(unprunedPassword);
 
 				// from msdn: White-space characters are defined by the Unicode standard. 
 				// The Trim() method removes any leading and trailing characters that produce 
@@ -302,7 +302,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 	{
 		public static string FilterNonWhitespaceControlCharacters(this string unprunedPassword)
 		{
-			Guard.NotNull(new object[] { unprunedPassword });
+			Guard.NotNull(unprunedPassword);
 
 			var charArray =
 				unprunedPassword
@@ -313,12 +313,12 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			return new string(charArray);
 		}
 
-		public static string CondenseWhiteSpace(this string unsanitized)
+		public static string CondenseWhiteSpace(this string unpruned)
 		{
-			Guard.NotNull(new object[] { unsanitized });
+			Guard.NotNull(unpruned);
 
 			return
-				unsanitized
+				unpruned
 					.ToCharArray()
 					.Select(c => char.IsWhiteSpace(c) ? ' ' : c)
 					.Aggregate(new StringBuilder(),

@@ -11,7 +11,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// </summary>
 		public static char[] EncodeDataToBase64CharArray(byte[] data)
 		{
-			Guard.NotNull(new object[] { data });
+			Guard.NotNull(data);
 
 			var estimatedOutputCharCount = EstimateBase64EncodedLengthInChars(data.Length);
 			var base64 = new char[estimatedOutputCharCount];
@@ -29,7 +29,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 		/// </summary>
 		public static byte[] DecodeBase64StringToBinary(string base64)
 		{
-			Guard.NotNull(new object[] { base64 });
+			Guard.NotNull(base64);
 			return Convert.FromBase64String(base64);
 		}
 

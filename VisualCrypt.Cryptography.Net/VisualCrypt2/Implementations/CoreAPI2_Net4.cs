@@ -14,7 +14,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 	{
 		public Compressed Compress(Cleartext cleartext)
 		{
-			Guard.NotNull(new object[] { cleartext });
+			Guard.NotNull(cleartext);
 
 			byte[] compressed = Deflate.Compress(cleartext.Text, Encoding.UTF8);
 
@@ -23,7 +23,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public PaddedData ApplyRandomPadding(Compressed compressed)
 		{
-			Guard.NotNull(new object[] { compressed });
+			Guard.NotNull(compressed);
 
 			int requiredPadding;
 			if (compressed.GetBytes().Length % 16 == 0)
@@ -233,7 +233,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public Compressed RemovePadding(PaddedData paddedData)
 		{
-			Guard.NotNull(new object[] { paddedData });
+			Guard.NotNull(paddedData);
 
 			var paddingRemoved = new byte[paddedData.GetBytes().Length - paddedData.PlaintextPadding.ByteValue];
 
@@ -244,7 +244,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public Cleartext Decompress(Compressed compressed)
 		{
-			Guard.NotNull(new object[] { compressed });
+			Guard.NotNull(compressed);
 
 			var clearText = Deflate.Decompress(compressed.GetBytes(), Encoding.UTF8);
 			return new Cleartext(clearText);
@@ -277,7 +277,7 @@ namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 
 		public byte[] ComputeSHA512(byte[] data)
 		{
-			Guard.NotNull(new object[] { data });
+			Guard.NotNull(data);
 
 			using (var sha = new SHA512Managed())
 			{
