@@ -61,14 +61,14 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.Row="0" Height="27" Padding="0" IsTabStop="False">
+        <Menu Grid.Row="0" Height="27" Padding="0,4,0,0" IsMainMenu="True" KeyboardNavigation.TabNavigation="None">
             <Menu.Resources>
-                <Style TargetType="MenuItem">
+                <!--<Style TargetType="MenuItem">
                     <Setter Property="Padding" Value="3" />
                     <Setter Property="IsTabStop" Value="False" />
-                </Style>
+                </Style>-->
             </Menu.Resources>
-            <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFile,Mode=OneWay}">
+            <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFile,Mode=OneWay}" IsTabStop="True">
                 <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileNew,Mode=OneWay}" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
                 <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileOpen,Mode=OneWay}" Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
                 <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileSave,Mode=OneWay}" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
