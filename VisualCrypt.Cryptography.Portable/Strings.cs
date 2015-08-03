@@ -50,13 +50,6 @@ namespace VisualCrypt.Cryptography.Portable
 
 		// MenuItems
 
-		public string miLanguage
-		{
-			get
-			{
-				return new[] { "_Language", "_Sprache" }.GetLocalizedString();
-			}
-		}
 
 		public string miFile
 		{
@@ -66,6 +59,116 @@ namespace VisualCrypt.Cryptography.Portable
 			}
 		}
 
+		public string miFileNew
+		{
+			get
+			{
+				return new[] { "_New", "_Neu" }.GetLocalizedString();
+			}
+		}
+
+		public string miFileOpen
+		{
+			get
+			{
+				return new[] { "_Open...", "_Öffnen..." }.GetLocalizedString();
+			}
+		}
+
+		public string miFileSave
+		{
+			get
+			{
+				return new[] { "_Save", "_Speichern" }.GetLocalizedString();
+			}
+		}
+
+		public string miFileSaveAs
+		{
+			get
+			{
+				return new[] { "Save _As..", "Speichern _unter..." }.GetLocalizedString();
+			}
+		}
+
+		public string miFileExportClearText
+		{
+			get
+			{
+				return new[] { "_Export Cleartext", "Klartext _exportieren..." }.GetLocalizedString();
+			}
+		}
+		public string miFileImportWithEnconding
+		{
+			get
+			{
+				return new[] { "_Import With Encoding...", "Importieren mit Encoding..." }.GetLocalizedString();
+			}
+		}
+		public string miFilePrint
+		{
+			get
+			{
+				return new[] { "_Print...", "_Drucken..." }.GetLocalizedString();
+			}
+		}
+		public string miFileExit
+		{
+			get
+			{
+				return new[] { "E_xit", "_Beenden" }.GetLocalizedString();
+			}
+		}
+
+		// Menu VisualCrypt
+
+		public string miVC
+		{
+			get
+			{
+				return new[] { "_VisualCrypt", "_VisualCrypt" }.GetLocalizedString();
+			}
+		}
+
+		public string miVCSetPassword
+		{
+			get
+			{
+				return new[] { "Set _Password...", "_Passwort setzen..." }.GetLocalizedString();
+			}
+		}
+
+		public string miVCChangePassword
+		{
+			get
+			{
+				return new[] { "Change _Password...", "_Passwort ändern..." }.GetLocalizedString();
+			}
+		}
+
+		public string miVCEncrypt
+		{
+			get
+			{
+				return new[] { "_Encrypt", "_Verschlüsseln" }.GetLocalizedString();
+			}
+		}
+
+		public string miVCDecrypt
+		{
+			get
+			{
+				return new[] { "_Decrpyt", "_Entschlüsseln" }.GetLocalizedString();
+			}
+		}
+
+		public string miVCSettings
+		{
+			get
+			{
+				return new[] { "_Settings...", "E_instellungen..." }.GetLocalizedString();
+			}
+		}
 
 
 
@@ -73,6 +176,17 @@ namespace VisualCrypt.Cryptography.Portable
 
 
 
+
+
+
+
+		public string miLanguage
+		{
+			get
+			{
+				return new[] { "_Language", "_Sprache" }.GetLocalizedString();
+			}
+		}
 
 
 

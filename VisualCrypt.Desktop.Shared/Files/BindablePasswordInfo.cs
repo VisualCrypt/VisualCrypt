@@ -1,26 +1,34 @@
 ﻿using System.Windows;
 using Microsoft.Practices.Prism.Mvvm;
+using VisualCrypt.Cryptography.Portable;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {
 	public class BindablePasswordInfo : BindableBase
 	{
+		public BindablePasswordInfo()
+		{
+			Loc.LocaleChanged += (sender, args) => RaiseAllChanged();
+		}
+
+		void RaiseAllChanged()
+		{
+			OnPropertyChanged(() => IsPasswordSet);
+			OnPropertyChanged(() => TextBlockClearPasswordVisibility);
+			OnPropertyChanged(() => PasswordStatus);
+			OnPropertyChanged(() => HyperlinkPasswordText);
+			OnPropertyChanged(() => MenuPasswordText);
+		}
+
 		public bool IsPasswordSet
 		{
 			get { return _isPasswordSet; }
 			set
 			{
-				//if (_isPasswordSet == value)
-				//	return;
 				_isPasswordSet = value;
-				OnPropertyChanged(() => IsPasswordSet);
-				OnPropertyChanged(() => TextBlockClearPasswordVisibility);
-				OnPropertyChanged(() => PasswordStatus);
-				OnPropertyChanged(() => HyperlinkPasswordText);
-				OnPropertyChanged(() => MenuPasswordText);
+				RaiseAllChanged();
 			}
 		}
-
 		bool _isPasswordSet;
 
 		public Visibility TextBlockClearPasswordVisibility
@@ -40,7 +48,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		public string MenuPasswordText
 		{
-			get { return _isPasswordSet ? "Change _Password..." : "Set _Password..."; }
+			get { return _isPasswordSet ? Loc.Strings.miVCChangePassword : Loc.Strings.miVCSetPassword; }
 		}
 	}
 }

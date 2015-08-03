@@ -1,4 +1,5 @@
-﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+﻿using System;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable
 {
@@ -16,6 +17,19 @@ namespace VisualCrypt.Cryptography.Portable
 			Guard.NotNull(loc);
 
 			Strings.SwitchLocale(loc);
+
+			OnLocaleChanged(new EventArgs());
+		}
+
+		public static event EventHandler LocaleChanged;
+
+		 static void OnLocaleChanged(EventArgs e)
+		{
+			var handler = LocaleChanged;
+			if (handler != null)
+			{
+				handler(null, e);
+			}
 		}
 	}
 }

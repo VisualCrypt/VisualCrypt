@@ -69,30 +69,30 @@
                 </Style>
             </Menu.Resources>
             <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFile,Mode=OneWay}">
-                <MenuItem Header="_New" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
-                <MenuItem Header="_Open..." Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
-                <MenuItem Header="_Save" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
-                <MenuItem Header="Save _As..." Command="{Binding SaveAsCommand}" InputGestureText="Control+Alt+S" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileNew,Mode=OneWay}" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileOpen,Mode=OneWay}" Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileSave,Mode=OneWay}" Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileSaveAs,Mode=OneWay}" Command="{Binding SaveAsCommand}" InputGestureText="Control+Alt+S" />
                 <Separator />
-                <MenuItem Header="_Export Clear Text..." Command="{Binding ExportCommand}" InputGestureText="F2" />
-                <MenuItem Header="_Import with Encoding..." Command="{Binding ImportWithEncodingCommand}"
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileExportClearText,Mode=OneWay}" Command="{Binding ExportCommand}" InputGestureText="F2" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileImportWithEnconding,Mode=OneWay}" Command="{Binding ImportWithEncodingCommand}"
                           InputGestureText="Shift+F2" />
                 <Separator />
-                <MenuItem Header="_Print..." Command="commands:EditorCommands.Print" InputGestureText="Ctrl+Alt+P" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFilePrint,Mode=OneWay}" Command="commands:EditorCommands.Print" InputGestureText="Ctrl+Alt+P" />
                 <Separator />
-                <MenuItem Header="E_xit" Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileExit,Mode=OneWay}" Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
             </MenuItem>
-            <MenuItem Header="_VisualCrypt">
+            <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miVC,Mode=OneWay}">
                 <!--<MenuItem Header="_Import Binary as Base64..." Command="{Binding ImportBinaryAsBase64Command}" />-->
                 <MenuItem
                     Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}"
                     Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
-                <MenuItem Header="_Encrypt Editor ClearTextContents" Command="{Binding EncryptEditorContentsCommand}"
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miVCEncrypt,Mode=OneWay}" Command="{Binding EncryptEditorContentsCommand}"
                           InputGestureText="Ctrl+E" />
-                <MenuItem Header="_Decrypt Editor ClearTextContents" Command="{Binding DecryptEditorContentsCommand}"
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miVCDecrypt,Mode=OneWay}" Command="{Binding DecryptEditorContentsCommand}"
                           InputGestureText="Ctrl+D" />
                 <Separator />
-                <MenuItem Header="_Settings..." Command="{Binding ShowSettingsDialogCommand}"
+                <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miVCSettings,Mode=OneWay}" Command="{Binding ShowSettingsDialogCommand}"
                           InputGestureText="Ctrl+Shift+P" />
             </MenuItem>
             <MenuItem Header="_Edit">
