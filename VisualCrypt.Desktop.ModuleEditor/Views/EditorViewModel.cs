@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
 using VisualCrypt.Desktop.Shared.App;
@@ -39,6 +40,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);
 			SearchOptions = new SearchOptions();
 			ExecuteZoom100();
+			Loc.LocaleChanged += (sender, args) => UpdateZoomLevelMenuText();
+
 
 			_editor.TextBox1.TextChanged += OnTextChanged;
 			_editor.TextBox1.SelectionChanged += OnSelectionChanged;
@@ -158,8 +161,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void UpdateZoomLevelMenuText()
 		{
+			if(_editor == null) // this method is hooked to the LocalChanged event and may be called any time
+				return;
+
 			var zoomLevel = (int)((_editor.TextBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
-			var zoomLevelMenuText = "_Zoom (" + zoomLevel + "%)";
+			var zoomLevelMenuText = string.Format(Loc.Strings.miViewZoomLevelText, zoomLevel);
 			SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
 			SettingsManager.EditorSettings.IsZoom100Checked =
