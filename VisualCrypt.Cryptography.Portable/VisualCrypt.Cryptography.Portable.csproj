@@ -47,10 +47,7 @@
     <None Include="YourKey.snk" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Loc.cs" />
-    <Compile Include="LocalizationExtensions.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Strings.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RandomKeyCipher32.cs" />
@@ -91,6 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
+      <Name>VisualCrypt.Language</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

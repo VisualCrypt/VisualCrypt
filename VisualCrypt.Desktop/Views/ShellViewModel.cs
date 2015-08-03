@@ -18,6 +18,7 @@ using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
 {

@@ -138,6 +138,10 @@
       <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
       <Name>VisualCrypt.Cryptography.Portable</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
+      <Name>VisualCrypt.Language</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Page Include="Styles\InUse\BarStyles.xaml">

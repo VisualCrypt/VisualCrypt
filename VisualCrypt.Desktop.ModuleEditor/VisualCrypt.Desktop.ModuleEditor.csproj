@@ -109,6 +109,10 @@
       <Project>{1A98F3E7-2163-46CE-9B6A-E204FFF4F3B8}</Project>
       <Name>VisualCrypt.Desktop.Shared</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
+      <Name>VisualCrypt.Language</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

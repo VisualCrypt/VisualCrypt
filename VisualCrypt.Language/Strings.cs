@@ -2,9 +2,8 @@
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using VisualCrypt.Cryptography.Portable.Annotations;
 
-namespace VisualCrypt.Cryptography.Portable
+namespace VisualCrypt.Language
 {
 	public class Strings : INotifyPropertyChanged
 	{
@@ -619,7 +618,6 @@ namespace VisualCrypt.Cryptography.Portable
 
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		[NotifyPropertyChangedInvocator]
 		void OnPropertyChanged([CallerMemberName] string propertyName = null)
 		{
 			PropertyChangedEventHandler handler = PropertyChanged;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {

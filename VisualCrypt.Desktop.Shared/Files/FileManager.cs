@@ -3,6 +3,7 @@ using System.Windows;
 using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {

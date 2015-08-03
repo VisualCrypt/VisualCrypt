@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
-             xmlns:portable="clr-namespace:VisualCrypt.Cryptography.Portable;assembly=VisualCrypt.Cryptography.Portable"
+             
+             xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -15,7 +16,7 @@
         <StackPanel Orientation="Horizontal" Grid.Column="0">
             <TextBlock>
                 <Hyperlink Click="WorkingBar_Cancel_Click">
-                 <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termCancel,Mode=OneWay}"></Run>
+                 <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termCancel,Mode=OneWay}"></Run>
             </Hyperlink>
             </TextBlock>
 

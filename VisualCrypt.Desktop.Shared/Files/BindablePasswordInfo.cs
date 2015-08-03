@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using Microsoft.Practices.Prism.Mvvm;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Shared.Files
 {

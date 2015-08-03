@@ -1,7 +1,6 @@
 ﻿using System;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
-namespace VisualCrypt.Cryptography.Portable
+namespace VisualCrypt.Language
 {
 	public static class Loc
 	{
@@ -14,7 +13,8 @@ namespace VisualCrypt.Cryptography.Portable
 
 		public static void SetLanguage(string loc)
 		{
-			Guard.NotNull(loc);
+			if(loc == null)
+				throw new ArgumentNullException("loc");
 
 			Strings.SwitchLocale(loc);
 

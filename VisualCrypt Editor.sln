@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Desktop.ModuleE
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Desktop.ModuleEncryption", "VisualCrypt.Desktop.ModuleEncryption\VisualCrypt.Desktop.ModuleEncryption.csproj", "{6E63BEEA-4535-4428-AC54-01885F74C77E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Language", "VisualCrypt.Language\VisualCrypt.Language.csproj", "{CC794610-54C9-4F5F-AC82-005260FBB8DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -75,6 +77,12 @@ Global
 		{6E63BEEA-4535-4428-AC54-01885F74C77E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6E63BEEA-4535-4428-AC54-01885F74C77E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6E63BEEA-4535-4428-AC54-01885F74C77E}.Release|x86.ActiveCfg = Release|Any CPU
+		{CC794610-54C9-4F5F-AC82-005260FBB8DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC794610-54C9-4F5F-AC82-005260FBB8DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC794610-54C9-4F5F-AC82-005260FBB8DE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{CC794610-54C9-4F5F-AC82-005260FBB8DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC794610-54C9-4F5F-AC82-005260FBB8DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC794610-54C9-4F5F-AC82-005260FBB8DE}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

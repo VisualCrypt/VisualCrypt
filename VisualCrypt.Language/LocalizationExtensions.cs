@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace VisualCrypt.Cryptography.Portable
+namespace VisualCrypt.Language
 {
 
 	public static class Localization

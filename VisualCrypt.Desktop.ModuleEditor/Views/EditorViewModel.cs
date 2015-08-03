@@ -14,6 +14,7 @@ using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
 using VisualCrypt.Desktop.Shared.Settings;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {

@@ -7,6 +7,7 @@ using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 {

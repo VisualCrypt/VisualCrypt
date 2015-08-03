@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
              xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
-             xmlns:portable="clr-namespace:VisualCrypt.Cryptography.Portable;assembly=VisualCrypt.Cryptography.Portable"
+             xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance views:ShellViewModel}">
     <UserControl.Resources>
@@ -32,15 +32,15 @@
         </StackPanel>
         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock>
-                <Hyperlink Click="Hyperlink_Encrypt_Click"><Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termEncrypt,Mode=OneWay}"></Run>
+                <Hyperlink Click="Hyperlink_Encrypt_Click"><Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termEncrypt,Mode=OneWay}"></Run>
                 </Hyperlink>
                 <Run xml:space="preserve"> </Run>
                 <Hyperlink  Click="Hyperlink_Decrypt_Click">
-                  <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termDecrypt,Mode=OneWay}"></Run>
+                  <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termDecrypt,Mode=OneWay}"></Run>
                 </Hyperlink>
                  <Run xml:space="preserve"> </Run>
                  <Hyperlink  Click="Hyperlink_Save_Click" IsEnabled="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty}">
-                  <Run Text="{Binding Source={x:Static portable:Loc.Strings},Path=termSave,Mode=OneWay}"></Run>
+                  <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termSave,Mode=OneWay}"></Run>
                 </Hyperlink>
                  <Run xml:space="preserve"> </Run>
             </TextBlock>
