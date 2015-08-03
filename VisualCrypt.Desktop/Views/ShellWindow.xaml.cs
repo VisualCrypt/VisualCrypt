@@ -78,7 +78,7 @@ namespace VisualCrypt.Desktop.Views
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
 			{
 
-				_contentEditorRegion.IsHitTestVisible = false;
+				ContentEditorRegion.IsHitTestVisible = false;
 				e.Effects = DragDropEffects.Copy;
 			}
 		}
@@ -95,14 +95,14 @@ namespace VisualCrypt.Desktop.Views
 			}
 			finally
 			{
-				_contentEditorRegion.IsHitTestVisible = true;
+				ContentEditorRegion.IsHitTestVisible = true;
 			}
 
 		}
 
 		void MainWindow_PreviewDragLeave(object sender, DragEventArgs e)
 		{
-			_contentEditorRegion.IsHitTestVisible = true;
+			ContentEditorRegion.IsHitTestVisible = true;
 		}
 
 

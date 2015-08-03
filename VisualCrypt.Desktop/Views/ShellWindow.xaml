@@ -62,12 +62,6 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Height="27" Padding="0,4,0,0" IsMainMenu="True" KeyboardNavigation.TabNavigation="None">
-            <Menu.Resources>
-                <!--<Style TargetType="MenuItem">
-                    <Setter Property="Padding" Value="3" />
-                    <Setter Property="IsTabStop" Value="False" />
-                </Style>-->
-            </Menu.Resources>
             <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFile,Mode=OneWay}" IsTabStop="True">
                 <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileNew,Mode=OneWay}" Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
                 <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileOpen,Mode=OneWay}" Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
@@ -83,7 +77,6 @@
                 <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miFileExit,Mode=OneWay}" Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
             </MenuItem>
             <MenuItem Header="{Binding  Source={x:Static portable:Loc.Strings}, Path=miVC,Mode=OneWay}">
-                <!--<MenuItem Header="_Import Binary as Base64..." Command="{Binding ImportBinaryAsBase64Command}" />-->
                 <MenuItem
                     Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}"
                     Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
@@ -156,7 +149,7 @@
                           InputGestureText="Shift+F1" />
             </MenuItem>
         </Menu>
-        <ContentControl x:Name="_contentEditorRegion" Grid.Row="1" regions:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
+        <ContentControl x:Name="ContentEditorRegion" Grid.Row="1" regions:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Border Grid.Row="2" Height="28"  Background="{DynamicResource AccentColorBrush}"
