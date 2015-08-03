@@ -38,9 +38,6 @@ namespace VisualCrypt.Desktop.Views
 			PreviewDragEnter += MainWindow_PreviewDragEnter;
 			PreviewDragLeave += MainWindow_PreviewDragLeave;
 			PreviewDrop += MainWindow_PreviewDrop;
-
-
-
 		}
 
 		void ShellWindow_Loaded(object sender, RoutedEventArgs routedEventArgs)
@@ -58,7 +55,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			// This was in TextBox1_PreviewKeyDown, does this still work?
 			if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-				&& ViewModel.ClearPasswordCommand.CanExecute())
+			    && ViewModel.ClearPasswordCommand.CanExecute())
 				ViewModel.ClearPasswordCommand.Execute();
 
 			if (e.Key == Key.F12)
@@ -77,7 +74,6 @@ namespace VisualCrypt.Desktop.Views
 		{
 			if (e.Data.GetDataPresent(DataFormats.FileDrop))
 			{
-
 				ContentEditorRegion.IsHitTestVisible = false;
 				e.Effects = DragDropEffects.Copy;
 			}
@@ -89,7 +85,7 @@ namespace VisualCrypt.Desktop.Views
 			{
 				if (e.Data.GetDataPresent(DataFormats.FileDrop))
 				{
-					var files = (string[])e.Data.GetData(DataFormats.FileDrop);
+					var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
 					ViewModel.OpenFileFromDragDrop(files[0]);
 				}
 			}
@@ -97,14 +93,12 @@ namespace VisualCrypt.Desktop.Views
 			{
 				ContentEditorRegion.IsHitTestVisible = true;
 			}
-
 		}
 
 		void MainWindow_PreviewDragLeave(object sender, DragEventArgs e)
 		{
 			ContentEditorRegion.IsHitTestVisible = true;
 		}
-
 
 
 		void ActivateEditor()
@@ -115,11 +109,11 @@ namespace VisualCrypt.Desktop.Views
 					string.Format(CultureInfo.InvariantCulture, "The region {0} is missing and has probably not been defined in Xaml.",
 						RegionNames.EditorRegion));
 
-			var view = mainRegion.GetView(typeof(IEditor).Name) as IEditor;
+			var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
 			if (view == null)
 			{
 				view = ServiceLocator.Current.GetInstance<IEditor>();
-				mainRegion.Add(view, typeof(IEditor).Name); // automatically activates the view
+				mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
 			}
 			else
 			{

@@ -22,6 +22,7 @@ namespace VisualCrypt.Desktop.Shared.Settings
 				}
 			}
 		}
+
 		byte _logRounds;
 
 		public event PropertyChangedEventHandler PropertyChanged;

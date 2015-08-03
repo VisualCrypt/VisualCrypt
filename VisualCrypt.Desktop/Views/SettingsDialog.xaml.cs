@@ -33,9 +33,7 @@ namespace VisualCrypt.Desktop.Views
 
 
 			PreviewKeyDown += CloseWithEscape;
-
 		}
-
 
 
 		void CloseWithEscape(object sender, KeyEventArgs e)
@@ -70,10 +68,8 @@ namespace VisualCrypt.Desktop.Views
 			{
 				_messageBoxService.ShowError(e);
 			}
-
 		}
 
-	
 
 		DelegateCommand _defaultsCommand;
 
@@ -104,14 +100,12 @@ namespace VisualCrypt.Desktop.Views
 			Close();
 		}
 
-		
-
 
 		void Hyperlink_Spec_OnClick(object sender, RoutedEventArgs e)
 		{
 			try
 			{
-				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.SpecUrl } })
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.SpecUrl}})
 					process.Start();
 			}
 			catch (Exception ex)
@@ -124,7 +118,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.SourceUrl } })
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.SourceUrl}})
 					process.Start();
 			}
 			catch (Exception ex)
@@ -132,30 +126,32 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(ex);
 			}
 		}
-	
+
 
 		public byte LogRounds
 		{
 			get { return _logRounds; }
 			set
 			{
-					_logRounds = value;
-					OnPropertyChanged();
-					SetWarningText(value);
-					DefaultsCommand.RaiseCanExecuteChanged();
+				_logRounds = value;
+				OnPropertyChanged();
+				SetWarningText(value);
+				DefaultsCommand.RaiseCanExecuteChanged();
 			}
 		}
+
 		byte _logRounds;
 
 		void SetWarningText(byte logRounds)
 		{
 			if (logRounds == BCrypt.DefaultBCryptRoundsLog2)
-			{ 
-				TextBlockWarning.Text = "The setting influences the required computational work to create the BCrypt hash. A higher value means more work.";
+			{
+				TextBlockWarning.Text =
+					"The setting influences the required computational work to create the BCrypt hash. A higher value means more work.";
 				return;
 			}
-			TextBlockWarning.Text = logRounds > BCrypt.DefaultBCryptRoundsLog2 
-				? "Warning: A high value will turn encryption and decryption into a very time consuming operation." 
+			TextBlockWarning.Text = logRounds > BCrypt.DefaultBCryptRoundsLog2
+				? "Warning: A high value will turn encryption and decryption into a very time consuming operation."
 				: "Warning: A low value faciliates brute force and dictionary attacks.";
 		}
 

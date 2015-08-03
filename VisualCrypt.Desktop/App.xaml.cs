@@ -10,9 +10,6 @@ namespace VisualCrypt.Desktop
 
 			var bootstrapper = new ShellBootstrapper();
 			bootstrapper.Run(true);
-			
 		}
-
-		
 	}
 }

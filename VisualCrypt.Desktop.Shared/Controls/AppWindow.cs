@@ -322,7 +322,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 					WmGetMinMaxInfo(lParam);
 					break;
 			}
-			
+
 			return IntPtr.Zero;
 		}
 

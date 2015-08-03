@@ -30,6 +30,7 @@ namespace VisualCrypt.Desktop.Views
 			set { DataContext = value; }
 			get { return DataContext as ShellViewModel; }
 		}
+
 		void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
 		{
 			if (ViewModel.ShowSetPasswordDialogCommand.CanExecute())

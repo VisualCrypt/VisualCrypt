@@ -49,7 +49,8 @@ namespace VisualCrypt.Desktop.Views
 				if (response.IsSuccess)
 				{
 					var sigCount = response.Result.Length;
-					SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"), PrunedPassword.MaxSanitizedPasswordLength.ToString("N0"));
+					SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"),
+						PrunedPassword.MaxSanitizedPasswordLength.ToString("N0"));
 				}
 				else
 				{
@@ -61,7 +62,6 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(ex);
 			}
 		}
-
 
 
 		void SetMode(SetPasswordDialogMode setPasswordDialogMode)
@@ -140,7 +140,6 @@ namespace VisualCrypt.Desktop.Views
 						MessageBoxImage.Warning) == MessageBoxResult.OK;
 					if (!okClicked)
 						return;
-
 				}
 
 				var setPasswordResponse = _encryptionService.SetPassword(PwBox.Text);
@@ -206,13 +205,11 @@ namespace VisualCrypt.Desktop.Views
 					DialogResult = true;
 					Close();
 				}
-
 			}
 			catch (Exception e)
 			{
 				_messageBoxService.ShowError(e);
 			}
-
 		}
 
 		bool CanExecuteClearPasswordCommand()
@@ -258,7 +255,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.PWSpecUrl } })
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.PWSpecUrl}})
 					process.Start();
 			}
 			catch (Exception ex)

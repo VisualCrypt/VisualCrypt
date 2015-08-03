@@ -44,9 +44,9 @@ namespace VisualCrypt.Desktop.Shared.Files
 					_filename = value;
 					OnPropertyChanged();
 				}
-
 			}
 		}
+
 		string _filename;
 
 
@@ -60,9 +60,9 @@ namespace VisualCrypt.Desktop.Shared.Files
 					_isEncrypted = value;
 					OnPropertyChanged();
 				}
-
 			}
 		}
+
 		bool _isEncrypted;
 
 
@@ -101,7 +101,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 		}
 
 
-
 		public static FileModel EmptyCleartext()
 		{
 			return new FileModel
@@ -138,7 +137,5 @@ namespace VisualCrypt.Desktop.Shared.Files
 				CipherV2 = (CipherV2) cipherV2
 			};
 		}
-
-
 	}
 }

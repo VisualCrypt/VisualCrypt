@@ -13,6 +13,6 @@ namespace VisualCrypt.Desktop.Shared.PrismSupport
 
 		TextBox TextBoxGoTo { get; }
 
-		UIElement EditorControl { get;  }
+		UIElement EditorControl { get; }
 	}
 }

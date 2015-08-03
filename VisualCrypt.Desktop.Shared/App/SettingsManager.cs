@@ -64,7 +64,6 @@ namespace VisualCrypt.Desktop.Shared.App
 		}
 
 
-
 		public static void SaveSettings(object settingValueForLoggingOnly, [CallerMemberName] string callerMemberName = null)
 		{
 			try
@@ -75,7 +74,8 @@ namespace VisualCrypt.Desktop.Shared.App
 
 				using (var visualCryptKey = GetOrCreateVisualCryptKey())
 					visualCryptKey.SetValue(Constants.Key_NotepadSettings, serializedSettings);
-				Logger.Log("Setting '{0}:{1}' saved!".FormatInvariant(callerMemberName, settingValueForLoggingOnly), Category.Info, Priority.Low);
+				Logger.Log("Setting '{0}:{1}' saved!".FormatInvariant(callerMemberName, settingValueForLoggingOnly), Category.Info,
+					Priority.Low);
 			}
 			catch (Exception e)
 			{
@@ -100,7 +100,7 @@ namespace VisualCrypt.Desktop.Shared.App
 					FontStyle = FontStyles.Normal,
 					FontWeight = FontWeights.Normal
 				},
-				CryptographySettings = new CryptographySettings { LogRounds = 10 }
+				CryptographySettings = new CryptographySettings {LogRounds = 10}
 			};
 		}
 
@@ -147,7 +147,7 @@ namespace VisualCrypt.Desktop.Shared.App
 					var value = visualCryptKey.GetValue(Constants.Key_HasRunOnce);
 
 					if (value is int)
-						hasRunOnce = (int)value;
+						hasRunOnce = (int) value;
 
 					if (hasRunOnce == 0)
 					{

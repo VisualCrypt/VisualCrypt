@@ -17,7 +17,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			try
 			{
 				var appWindow = ServiceLocator.Current.GetInstance<T>();
-				
+
 				appWindow.ShowInTaskbar = true;
 				EnsureCustomWindowConfiguration(appWindow);
 

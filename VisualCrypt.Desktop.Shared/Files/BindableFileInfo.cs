@@ -51,6 +51,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		Visibility _plainTextBarVisibility;
 
 		public Visibility WorkingBarVisibility
@@ -62,6 +63,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		Visibility _workingBarVisibility;
 
 		public Visibility EncryptedBarVisibility
@@ -73,6 +75,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		Visibility _encryptedBarVisibility;
 
 		public int ProgressPercent
@@ -84,6 +87,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		int _progressPercent;
 
 		public string ProgressMessage
@@ -95,6 +99,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		string _progressMessage;
 
 		public string ProgressBarOpName
@@ -106,6 +111,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		string _progressBarOpName;
 
 		public string EncrytedBarText
@@ -117,6 +123,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				OnPropertyChanged();
 			}
 		}
+
 		string _encryptedBarText;
 
 
@@ -128,9 +135,5 @@ namespace VisualCrypt.Desktop.Shared.Files
 			if (handler != null)
 				handler(this, new PropertyChangedEventArgs(propertyName));
 		}
-
-
-
-	
 	}
 }

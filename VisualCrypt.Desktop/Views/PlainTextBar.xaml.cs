@@ -13,6 +13,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			InitializeComponent();
 		}
+
 		ShellViewModel ViewModel
 		{
 			set { DataContext = value; }

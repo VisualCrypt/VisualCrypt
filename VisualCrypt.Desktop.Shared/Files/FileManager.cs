@@ -20,7 +20,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 					UpdateEncryptedBarText();
 			};
 		}
-		
 
 
 		public static FileModel FileModel
@@ -39,7 +38,6 @@ namespace VisualCrypt.Desktop.Shared.Files
 				{
 					UpdateEncryptedBarText();
 					ShowEncryptedBar();
-
 				}
 				else
 					ShowPlainTextBar();
@@ -48,7 +46,8 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		static void UpdateEncryptedBarText()
 		{
-			string text = string.Format(Loc.Strings.encrpytedStatusbarText, CipherV2.Version, _fileModel.CipherV2.RoundsExponent.Value, _fileModel.VisualCryptText.Length);
+			string text = string.Format(Loc.Strings.encrpytedStatusbarText, CipherV2.Version,
+				_fileModel.CipherV2.RoundsExponent.Value, _fileModel.VisualCryptText.Length);
 			BindableFileInfo.EncrytedBarText = text;
 		}
 
@@ -75,10 +74,9 @@ namespace VisualCrypt.Desktop.Shared.Files
 		}
 
 
-
 		static void _fileModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
-			var fileModel = (FileModel)sender;
+			var fileModel = (FileModel) sender;
 			switch (e.PropertyName)
 			{
 				case "IsDirty":
@@ -94,7 +92,5 @@ namespace VisualCrypt.Desktop.Shared.Files
 					throw new ArgumentException("Unknown property name {0}.", e.PropertyName);
 			}
 		}
-
-
 	}
 }

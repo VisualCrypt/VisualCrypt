@@ -35,7 +35,6 @@ namespace VisualCrypt.Desktop.Views
 		public ShellViewModel(IEventAggregator eventAggregator, ILoggerFacade logger,
 			IMessageBoxService messageBoxService, IEncryptionService encryptionService)
 		{
-
 			_eventAggregator = eventAggregator;
 			_logger = logger;
 			_messageBoxService = messageBoxService;
@@ -51,7 +50,8 @@ namespace VisualCrypt.Desktop.Views
 			if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
 			{
 				var fileName = args[1];
-				_logger.Log(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}", fileName), Category.Info,
+				_logger.Log(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}", fileName),
+					Category.Info,
 					Priority.None);
 				OpenFileCommon(fileName);
 			}
@@ -61,6 +61,7 @@ namespace VisualCrypt.Desktop.Views
 				_logger.Log("Started with new file - Ready.", Category.Info, Priority.None);
 			}
 		}
+
 		void ExecuteEditorSendsTextCallback(EditorSendsText args)
 		{
 			if (args != null && args.Callback != null)
@@ -94,8 +95,6 @@ namespace VisualCrypt.Desktop.Views
 		}
 
 		string _statusBarText;
-
-
 
 		#endregion
 
@@ -205,7 +204,11 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand ExportCommand
 		{
-			get { return CreateCommand(ref _exportCommand, ExecuteExportCommand, () => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null); }
+			get
+			{
+				return CreateCommand(ref _exportCommand, ExecuteExportCommand,
+					() => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
+			}
 		}
 
 		async void ExecuteExportCommand()
@@ -217,7 +220,8 @@ namespace VisualCrypt.Desktop.Views
 				if (editorClearText == null)
 					throw new InvalidOperationException("The text received from the editor was null.");
 
-				string title = string.Format(CultureInfo.InvariantCulture, "Export Clear Text (Encoding: {0})", FileManager.FileModel.SaveEncoding.EncodingName);
+				string title = string.Format(CultureInfo.InvariantCulture, "Export Clear Text (Encoding: {0})",
+					FileManager.FileModel.SaveEncoding.EncodingName);
 
 				string suggestedFilename = FileManager.FileModel.Filename.ReplaceCaseInsensitive(Constants.DotVisualCrypt,
 					string.Empty);
@@ -249,7 +253,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Constants.HelpUrl } })
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.HelpUrl}})
 					process.Start();
 			}
 			catch (Exception e)
@@ -346,7 +350,7 @@ namespace VisualCrypt.Desktop.Views
 				if (openFileResponse.Result.SaveEncoding == null)
 				{
 					if (_messageBoxService.Show("This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\n" +
-						"If file is very large the editor may become less responsive.", "Binary File",
+					                            "If file is very large the editor may become less responsive.", "Binary File",
 						MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel)
 						return;
 				}
@@ -355,8 +359,8 @@ namespace VisualCrypt.Desktop.Views
 
 				var ert = _eventAggregator.GetEvent<EditorReceivesText>();
 				var text = FileManager.FileModel.IsEncrypted
-						? FileManager.FileModel.VisualCryptText
-						: FileManager.FileModel.ClearTextContents;
+					? FileManager.FileModel.VisualCryptText
+					: FileManager.FileModel.ClearTextContents;
 				ert.Publish(text);
 
 
@@ -372,13 +376,13 @@ namespace VisualCrypt.Desktop.Views
 						return; // The user prefers to look at the cipher!
 				}
 
-			tryDecryptLoadFileWithCurrentPassword:
+				tryDecryptLoadFileWithCurrentPassword:
 
 				// We have a password, but we don't know if it's the right one. We must try!
 				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryptOpenedFile))
 				{
 					var decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
-				FileManager.FileModel.VisualCryptText, _longRunningOperation.Context));
+						FileManager.FileModel.VisualCryptText, _longRunningOperation.Context));
 					if (decryptForDisplayResult.IsSuccess)
 					{
 						// we were lucky, the password we have is correct!
@@ -448,7 +452,10 @@ namespace VisualCrypt.Desktop.Views
 				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryption))
 				{
 					var createEncryptedFileResponse =
-					await Task.Run(() => _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
+						await
+							Task.Run(
+								() =>
+									_encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
 					if (createEncryptedFileResponse.IsSuccess)
 					{
 						FileManager.FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
@@ -501,7 +508,10 @@ namespace VisualCrypt.Desktop.Views
 				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryption))
 				{
 					var decryptForDisplayResult =
-					await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
+						await
+							Task.Run(
+								() =>
+									_encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
 					if (decryptForDisplayResult.IsSuccess)
 					{
 						FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
@@ -515,7 +525,6 @@ namespace VisualCrypt.Desktop.Views
 					FileManager.ShowEncryptedBar();
 					_messageBoxService.ShowError(decryptForDisplayResult.Error);
 				}
-
 			}
 			catch (Exception e)
 			{
@@ -531,8 +540,7 @@ namespace VisualCrypt.Desktop.Views
 			{
 				FileManager.BindableFileInfo.ProgressPercent = encryptionProgress.Percent;
 				FileManager.BindableFileInfo.ProgressMessage = encryptionProgress.Message;
-				
-			} ;
+			};
 
 			var switchBackToPreviousBar = FileManager.FileModel.IsEncrypted
 				? (Action) FileManager.ShowEncryptedBar
@@ -540,8 +548,6 @@ namespace VisualCrypt.Desktop.Views
 
 			return new LongRunningOperation(updateProgressBar, switchBackToPreviousBar);
 		}
-
-
 
 		#endregion
 
@@ -571,7 +577,7 @@ namespace VisualCrypt.Desktop.Views
 						throw new Exception(response.Error);
 					FileManager.FileModel.IsDirty = false;
 				}
-				// This is the case where we need a new filename and can then also 'just save'.
+					// This is the case where we need a new filename and can then also 'just save'.
 				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave()))
 				{
 					string suggestedFilename = null;
@@ -588,7 +594,7 @@ namespace VisualCrypt.Desktop.Views
 						FileManager.FileModel.IsDirty = false;
 					}
 				}
-				// And in that case we need a different strategy: Encrypt and THEN save.
+					// And in that case we need a different strategy: Encrypt and THEN save.
 				else
 				{
 					if (FileManager.FileModel.IsEncrypted)
@@ -633,7 +639,10 @@ namespace VisualCrypt.Desktop.Views
 			using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryptAndSave))
 			{
 				var encryptAndSaveFileResponse =
-				await Task.Run(() => _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText, _longRunningOperation.Context));
+					await
+						Task.Run(
+							() =>
+								_encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText, _longRunningOperation.Context));
 
 				if (encryptAndSaveFileResponse.IsSuccess)
 				{
@@ -659,10 +668,6 @@ namespace VisualCrypt.Desktop.Views
 				FileManager.ShowPlainTextBar();
 				throw new Exception(encryptAndSaveFileResponse.Error);
 			}
-
-
-
-
 		}
 
 		#endregion
@@ -673,7 +678,10 @@ namespace VisualCrypt.Desktop.Views
 
 		public DelegateCommand SaveAsCommand
 		{
-			get { return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () => FileManager.FileModel.SaveEncoding != null); }
+			get
+			{
+				return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand, () => FileManager.FileModel.SaveEncoding != null);
+			}
 		}
 
 		void ExecuteSaveAsCommand()
@@ -720,7 +728,7 @@ namespace VisualCrypt.Desktop.Views
 		/// </summary>
 		async Task<bool> SetPasswordAsync(SetPasswordDialogMode setPasswordDialogMode)
 		{
-			ParamsProvider.SetParams(typeof(SetPasswordDialog), setPasswordDialogMode);
+			ParamsProvider.SetParams(typeof (SetPasswordDialog), setPasswordDialogMode);
 			return await WindowManager.GetBoolFromShowDialogAsyncWhenClosed<SetPasswordDialog>();
 		}
 
@@ -751,8 +759,6 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(e);
 			}
 		}
-
-
 
 		#endregion
 
@@ -786,6 +792,7 @@ namespace VisualCrypt.Desktop.Views
 		#endregion
 
 		#region CopyAllCommand
+
 		public DelegateCommand CopyAllCommand
 		{
 			get { return CreateCommand(ref _copyAllCommand, ExecuteCopyAllCommand, () => true); }
@@ -805,9 +812,11 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(e.Message);
 			}
 		}
+
 		#endregion
 
 		#region SwitchLanguageCommand
+
 		public DelegateCommand<string> SwitchLanguageCommand
 		{
 			get { return CreateCommand(ref _switchLanguageCommand, ExecuteSwitchLanguageCommand, s => true); }
@@ -826,6 +835,7 @@ namespace VisualCrypt.Desktop.Views
 				_messageBoxService.ShowError(e.Message);
 			}
 		}
+
 		#endregion
 
 		#region private methods

@@ -30,6 +30,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 				RaiseAllChanged();
 			}
 		}
+
 		bool _isPasswordSet;
 
 		public Visibility TextBlockClearPasswordVisibility
@@ -39,7 +40,12 @@ namespace VisualCrypt.Desktop.Shared.Files
 
 		public string PasswordStatus
 		{
-			get { return _isPasswordSet ? Loc.Strings.termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5) : Loc.Strings.termSetPassword + "..."; }
+			get
+			{
+				return _isPasswordSet
+					? Loc.Strings.termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5)
+					: Loc.Strings.termSetPassword + "...";
+			}
 		}
 
 		public string HyperlinkPasswordText

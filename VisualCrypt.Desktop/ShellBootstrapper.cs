@@ -20,7 +20,9 @@ namespace VisualCrypt.Desktop
 			stopWatch.Start();
 			base.Run(runWithDefaultConfiguration);
 			stopWatch.Stop();
-			_replayLogger.Log(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",stopWatch.ElapsedMilliseconds),Category.Info, Priority.Low);
+			_replayLogger.Log(
+				string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.", stopWatch.ElapsedMilliseconds),
+				Category.Info, Priority.Low);
 			Container.GetExportedValue<ShellViewModel>().OpenFromCommandLineOrNew();
 		}
 
@@ -62,7 +64,6 @@ namespace VisualCrypt.Desktop
 			Container.ComposeExportedValue(_replayLogger);
 		}
 
-		
 
 		/// <summary>
 		/// Create the <see cref="ILoggerFacade"/> used by the bootstrapper.

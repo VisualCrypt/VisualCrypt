@@ -9,9 +9,8 @@
         <Setter Property="Margin" Value="5" />
         <Setter Property="FontSize" Value="{x:Static SystemFonts.StatusFontSize}" />
     </Style>
-  
-   
-  
+
+
     <Style TargetType="{x:Type Hyperlink}">
         <Setter Property="Foreground" Value="White" />
         <Setter Property="TextDecorations" Value="{x:Null}" />

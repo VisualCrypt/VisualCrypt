@@ -33,31 +33,48 @@
                         <ComboBox>
                             <ComboBoxItem IsSelected="True">VisualCrypt 2 (AES 256 Bit, BCrypt)</ComboBoxItem>
                         </ComboBox>
-                        <TextBlock>Read the <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SpecUrl}, Mode=OneWay}"  Click="Hyperlink_Spec_OnClick">Spec</Hyperlink> or view the
-                            <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SourceUrl}, Mode=OneWay}"  Click="Hyperlink_Source_OnClick">Source Code</Hyperlink>.</TextBlock>
-<TextBlock></TextBlock>
+                        <TextBlock>
+                            Read the
+                            <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SpecUrl}, Mode=OneWay}"
+                                       Click="Hyperlink_Spec_OnClick">
+                                Spec
+                            </Hyperlink>
+                            or view the
+                            <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SourceUrl}, Mode=OneWay}"
+                                       Click="Hyperlink_Source_OnClick">
+                                Source Code
+                            </Hyperlink>
+                            .
+                        </TextBlock>
+                        <TextBlock />
                         <StackPanel>
-                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                                    <TextBlock>
-                            <TextBlock Margin="0">BCrypt Rounds:</TextBlock>
-                           
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                <TextBlock>
+                                    <TextBlock Margin="0">BCrypt Rounds:</TextBlock>
+
                                 </TextBlock>
-                                </StackPanel>
-
-                                <StackPanel Orientation="Horizontal">
-                                    <Slider  Margin="15, 5, 0, 0" 
-                                          Width="100" Orientation="Horizontal" HorizontalAlignment="Left" 
-                                          Value="{Binding LogRounds}" Minimum="4" Maximum="31" 
-                                          SmallChange="1" LargeChange="10"
-                                          TickPlacement="BottomRight" TickFrequency="10"/>
-                                <TextBlock Margin="0">2<Run BaselineAlignment="Superscript" FontSize="10" Text="{Binding LogRounds}"></Run></TextBlock>
-
-
-                                <TextBlock>Default:  2<Run BaselineAlignment="Superscript" FontSize="10" Text="{Binding Source={x:Static implementations:BCrypt.DefaultBCryptRoundsLog2},Mode=OneWay}"></Run></TextBlock>
                             </StackPanel>
-                            <TextBlock x:Name="TextBlockWarning" TextWrapping="Wrap"></TextBlock>
+
+                            <StackPanel Orientation="Horizontal">
+                                <Slider Margin="15, 5, 0, 0"
+                                        Width="100" Orientation="Horizontal" HorizontalAlignment="Left"
+                                        Value="{Binding LogRounds}" Minimum="4" Maximum="31"
+                                        SmallChange="1" LargeChange="10"
+                                        TickPlacement="BottomRight" TickFrequency="10" />
+                                <TextBlock Margin="0">
+                                    2
+                                    <Run BaselineAlignment="Superscript" FontSize="10" Text="{Binding LogRounds}" />
+                                </TextBlock>
+
+
+                                <TextBlock>
+                                    Default:  2
+                                    <Run BaselineAlignment="Superscript" FontSize="10"
+                                         Text="{Binding Source={x:Static implementations:BCrypt.DefaultBCryptRoundsLog2},Mode=OneWay}" />
+                                </TextBlock>
+                            </StackPanel>
+                            <TextBlock x:Name="TextBlockWarning" TextWrapping="Wrap" />
                         </StackPanel>
-                      
 
 
                     </StackPanel>

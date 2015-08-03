@@ -13,8 +13,8 @@ namespace VisualCrypt.Desktop.Shared.Controls
 	{
 		static AppDialog()
 		{
-			DefaultStyleKeyProperty.OverrideMetadata(typeof(AppDialog),
-				new FrameworkPropertyMetadata(typeof(AppDialog)));
+			DefaultStyleKeyProperty.OverrideMetadata(typeof (AppDialog),
+				new FrameworkPropertyMetadata(typeof (AppDialog)));
 		}
 
 		HwndSource _hwndSource;
@@ -24,14 +24,14 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		{
 			base.OnApplyTemplate();
 			// ReSharper disable PossibleNullReferenceException, this should fail fast
-			var closeButton = (Button)GetTemplateChild("closeButton");
+			var closeButton = (Button) GetTemplateChild("closeButton");
 
 			closeButton.Click += Close_Click;
 
-			_moveRectangle = (Rectangle)GetTemplateChild("moveRectangle");
+			_moveRectangle = (Rectangle) GetTemplateChild("moveRectangle");
 			_moveRectangle.MouseDown += MoveWindow;
 
-			var resizeGrid = (Panel)GetTemplateChild("resizeGrid");
+			var resizeGrid = (Panel) GetTemplateChild("resizeGrid");
 			foreach (UIElement rectangle in resizeGrid.Children)
 			{
 				rectangle.PreviewMouseDown += ResizeRectangle_PreviewMouseDown;
@@ -39,7 +39,6 @@ namespace VisualCrypt.Desktop.Shared.Controls
 				rectangle.MouseLeave += ResizeRectangle_MouseLeave;
 			}
 			// ReSharper restore PossibleNullReferenceException
-			
 		}
 
 
@@ -76,12 +75,12 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 		void CenterOnPrimaryScreen()
 		{
-			Left = (SystemParameters.WorkArea.Width / 2) - (Width / 2);
-			Top = (SystemParameters.WorkArea.Height / 2) - (Height / 2);
+			Left = (SystemParameters.WorkArea.Width/2) - (Width/2);
+			Top = (SystemParameters.WorkArea.Height/2) - (Height/2);
 			WindowState = WindowState.Normal;
 		}
 
-		
+
 		void Close_Click(object sender, RoutedEventArgs e)
 		{
 			Close();
@@ -185,11 +184,6 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			BottomRight = 8,
 		}
 
-		
-
-
-		
-
 		#endregion
 
 		#region interop
@@ -204,7 +198,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 			var wpfPoint = PointToScreen(mPoint);
 			var x = Convert.ToInt16(wpfPoint.X);
 			var y = Convert.ToInt16(wpfPoint.Y);
-			var lParam = (int)(uint)x | (y << 16);
+			var lParam = (int) (uint) x | (y << 16);
 
 			const int wmNclbuttondown = 0x00A1;
 			const int htCaption = 0x2;
@@ -213,7 +207,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 
 		void ResizeWindow(ResizeDirection direction)
 		{
-			SendMessage(_hwndSource.Handle, 0x112, (IntPtr)(61440 + direction), IntPtr.Zero);
+			SendMessage(_hwndSource.Handle, 0x112, (IntPtr) (61440 + direction), IntPtr.Zero);
 		}
 
 		[DllImport("user32.dll")]
@@ -223,8 +217,5 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		static extern IntPtr SendMessage(IntPtr hWnd, UInt32 msg, IntPtr wParam, IntPtr lParam);
 
 		#endregion
-
 	}
-
-		
 }

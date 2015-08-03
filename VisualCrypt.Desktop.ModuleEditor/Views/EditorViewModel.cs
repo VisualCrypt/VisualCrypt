@@ -5,7 +5,6 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
 using VisualCrypt.Desktop.Shared.App;

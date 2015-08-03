@@ -13,9 +13,11 @@ namespace VisualCrypt.Desktop.Shared.Services
 		/// </summary>
 		Response<FileModel> OpenFile(string filename);
 
-		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
+		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents,
+			LongRunningOperationContext context);
 
-		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
+		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents,
+			LongRunningOperationContext context);
 
 		Response SetPassword(string unprunedUTF16LEPassword);
 
@@ -23,7 +25,8 @@ namespace VisualCrypt.Desktop.Shared.Services
 
 		Response SaveEncryptedFile(FileModel fileModel);
 
-		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, LongRunningOperationContext context);
+		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents,
+			LongRunningOperationContext context);
 
 		Response<string> GenerateRandomPassword();
 
