@@ -124,8 +124,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 			context.EncryptionProgress.Message = Loc.Strings.encProgr_ProcessingKey;
 
-			// Compute the left side on a background thread
-			var task = Task.Factory.StartNew(() => BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context));
+			// Compute the left side on a ThreadPool thread
+			var task = Task.Run(() => BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context));
 
 			// Compute the right side after dispatching the work for the right side
 			BCrypt24 rightBCrypt = BCrypt.CreateHash(iv, rightSHA512, roundsExponent.Value, context);
