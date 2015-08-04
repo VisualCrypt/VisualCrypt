@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi" 
+     xmlns:bal="http://schemas.microsoft.com/wix/BalExtension">
+  <!-- This version is used Add/Remove programs. 
+  Also, incrementing will trigger the uninstall/reinstall strategy,
+  even if the version in Product stays the same. -->
+	<Bundle Name="VisualCrypt" Version="1.3.0.0" Manufacturer="VisualCrypt AG" UpgradeCode="173fe128-007d-4094-8a8d-ba1bb9781a3a" DisableRepair="yes" IconSourceFile="VisualCrypt.ico">
+    <BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense">
+      <bal:WixStandardBootstrapperApplication
+            LicenseFile="vclicense.rtf"
+            ShowVersion="yes" SuppressOptionsUI="no"  
+            LaunchTarget="[ProgramFilesFolder]VisualCrypt\VisualCryptNotepad.exe"
+             LogoFile="WindowIcon.png"
+            />
+
+    </BootstrapperApplicationRef>
+		<Chain>
+      <!-- Install Installer (msiexec)? -->
+      <PackageGroupRef Id="NetFx40ClientWeb"/>
+      <MsiPackage Id="VisualCryptMSI" SourceFile="$(var.VisualCrypt.Wix.TargetPath)"/>
+    </Chain>
+	</Bundle>
+</Wix>

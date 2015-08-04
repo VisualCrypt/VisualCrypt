@@ -93,10 +93,6 @@
     <AssemblyOriginatorKeyFile>YourKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Interop.Shell32">
-      <HintPath>..\VisualCrypt.Desktop\obj\Debug\Interop.Shell32.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
     <Reference Include="Microsoft.Expression.Interactions">
       <HintPath>..\..\..\..\..\LIB\Desktop\Microsoft.Expression.Interactions.dll</HintPath>
     </Reference>
@@ -228,6 +224,9 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="VisualCrypt.visualcrypt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="YourKey.snk" />
   </ItemGroup>
   <ItemGroup>

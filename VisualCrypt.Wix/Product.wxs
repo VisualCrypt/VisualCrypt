@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Product Code VC: * // auto-generates a GUID
+Upgrade Code VC: {2B370BAE-3A2F-474A-8961-EC13FFCC25A6}
+-->
+<!-- ToDo Release 
+0. Increment Version in Version.cs
+1. Increment the Version here and in Bundle.wxs, so that the previous version will be uninstalled.
+2. Set the Output name in the WixBundle Properties to e.g. VisualCryptSetup_1.0.11 and the output path to the website's
+   content dir and include the new version into the web project so that it will be deployed.
+3. Update the download page with proper link text/href and release note for the version.
+-->
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <!-- The first 3 digits tell Windows Installer which Version it is, and trigger the uninstall/reinstall strategy -->
+  <!-- This version number is not used in Add/Remove Programs -->
+  <Product Id="*" UpgradeCode="2B370BAE-3A2F-474A-8961-EC13FFCC25A6" Version="1.3.0.0" Language="1033" Name="VisualCrypt" Manufacturer="VisualCrypt AG">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" InstallPrivileges="elevated"/>
+    <Media Id="1" Cabinet="data1.cab" EmbedCab="yes" />
+
+    <!-- Step 1 Define all the directories we will write to -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Step 1 Program Files (x86): Define the directory structure -->
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="VisualCrypt"/>
+      </Directory>
+      <!-- Step 1 Program Menu Shortcut: Define the directory structure -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="VisualCrypt"/>
+      </Directory>
+      <!-- Step 1 Desktop Shortcut: Define the directory -->
+      <Directory Id="DesktopFolder"/>
+      <!-- Step 1 SendTo Shortcut: Define the directory -->
+      <Directory Id="SendToFolder"/>
+      <!-- Step 1 Registry entries: Define the directory -->
+      <Directory Id="Registry"/>
+
+      <Directory Id="WindowsFolder">
+        <Directory Id="ShellNewDirectory" Name="ShellNew"/>
+      </Directory>
+    </Directory>
+
+    <!-- Step 2 Program Files (x86): Add files to installer package -->
+    <DirectoryRef Id="APPLICATIONROOTDIRECTORY">
+      <Component Guid="*" Id="VisualCrypt.exe">
+        <File Source="$(var.VisualCrypt.Desktop.TargetDir)/VisualCrypt.exe" KeyPath="yes" Checksum="yes" />
+      </Component>
+      <Component Guid="*" Id="VisualCrypt.Cryptography.Portable.dll">
+        <File Source="$(var.VisualCrypt.Desktop.TargetDir)/VisualCrypt.Cryptography.Portable.dll" KeyPath="yes" />
+      </Component>
+      <Component Guid="*" Id="VisualCrypt.Cryptography.Net.dll">
+        <File Source="$(var.VisualCrypt.Desktop.TargetDir)/VisualCrypt.Cryptography.Net.dll" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="ShellNewDirectory">
+      <Component Id="VisualCrypt.visualcrypt" Guid="*">
+        <File Source="$(var.VisualCrypt.Desktop.TargetDir)/VisualCrypt.visualcrypt"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Step 2 Program Menu Shortcut: Add shortcut to installer package -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="*">
+        <Shortcut Id="ApplicationStartMenuShortcut" Name="VisualCrypt Notepad" Description="Start VisualCrypt Notepad"  Target="[#VisualCrypt.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+        <!-- Marker for the existence of the Program Menu shortcut (because Shortcuts can't be 'KeyPath') -->
+        <RegistryValue Root="HKCU" Key="Software\VisualCrypt" Name="IsApplicationShortcutCreated" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Step 2 Desktop Menu Shortcut: Add shortcut to installer package -->
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="*">
+        <Shortcut Id="DesktopShortcut" Name="VisualCrypt Notepad" Description="Start VisualCrypt Notepad"  Target="[#VisualCrypt.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="DesktopFolder" On="uninstall"/>
+        <!-- Marker for the existence of the Desktop Shortcut  (because Shortcuts can't be 'KeyPath')  -->
+        <RegistryValue Root="HKCU" Key="Software\VisualCrypt" Name="IsDesktopShortcutCreated" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Step 2 SendTo: Add shortcut to installer package -->
+    <DirectoryRef Id="SendToFolder">
+      <Component Id="ApplicationShortcutSendTo" Guid="*">
+        <Shortcut Id="SendToShortcut" Name="VisualCrypt Notepad" Description="Start VisualCrypt Notepad"  Target="[#VisualCrypt.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="SendToFolder" On="uninstall"/>
+        <!-- Marker for the existence of the Desktop Shortcut  (because Shortcuts can't be 'KeyPath')  -->
+        <RegistryValue Root="HKCU" Key="Software\VisualCrypt" Name="IsSendToShortcutCreated" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Step 2 Reg: Writing registry entries during installation is similar to writing files during installation. You describe the registry hierarchy you want 
+          to write into, specify the registry values to create, then add the component to your feature list.-->
+    <DirectoryRef Id="Registry">
+      <Component Id="RegistryEntries" Guid="*">
+        <!-- ProgID: FileId should refer to the Id attribute of the File element describing the file meant to handle the files of this extension -->
+        <ProgId Id="VisualCrypt.Text" Description="Text file (.visualcrypt)">
+          <Extension Id="visualcrypt" ContentType="application/visualcrypttext">
+            <Verb Id="open" Command="open" TargetFile ="VisualCrypt.exe" Argument="&quot;%1&quot;" />
+            <MIME ContentType="application/visualcrypttext" Default="yes" />
+          </Extension>
+        </ProgId>
+        <RegistryValue Root="HKCR" Key=".visualcrypt\ShellNew" Name="Filename" Type="string" Value="[WindowsFolder]shellnew\visualcrypt.visualcrypt" />
+        <RegistryValue Root="HKCU" Key="Software\VisualCrypt" Name="HasRunOnce" Type="integer" Value="0" />
+        <!-- Marker for the existence of the Reg entries  (because Reg entries can't be 'KeyPath' either)  -->
+        <RegistryValue Root="HKCU" Key="Software\VisualCrypt" Name="IsOtherRegEntriesCreated" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <!-- Step 3 Tell WiX to install all componets of the feature -->
+    <Feature Id="MainApplication" Title="Main Application" Level="1">
+      <!-- Program components -->
+      <ComponentRef Id="VisualCrypt.exe" />
+      <ComponentRef Id="VisualCrypt.Cryptography.Portable.dll" />
+      <ComponentRef Id="VisualCrypt.Cryptography.Net.dll" />
+      <!-- Shortcut components -->
+      <ComponentRef Id="ApplicationShortcut" />
+      <ComponentRef Id="ApplicationShortcutDesktop" />
+      <ComponentRef Id="ApplicationShortcutSendTo" />
+      <!-- Registry Entries -->
+      <ComponentRef Id="RegistryEntries" />
+      <!-- ShellNew -->
+      <ComponentRef Id="VisualCrypt.visualcrypt" />
+    </Feature>
+  </Product>
+</Wix>
