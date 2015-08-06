@@ -47,6 +47,14 @@ namespace VisualCrypt.Language
 
 		#region Languages
 
+		public string constUntitledDotVisualCrypt
+		{
+			get
+			{
+				return new[] {  "Untitled.visualcrypt",  "Unbenannt.visualcrypt" }.GetLocalizedString();
+			}
+		}
+
 		// MenuItems
 		// Menu File
 

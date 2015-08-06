@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
@@ -570,7 +571,7 @@ namespace VisualCrypt.Desktop.Views
 			try
 			{
 				// This is the simple case, we can 'just save'.
-				if (FileManager.FileModel.IsEncrypted && !isSaveAs && FileManager.FileModel.CheckFilenameForQuickSave())
+				if (FileManager.FileModel.IsEncrypted && !isSaveAs && FileManager.CheckFilenameForQuickSave())
 				{
 					var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
 					if (!response.IsSuccess)
@@ -578,7 +579,7 @@ namespace VisualCrypt.Desktop.Views
 					FileManager.FileModel.IsDirty = false;
 				}
 					// This is the case where we need a new filename and can then also 'just save'.
-				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave()))
+				else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.CheckFilenameForQuickSave()))
 				{
 					string suggestedFilename = null;
 					if (isSaveAs)
@@ -621,7 +622,7 @@ namespace VisualCrypt.Desktop.Views
 					return;
 			}
 			// Then we must sure we have the file name:
-			if (isSaveAs || !FileManager.FileModel.CheckFilenameForQuickSave())
+			if (isSaveAs || !FileManager.CheckFilenameForQuickSave())
 			{
 				string suggestedFilename = null;
 				if (isSaveAs)

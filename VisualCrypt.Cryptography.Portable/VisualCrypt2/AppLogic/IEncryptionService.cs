@@ -1,10 +1,6 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
-using VisualCrypt.Desktop.Shared.Files;
+﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
-namespace VisualCrypt.Desktop.Shared.Services
+namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
 {
 	public interface IEncryptionService
 	{

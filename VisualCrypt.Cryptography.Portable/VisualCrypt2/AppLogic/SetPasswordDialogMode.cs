@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Desktop.Views
+﻿namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
 {
 	public enum SetPasswordDialogMode
 	{

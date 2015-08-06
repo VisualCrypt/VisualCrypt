@@ -17,7 +17,7 @@ namespace VisualCrypt.Desktop.Shared.App
 		public const string PWSpecUrl = "http://visualcrypt.com/Specs/VisualCrypt2#Passwords";
 		public const string SourceUrl = "https://github.com/VisualCrypt/VisualCrypt-Editor";
 
-		public const string UntitledDotVisualCrypt = "Untitled.visualcrypt";
+		
 
 		public const string DotVisualCrypt = ".visualcrypt";
 

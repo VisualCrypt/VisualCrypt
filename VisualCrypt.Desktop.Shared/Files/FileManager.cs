@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using System.Windows;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Language;
@@ -41,6 +43,23 @@ namespace VisualCrypt.Desktop.Shared.Files
 				}
 				else
 					ShowPlainTextBar();
+			}
+		}
+		public static bool CheckFilenameForQuickSave()
+		{
+			try
+			{
+				if (string.IsNullOrWhiteSpace(_fileModel.Filename) || _fileModel.Filename == Loc.Strings.constUntitledDotVisualCrypt)
+					return false;
+				if (!_fileModel.Filename.EndsWith(Constants.DotVisualCrypt))
+					return false;
+				if (File.Exists(_fileModel.Filename))
+					return true;
+				return false;
+			}
+			catch (Exception)
+			{
+				return false;
 			}
 		}
 

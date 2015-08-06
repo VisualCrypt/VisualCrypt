@@ -48,6 +48,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\FileModel.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\IEncryptionService.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\SetPasswordDialogMode.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RandomKeyCipher32.cs" />

@@ -151,7 +151,6 @@
     <Compile Include="Views\SetPasswordDialog.xaml.cs">
       <DependentUpon>SetPasswordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SetPasswordDialogMode.cs" />
     <Compile Include="Views\ShellWindow.xaml.cs">
       <DependentUpon>ShellWindow.xaml</DependentUpon>
     </Compile>
