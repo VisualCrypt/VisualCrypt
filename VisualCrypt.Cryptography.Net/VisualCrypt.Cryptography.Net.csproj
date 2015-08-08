@@ -46,9 +46,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="VisualCrypt2\Implementations\Deflate.cs" />
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="VisualCrypt2\Implementations\SecureStringExtensions.cs" />
     <Compile Include="VisualCrypt2\Implementations\CoreAPI2_Net4.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

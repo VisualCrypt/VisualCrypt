@@ -106,6 +106,7 @@
     <Compile Include="App\Serializer.cs" />
     <Compile Include="Settings\OnFirstRunTasks.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="Tools\SecureStringExtensions.cs" />
     <Compile Include="ValueConverters\BoolTextWrappingConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ThicknessToDoubleConverter.cs" />

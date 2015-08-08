@@ -12,6 +12,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 	public class VisualCrypt2API : IVisualCrypt2API
 	{
 		readonly ICoreAPI2 _coreAPI2;
+	    readonly VisualCryptAPI2Internal _internal;
 
 		public VisualCrypt2API(ICoreAPI2 coreAPI2)
 		{
@@ -19,6 +20,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				throw new ArgumentNullException("coreAPI2", "The platform-specific API part is mandantory.");
 
 			_coreAPI2 = coreAPI2;
+            _internal = new VisualCryptAPI2Internal(_coreAPI2);
 		}
 
 
@@ -65,9 +67,9 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			{
 				Guard.NotNull(new object[] { cleartext, sha512PW64, roundsExponent, context });
 
-				Compressed compressed = _coreAPI2.Compress(cleartext);
+				Compressed compressed = _internal.Compress(cleartext);
 
-				PaddedData paddedData = _coreAPI2.ApplyRandomPadding(compressed);
+				PaddedData paddedData = _internal.ApplyRandomPadding(compressed);
 
 				IV16 iv = new IV16(_coreAPI2.GenerateRandomBytes(16));
 
@@ -76,13 +78,13 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				RandomKey32 randomKey = new RandomKey32(_coreAPI2.GenerateRandomBytes(32));
 
 				var cipherV2 = new CipherV2 { RoundsExponent = roundsExponent, IV16 = iv };
-				_coreAPI2.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2, context);
+				_internal.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2, context);
 
-				_coreAPI2.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2, context);
+				_internal.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2, context);
 
 				MAC16 mac = CreateMAC(cipherV2, context);
 
-				_coreAPI2.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey, context);
+				_internal.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey, context);
 
 				response.Result = cipherV2;
 				response.SetSuccess();
@@ -168,8 +170,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			try
 			{
 				Guard.NotNull(visualCryptText);
-
-				response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText);
+			    var pruned = visualCryptText.FilterWhitespaceAndControlCharacters();
+				response.Result = VisualCrypt2Formatter.DissectVisualCryptText(pruned);
 				response.SetSuccess();
 			}
 			catch (Exception e)
@@ -191,9 +193,9 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.RoundsExponent,
 					context);
 
-				RandomKey32 randomKey = _coreAPI2.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey, context);
+				RandomKey32 randomKey = _internal.AESDecryptRandomKeyWithPasswordDerivedKey(cipherV2, passwordDerivedKey, context);
 
-				MAC16 decryptedMAC = _coreAPI2.AESDecryptMAC(cipherV2, randomKey, context);
+				MAC16 decryptedMAC = _internal.AESDecryptMAC(cipherV2, randomKey, context);
 
 				MAC16 actualMAC = CreateMAC(cipherV2, context);
 
@@ -204,11 +206,11 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 				}
 
 
-				PaddedData paddedData = _coreAPI2.AESDecryptMessage(cipherV2, cipherV2.IV16, randomKey, context);
+				PaddedData paddedData = _internal.AESDecryptMessage(cipherV2, cipherV2.IV16, randomKey, context);
 
-				Compressed compressed = _coreAPI2.RemovePadding(paddedData);
+				Compressed compressed = _internal.RemovePadding(paddedData);
 
-				Cleartext cleartext = _coreAPI2.Decompress(compressed);
+				Cleartext cleartext = _internal.Decompress(compressed);
 
 				response.Result = cleartext;
 				response.SetSuccess();
@@ -252,7 +254,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			var response = new Response<string>();
 			try
 			{
-				response.Result = _coreAPI2.GenerateRandomPassword();
+				response.Result = _internal.GenerateRandomPassword();
 				response.SetSuccess();
 			}
 			catch (Exception e)
@@ -301,7 +303,20 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 	internal static class SanitizationStringExtensions
 	{
-		public static string FilterNonWhitespaceControlCharacters(this string unprunedPassword)
+        public static string FilterWhitespaceAndControlCharacters(this string visualCryptBase64)
+        {
+            Guard.NotNull(visualCryptBase64);
+
+            var charArray =
+                visualCryptBase64
+                    .ToCharArray()
+                    .Where(c => !char.IsControl(c) && !char.IsWhiteSpace(c))
+                    .ToArray();
+
+            return new string(charArray);
+        }
+
+        public static string FilterNonWhitespaceControlCharacters(this string unprunedPassword)
 		{
 			Guard.NotNull(unprunedPassword);
 
