@@ -61,6 +61,7 @@
     <Compile Include="VisualCrypt2\DataTypes\PrunedPassword.cs" />
     <Compile Include="VisualCrypt2\Implementations\AESDir.cs" />
     <Compile Include="VisualCrypt2\Implementations\Deflate.cs" />
+    <Compile Include="VisualCrypt2\Implementations\KeyStore.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCryptAPI2Internal.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\EncryptionProgress.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\Guard.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="VisualCrypt2\Implementations\FileContentsDetection.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2API.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2Formatter.cs" />
-    <Compile Include="VisualCrypt2\Implementations\ICoreAPI2.cs" />
+    <Compile Include="VisualCrypt2\Implementations\IPlatform.cs" />
     <Compile Include="VisualCrypt2\DataTypes\CipherV2.cs" />
     <Compile Include="VisualCrypt2\DataTypes\ClearText.cs" />
     <Compile Include="VisualCrypt2\DataTypes\VisualCryptText.cs" />

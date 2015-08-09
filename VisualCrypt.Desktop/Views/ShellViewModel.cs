@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.Shared;
 using VisualCrypt.Desktop.Shared.App;
@@ -456,7 +457,7 @@ namespace VisualCrypt.Desktop.Views
 						await
 							Task.Run(
 								() =>
-									_encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
+									_encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds), _longRunningOperation.Context));
 					if (createEncryptedFileResponse.IsSuccess)
 					{
 						FileManager.FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
@@ -643,7 +644,7 @@ namespace VisualCrypt.Desktop.Views
 					await
 						Task.Run(
 							() =>
-								_encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText, _longRunningOperation.Context));
+								_encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText, new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds), _longRunningOperation.Context));
 
 				if (encryptAndSaveFileResponse.IsSuccess)
 				{

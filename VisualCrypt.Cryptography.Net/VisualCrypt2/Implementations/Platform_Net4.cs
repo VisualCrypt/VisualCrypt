@@ -6,7 +6,7 @@ using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 {
-	public class CoreAPI2_Net4 : ICoreAPI2
+	public class Platform_Net4 : IPlatform
 	{
 		public byte[] GenerateRandomBytes(int length)
 		{

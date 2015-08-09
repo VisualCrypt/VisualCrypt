@@ -96,6 +96,10 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Editor.xaml.cs">
+      <DependentUpon>Editor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EditorViewModel.cs" />
     <Compile Include="Events\EditorReceivesText.cs" />
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
@@ -124,9 +128,8 @@
     <Compile Include="Static\SettingsManager.cs" />
     <Compile Include="Static\SharedInstances.cs" />
     <Compile Include="Temp\SampleFiles.cs" />
-    <Compile Include="V2\Core2API.cs" />
+    <Compile Include="V2\Platform_UWP.cs" />
     <Compile Include="V2\EncryptionService.cs" />
-    <Compile Include="V2\KeyStore.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -149,6 +152,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Controls\Editor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FilesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -168,6 +175,7 @@
       <Name>VisualCrypt.Language</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

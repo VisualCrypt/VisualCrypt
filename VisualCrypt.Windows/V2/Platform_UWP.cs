@@ -7,10 +7,8 @@ using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Windows.V2
 {
-    public class Core2API : ICoreAPI2
+    public class Platform_UWP : IPlatform
     {
-        const string AES_CBC = "AES_CBC";  // "AES_CBC" -> Padding Mode: None
-
         public byte[] GenerateRandomBytes(int length)
         {
             IBuffer random = CryptographicBuffer.GenerateRandom((uint)length);

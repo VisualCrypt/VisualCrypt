@@ -47,7 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GlobalSuppressions.cs" />
-    <Compile Include="VisualCrypt2\Implementations\CoreAPI2_Net4.cs" />
+    <Compile Include="VisualCrypt2\Implementations\Platform_Net4.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

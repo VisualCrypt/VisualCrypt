@@ -13,8 +13,8 @@ namespace VisualCrypt.Windows.Pages
         public  FilesPage()
         {
             InitializeComponent();
-            var t= Task.Run(() => Temp.SampleFiles.CreateSampleFiles());
-            t.Wait();
+            //var t= Task.Run(() => Temp.SampleFiles.CreateSampleFiles());
+            //t.Wait();
             Loaded += (s,e)=> _viewModel.SetNavigationService(Frame);
         }
 

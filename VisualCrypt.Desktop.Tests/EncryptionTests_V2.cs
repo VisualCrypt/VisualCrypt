@@ -13,13 +13,13 @@ namespace VisualCrypt.Desktop.Tests
 	public class EncryptionTests_V2
 	{
 		readonly IVisualCrypt2API _visualCryptAPI;
-		readonly ICoreAPI2 _visualCryptCoreAPI2;
+		readonly IPlatform _visualCryptPlatform;
 		readonly List<string> _messages = new List<string> { "" };
 
 		public EncryptionTests_V2()
 		{
-			_visualCryptCoreAPI2 = new CoreAPI2_Net4();
-			_visualCryptAPI = new VisualCrypt2API(_visualCryptCoreAPI2);
+			_visualCryptPlatform = new Platform_Net4();
+			_visualCryptAPI = new VisualCrypt2API(_visualCryptPlatform);
 
 			var message = _messages[0];
 

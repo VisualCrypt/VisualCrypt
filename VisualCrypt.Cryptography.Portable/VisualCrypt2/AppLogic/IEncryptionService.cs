@@ -1,4 +1,5 @@
-﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
 {
@@ -9,8 +10,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
 		/// </summary>
 		Response<FileModel> OpenFile(string filename);
 
-		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents,
-			LongRunningOperationContext context);
+		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent,
+            LongRunningOperationContext context);
 
 		Response<FileModel> DecryptForDisplay(FileModel fileModel, string textBufferContents,
 			LongRunningOperationContext context);
@@ -21,8 +22,8 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
 
 		Response SaveEncryptedFile(FileModel fileModel);
 
-		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents,
-			LongRunningOperationContext context);
+		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent,
+            LongRunningOperationContext context);
 
 		Response<string> GenerateRandomPassword();
 

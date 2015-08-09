@@ -1,6 +1,6 @@
 ﻿namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
-	public interface ICoreAPI2
+	public interface IPlatform
 	{
 		byte[] GenerateRandomBytes(int length);
 

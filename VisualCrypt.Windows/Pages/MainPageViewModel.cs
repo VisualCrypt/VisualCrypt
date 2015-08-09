@@ -25,10 +25,9 @@ namespace VisualCrypt.Windows.Pages
         Frame _frame;
         TextBox _textBox1;
 
-        public void OnViewInitialized(Frame frame, TextBox textBox1)
+        public void OnViewInitialized(Frame frame)
         {
             _frame = frame;
-            _textBox1 = textBox1;
         }
 
         public void OnNavigatedTo(NavigationEventArgs e)

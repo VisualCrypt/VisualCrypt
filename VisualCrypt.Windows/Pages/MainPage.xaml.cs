@@ -10,12 +10,12 @@ namespace VisualCrypt.Windows.Pages
         public MainPage()
         {
             InitializeComponent();
-            Loaded += (s, e) => _viewModel.OnViewInitialized(Frame,_textBox1);
+            Loaded += (s, e) => _viewModel.OnViewInitialized(Frame);
         }
         
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _viewModel.OnViewInitialized(Frame, _textBox1);
+            _viewModel.OnViewInitialized(Frame);
             base.OnNavigatedTo(e);
             _viewModel.OnNavigatedTo(e);
         }

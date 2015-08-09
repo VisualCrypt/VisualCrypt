@@ -7,9 +7,7 @@ using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
-using VisualCrypt.Desktop.Shared.App;
-using VisualCrypt.Desktop.Shared.Files;
-using VisualCrypt.Desktop.Shared.Services;
+
 
 namespace VisualCrypt.Desktop.ModuleEncryption
 {
@@ -20,13 +18,9 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 
 		public EncryptionService()
 		{
-			_visualCrypt2API = new VisualCrypt2API(new CoreAPI2_Net4());
+			_visualCrypt2API = new VisualCrypt2API(new Platform_Net4());
 		}
 
-		RoundsExponent GetV2LogRoundsSetting()
-		{
-			return new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds);
-		}
 
 		public Response<FileModel> OpenFile(string filename)
 		{
@@ -73,7 +67,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 			return response;
 		}
 
-		public Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, LongRunningOperationContext context)
+		public Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent, LongRunningOperationContext context)
 		{
 			var response = new Response<FileModel>();
 
@@ -85,7 +79,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCrypt2API.Encrypt(new Cleartext(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context);
+				var encryptResponse = _visualCrypt2API.Encrypt(new Cleartext(textBufferContents), KeyStore.GetPasswordHash(), roundsExponent, context);
 				context.CancellationToken.ThrowIfCancellationRequested();
 				if (encryptResponse.IsSuccess)
 				{
@@ -118,7 +112,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				Response<SHA512PW64> sha512PW64Response = _visualCrypt2API.CreateSHA512PW64(unprunedUTF16LEPassword);
 				if (sha512PW64Response.IsSuccess)
 				{
-					KeyStore.SetSHA256PW32(sha512PW64Response.Result);
+					KeyStore.SetPasswordHash(sha512PW64Response.Result);
 					response.SetSuccess();
 				}
 				else
@@ -163,7 +157,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				var decodeResponse = _visualCrypt2API.TryDecodeVisualCryptText(textBufferContents);
 				if (decodeResponse.IsSuccess)
 				{
-					var decrpytResponse = _visualCrypt2API.Decrypt(decodeResponse.Result, KeyStore.GetSHA256PW32(), context);
+					var decrpytResponse = _visualCrypt2API.Decrypt(decodeResponse.Result, KeyStore.GetPasswordHash(), context);
 					if (decrpytResponse.IsSuccess)
 					{
 						Cleartext cleartext = decrpytResponse.Result;
@@ -210,7 +204,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 		}
 
 
-		public Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, LongRunningOperationContext context)
+		public Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent, LongRunningOperationContext context)
 		{
 			var response = new Response<string>();
 
@@ -222,7 +216,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (fileModel.IsEncrypted)
 					throw new InvalidOperationException("IsEncrypted is already true - not allowed here.");
 
-				var encryptResponse = _visualCrypt2API.Encrypt(new Cleartext(textBufferContents), KeyStore.GetSHA256PW32(), GetV2LogRoundsSetting(), context);
+				var encryptResponse = _visualCrypt2API.Encrypt(new Cleartext(textBufferContents), KeyStore.GetPasswordHash(), roundsExponent, context);
 				if (encryptResponse.IsSuccess)
 				{
 					var encodeResponse = _visualCrypt2API.EncodeToVisualCryptText(encryptResponse.Result);

@@ -12,11 +12,11 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
     class VisualCryptAPI2Internal
     {
-        ICoreAPI2 _coreAPI2;
+        IPlatform _platform;
 
-        public VisualCryptAPI2Internal(ICoreAPI2 coreAPI2)
+        public VisualCryptAPI2Internal(IPlatform platform)
         {
-            _coreAPI2 = coreAPI2;
+            _platform = platform;
         }
 
         public Compressed Compress(Cleartext cleartext)
@@ -38,7 +38,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
             else
                 requiredPadding = 16 - compressed.GetBytes().Length % 16;
 
-            var paddingBytes = _coreAPI2.GenerateRandomBytes(requiredPadding);
+            var paddingBytes = _platform.GenerateRandomBytes(requiredPadding);
 
             var paddedDataBytes = new byte[compressed.GetBytes().Length + requiredPadding];
             Buffer.BlockCopy(compressed.GetBytes(), 0, paddedDataBytes, 0, compressed.GetBytes().Length);
@@ -100,7 +100,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
                        ? _ivCache.Item2[roundsToGo - 1]
                        : _ivCache.Item2[_ivCache.Item2.Length - roundsToGo];
 
-                aesResult = _coreAPI2.ComputeAESRound(aesDir, currentIV, inputData, keyBytes);
+                aesResult = _platform.ComputeAESRound(aesDir, currentIV, inputData, keyBytes);
                 inputData = aesResult;
 
                 // START encryptionProgress / Cancellation
@@ -128,7 +128,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
                 ivTable[ivTable.Length - ivRounds] = ivInput;
 
-                ivInput = _coreAPI2.ComputeSHA256(ivInput).Take(16).ToArray();
+                ivInput = _platform.ComputeSHA256(ivInput).Take(16).ToArray();
 
                 ivRounds = ivRounds - 1;
             }
@@ -194,7 +194,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
         public string GenerateRandomPassword()
         {
-            var passwordBytes = _coreAPI2.GenerateRandomBytes(32);
+            var passwordBytes = _platform.GenerateRandomBytes(32);
 
             char[] passwordChars = Base64Encoder.EncodeDataToBase64CharArray(passwordBytes);
 

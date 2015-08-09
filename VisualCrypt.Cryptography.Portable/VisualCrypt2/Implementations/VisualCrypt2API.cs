@@ -11,16 +11,16 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
 	public class VisualCrypt2API : IVisualCrypt2API
 	{
-		readonly ICoreAPI2 _coreAPI2;
+		readonly IPlatform _platform;
 	    readonly VisualCryptAPI2Internal _internal;
 
-		public VisualCrypt2API(ICoreAPI2 coreAPI2)
+		public VisualCrypt2API(IPlatform platform)
 		{
-			if (coreAPI2 == null)
-				throw new ArgumentNullException("coreAPI2", "The platform-specific API part is mandantory.");
+			if (platform == null)
+				throw new ArgumentNullException("platform", "The platform-specific API part is mandantory.");
 
-			_coreAPI2 = coreAPI2;
-            _internal = new VisualCryptAPI2Internal(_coreAPI2);
+			_platform = platform;
+            _internal = new VisualCryptAPI2Internal(_platform);
 		}
 
 
@@ -45,7 +45,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 				var utf16LEBytes = Encoding.Unicode.GetBytes(prunedPasswordResponse.Result.Text);
 
-				var sha512 = _coreAPI2.ComputeSHA512(utf16LEBytes);
+				var sha512 = _platform.ComputeSHA512(utf16LEBytes);
 
 				response.Result = new SHA512PW64(sha512);
 				response.SetSuccess();
@@ -71,11 +71,11 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 				PaddedData paddedData = _internal.ApplyRandomPadding(compressed);
 
-				IV16 iv = new IV16(_coreAPI2.GenerateRandomBytes(16));
+				IV16 iv = new IV16(_platform.GenerateRandomBytes(16));
 
 				PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, roundsExponent, context);
 
-				RandomKey32 randomKey = new RandomKey32(_coreAPI2.GenerateRandomBytes(32));
+				RandomKey32 randomKey = new RandomKey32(_platform.GenerateRandomBytes(32));
 
 				var cipherV2 = new CipherV2 { RoundsExponent = roundsExponent, IV16 = iv };
 				_internal.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2, context);
@@ -140,7 +140,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			var combinedHashes = ByteArrays.Concatenate(sha512PW64.GetBytes(), task.Result.GetBytes(), rightBCrypt.GetBytes());
 			Debug.Assert(combinedHashes.Length == 64 + 24 + 24);
 
-			var condensedHash = _coreAPI2.ComputeSHA256(combinedHashes);
+			var condensedHash = _platform.ComputeSHA256(combinedHashes);
 			return new PasswordDerivedKey32(condensedHash);
 		}
 
