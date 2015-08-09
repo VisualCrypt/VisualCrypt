@@ -17,7 +17,6 @@
 
 using System;
 using System.Diagnostics.Contracts;
-using System.Windows.Input;
 
 namespace VisualCrypt.Windows.Infrastructure
 {

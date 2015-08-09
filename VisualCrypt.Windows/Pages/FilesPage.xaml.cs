@@ -6,16 +6,15 @@ using VisualCrypt.Windows.Models;
 
 namespace VisualCrypt.Windows.Pages
 {
-    public sealed partial class FilesPage
+    public sealed partial class FilesPage: IFrameNavigation
     {
-        readonly FilesPageViewModel _viewModel = new FilesPageViewModel();
+        readonly FilesPageViewModel _viewModel;
 
         public  FilesPage()
         {
             InitializeComponent();
-            //var t= Task.Run(() => Temp.SampleFiles.CreateSampleFiles());
-            //t.Wait();
-            Loaded += (s,e)=> _viewModel.SetNavigationService(Frame);
+            _viewModel = new FilesPageViewModel(this);
+            Loaded += async (s,e)=> await _viewModel.OnNavigatedToCompleteAndLoaded();
         }
 
        

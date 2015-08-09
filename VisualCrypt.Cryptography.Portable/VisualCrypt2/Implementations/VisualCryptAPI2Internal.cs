@@ -38,6 +38,11 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
             else
                 requiredPadding = 16 - compressed.GetBytes().Length % 16;
 
+            if (requiredPadding == 0)
+            {
+                return new PaddedData(compressed.GetBytes(), new PlaintextPadding(requiredPadding));
+            }
+
             var paddingBytes = _platform.GenerateRandomBytes(requiredPadding);
 
             var paddedDataBytes = new byte[compressed.GetBytes().Length + requiredPadding];

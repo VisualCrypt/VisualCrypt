@@ -16,16 +16,22 @@ namespace VisualCrypt.Windows.Services
     enum MessageBoxResult
     {
         Cancel,
-        OK
+        OK,
+        None
     }
 
     enum MessageBoxImage
     {
-        Warning
+        Warning,
+        Exclamation,
+        Information,
+        Error,
+        Question
     }
 
     enum MessageBoxButton
     {
+        OK,Cancel,
         OKCancel
     }
 }

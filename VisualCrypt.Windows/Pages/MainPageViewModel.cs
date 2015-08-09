@@ -5,6 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Language;
 using VisualCrypt.Windows.Events;
@@ -19,18 +20,21 @@ namespace VisualCrypt.Windows.Pages
     class MainPageViewModel : ViewModelBase
     {
         readonly IEncryptionService _encryptionService = new EncryptionService();
-        readonly IMessageBoxService _messageBoxService;
+        readonly IMessageBoxService _messageBoxService = SharedInstances.MessageBoxService;
         readonly IEventAggregator _eventAggregator = SharedInstances.EventAggregator;
+        readonly IFrameNavigation _frameNavigation;
         LongRunningOperation _longRunningOperation;
-        Frame _frame;
-        TextBox _textBox1;
 
-        public void OnViewInitialized(Frame frame)
+        public MainPageViewModel(IFrameNavigation frameNavigation)
         {
-            _frame = frame;
+            _frameNavigation = frameNavigation;
+           
+            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
+          
+
         }
 
-        public void OnNavigatedTo(NavigationEventArgs e)
+        public async Task OnNavigatedToCompletedAndLoaded(NavigationEventArgs e)
         {
             if (e == null || e.Parameter == null || e.Parameter is FilesPageCommandArgs == false)
                 throw new ArgumentException("Invalid NavigationEventArgs passed to MainPageViewModel.");
@@ -39,31 +43,69 @@ namespace VisualCrypt.Windows.Pages
             switch (command.FilesPageCommand)
             {
                 case FilesPageCommand.New:
-                    NewCommand.Execute();
+                    ExecuteNewCommand();
                     break;
                 case FilesPageCommand.Open:
-                    OpenCommand.Execute(command.FileReference);
+                    await ExecuteOpenCommand(command.FileReference);
                     break;
                 default:
                     throw new InvalidOperationException($"Unknwon command {command}");
             }
+          
         }
+
+
+        void OnEditorSendsStatusBarInfo(string obj)
+        {
+
+        }
+
+
+
+        void ExecuteEditorSendsTextCallback(EditorSendsText args)
+        {
+            if (args != null && args.Callback != null)
+                args.Callback(args.Text);
+
+        }
+
+        Task<string> EditorSendsTextAsync()
+        {
+            _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
+            var tcs = new TaskCompletionSource<string>();
+            _eventAggregator.GetEvent<EditorShouldSendText>()
+                .Publish(delegate (string s)
+                {
+                    _eventAggregator.GetEvent<EditorSendsText>().Unsubscribe(ExecuteEditorSendsTextCallback);
+                    tcs.SetResult(s);
+                });
+            return tcs.Task;
+        }
+
+
+
+
+
 
         #region NewCommand
-
-        DelegateCommand _newCommand;
-
-        public DelegateCommand NewCommand
-        {
-            get { return CreateCommand(ref _newCommand, ExecuteNewCommand, () => true); }
-        }
 
         void ExecuteNewCommand()
         {
             if (!ConfirmToDiscardText())
                 return;
+            var setPasswordResponse = _encryptionService.SetPassword("bla");
+            if (!setPasswordResponse.IsSuccess)
+            {
+                PasswordManager.PasswordInfo.IsPasswordSet = false;
+                _messageBoxService.ShowError(setPasswordResponse.Error);
+                return;
+            }
+            PasswordManager.PasswordInfo.IsPasswordSet = true;
+
             FileManager.FileModel = FileModel.EmptyCleartext();
-            _textBox1.Text = FileManager.FileModel.ClearTextContents;
+
+            var ert = _eventAggregator.GetEvent<EditorReceivesText>();
+            ert.Publish(FileManager.FileModel.ClearTextContents);
         }
 
         #endregion
@@ -81,17 +123,16 @@ namespace VisualCrypt.Windows.Pages
         {
             if (!ConfirmToDiscardText())
                 return;
-            _frame.Navigate(typeof (FilesPage));
+            _eventAggregator.GetEvent<EditorShouldCleanup>().Publish(null);
+            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(OnEditorSendsStatusBarInfo);
+            _frameNavigation.Frame.Navigate(typeof(FilesPage));
         }
 
         #endregion
 
         #region OpenCommand
 
-        DelegateCommand<FileReference> OpenCommand => CreateCommand(ref _openCommand, ExecuteOpenCommand, arg => true);
-        DelegateCommand<FileReference> _openCommand;
-
-        async void ExecuteOpenCommand(FileReference fileReference)
+        async Task ExecuteOpenCommand(FileReference fileReference)
         {
             // _textBox1.Text = fileReference.Filename;
 
@@ -209,7 +250,10 @@ namespace VisualCrypt.Windows.Pages
 
         private void UpdateCanExecuteChanged()
         {
-            
+            // TODO: many more Commands, like Replace must be updated
+            //_exportCommand.RaiseCanExecuteChanged();
+            _encryptEditorContentsCommand.RaiseCanExecuteChanged();
+            _decryptEditorContentsCommand.RaiseCanExecuteChanged();
         }
 
         private Task<bool> SetPasswordAsync(SetPasswordDialogMode correctPassword)
@@ -218,6 +262,120 @@ namespace VisualCrypt.Windows.Pages
             tcs.SetResult(true);
             return tcs.Task;
         }
+
+        #endregion
+
+        #region EncryptEditorContentsCommand
+
+        DelegateCommand _encryptEditorContentsCommand;
+
+        public DelegateCommand EncryptEditorContentsCommand
+        {
+            get
+            {
+                return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand,
+                    () => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
+            }
+        }
+
+
+        async void ExecuteEncryptEditorContentsCommand()
+        {
+            try
+            {
+                if (!PasswordManager.PasswordInfo.IsPasswordSet)
+                {
+                    bool result = await SetPasswordAsync(SetPasswordDialogMode.SetAndEncrypt);
+                    if (result == false)
+                        return;
+                }
+
+                string textBufferContents = await EditorSendsTextAsync();
+
+                using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryption))
+                {
+                    var createEncryptedFileResponse =
+                        await
+                            Task.Run(
+                                () =>
+                                    _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents, new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds), _longRunningOperation.Context));
+                    if (createEncryptedFileResponse.IsSuccess)
+                    {
+                        FileManager.FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
+                        _eventAggregator.GetEvent<EditorReceivesText>().Publish(createEncryptedFileResponse.Result.VisualCryptText);
+                        UpdateCanExecuteChanged();
+                        return;
+                    }
+                    if (createEncryptedFileResponse.IsCanceled)
+                        return;
+                    // other error, switch back to PlainTextBar and show error
+                    FileManager.ShowPlainTextBar();
+                    _messageBoxService.ShowError(createEncryptedFileResponse.Error);
+                }
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
+            }
+        }
+
+        #endregion
+
+        #region DecryptEditorContentsCommand
+
+        DelegateCommand _decryptEditorContentsCommand;
+
+        public DelegateCommand DecryptEditorContentsCommand
+        {
+            get
+            {
+                return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand,
+                    () => FileManager.FileModel.SaveEncoding != null);
+            }
+        }
+
+
+        async void ExecuteDecryptEditorContentsCommand()
+        {
+            try
+            {
+                if (!PasswordManager.PasswordInfo.IsPasswordSet)
+                {
+                    bool result = await SetPasswordAsync(SetPasswordDialogMode.SetAndDecrypt);
+                    if (result == false)
+                        return;
+                }
+
+                string textBufferContents = await EditorSendsTextAsync();
+
+                using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryption))
+                {
+                    var decryptForDisplayResult =
+                        await
+                            Task.Run(
+                                () =>
+                                    _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents, _longRunningOperation.Context));
+                    if (decryptForDisplayResult.IsSuccess)
+                    {
+                        FileManager.FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
+                        _eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
+                        UpdateCanExecuteChanged();
+                        return;
+                    }
+                    if (decryptForDisplayResult.IsCanceled)
+                        return;
+                    // other error, switch back to EncryptedBar
+                    FileManager.ShowEncryptedBar();
+                    _messageBoxService.ShowError(decryptForDisplayResult.Error);
+                }
+            }
+            catch (Exception e)
+            {
+                _messageBoxService.ShowError(e);
+            }
+        }
+
+
 
         #endregion
 
@@ -236,5 +394,6 @@ namespace VisualCrypt.Windows.Pages
         }
 
         #endregion
+
     }
 }

@@ -5,6 +5,11 @@ namespace VisualCrypt.Windows.Static
 {
     static class FileManager
     {
+        static FileManager ()
+        {
+            FileModel = FileModel.EmptyCleartext();
+        }
+
         public static BindableFileInfo BindableFileInfo = new BindableFileInfo();
 
         public static FileModel FileModel { get; set; }

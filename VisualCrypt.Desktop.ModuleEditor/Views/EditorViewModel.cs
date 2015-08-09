@@ -34,7 +34,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_messageBoxService = messageBoxService;
 		}
 
-		public void OnEditorLoaded(IEditor editor)
+		public void OnViewLoaded(IEditor editor)
 		{
 			_editor = editor;
 			SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);

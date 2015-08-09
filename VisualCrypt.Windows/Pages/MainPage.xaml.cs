@@ -1,23 +1,30 @@
-﻿using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
 
 namespace VisualCrypt.Windows.Pages
 {
-    public sealed partial class MainPage
+    public sealed partial class MainPage : IFrameNavigation
     {
-        readonly MainPageViewModel _viewModel = new MainPageViewModel();
+        readonly MainPageViewModel _viewModel;
 
         public MainPage()
         {
             InitializeComponent();
-            Loaded += (s, e) => _viewModel.OnViewInitialized(Frame);
+            _viewModel = new MainPageViewModel(this);
         }
-        
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            _viewModel.OnViewInitialized(Frame);
             base.OnNavigatedTo(e);
-            _viewModel.OnNavigatedTo(e);
+            RoutedEventHandler handler = null;
+            handler = async (sender, args) => 
+            {
+                Loaded -= handler;
+                await _viewModel.OnNavigatedToCompletedAndLoaded(e);
+            };
+            Loaded += handler;
         }
+
+        
     }
 }

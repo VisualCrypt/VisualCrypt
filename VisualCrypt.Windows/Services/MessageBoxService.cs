@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Threading.Tasks;
+using Windows.UI.Popups;
 
 namespace VisualCrypt.Windows.Services
 {
@@ -6,17 +8,27 @@ namespace VisualCrypt.Windows.Services
     {
         public MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton buttons, MessageBoxImage image)
         {
-            return MessageBoxResult.OK;
+
+            ShowDialog(messageBoxText);
+          
+           return MessageBoxResult.OK;
+          
         }
 
         public void ShowError(Exception e, string callerMemberName = "")
         {
-           
+            ShowDialog(e.Message);
         }
 
         public void ShowError(string error)
         {
-            
+            ShowDialog(error);
+        }
+
+        async void ShowDialog(string text)
+        {
+            var md = new MessageDialog(text);
+            await md.ShowAsync();
         }
     }
 }

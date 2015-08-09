@@ -99,10 +99,16 @@
     <Compile Include="Controls\Editor.xaml.cs">
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\EditorSupport\IEditor.cs" />
     <Compile Include="Controls\EditorViewModel.cs" />
+    <Compile Include="Controls\EditorSupport\FindReplace\SearchOptions.cs" />
+    <Compile Include="Controls\EditorSupport\FindReplace\SearchResult.cs" />
+    <Compile Include="Controls\EditorSupport\FindReplace\SearchStrategy.cs" />
+    <Compile Include="Controls\TextBoxExtensions.cs" />
     <Compile Include="Events\EditorReceivesText.cs" />
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
+    <Compile Include="Events\EditorShouldCleanup.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
     <Compile Include="Infrastructure\DelegateCommand.cs" />
     <Compile Include="Infrastructure\DelegateCommandBase.cs" />
@@ -114,6 +120,7 @@
     </Compile>
     <Compile Include="Pages\FilesPageCommandArgs.cs" />
     <Compile Include="Pages\FilesPageViewModel.cs" />
+    <Compile Include="Pages\IFrameNavigation.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -123,8 +130,13 @@
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Static\BindableFileInfo.cs" />
     <Compile Include="Static\BindablePasswordInfo.cs" />
+    <Compile Include="Static\CryptographySettings.cs" />
+    <Compile Include="Static\EditorSettings.cs" />
     <Compile Include="Static\FileManager.cs" />
+    <Compile Include="Static\FontSettings.cs" />
+    <Compile Include="Static\Map.cs" />
     <Compile Include="Static\PasswordManager.cs" />
+    <Compile Include="Static\Serializer.cs" />
     <Compile Include="Static\SettingsManager.cs" />
     <Compile Include="Static\SharedInstances.cs" />
     <Compile Include="Temp\SampleFiles.cs" />
@@ -175,7 +187,6 @@
       <Name>VisualCrypt.Language</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

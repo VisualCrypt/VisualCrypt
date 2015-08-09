@@ -284,7 +284,7 @@ namespace VisualCrypt.Desktop.Tests
 
 			var vm = ServiceLocator.Current.GetInstance<EditorViewModel>();
 			vm._messageBoxService = new FakeOkMessageBoxService();
-			vm.OnEditorLoaded(_editor);
+			vm.OnViewLoaded(_editor);
 			return vm;
 		}
 

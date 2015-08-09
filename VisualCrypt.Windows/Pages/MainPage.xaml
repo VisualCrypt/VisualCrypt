@@ -5,8 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:VisualCrypt.Windows.Controls"
+    NavigationCacheMode="Disabled"
     mc:Ignorable="d">
-
+    <Page.TopAppBar>
+        <CommandBar>
+            <AppBarButton Label="Encrypt" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Icon="Permissions" />
+            <AppBarButton Label="Decrypt" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Icon="View" />
+        </CommandBar>
+    </Page.TopAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
@@ -26,6 +32,6 @@
 
         </StackPanel>
         <controls:Editor Grid.Row="1"></controls:Editor>
-       
+
     </Grid>
 </Page>

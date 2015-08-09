@@ -1,26 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using VisualCrypt.Windows.Infrastructure;
 using VisualCrypt.Windows.Models;
+using VisualCrypt.Windows.Temp;
 
 namespace VisualCrypt.Windows.Pages
 {
     class FilesPageViewModel : ViewModelBase
     {
         public readonly ObservableCollection<FileReference> FileReferences = new ObservableCollection<FileReference>();
-        Frame _frame;
+        readonly IFrameNavigation _frameNavigation;
 
-        public FilesPageViewModel()
+        public FilesPageViewModel(IFrameNavigation frameNavigation)
         {
-            FileReferences.Add(new FileReference {Filename = "File1.visualcrpyt", DirectoryName = "Desktop"});
-            FileReferences.Add(new FileReference { Filename = "File2.visualcrpyt", DirectoryName = "Desktop" });
+            _frameNavigation = frameNavigation;
         }
 
         public DelegateCommand NavigateToNewCommand => CreateCommand(ref _navigateToNewCommand, ExecuteNavigateToNewCommand, () => true);
@@ -28,23 +24,25 @@ namespace VisualCrypt.Windows.Pages
 
         void ExecuteNavigateToNewCommand()
         {
-            _frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.New }, new DrillInNavigationTransitionInfo());
+            _frameNavigation.Frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.New }, new DrillInNavigationTransitionInfo());
         }
 
         public DelegateCommand<FileReference> NavigateToOpenCommand => CreateCommand(ref _navigateToOpenCommand, ExecuteNavigateToOpenCommand, arg => true);
         DelegateCommand<FileReference> _navigateToOpenCommand;
 
+
         void ExecuteNavigateToOpenCommand(FileReference fileReference)
         {
-            _frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference }, new DrillInNavigationTransitionInfo());
+            _frameNavigation.Frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference }, new DrillInNavigationTransitionInfo());
         }
 
-        internal async void SetNavigationService(Frame frame)
+        // Called From FilesPage.OnLoaded
+        internal async Task OnNavigatedToCompleteAndLoaded()
         {
-            _frame = frame;
-           
+            await SampleFiles.CreateSampleFiles();
+            // because we await here, OnLoaded can finish - good!
             var fileReferences = await GetFileReferences(ApplicationData.Current.LocalFolder);
-           
+
             foreach (var fileReference in fileReferences)
             {
                 FileReferences.Add(fileReference);
