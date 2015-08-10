@@ -48,8 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\DialogDirection.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\DialogFilters.cs" />
     <Compile Include="VisualCrypt2\AppLogic\FileModel.cs" />
     <Compile Include="VisualCrypt2\AppLogic\IEncryptionService.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\IFileModel.cs" />
+    <Compile Include="VisualCrypt2\AppLogic\PortableConstants.cs" />
     <Compile Include="VisualCrypt2\AppLogic\SetPasswordDialogMode.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
@@ -89,6 +93,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\ByteArrays.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\FillWithZeros.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\StringExtensions.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\ToHexView.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\FormatInvariant.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

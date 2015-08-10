@@ -100,11 +100,16 @@
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditorSupport\IEditor.cs" />
+    <Compile Include="Controls\EditorSupport\IEditorContext.cs" />
     <Compile Include="Controls\EditorViewModel.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchOptions.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchResult.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchStrategy.cs" />
     <Compile Include="Controls\EditorSupport\TextBoxExtensions.cs" />
+    <Compile Include="Controls\PasswordDialog.xaml.cs">
+      <DependentUpon>PasswordDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PasswordDialogViewModel.cs" />
     <Compile Include="Events\EditorReceivesText.cs" />
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
@@ -130,13 +135,11 @@
     <Compile Include="Services\IMessageBoxService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Static\BindableFileInfo.cs" />
-    <Compile Include="Static\BindablePasswordInfo.cs" />
+    <Compile Include="Models\PasswordInfo.cs" />
     <Compile Include="Static\CryptographySettings.cs" />
     <Compile Include="Static\EditorSettings.cs" />
-    <Compile Include="Static\FileManager.cs" />
     <Compile Include="Static\FontSettings.cs" />
     <Compile Include="Static\Map.cs" />
-    <Compile Include="Static\PasswordManager.cs" />
     <Compile Include="Static\Serializer.cs" />
     <Compile Include="Static\SettingsManager.cs" />
     <Compile Include="Static\SharedInstances.cs" />
@@ -169,11 +172,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\PasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\FilesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\BarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\DialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\VisualCryptColors.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -19,6 +19,7 @@ namespace VisualCrypt.Windows.Controls
         readonly IMessageBoxService _messageBoxService = SharedInstances.MessageBoxService;
         readonly IEventAggregator _eventAggregator = SharedInstances.EventAggregator;
         IEditor _editor;
+        IEditorContext _context;
 
         public EditorViewModel()
         {
@@ -27,10 +28,10 @@ namespace VisualCrypt.Windows.Controls
             _eventAggregator.GetEvent<EditorShouldCleanup>().Subscribe(Cleanup);
         }
 
-        public void OnViewInitialized(IEditor editor)
+        public void OnViewInitialized(IEditor editor, IEditorContext context)
         {
             _editor = editor;
-
+            _context = context;
             //SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);
             SearchOptions = new SearchOptions();
             //ExecuteZoom100();
@@ -71,18 +72,18 @@ namespace VisualCrypt.Windows.Controls
 
             //_editor.TextBox1.IsUndoEnabled = false;
 
-            var backup = FileManager.FileModel.IsDirty;
+            var backup = _context.FileModel.IsDirty;
             _editor.TextBox1.Text = newText; // triggers Text_Changed which sets FileManager.FileModel.IsDirty = true;
-            FileManager.FileModel.IsDirty = backup;
+            _context.FileModel.IsDirty = backup;
 
-            if (FileManager.FileModel.IsEncrypted)
+            if (_context.FileModel.IsEncrypted)
             {
                 //_editor.TextBox1.IsUndoEnabled = false;
                 _editor.TextBox1.IsReadOnly = true;
             }
             else
             {
-                if (FileManager.FileModel.SaveEncoding != null)
+                if (_context.FileModel.SaveEncoding != null)
                 {
                     //_editor.TextBox1.IsUndoEnabled = true;
                     _editor.TextBox1.IsReadOnly = false;
@@ -100,7 +101,7 @@ namespace VisualCrypt.Windows.Controls
 
         void OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            FileManager.FileModel.IsDirty = true;
+            _context.FileModel.IsDirty = true;
             UpdateStatusBar();
         }
 
@@ -427,9 +428,9 @@ namespace VisualCrypt.Windows.Controls
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
         }
 
-        static string GetEncodingString()
+        string GetEncodingString()
         {
-            return FileManager.FileModel.SaveEncoding != null ? FileManager.FileModel.SaveEncoding.EncodingName : "Hex View";
+            return _context.FileModel.SaveEncoding != null ? _context.FileModel.SaveEncoding.EncodingName : "Hex View";
         }
 
         string GetPositionString()

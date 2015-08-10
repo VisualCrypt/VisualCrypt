@@ -10,6 +10,7 @@ using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Services;
+using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
 {
@@ -106,7 +107,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.SpecUrl}})
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl}})
 					process.Start();
 			}
 			catch (Exception ex)
@@ -119,7 +120,7 @@ namespace VisualCrypt.Desktop.Views
 		{
 			try
 			{
-				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Constants.SourceUrl}})
+				using (var process = new Process {StartInfo = {UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl } })
 					process.Start();
 			}
 			catch (Exception ex)

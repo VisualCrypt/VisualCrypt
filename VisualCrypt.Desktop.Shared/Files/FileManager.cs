@@ -51,7 +51,7 @@ namespace VisualCrypt.Desktop.Shared.Files
 			{
 				if (string.IsNullOrWhiteSpace(_fileModel.Filename) || _fileModel.Filename == Loc.Strings.constUntitledDotVisualCrypt)
 					return false;
-				if (!_fileModel.Filename.EndsWith(Constants.DotVisualCrypt))
+				if (!_fileModel.Filename.EndsWith(PortableConstants.DotVisualCrypt))
 					return false;
 				if (File.Exists(_fileModel.Filename))
 					return true;

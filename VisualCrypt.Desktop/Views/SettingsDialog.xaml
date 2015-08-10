@@ -7,6 +7,7 @@
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:app="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:implementations="clr-namespace:VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;assembly=VisualCrypt.Cryptography.Portable"
+                    xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
                     mc:Ignorable="d"
                     Title="Settings" Height="300" Width="500" WindowStartupLocation="CenterOwner"
                     d:DataContext="{d:DesignInstance views:SettingsDialog}"
@@ -35,12 +36,12 @@
                         </ComboBox>
                         <TextBlock>
                             Read the
-                            <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SpecUrl}, Mode=OneWay}"
+                            <Hyperlink ToolTip="{Binding Source={x:Static language:Loc.Strings},Path=uriPWSpecUrl, Mode=OneWay}"
                                        Click="Hyperlink_Spec_OnClick">
                                 Spec
                             </Hyperlink>
                             or view the
-                            <Hyperlink ToolTip="{Binding Source={x:Static app:Constants.SourceUrl}, Mode=OneWay}"
+                            <Hyperlink ToolTip="{Binding Source={x:Static language:Loc.Strings}, Path=uriSourceUrl, Mode=OneWay}"
                                        Click="Hyperlink_Source_OnClick">
                                 Source Code
                             </Hyperlink>

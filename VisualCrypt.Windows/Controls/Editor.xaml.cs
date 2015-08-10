@@ -9,8 +9,10 @@ namespace VisualCrypt.Windows.Controls
         public Editor()
         {
             InitializeComponent();
-            Loaded += (s, e) => _viewModel.OnViewInitialized(this);
+            Loaded += (s, e) => _viewModel.OnViewInitialized(this,Context);
         }
+
+        public IEditorContext Context { private get; set; }
 
         #region IEditor
 
@@ -38,6 +40,8 @@ namespace VisualCrypt.Windows.Controls
         {
             get { return this; }
         }
+
+       
 
         #endregion
     }

@@ -43,11 +43,48 @@ namespace VisualCrypt.Language
 			get { return Localization.GetCurrentLocale() == "DE"; }
 		}
 
-		#endregion
+        #endregion
 
-		#region Languages
+        #region Languages
 
-		public string constUntitledDotVisualCrypt
+     
+
+        public string uriHelpUrl
+        {
+            get
+            {
+                return "http://visualcrypt.com/Help/Windows/VisualCrypt2";
+            }
+        }
+
+        public string uriSpecUrl
+        {
+            get
+            {
+                return "http://visualcrypt.com/Specs/VisualCrypt2";
+            }
+        }
+
+        public string uriSourceUrl
+        {
+            get
+            {
+                return "https://github.com/VisualCrypt/VisualCrypt-Editor";
+            }
+        }
+        public string uriPWSpecUrl
+        {
+            get
+            {
+                return "http://visualcrypt.com/Specs/VisualCrypt2#Passwords";
+            }
+        }
+
+
+
+
+
+        public string constUntitledDotVisualCrypt
 		{
 			get
 			{
@@ -594,16 +631,10 @@ namespace VisualCrypt.Language
 				return new[] { "Incorrect password or corrupted/forged message.", "Falsches Passwort oder beschädigte/verfälschte Daten." }.GetLocalizedString();
 			}
 		}
+       
+       
 
-		
-		
-
-
-		
-		
-
-
-		#endregion
+	    #endregion
 
 
 

@@ -1,5 +1,6 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using VisualCrypt.Windows.Controls.EditorSupport;
 
 namespace VisualCrypt.Windows.Pages
 {
@@ -11,6 +12,7 @@ namespace VisualCrypt.Windows.Pages
         {
             InitializeComponent();
             _viewModel = new MainPageViewModel(this);
+            this.EditorControl.Context = (IEditorContext) _viewModel;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

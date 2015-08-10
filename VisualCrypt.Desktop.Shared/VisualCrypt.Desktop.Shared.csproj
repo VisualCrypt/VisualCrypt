@@ -75,8 +75,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App\DialogDirection.cs" />
-    <Compile Include="App\DialogFilters.cs" />
     <Compile Include="App\WindowManager.cs" />
     <Compile Include="PrismSupport\ParamsProvider.cs" />
     <Compile Include="Commands\EditorCommands.cs" />
@@ -105,7 +103,6 @@
     <Compile Include="App\SettingsManager.cs" />
     <Compile Include="App\Serializer.cs" />
     <Compile Include="Settings\OnFirstRunTasks.cs" />
-    <Compile Include="StringExtensions.cs" />
     <Compile Include="Tools\SecureStringExtensions.cs" />
     <Compile Include="ValueConverters\BoolTextWrappingConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />

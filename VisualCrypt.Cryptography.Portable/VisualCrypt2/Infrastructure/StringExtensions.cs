@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace VisualCrypt.Desktop.Shared
+namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
 {
 	public static class StringExtensions
 	{

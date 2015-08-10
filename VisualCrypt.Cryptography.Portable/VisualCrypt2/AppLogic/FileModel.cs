@@ -7,7 +7,7 @@ using VisualCrypt.Language;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
 {
-	public class FileModel : INotifyPropertyChanged
+	public class FileModel : INotifyPropertyChanged, IFileModel
 	{
 		static readonly Encoding VisualCryptTextSaveEncoding = new UTF8Encoding(false, true);
 		static readonly Encoding DefaultClearTextSaveEncoding = VisualCryptTextSaveEncoding;
