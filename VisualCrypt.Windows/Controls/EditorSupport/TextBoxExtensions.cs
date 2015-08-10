@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 
-namespace VisualCrypt.Windows.Controls
+namespace VisualCrypt.Windows.Controls.EditorSupport
 {
     public static class TextBoxExtensions
     {

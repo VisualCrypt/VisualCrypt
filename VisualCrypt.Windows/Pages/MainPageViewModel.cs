@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Practices.Prism.PubSubEvents;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
@@ -17,27 +17,24 @@ using VisualCrypt.Windows.V2;
 
 namespace VisualCrypt.Windows.Pages
 {
-    class MainPageViewModel : ViewModelBase
+    class MainPageViewModel : ViewModelBase, IActiveCleanup
     {
         readonly IEncryptionService _encryptionService = new EncryptionService();
         readonly IMessageBoxService _messageBoxService = SharedInstances.MessageBoxService;
         readonly IEventAggregator _eventAggregator = SharedInstances.EventAggregator;
-        readonly IFrameNavigation _frameNavigation;
+        IFrameNavigation _frameNavigation;
         LongRunningOperation _longRunningOperation;
 
         public MainPageViewModel(IFrameNavigation frameNavigation)
         {
             _frameNavigation = frameNavigation;
-           
+            _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
-          
-
         }
 
         public async Task OnNavigatedToCompletedAndLoaded(NavigationEventArgs e)
         {
-            if (e == null || e.Parameter == null || e.Parameter is FilesPageCommandArgs == false)
-                throw new ArgumentException("Invalid NavigationEventArgs passed to MainPageViewModel.");
+            Debug.Assert(e?.Parameter is FilesPageCommandArgs);
 
             var command = (FilesPageCommandArgs)e.Parameter;
             switch (command.FilesPageCommand)
@@ -51,7 +48,6 @@ namespace VisualCrypt.Windows.Pages
                 default:
                     throw new InvalidOperationException($"Unknwon command {command}");
             }
-          
         }
 
 
@@ -61,22 +57,19 @@ namespace VisualCrypt.Windows.Pages
         }
 
 
-
-        void ExecuteEditorSendsTextCallback(EditorSendsText args)
+        static void ExecuteEditorSendsTextCallback(EditorSendsText args)
         {
-            if (args != null && args.Callback != null)
-                args.Callback(args.Text);
-
+            Debug.Assert(args?.Callback != null);
+            args.Callback(args.Text);
         }
 
         Task<string> EditorSendsTextAsync()
         {
-            _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
+
             var tcs = new TaskCompletionSource<string>();
             _eventAggregator.GetEvent<EditorShouldSendText>()
                 .Publish(delegate (string s)
                 {
-                    _eventAggregator.GetEvent<EditorSendsText>().Unsubscribe(ExecuteEditorSendsTextCallback);
                     tcs.SetResult(s);
                 });
             return tcs.Task;
@@ -123,9 +116,9 @@ namespace VisualCrypt.Windows.Pages
         {
             if (!ConfirmToDiscardText())
                 return;
-            _eventAggregator.GetEvent<EditorShouldCleanup>().Publish(null);
-            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(OnEditorSendsStatusBarInfo);
+
             _frameNavigation.Frame.Navigate(typeof(FilesPage));
+            Cleanup();
         }
 
         #endregion
@@ -150,8 +143,7 @@ namespace VisualCrypt.Windows.Pages
 
         async Task OpenFileCommon(string filename)
         {
-            if (string.IsNullOrWhiteSpace(filename) || !File.Exists(filename))
-                return;
+            Debug.Assert(filename != null);
 
             try
             {
@@ -190,7 +182,7 @@ namespace VisualCrypt.Windows.Pages
                         return; // The user prefers to look at the cipher!
                 }
 
-            tryDecryptLoadFileWithCurrentPassword:
+                tryDecryptLoadFileWithCurrentPassword:
 
                 // We have a password, but we don't know if it's the right one. We must try!
                 using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryptOpenedFile))
@@ -227,7 +219,7 @@ namespace VisualCrypt.Windows.Pages
             }
         }
 
-        LongRunningOperation StartLongRunnungOperation(string description)
+        static LongRunningOperation StartLongRunnungOperation(string description)
         {
             FileManager.ShowWorkingBar(description);
 
@@ -248,7 +240,7 @@ namespace VisualCrypt.Windows.Pages
             _longRunningOperation.Cancel();
         }
 
-        private void UpdateCanExecuteChanged()
+        void UpdateCanExecuteChanged()
         {
             // TODO: many more Commands, like Replace must be updated
             //_exportCommand.RaiseCanExecuteChanged();
@@ -256,7 +248,7 @@ namespace VisualCrypt.Windows.Pages
             _decryptEditorContentsCommand.RaiseCanExecuteChanged();
         }
 
-        private Task<bool> SetPasswordAsync(SetPasswordDialogMode correctPassword)
+        Task<bool> SetPasswordAsync(SetPasswordDialogMode correctPassword)
         {
             var tcs = new TaskCompletionSource<bool>();
             tcs.SetResult(true);
@@ -395,5 +387,16 @@ namespace VisualCrypt.Windows.Pages
 
         #endregion
 
+        #region ICleanup
+
+        public void Cleanup()
+        {
+            _eventAggregator.GetEvent<EditorShouldCleanup>().Publish(null);
+            _eventAggregator.GetEvent<EditorSendsText>().Unsubscribe(ExecuteEditorSendsTextCallback);
+            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(OnEditorSendsStatusBarInfo);
+            _frameNavigation = null;
+        }
+
+        #endregion
     }
 }

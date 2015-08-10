@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -9,12 +8,13 @@ using VisualCrypt.Windows.Controls.EditorSupport;
 using VisualCrypt.Windows.Controls.EditorSupport.FindReplace;
 using VisualCrypt.Windows.Events;
 using VisualCrypt.Windows.Infrastructure;
+using VisualCrypt.Windows.Pages;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Static;
 
 namespace VisualCrypt.Windows.Controls
 {
-    class EditorViewModel : ViewModelBase
+    class EditorViewModel : ViewModelBase, IActiveCleanup
     {
         readonly IMessageBoxService _messageBoxService = SharedInstances.MessageBoxService;
         readonly IEventAggregator _eventAggregator = SharedInstances.EventAggregator;
@@ -25,16 +25,6 @@ namespace VisualCrypt.Windows.Controls
             _eventAggregator.GetEvent<EditorReceivesText>().Subscribe(OnTextReceived);
             _eventAggregator.GetEvent<EditorShouldSendText>().Subscribe(OnTextRequested);
             _eventAggregator.GetEvent<EditorShouldCleanup>().Subscribe(Cleanup);
-        }
-
-        void Cleanup(EditorShouldCleanup e)
-        {
-            _eventAggregator.GetEvent<EditorReceivesText>().Unsubscribe(OnTextReceived);
-            _eventAggregator.GetEvent<EditorShouldSendText>().Unsubscribe(OnTextRequested);
-            _eventAggregator.GetEvent<EditorShouldCleanup>().Unsubscribe(Cleanup);
-            Loc.LocaleChanged -= OnLocaleChanged;
-            _editor.TextBox1.TextChanged -= OnTextChanged;
-            _editor.TextBox1.SelectionChanged -= OnSelectionChanged;
         }
 
         public void OnViewInitialized(IEditor editor)
@@ -48,8 +38,8 @@ namespace VisualCrypt.Windows.Controls
 
 
             _editor.TextBox1.TextChanged += OnTextChanged;
-             _editor.TextBox1.SelectionChanged += OnSelectionChanged;
-          
+            _editor.TextBox1.SelectionChanged += OnSelectionChanged;
+
 
             //OnTextReceived(string.Empty);
         }
@@ -60,9 +50,9 @@ namespace VisualCrypt.Windows.Controls
             UpdateStatusBar();
         }
 
-        private void TextBox1_SelectionChanged(object sender, global::Windows.UI.Xaml.RoutedEventArgs e)
+        private void TextBox1_SelectionChanged(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         #region Events
@@ -266,7 +256,7 @@ namespace VisualCrypt.Windows.Controls
             Pos = 0;
             var count = 0;
 
-        start:
+            start:
             var searchResult = Find(false, false);
 
             if (searchResult.HasValue)
@@ -298,7 +288,7 @@ namespace VisualCrypt.Windows.Controls
             {
                 if (SearchOptions.UseRegEx)
                 {
-                    _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", Services.MessageBoxButton.OK,
+                    _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", MessageBoxButton.OK,
                         MessageBoxImage.Error);
                     return null;
                 }
@@ -473,6 +463,25 @@ namespace VisualCrypt.Windows.Controls
             if (lineIndex == -1)
                 lineIndex = 0;
             return lineIndex;
+        }
+
+        #endregion
+
+        #region IActiveCleanup
+
+        void Cleanup(EditorShouldCleanup args)
+        {
+            Cleanup();
+        }
+
+        public void Cleanup()
+        {
+            _eventAggregator.GetEvent<EditorReceivesText>().Unsubscribe(OnTextReceived);
+            _eventAggregator.GetEvent<EditorShouldSendText>().Unsubscribe(OnTextRequested);
+            _eventAggregator.GetEvent<EditorShouldCleanup>().Unsubscribe(Cleanup);
+            Loc.LocaleChanged -= OnLocaleChanged;
+            _editor.TextBox1.TextChanged -= OnTextChanged;
+            _editor.TextBox1.SelectionChanged -= OnSelectionChanged;
         }
 
         #endregion

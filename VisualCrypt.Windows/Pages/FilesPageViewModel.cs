@@ -9,15 +9,18 @@ using VisualCrypt.Windows.Temp;
 
 namespace VisualCrypt.Windows.Pages
 {
-    class FilesPageViewModel : ViewModelBase
+    class FilesPageViewModel : ViewModelBase, IActiveCleanup
     {
-        public readonly ObservableCollection<FileReference> FileReferences = new ObservableCollection<FileReference>();
-        readonly IFrameNavigation _frameNavigation;
+        ObservableCollection<FileReference> _fileReferences;
+        IFrameNavigation _frameNavigation;
 
         public FilesPageViewModel(IFrameNavigation frameNavigation)
         {
+            _fileReferences = new ObservableCollection<FileReference>();
             _frameNavigation = frameNavigation;
         }
+
+        public ObservableCollection<FileReference> FileReferences => _fileReferences;
 
         public DelegateCommand NavigateToNewCommand => CreateCommand(ref _navigateToNewCommand, ExecuteNavigateToNewCommand, () => true);
         DelegateCommand _navigateToNewCommand;
@@ -25,6 +28,7 @@ namespace VisualCrypt.Windows.Pages
         void ExecuteNavigateToNewCommand()
         {
             _frameNavigation.Frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.New }, new DrillInNavigationTransitionInfo());
+            Cleanup();
         }
 
         public DelegateCommand<FileReference> NavigateToOpenCommand => CreateCommand(ref _navigateToOpenCommand, ExecuteNavigateToOpenCommand, arg => true);
@@ -34,7 +38,10 @@ namespace VisualCrypt.Windows.Pages
         void ExecuteNavigateToOpenCommand(FileReference fileReference)
         {
             _frameNavigation.Frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference }, new DrillInNavigationTransitionInfo());
+            Cleanup();
         }
+
+        
 
         // Called From FilesPage.OnLoaded
         internal async Task OnNavigatedToCompleteAndLoaded()
@@ -64,5 +71,10 @@ namespace VisualCrypt.Windows.Pages
             return files;
         }
 
+        public void Cleanup()
+        {
+            _fileReferences = null;  // will also cease fireing SelectionChanged event
+            _frameNavigation = null; // release connection to view
+        }
     }
 }

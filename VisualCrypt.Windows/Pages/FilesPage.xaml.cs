@@ -1,6 +1,4 @@
 ﻿using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls;
 using VisualCrypt.Windows.Models;
 

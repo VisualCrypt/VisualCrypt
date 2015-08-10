@@ -104,7 +104,7 @@
     <Compile Include="Controls\EditorSupport\FindReplace\SearchOptions.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchResult.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchStrategy.cs" />
-    <Compile Include="Controls\TextBoxExtensions.cs" />
+    <Compile Include="Controls\EditorSupport\TextBoxExtensions.cs" />
     <Compile Include="Events\EditorReceivesText.cs" />
     <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Events\EditorSendsText.cs" />
@@ -120,6 +120,7 @@
     </Compile>
     <Compile Include="Pages\FilesPageCommandArgs.cs" />
     <Compile Include="Pages\FilesPageViewModel.cs" />
+    <Compile Include="Pages\IActiveCleanup.cs" />
     <Compile Include="Pages\IFrameNavigation.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
