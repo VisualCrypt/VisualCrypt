@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using VisualCrypt.Desktop.Shared.App;
 
-namespace VisualCrypt.Desktop.Shared.Settings
+namespace VisualCrypt.Cryptography.Portable.Settings
 {
 	[DataContract]
 	public class CryptographySettings : INotifyPropertyChanged
@@ -18,7 +17,6 @@ namespace VisualCrypt.Desktop.Shared.Settings
 				{
 					_logRounds = value;
 					OnPropertyChanged();
-					SettingsManager.SaveSettings(value);
 				}
 			}
 		}

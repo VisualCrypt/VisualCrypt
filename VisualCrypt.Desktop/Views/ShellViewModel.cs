@@ -6,18 +6,21 @@ using System.Globalization;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.PubSubEvents;
 using Microsoft.Win32;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.Events;
+using VisualCrypt.Cryptography.Portable.Models;
+using VisualCrypt.Cryptography.Portable.MVVM;
+using VisualCrypt.Cryptography.Portable.Settings;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Desktop.Services;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
-using VisualCrypt.Desktop.Shared.Services;
 using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
@@ -25,28 +28,54 @@ namespace VisualCrypt.Desktop.Views
     [Export]
     public class ShellViewModel : ViewModelBase
     {
-        readonly IEventAggregator _eventAggregator;
-        readonly ILoggerFacade _logger;
-        readonly IMessageBoxService _messageBoxService;
-        readonly IEncryptionService _encryptionService;
+		public readonly PasswordInfo PasswordInfo = new PasswordInfo();
+		public readonly StatusBarModel StatusBarModel = new StatusBarModel();
+		public readonly FileModel FileModel;
+
+		readonly IEventAggregator _eventAggregator;
+		readonly ILoggerFacade _logger;
+
+		readonly IMessageBoxService _messageBoxService;
+		readonly IEncryptionService _encryptionService;
+
+		readonly INavigationService _navigationService;
+		readonly IPasswordDialogDispatcher _passwordDialogDispatcher;
+
+
+		readonly ISettingsManager _settingsManager;
+		readonly IFileService _fileService;
+
+
+
         LongRunningOperation _longRunningOperation;
 
         [ImportingConstructor]
-        public ShellViewModel(IEventAggregator eventAggregator, ILoggerFacade logger,
-            IMessageBoxService messageBoxService, IEncryptionService encryptionService)
+		public ShellViewModel(IEventAggregator eventAggregator, ILoggerFacade logger,
+			IMessageBoxService messageBoxService, IEncryptionService encryptionService,
+			INavigationService navigationService, IPasswordDialogDispatcher passwordDialogDispatcher,
+			   ISettingsManager settingsManager, IFileService fileService)
         {
-            _eventAggregator = eventAggregator;
-            _logger = logger;
-            _messageBoxService = messageBoxService;
-            _encryptionService = encryptionService;
+			_eventAggregator = eventAggregator;
+			_logger = logger;
+
+			_messageBoxService = messageBoxService;
+			_encryptionService = encryptionService;
+
+			_navigationService = navigationService;
+			_passwordDialogDispatcher = passwordDialogDispatcher;
+
+
+			_settingsManager = settingsManager;
+			_fileService = fileService;
+
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
         }
 
 
-        public void OpenFromCommandLineOrNew()
+        public void OpenFromCommandLineOrNew(string[] args)
         {
-            var args = Environment.GetCommandLineArgs();
+           
             if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
             {
                 var fileName = args[1];
@@ -146,8 +175,8 @@ namespace VisualCrypt.Desktop.Views
         {
             if (!ConfirmToDiscardText())
                 return;
-            FileManager.FileModel = FileModel.EmptyCleartext();
-            _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
+            FileService.FileModel = FileModel.EmptyCleartext();
+            _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileService.FileModel.ClearTextContents);
         }
 
         #endregion
@@ -187,9 +216,9 @@ namespace VisualCrypt.Desktop.Views
                         string filename = pickFileResult.Item2;
                         var shortFilename = Path.GetFileName(filename);
                         string importedString = File.ReadAllText(filename, selectedEncoding);
-                        FileManager.FileModel = FileModel.Cleartext(filename, shortFilename, importedString,
+                        FileService.FileModel = FileModel.Cleartext(filename, shortFilename, importedString,
                             selectedEncoding);
-                        _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileManager.FileModel.ClearTextContents);
+                        _eventAggregator.GetEvent<EditorReceivesText>().Publish(FileService.FileModel.ClearTextContents);
                     }
                 }
             }
@@ -314,21 +343,21 @@ namespace VisualCrypt.Desktop.Views
                     if (_messageBoxService.Show(
                         "This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\n" +
                         "If file is very large the editor may become less responsive.", "Binary File",
-                        MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel)
+                        RequestButton.OKCancel, RequestImage.Warning) == RequestResult.Cancel)
                         return;
                 }
-                FileManager.FileModel = openFileResponse.Result;
+                FileService.FileModel = openFileResponse.Result;
                 SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
                 var ert = _eventAggregator.GetEvent<EditorReceivesText>();
-                var text = FileManager.FileModel.IsEncrypted
-                    ? FileManager.FileModel.VisualCryptText
-                    : FileManager.FileModel.ClearTextContents;
+                var text = FileService.FileModel.IsEncrypted
+                    ? FileService.FileModel.VisualCryptText
+                    : FileService.FileModel.ClearTextContents;
                 ert.Publish(text);
 
 
                 // if the loaded file was cleartext we are all done
-                if (!FileManager.FileModel.IsEncrypted)
+                if (!FileService.FileModel.IsEncrypted)
                     return;
 
                 // if it's encrypted, check if we have SOME password
@@ -345,12 +374,12 @@ namespace VisualCrypt.Desktop.Views
                 using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryptOpenedFile))
                 {
                     var decryptForDisplayResult =
-                        await Task.Run(() => _encryptionService.DecryptForDisplay(FileManager.FileModel,
-                            FileManager.FileModel.VisualCryptText, _longRunningOperation.Context));
+                        await Task.Run(() => _encryptionService.DecryptForDisplay(FileService.FileModel,
+                            FileService.FileModel.VisualCryptText, _longRunningOperation.Context));
                     if (decryptForDisplayResult.IsSuccess)
                     {
                         // we were lucky, the password we have is correct!
-                        FileManager.FileModel = decryptForDisplayResult.Result;
+                        FileService.FileModel = decryptForDisplayResult.Result;
                             // do this before pushing the text to the editor
                         _eventAggregator.GetEvent<EditorReceivesText>()
                             .Publish(decryptForDisplayResult.Result.ClearTextContents);
@@ -362,7 +391,7 @@ namespace VisualCrypt.Desktop.Views
                         return; // we also exit from whole procedure (we could also move on to redisplay 
                         // the password entry, as below, in case of error, which we interpret as wrong password).
                     }
-                    FileManager.ShowEncryptedBar(); // Error, i.e. wrong password, show EncryptedBar
+                    FileService.ShowEncryptedBar(); // Error, i.e. wrong password, show EncryptedBar
                 }
 
                 // As we tested that it's valid VisualCrypt in the open routine, we can assume we are here because
@@ -397,7 +426,7 @@ namespace VisualCrypt.Desktop.Views
             get
             {
                 return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand,
-                    () => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
+                    () => !FileService.FileModel.IsEncrypted && FileService.FileModel.SaveEncoding != null);
             }
         }
 
@@ -421,12 +450,12 @@ namespace VisualCrypt.Desktop.Views
                         await
                             Task.Run(
                                 () =>
-                                    _encryptionService.EncryptForDisplay(FileManager.FileModel, textBufferContents,
-                                        new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds),
+                                    _encryptionService.EncryptForDisplay(FileService.FileModel, textBufferContents,
+                                        new RoundsExponent(SettingsManager.CryptographySettings.LogRounds),
                                         _longRunningOperation.Context));
                     if (createEncryptedFileResponse.IsSuccess)
                     {
-                        FileManager.FileModel = createEncryptedFileResponse.Result;
+                        FileService.FileModel = createEncryptedFileResponse.Result;
                             // do this before pushing the text to the editor
                         _eventAggregator.GetEvent<EditorReceivesText>()
                             .Publish(createEncryptedFileResponse.Result.VisualCryptText);
@@ -436,7 +465,7 @@ namespace VisualCrypt.Desktop.Views
                     if (createEncryptedFileResponse.IsCanceled)
                         return;
                     // other error, switch back to PlainTextBar and show error
-                    FileManager.ShowPlainTextBar();
+                    FileService.ShowPlainTextBar();
                     _messageBoxService.ShowError(createEncryptedFileResponse.Error);
                 }
             }
@@ -457,7 +486,7 @@ namespace VisualCrypt.Desktop.Views
             get
             {
                 return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand,
-                    () => FileManager.FileModel.SaveEncoding != null);
+                    () => FileService.FileModel.SaveEncoding != null);
             }
         }
 
@@ -481,11 +510,11 @@ namespace VisualCrypt.Desktop.Views
                         await
                             Task.Run(
                                 () =>
-                                    _encryptionService.DecryptForDisplay(FileManager.FileModel, textBufferContents,
+                                    _encryptionService.DecryptForDisplay(FileService.FileModel, textBufferContents,
                                         _longRunningOperation.Context));
                     if (decryptForDisplayResult.IsSuccess)
                     {
-                        FileManager.FileModel = decryptForDisplayResult.Result;
+                        FileService.FileModel = decryptForDisplayResult.Result;
                             // do this before pushing the text to the editor
                         _eventAggregator.GetEvent<EditorReceivesText>()
                             .Publish(decryptForDisplayResult.Result.ClearTextContents);
@@ -495,7 +524,7 @@ namespace VisualCrypt.Desktop.Views
                     if (decryptForDisplayResult.IsCanceled)
                         return;
                     // other error, switch back to EncryptedBar
-                    FileManager.ShowEncryptedBar();
+                    FileService.ShowEncryptedBar();
                     _messageBoxService.ShowError(decryptForDisplayResult.Error);
                 }
             }
@@ -507,17 +536,17 @@ namespace VisualCrypt.Desktop.Views
 
         LongRunningOperation StartLongRunnungOperation(string description)
         {
-            FileManager.ShowWorkingBar(description);
+            FileService.ShowWorkingBar(description);
 
             Action<EncryptionProgress> updateProgressBar = encryptionProgress =>
             {
-                FileManager.BindableFileInfo.ProgressPercent = encryptionProgress.Percent;
-                FileManager.BindableFileInfo.ProgressMessage = encryptionProgress.Message;
+                FileService.BindableFileInfo.ProgressPercent = encryptionProgress.Percent;
+                FileService.BindableFileInfo.ProgressMessage = encryptionProgress.Message;
             };
 
-            var switchBackToPreviousBar = FileManager.FileModel.IsEncrypted
-                ? (Action) FileManager.ShowEncryptedBar
-                : FileManager.ShowPlainTextBar;
+            var switchBackToPreviousBar = FileService.FileModel.IsEncrypted
+                ? (Action) FileService.ShowEncryptedBar
+                : FileService.ShowPlainTextBar;
 
             return new LongRunningOperation(updateProgressBar, switchBackToPreviousBar);
         }
@@ -533,7 +562,7 @@ namespace VisualCrypt.Desktop.Views
             get
             {
                 return CreateCommand(ref _saveCommand, ExecuteSaveCommand,
-                    () => FileManager.FileModel.SaveEncoding != null);
+                    () => FileService.FileModel.SaveEncoding != null);
             }
         }
 
@@ -547,35 +576,35 @@ namespace VisualCrypt.Desktop.Views
             try
             {
                 // This is the simple case, we can 'just save'.
-                if (FileManager.FileModel.IsEncrypted && !isSaveAs && FileManager.CheckFilenameForQuickSave())
+                if (FileService.FileModel.IsEncrypted && !isSaveAs && FileService.CheckFilenameForQuickSave())
                 {
-                    var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
+                    var response = _encryptionService.SaveEncryptedFile(FileService.FileModel);
                     if (!response.IsSuccess)
                         throw new Exception(response.Error);
-                    FileManager.FileModel.IsDirty = false;
+                    FileService.FileModel.IsDirty = false;
                 }
                 // This is the case where we need a new filename and can then also 'just save'.
-                else if (FileManager.FileModel.IsEncrypted && (isSaveAs || !FileManager.CheckFilenameForQuickSave()))
+                else if (FileService.FileModel.IsEncrypted && (isSaveAs || !FileService.CheckFilenameForQuickSave()))
                 {
                     string suggestedFilename = null;
                     if (isSaveAs)
-                        suggestedFilename = FileManager.FileModel.Filename;
+                        suggestedFilename = FileService.FileModel.Filename;
 
                     var pickFileResult =
                         await PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save);
                     if (pickFileResult.Item1)
                     {
-                        FileManager.FileModel.Filename = pickFileResult.Item2;
-                        var response = _encryptionService.SaveEncryptedFile(FileManager.FileModel);
+                        FileService.FileModel.Filename = pickFileResult.Item2;
+                        var response = _encryptionService.SaveEncryptedFile(FileService.FileModel);
                         if (!response.IsSuccess)
                             throw new Exception(response.Error);
-                        FileManager.FileModel.IsDirty = false;
+                        FileService.FileModel.IsDirty = false;
                     }
                 }
                 // And in that case we need a different strategy: Encrypt and THEN save.
                 else
                 {
-                    if (FileManager.FileModel.IsEncrypted)
+                    if (FileService.FileModel.IsEncrypted)
                         throw new InvalidOperationException("We assert confusion!");
                     await EncryptAndThenSave(isSaveAs);
                 }
@@ -599,20 +628,20 @@ namespace VisualCrypt.Desktop.Views
                     return;
             }
             // Then we must sure we have the file name:
-            if (isSaveAs || !FileManager.CheckFilenameForQuickSave())
+            if (isSaveAs || !FileService.CheckFilenameForQuickSave())
             {
                 string suggestedFilename = null;
                 if (isSaveAs)
-                    suggestedFilename = FileManager.FileModel.Filename;
+                    suggestedFilename = FileService.FileModel.Filename;
 
                 var pickFileResult =
                     await PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save);
                 if (!pickFileResult.Item1)
                     return;
-                FileManager.FileModel.Filename = pickFileResult.Item2;
+                FileService.FileModel.Filename = pickFileResult.Item2;
             }
             // No we have password and filename, we can now encrypt and save in one step.
-            // We will not replace FileManager.FileModel because we continue editing the same cleartext.
+            // We will not replace FileService.FileModel because we continue editing the same cleartext.
             string editorClearText = await EditorSendsTextAsync();
 
             using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryptAndSave))
@@ -621,8 +650,8 @@ namespace VisualCrypt.Desktop.Views
                     await
                         Task.Run(
                             () =>
-                                _encryptionService.EncryptAndSaveFile(FileManager.FileModel, editorClearText,
-                                    new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds),
+                                _encryptionService.EncryptAndSaveFile(FileService.FileModel, editorClearText,
+                                    new RoundsExponent(SettingsManager.CryptographySettings.LogRounds),
                                     _longRunningOperation.Context));
 
                 if (encryptAndSaveFileResponse.IsSuccess)
@@ -630,11 +659,11 @@ namespace VisualCrypt.Desktop.Views
                     string visualCryptTextSaved = encryptAndSaveFileResponse.Result;
                     // We are done with successful saving. Show that we did encrypt the text:
                     _eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
-                    FileManager.ShowEncryptedBar();
+                    FileService.ShowEncryptedBar();
                     await Task.Delay(2000);
-                    FileManager.ShowPlainTextBar();
+                    FileService.ShowPlainTextBar();
                     // Redisplay the clear text, to allow continue editing.
-                    FileManager.FileModel.IsDirty = false;
+                    FileService.FileModel.IsDirty = false;
 
                     _eventAggregator.GetEvent<EditorReceivesText>().Publish(editorClearText);
 
@@ -646,7 +675,7 @@ namespace VisualCrypt.Desktop.Views
                     return; // Cancel means the user can continue editing clear text
                 }
                 // other error, switch back to PlainTextBar
-                FileManager.ShowPlainTextBar();
+                FileService.ShowPlainTextBar();
                 throw new Exception(encryptAndSaveFileResponse.Error);
             }
         }
@@ -662,7 +691,7 @@ namespace VisualCrypt.Desktop.Views
             get
             {
                 return CreateCommand(ref _saveAsCommand, ExecuteSaveAsCommand,
-                    () => FileManager.FileModel.SaveEncoding != null);
+                    () => FileService.FileModel.SaveEncoding != null);
             }
         }
 
@@ -682,7 +711,7 @@ namespace VisualCrypt.Desktop.Views
             get
             {
                 return CreateCommand(ref _exportCommand, ExecuteExportCommand,
-                    () => !FileManager.FileModel.IsEncrypted && FileManager.FileModel.SaveEncoding != null);
+                    () => !FileService.FileModel.IsEncrypted && FileService.FileModel.SaveEncoding != null);
             }
         }
 
@@ -696,16 +725,16 @@ namespace VisualCrypt.Desktop.Views
                     throw new InvalidOperationException("The text received from the editor was null.");
 
                 string title = string.Format(CultureInfo.InvariantCulture, "Export Clear Text (Encoding: {0})",
-                    FileManager.FileModel.SaveEncoding.EncodingName);
+                    FileService.FileModel.SaveEncoding.EncodingName);
 
                 string suggestedFilename =
-                    FileManager.FileModel.Filename.ReplaceCaseInsensitive(PortableConstants.DotVisualCrypt,
+                    FileService.FileModel.Filename.ReplaceCaseInsensitive(PortableConstants.DotVisualCrypt,
                         string.Empty);
                 var pickFileResult =
                     await PickFileAsync(suggestedFilename, DialogFilter.Text, DialogDirection.Save, title);
                 if (pickFileResult.Item1)
                 {
-                    byte[] encodedTextBytes = FileManager.FileModel.SaveEncoding.GetBytes(editorClearText);
+                    byte[] encodedTextBytes = FileService.FileModel.SaveEncoding.GetBytes(editorClearText);
                     File.WriteAllBytes(pickFileResult.Item2, encodedTextBytes);
                 }
             }
@@ -832,7 +861,7 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                var cipherText = FileManager.FileModel.VisualCryptText;
+                var cipherText = FileModel.VisualCryptText;
                 Clipboard.SetText(cipherText, TextDataFormat.Text);
             }
             catch (Exception e)
@@ -878,11 +907,11 @@ namespace VisualCrypt.Desktop.Views
 
         bool ConfirmToDiscardText()
         {
-            if (FileManager.FileModel.IsDirty)
+            if (FileService.FileModel.IsDirty)
                 return
-                    (_messageBoxService.Show("Discard changes?", Constants.ProductName, MessageBoxButton.OKCancel,
-                        MessageBoxImage.Question) ==
-                     MessageBoxResult.OK);
+                    (_messageBoxService.Show("Discard changes?", Constants.ProductName, RequestButton.OKCancel,
+                        RequestImage.Question) ==
+                     RequestResult.OK);
 
             return true;
         }

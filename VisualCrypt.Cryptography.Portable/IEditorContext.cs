@@ -1,6 +1,6 @@
 ﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 
-namespace VisualCrypt.Windows.Controls.EditorSupport
+namespace VisualCrypt.Cryptography.Portable
 {
     public interface IEditorContext
     {

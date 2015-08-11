@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.Diagnostics;
@@ -24,7 +25,8 @@ namespace VisualCrypt.Desktop
                 string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",
                     stopWatch.ElapsedMilliseconds),
                 Category.Info, Priority.Low);
-            Container.GetExportedValue<ShellViewModel>().OpenFromCommandLineOrNew();
+			var args = Environment.GetCommandLineArgs();
+            Container.GetExportedValue<ShellViewModel>().OpenFromCommandLineOrNew(args);
         }
 
         protected override DependencyObject CreateShell()

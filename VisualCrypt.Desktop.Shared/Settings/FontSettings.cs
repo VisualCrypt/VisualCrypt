@@ -1,4 +1,6 @@
 ﻿using System;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
@@ -9,7 +11,7 @@ using Microsoft.Practices.ServiceLocation;
 namespace VisualCrypt.Desktop.Shared.Settings
 {
 	[DataContract]
-	public class FontSettings
+	public class FontSettings :INotifyPropertyChanged
 	{
 		public FontFamily FontFamily { get; set; }
 
@@ -90,5 +92,18 @@ namespace VisualCrypt.Desktop.Shared.Settings
 				ServiceLocator.Current.GetInstance<ILoggerFacade>().Log(e.Message, Category.Exception, Priority.High);
 			}
 		}
-	}
+
+        #region INotifyPropertyChanged
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        #endregion
+    }
 }

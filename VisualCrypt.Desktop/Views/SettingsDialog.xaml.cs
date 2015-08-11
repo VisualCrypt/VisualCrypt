@@ -1,15 +1,15 @@
-﻿using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using Microsoft.Practices.Prism.Commands;
-using System;
+﻿using System;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
+using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.Shared.App;
-using VisualCrypt.Desktop.Shared.Services;
 using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
@@ -31,7 +31,7 @@ namespace VisualCrypt.Desktop.Views
             InitializeComponent();
             DataContext = this;
 
-            LogRounds = SettingsManager.EditorSettings.CryptographySettings.LogRounds;
+            LogRounds = SettingsManager.CryptographySettings.LogRounds;
 
 
             PreviewKeyDown += CloseWithEscape;
@@ -62,7 +62,7 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                SettingsManager.EditorSettings.CryptographySettings.LogRounds = LogRounds;
+                SettingsManager.CryptographySettings.LogRounds = LogRounds;
                 DialogResult = true;
                 Close();
             }

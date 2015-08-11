@@ -1,8 +1,7 @@
-﻿using Windows.UI.Xaml;
-using VisualCrypt.Cryptography.Portable.MVVM;
+﻿using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Language;
 
-namespace VisualCrypt.Windows.Models
+namespace VisualCrypt.Cryptography.Portable.Models
 {
     public class PasswordInfo : ViewModelBase
     {
@@ -14,7 +13,7 @@ namespace VisualCrypt.Windows.Models
         void RaiseAllChanged()
         {
             OnPropertyChanged(() => IsPasswordSet);
-            OnPropertyChanged(() => TextBlockClearPasswordVisibility);
+            OnPropertyChanged(() => IsTextBlockClearPasswordHidden);
             OnPropertyChanged(() => PasswordStatus);
             OnPropertyChanged(() => HyperlinkPasswordText);
             OnPropertyChanged(() => MenuPasswordText);
@@ -23,7 +22,7 @@ namespace VisualCrypt.Windows.Models
         public bool IsPasswordSet
         {
             get { return _isPasswordSet; }
-            set
+            private set
             {
                 _isPasswordSet = value;
                 RaiseAllChanged();
@@ -32,9 +31,9 @@ namespace VisualCrypt.Windows.Models
 
         bool _isPasswordSet;
 
-        public Visibility TextBlockClearPasswordVisibility
+        public bool IsTextBlockClearPasswordHidden
         {
-            get { return IsPasswordSet ? Visibility.Visible : Visibility.Collapsed; }
+            get { return !IsPasswordSet; }
         }
 
         public string PasswordStatus
@@ -55,6 +54,11 @@ namespace VisualCrypt.Windows.Models
         public string MenuPasswordText
         {
             get { return _isPasswordSet ? Loc.Strings.miVCChangePassword : Loc.Strings.miVCSetPassword; }
+        }
+
+        public void SetIsPasswordSet(bool isPasswordSet)
+        {
+            IsPasswordSet = isPasswordSet;
         }
     }
 }

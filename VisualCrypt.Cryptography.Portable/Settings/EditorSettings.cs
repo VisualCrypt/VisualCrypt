@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using VisualCrypt.Desktop.Shared.Settings;
 
-namespace VisualCrypt.Desktop.Shared.App
+namespace VisualCrypt.Cryptography.Portable.Settings
 {
 	/// <summary>
 	/// Tracks the state of the editor. Some properties will be serialized, some not.
@@ -19,7 +18,6 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isStatusBarChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -33,7 +31,6 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isToolAreaChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -48,7 +45,6 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isWordWrapChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -62,7 +58,6 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_isSpellCheckingChecked = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings(value);
 			}
 		}
 
@@ -76,17 +71,12 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				_printMargin = value;
 				OnPropertyChanged();
-				SettingsManager.SaveSettings(value);
 			}
 		}
 
 		int _printMargin;
 
-		[DataMember]
-		public FontSettings FontSettings { get; set; }
-
-		[DataMember]
-		public CryptographySettings CryptographySettings { get; set; }
+		
 
 		public bool IsZoom100Checked
 		{

@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Shapes;
 
-
 namespace VisualCrypt.Desktop.Shared.Controls
 {
 	public class AppDialog : Window

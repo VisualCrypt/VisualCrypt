@@ -1,6 +1,6 @@
 ﻿using VisualCrypt.Cryptography.Portable.MVVM;
 
-namespace VisualCrypt.Windows.Models
+namespace VisualCrypt.Cryptography.Portable.Models
 {
     public class FileReference : ViewModelBase
     {

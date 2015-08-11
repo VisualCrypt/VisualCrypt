@@ -4,13 +4,14 @@ using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
-using Microsoft.Practices.Prism.Commands;
+using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
-using VisualCrypt.Desktop.Shared.Services;
 using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
@@ -42,7 +43,7 @@ namespace VisualCrypt.Desktop.Views
             SetMode(paramsProvider.GetParams<SetPasswordDialog, SetPasswordDialogMode>());
         }
 
-        void PwBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        void PwBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
@@ -138,8 +139,8 @@ namespace VisualCrypt.Desktop.Views
                         ? "Use empty password?"
                         : "The password is effectively empty - are you sure?";
                     var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?",
-                        MessageBoxButton.OKCancel,
-                        MessageBoxImage.Warning) == MessageBoxResult.OK;
+                        RequestButton.OKCancel,
+                        RequestImage.Warning) == RequestResult.OK;
                     if (!okClicked)
                         return;
                 }

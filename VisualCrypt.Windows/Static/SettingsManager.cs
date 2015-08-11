@@ -3,10 +3,11 @@ using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using Windows.UI.Text;
 using Windows.UI.Xaml.Media;
+using VisualCrypt.Cryptography.Portable.Settings;
 
 namespace VisualCrypt.Windows.Static
 {
-    class SettingsManager
+    class SettingsManager : ISettingsManager
     {
         static SettingsManager()
         {
@@ -36,6 +37,43 @@ namespace VisualCrypt.Windows.Static
         public static string CurrentDirectoryName { get; internal set; }
 
         public static EditorSettings EditorSettings { get; private set; }
+
+        string ISettingsManager.CurrentDirectoryName
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        Cryptography.Portable.Settings.EditorSettings ISettingsManager.EditorSettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public Cryptography.Portable.Settings.CryptographySettings CryptographySettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public object FontSettings
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public static void SaveSettings(object settingValueForLoggingOnly, [CallerMemberName] string callerMemberName = null)
         {

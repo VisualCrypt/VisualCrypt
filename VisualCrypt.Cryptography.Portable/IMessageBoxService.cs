@@ -1,26 +1,26 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-namespace VisualCrypt.Windows.Services
+namespace VisualCrypt.Cryptography.Portable
 {
-    interface IMessageBoxService
+    public interface IMessageBoxService
     {
-        MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton buttons,
-            MessageBoxImage image);
+        RequestResult Show(string messageBoxText, string title, RequestButton buttons,
+            RequestImage image);
 
         void ShowError(Exception e, [CallerMemberName] string callerMemberName = "");
 
         void ShowError(string error);
     }
 
-    enum MessageBoxResult
+    public enum RequestResult
     {
         Cancel,
         OK,
         None
     }
 
-    enum MessageBoxImage
+    public enum RequestImage
     {
         Warning,
         Exclamation,
@@ -29,7 +29,7 @@ namespace VisualCrypt.Windows.Services
         Question
     }
 
-    enum MessageBoxButton
+    public enum RequestButton
     {
         OK,Cancel,
         OKCancel

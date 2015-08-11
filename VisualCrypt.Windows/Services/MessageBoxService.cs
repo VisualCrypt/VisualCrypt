@@ -1,16 +1,17 @@
 ﻿using System;
 using Windows.UI.Popups;
+using VisualCrypt.Cryptography.Portable;
 
 namespace VisualCrypt.Windows.Services
 {
     class MessageBoxService : IMessageBoxService
     {
-        public MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton buttons, MessageBoxImage image)
+        public RequestResult Show(string messageBoxText, string title, RequestButton buttons, RequestImage image)
         {
 
             ShowDialog(messageBoxText);
           
-           return MessageBoxResult.OK;
+           return RequestResult.OK;
           
         }
 

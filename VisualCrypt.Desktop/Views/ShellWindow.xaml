@@ -12,7 +12,7 @@
                     xmlns:prismSupport="clr-namespace:VisualCrypt.Desktop.Shared.PrismSupport;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
-                    Title="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=Filename}"
+                    Title="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=Filename}"
                     Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
                     Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
                     WindowStartupLocation="CenterScreen"
@@ -200,11 +200,11 @@
                 Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <StackPanel>
                 <views:PlainTextBar
-                    Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=PlainTextBarVisibility}" />
+                    Visibility="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=PlainTextBarVisibility}" />
                 <views:WorkingBar
-                    Visibility="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=WorkingBarVisibility}" />
+                    Visibility="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=WorkingBarVisibility}" />
                 <views:EncryptedBar
-                    Visibility="{Binding  Source={x:Static files:FileManager.BindableFileInfo}, Path=EncryptedBarVisibility}" />
+                    Visibility="{Binding  Source={x:Static files:FileService.BindableFileInfo}, Path=EncryptedBarVisibility}" />
             </StackPanel>
         </Border>
     </Grid>

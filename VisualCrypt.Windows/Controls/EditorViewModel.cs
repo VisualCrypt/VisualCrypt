@@ -3,6 +3,7 @@ using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Language;
 using VisualCrypt.Windows.Controls.EditorSupport;
@@ -185,11 +186,11 @@ namespace VisualCrypt.Windows.Controls
 
             if (!found && SearchOptions.UseRegEx == false)
                 _messageBoxService.Show(string.Format("'{0}' is not in the document.", FindString), "Find",
-                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    RequestButton.OK, RequestImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
                 _messageBoxService.Show(
                     string.Format("The expression '{0}' yields no matches in the document.", FindString), "Find",
-                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    RequestButton.OK, RequestImage.Exclamation);
         }
 
         SearchResult? Find(bool wrapSearchPos, bool isReplace)
@@ -229,10 +230,10 @@ namespace VisualCrypt.Windows.Controls
 
             if (!found && SearchOptions.UseRegEx == false)
                 _messageBoxService.Show(string.Format("'{0}' could not be found.", FindString), "Replace",
-                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    RequestButton.OK, RequestImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
                 _messageBoxService.Show(string.Format("No match for '{0}' could be found.", FindString), "Replace",
-                    MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                    RequestButton.OK, RequestImage.Exclamation);
         }
 
         #endregion
@@ -269,11 +270,11 @@ namespace VisualCrypt.Windows.Controls
 
                 goto start;
             }
-            var image = (count > 0) ? MessageBoxImage.Information : MessageBoxImage.Exclamation;
+            var image = (count > 0) ? RequestImage.Information : RequestImage.Exclamation;
 
 
             _messageBoxService.Show(string.Format("{0} occurrences were replaced.", count), "Replace All",
-                MessageBoxButton.OK, image);
+                RequestButton.OK, image);
         }
 
         #endregion
@@ -289,8 +290,8 @@ namespace VisualCrypt.Windows.Controls
             {
                 if (SearchOptions.UseRegEx)
                 {
-                    _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", MessageBoxButton.OK,
-                        MessageBoxImage.Error);
+                    _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", RequestButton.OK,
+                        RequestImage.Error);
                     return null;
                 }
                 throw;
@@ -312,8 +313,8 @@ namespace VisualCrypt.Windows.Controls
                     {
                         var result = _messageBoxService.Show(
                             "Nothing found - Search again from the top of the document?", "Replace",
-                            MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
+                            RequestButton.OKCancel, RequestImage.Question);
+                        if (result == RequestResult.Cancel || result == RequestResult.None)
                             return null;
                     }
                     Pos = 0;
@@ -325,8 +326,8 @@ namespace VisualCrypt.Windows.Controls
                         var result =
                             _messageBoxService.Show("Nothing found - Search again from the bottom of the document?",
                                 "Replace",
-                                MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                        if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
+                                RequestButton.OKCancel, RequestImage.Question);
+                        if (result == RequestResult.Cancel || result == RequestResult.None)
                             return null;
                     }
                     Pos = _editor.TextBox1.Text.Length;

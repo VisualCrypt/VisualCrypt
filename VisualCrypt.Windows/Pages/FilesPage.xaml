@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:VisualCrypt.Windows.Models"
+    xmlns:models="using:VisualCrypt.Cryptography.Portable.Models"
     NavigationCacheMode="Disabled"
     mc:Ignorable="d">
 <Page.TopAppBar>
@@ -14,7 +14,7 @@
     </Page.TopAppBar>
     <Page.Resources>
         <!-- When using x:Bind, you need to set x:DataType -->
-        <DataTemplate x:Key="ContactListViewTemplate" x:DataType="data:FileReference">
+        <DataTemplate x:Key="ContactListViewTemplate" x:DataType="models:FileReference">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -24,6 +24,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
+              
                 <Ellipse x:Name="Ellipse"
                          Grid.RowSpan="2"
                          Width="32"

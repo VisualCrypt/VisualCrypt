@@ -1,4 +1,4 @@
-﻿using VisualCrypt.Desktop.Shared.PrismSupport;
+﻿using VisualCrypt.Cryptography.Portable.MVVM;
 
 namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace
 {

@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
@@ -18,7 +19,7 @@ namespace VisualCrypt.Desktop.Views
             Closed += LogWindow_Closed;
         }
 
-        void LogWindow_Closed(object sender, System.EventArgs e)
+        void LogWindow_Closed(object sender, EventArgs e)
         {
             _logger.Callback = null;
         }

@@ -103,6 +103,21 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
         }
         string _visualCryptText;
 
+        public string SaveEncodingName
+        {
+            get { return _saveEncodingName; }
+            private set
+            {
+                if (_saveEncodingName != value)
+                {
+                    _saveEncodingName = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        string _saveEncodingName = "ToDoEcoding";
+
+
         public Encoding SaveEncoding { get; private set; }
 
         public CipherV2 CipherV2 { get; private set; }

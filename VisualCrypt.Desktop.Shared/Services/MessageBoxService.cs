@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Runtime.CompilerServices;
 using System.Windows;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Desktop.Shared.Services
@@ -41,33 +42,38 @@ namespace VisualCrypt.Desktop.Shared.Services
 			_owner = owner;
 		}
 
-		/// <summary>
-		/// Defaults to the Cancel button, if present.
-		/// </summary>
-		public MessageBoxResult Show(string messageBoxText, string title, MessageBoxButton buttons, MessageBoxImage image)
-		{
-			if (title == null)
-				title = "Untitled";
-			if (messageBoxText == null)
-				messageBoxText = "No text available";
+        /// <summary>
+        /// Defaults to the Cancel button, if present.
+        /// </summary>
+        public RequestResult Show(string messageBoxText, string title, RequestButton buttons, RequestImage image)
+        {
+            if (title == null)
+                title = "Untitled";
+            if (messageBoxText == null)
+                messageBoxText = "No text available";
 
-			try
-			{
-				if (Owner != null)
-					return MessageBox.Show(Owner, messageBoxText, title, buttons, image, MessageBoxResult.Cancel);
-				return MessageBox.Show(messageBoxText, title, buttons, image);
-			}
-			catch (Exception e)
-			{
-				return MessageBox.Show("{0}\r\n\r\n{1}".FormatInvariant(e.Message, messageBoxText), title, buttons, image);
-			}
-		}
+            var xButtons = (MessageBoxButton) buttons;
+            var xImages = (MessageBoxImage) image;
+
+            try
+            {
+                if (Owner != null)
+                    return (RequestResult) MessageBox.Show(Owner, messageBoxText, title, xButtons, xImages, MessageBoxResult.Cancel) ;
+                return (RequestResult)MessageBox.Show(messageBoxText, title, xButtons, xImages);
+            }
+            catch (Exception e)
+            {
+                return (RequestResult) MessageBox.Show("{0}\r\n\r\n{1}".FormatInvariant(e.Message, messageBoxText), title, xButtons, xImages);
+            }
+        }
+
+      
 
 
 		public void ShowError(Exception e, [CallerMemberName] string callerMemberName = "")
 		{
 			var messageBoxText = "SetError in {0}:\r\n\r\n{1}".FormatInvariant(callerMemberName, e.Message);
-			Show(messageBoxText, "SetError (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
+			Show(messageBoxText, "SetError (Press Ctrl + C to copy)", RequestButton.OK, RequestImage.Error);
 		}
 
 
@@ -77,7 +83,9 @@ namespace VisualCrypt.Desktop.Shared.Services
 				error = "There was an error but the error message is missing.";
 
 
-			Show(error, "SetError (Press Ctrl + C to copy)", MessageBoxButton.OK, MessageBoxImage.Error);
+			Show(error, "SetError (Press Ctrl + C to copy)", RequestButton.OK, RequestImage.Error);
 		}
-	}
+
+       
+    }
 }

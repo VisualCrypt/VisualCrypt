@@ -2,23 +2,28 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Windows.UI.Xaml.Media.Animation;
+using Microsoft.Practices.Prism.PubSubEvents;
+using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Models;
 using VisualCrypt.Cryptography.Portable.MVVM;
-using VisualCrypt.Windows.Models;
+using VisualCrypt.Cryptography.Portable.Settings;
+using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Temp;
+using VisualCrypt.Windows.V2;
 
 namespace VisualCrypt.Windows.Pages
 {
     class FilesPageViewModel : ViewModelBase, IActiveCleanup
     {
         ObservableCollection<FileReference> _fileReferences;
-        IFrameNavigation _frameNavigation;
+        INavigationService _navigationService;
 
-        public FilesPageViewModel(IFrameNavigation frameNavigation)
+        public FilesPageViewModel(NavigationService navigationService, PasswordDialogDispatcher passwordDialogDispatcher, EncryptionService encryptionService, MessageBoxService messageBoxService, IEventAggregator eventAggregator, ISettingsManager settingsManager, FileService fileService)
         {
             _fileReferences = new ObservableCollection<FileReference>();
-            _frameNavigation = frameNavigation;
+            _navigationService = navigationService;
         }
+       
 
         public ObservableCollection<FileReference> FileReferences => _fileReferences;
 
@@ -27,17 +32,19 @@ namespace VisualCrypt.Windows.Pages
 
         void ExecuteNavigateToNewCommand()
         {
-            _frameNavigation.Frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.New }, new DrillInNavigationTransitionInfo());
+            _navigationService.NavigateToMainPage( new FilesPageCommandArgs { FilesPageCommand = FilesPageCommand.New });
             Cleanup();
         }
 
         public DelegateCommand<FileReference> NavigateToOpenCommand => CreateCommand(ref _navigateToOpenCommand, ExecuteNavigateToOpenCommand, arg => true);
         DelegateCommand<FileReference> _navigateToOpenCommand;
 
+      
+
 
         void ExecuteNavigateToOpenCommand(FileReference fileReference)
         {
-            _frameNavigation.Frame.Navigate(typeof(MainPage), new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference }, new DrillInNavigationTransitionInfo());
+            _navigationService.NavigateToMainPage(new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference });
             Cleanup();
         }
 
@@ -74,7 +81,7 @@ namespace VisualCrypt.Windows.Pages
         public void Cleanup()
         {
             _fileReferences = null;  // will also cease fireing SelectionChanged event
-            _frameNavigation = null; // release connection to view
+            _navigationService = null; // release connection to view
         }
     }
 }

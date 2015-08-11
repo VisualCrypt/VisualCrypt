@@ -1,22 +1,27 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Desktop.Shared.Controls;
+using VisualCrypt.Desktop.Views;
 
-namespace VisualCrypt.Desktop.Shared.App
+namespace VisualCrypt.Desktop.Services
 {
-	public static class WindowManager
+	
+
+	public  class WindowManager : IWindowManager
 	{
 		static readonly ILoggerFacade Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
 
-		public static async Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : AppWindow
+		public  async Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : class // AppWindow
 		{
 			var tcs = new TaskCompletionSource<object>();
 			try
 			{
-				var appWindow = ServiceLocator.Current.GetInstance<T>();
+				var appWindow = ServiceLocator.Current.GetInstance<T>() as AppWindow;
 
 				appWindow.ShowInTaskbar = true;
 				EnsureCustomWindowConfiguration(appWindow);
@@ -34,25 +39,32 @@ namespace VisualCrypt.Desktop.Shared.App
 			return await tcs.Task;
 		}
 
-		public static async Task<T> GetDialogFromShowDialogAsyncWhenClosed<T>() where T : AppDialog
+		public  async Task<T> GetDialogFromShowDialogAsyncWhenClosed<T>() where T : class 
 		{
 			var tcs = new TaskCompletionSource<T>();
 
-			var appDialog = ServiceLocator.Current.GetInstance<T>();
+			var appDialog = ServiceLocator.Current.GetInstance<T>() as AppDialog;
 			appDialog.ShowInTaskbar = false;
 			EnsureCustomWindowConfiguration(appDialog);
 
 			appDialog.ShowDialog();
-			tcs.SetResult(appDialog);
+			tcs.SetResult(appDialog as T );
 			return await tcs.Task;
 		}
 
+		public async Task<Tuple<bool?, Encoding>> GetDialogFromShowDialogAsyncWhenClosed_ImportEncodingDialog()
+		{
+			var importEncodingDialog = await GetDialogFromShowDialogAsyncWhenClosed<ImportEncodingDialog>();
 
-		public static async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : Window
+			var selectedEncoding = importEncodingDialog.SelectedEncodingInfo.GetEncoding();
+			return new Tuple<bool?, Encoding>(importEncodingDialog.DialogResult, selectedEncoding);
+		}
+
+		public  async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : class 
 		{
 			var tcs = new TaskCompletionSource<bool>();
 
-			var appDialog = ServiceLocator.Current.GetInstance<T>();
+			var appDialog = ServiceLocator.Current.GetInstance<T>() as Window;
 			appDialog.ShowInTaskbar = false;
 			EnsureCustomWindowConfiguration(appDialog);
 
@@ -69,5 +81,8 @@ namespace VisualCrypt.Desktop.Shared.App
 			window.AllowsTransparency = true; // important, if not true, painting errors may occur!
 			window.ResizeMode = ResizeMode.NoResize;
 		}
+
+
+		
 	}
 }

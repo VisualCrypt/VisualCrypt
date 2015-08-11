@@ -100,7 +100,6 @@
       <DependentUpon>Editor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\EditorSupport\IEditor.cs" />
-    <Compile Include="Controls\EditorSupport\IEditorContext.cs" />
     <Compile Include="Controls\EditorViewModel.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchOptions.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchResult.cs" />
@@ -115,22 +114,18 @@
     <Compile Include="Events\EditorSendsText.cs" />
     <Compile Include="Events\EditorShouldCleanup.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
-    <Compile Include="Models\FileReference.cs" />
     <Compile Include="Pages\FilesPage.xaml.cs">
       <DependentUpon>FilesPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\FilesPageCommandArgs.cs" />
     <Compile Include="Pages\FilesPageViewModel.cs" />
-    <Compile Include="Pages\IActiveCleanup.cs" />
-    <Compile Include="Pages\IFrameNavigation.cs" />
+    <Compile Include="Pages\LaunchPasswordDialog.cs" />
     <Compile Include="Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\MainPageViewModel.cs" />
+    <Compile Include="Pages\NavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IMessageBoxService.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
-    <Compile Include="Models\PasswordInfo.cs" />
     <Compile Include="Static\CryptographySettings.cs" />
     <Compile Include="Static\EditorSettings.cs" />
     <Compile Include="Static\FontSettings.cs" />

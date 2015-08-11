@@ -22,10 +22,10 @@
 
             <ProgressBar Width="150" Height="8" Margin="5,4,5,0" IsIndeterminate="False" Foreground="#FF77FF77"
                          BorderThickness="0" Background="{DynamicResource BarColorBrush}"
-                         Value="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressPercent}" />
+                         Value="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=ProgressPercent}" />
             <TextBlock>
-                <Run Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressBarOpName}" />
-                <Run Text="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=ProgressMessage}" />
+                <Run Text="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=ProgressBarOpName}" />
+                <Run Text="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=ProgressMessage}" />
             </TextBlock>
         </StackPanel>
 

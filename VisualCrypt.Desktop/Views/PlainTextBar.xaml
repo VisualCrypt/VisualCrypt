@@ -44,7 +44,7 @@
                 </Hyperlink>
                 <Run xml:space="preserve" />
                 <Hyperlink Click="Hyperlink_Save_Click"
-                           IsEnabled="{Binding Source={x:Static files:FileManager.BindableFileInfo}, Path=IsDirty}">
+                           IsEnabled="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=IsDirty}">
                     <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termSave,Mode=OneWay}" />
                 </Hyperlink>
                 <Run xml:space="preserve" />

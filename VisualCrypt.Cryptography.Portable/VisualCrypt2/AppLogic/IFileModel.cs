@@ -7,5 +7,6 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic
         bool IsDirty { get; set; }
         bool IsEncrypted { get;  }
         Encoding SaveEncoding  { get;  }
+	  
     }
 }

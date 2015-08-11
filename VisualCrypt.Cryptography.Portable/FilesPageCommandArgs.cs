@@ -1,14 +1,15 @@
-﻿using VisualCrypt.Windows.Models;
+﻿
+using VisualCrypt.Cryptography.Portable.Models;
 
-namespace VisualCrypt.Windows.Pages
+namespace VisualCrypt.Cryptography.Portable
 {
-    class FilesPageCommandArgs
+    public class FilesPageCommandArgs
     {
         public FilesPageCommand FilesPageCommand;
         public FileReference FileReference { get; set; }
     }
 
-    enum FilesPageCommand
+    public enum FilesPageCommand
     {
         Invalid = 0, New, Open
     }

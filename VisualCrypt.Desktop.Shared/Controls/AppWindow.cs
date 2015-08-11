@@ -6,7 +6,6 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Shapes;
 
-
 namespace VisualCrypt.Desktop.Shared.Controls
 {
 	public class AppWindow : Window
@@ -281,7 +280,7 @@ namespace VisualCrypt.Desktop.Shared.Controls
 		const int HtCaption = 0x2;
 		HwndSource _hwndSource;
 
-		[DllImportAttribute("user32.dll")]
+		[DllImport("user32.dll")]
 		static extern bool ReleaseCapture();
 
 		[DllImport("user32.dll", CharSet = CharSet.Auto)]

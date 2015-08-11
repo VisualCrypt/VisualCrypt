@@ -1,26 +1,33 @@
 ﻿using System;
+using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.IO;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using Shell32;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.Portable.Settings;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
 {
-	public static class SettingsManager
+	[Export(typeof(ISettingsManager))]
+	[PartCreationPolicy(CreationPolicy.NonShared)]
+	public  class SettingsManager
 	{
-		static readonly ILoggerFacade Logger;
-		static string _currentDirectoryName;
+		readonly ILoggerFacade Logger;
+		string _currentDirectoryName;
 
-		public static EditorSettings EditorSettings { get; private set; }
+		public  EditorSettings EditorSettings { get; private set; }
 
-		public static string CurrentDirectoryName
+	    public  FontSettings FontSettings { get; private set; }
+
+        public  CryptographySettings CryptographySettings { get; private set; }
+
+        public  string CurrentDirectoryName
 		{
 			get
 			{
@@ -31,7 +38,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			set { _currentDirectoryName = value; }
 		}
 
-		static SettingsManager()
+		 SettingsManager()
 		{
 			try
 			{
@@ -43,28 +50,38 @@ namespace VisualCrypt.Desktop.Shared.App
 				// when editing ShellWindow.xaml
 			}
 
-			EditorSettings = FactorySettings();
+			FactorySettings();
 		}
 
-		public static void LoadOrInitSettings()
+		public  void LoadOrInitSettings()
 		{
-			EditorSettings settings;
-			if (!TryGetSettings(out settings))
+		    Tuple<EditorSettings, FontSettings, CryptographySettings> settings;
+            if (!TryGetSettings(out settings))
 			{
 				Logger.Log("Could not load settings, using factory settings.", Category.Warn, Priority.Medium);
-				settings = FactorySettings();
-				SaveSettings(settings);
+				FactorySettings();
+				SaveSettings();
 			}
 			else
 				Logger.Log("Settings successfully loaded!.", Category.Info, Priority.Medium);
 
-			EditorSettings = settings;
+			EditorSettings = settings.Item1;
+		    FontSettings = settings.Item2;
+		    CryptographySettings = settings.Item3;
 
 			TryPinToTaskbarOnFirstRun();
-		}
 
+            EditorSettings.PropertyChanged += SettingsChanged;
+		    CryptographySettings.PropertyChanged += SettingsChanged;
+            FontSettings.PropertyChanged += SettingsChanged;
+        }
 
-		public static void SaveSettings(object settingValueForLoggingOnly, [CallerMemberName] string callerMemberName = null)
+         void SettingsChanged(object sender, PropertyChangedEventArgs e)
+        {
+            SaveSettings();
+        }
+
+        public  void SaveSettings()
 		{
 			try
 			{
@@ -73,8 +90,8 @@ namespace VisualCrypt.Desktop.Shared.App
 				var serializedSettings = Serializer<EditorSettings>.Serialize(EditorSettings);
 
 				using (var visualCryptKey = GetOrCreateVisualCryptKey())
-					visualCryptKey.SetValue(Constants.Key_NotepadSettings, serializedSettings);
-				Logger.Log("Setting '{0}:{1}' saved!".FormatInvariant(callerMemberName, settingValueForLoggingOnly), Category.Info,
+					visualCryptKey.SetValue(Constants.Key_EditorSettings, serializedSettings);
+				Logger.Log("Settings saved!", Category.Info,
 					Priority.Low);
 			}
 			catch (Exception e)
@@ -84,41 +101,59 @@ namespace VisualCrypt.Desktop.Shared.App
 		}
 
 
-		static EditorSettings FactorySettings()
+		 void  FactorySettings()
 		{
-			return new EditorSettings
+			EditorSettings =  new EditorSettings
 			{
 				IsStatusBarChecked = true,
 				IsWordWrapChecked = true,
 				IsSpellCheckingChecked = false,
 				PrintMargin = 72,
-				FontSettings = new FontSettings
-				{
-					FontFamily = new FontFamily("Consolas"),
+				
+			};
+            FontSettings = new FontSettings
+                {
+                FontFamily = new FontFamily("Consolas"),
 					FontSize = FontSizeListItem.PointsToPixels(11),
 					FontStretch = FontStretches.Normal,
 					FontStyle = FontStyles.Normal,
 					FontWeight = FontWeights.Normal
-				},
-				CryptographySettings = new CryptographySettings {LogRounds = 10}
-			};
+                }
+		    ;
+		    CryptographySettings = new CryptographySettings {LogRounds = 10};
 		}
 
-		static bool TryGetSettings(out EditorSettings editorSettings)
+		 bool TryGetSettings(out Tuple<EditorSettings,FontSettings,CryptographySettings> settings)
 		{
-			try
+             
+            try
 			{
 				using (RegistryKey visualCryptKey = GetOrCreateVisualCryptKey())
 				{
 					if (visualCryptKey != null)
 					{
-						var settingsString = visualCryptKey.GetValue(Constants.Key_NotepadSettings) as string;
-						if (settingsString != null && !string.IsNullOrWhiteSpace(settingsString))
+						var editorSettingsString = visualCryptKey.GetValue(Constants.Key_EditorSettings) as string;
+                        var fontSettingsString = visualCryptKey.GetValue(Constants.Key_FontSettings) as string;
+                        var cryptoSettingsString = visualCryptKey.GetValue(Constants.Key_CryptoSettings) as string;
+
+					    EditorSettings editorSettings = null;
+                        if (editorSettingsString != null && !string.IsNullOrWhiteSpace(editorSettingsString))
 						{
-							editorSettings = Serializer<EditorSettings>.Deserialize(settingsString);
-							if (editorSettings != null && editorSettings.FontSettings != null)
-								return true;
+							editorSettings = Serializer<EditorSettings>.Deserialize(editorSettingsString);
 						}
+                        FontSettings fontSettings = null;
+                        if (fontSettingsString != null && !string.IsNullOrWhiteSpace(fontSettingsString))
+                        {
+                            fontSettings = Serializer<FontSettings>.Deserialize(fontSettingsString);
+                        }
+                        CryptographySettings cryptoSettings = null;
+                        if (cryptoSettingsString != null && !string.IsNullOrWhiteSpace(cryptoSettingsString))
+                        {
+                            cryptoSettings = Serializer<CryptographySettings>.Deserialize(cryptoSettingsString);
+                        }
+                        settings = new Tuple<EditorSettings, FontSettings, CryptographySettings>(editorSettings, fontSettings,
+					        cryptoSettings);
+					    return true;
 					}
 				}
 			}
@@ -126,18 +161,18 @@ namespace VisualCrypt.Desktop.Shared.App
 			{
 				Logger.Log(e.Message, Category.Exception, Priority.Medium);
 			}
-			editorSettings = null;
+			settings = null;
 			return false;
 		}
 
-		static RegistryKey GetOrCreateVisualCryptKey()
+		 RegistryKey GetOrCreateVisualCryptKey()
 		{
 			Registry.CurrentUser.CreateSubKey(Constants.Key_VisualCrypt, RegistryKeyPermissionCheck.ReadWriteSubTree);
 			return Registry.CurrentUser.OpenSubKey(Constants.Key_VisualCrypt, true);
 		}
 
 
-		static void TryPinToTaskbarOnFirstRun()
+		 void TryPinToTaskbarOnFirstRun()
 		{
 			try
 			{
@@ -163,7 +198,7 @@ namespace VisualCrypt.Desktop.Shared.App
 			}
 		}
 
-		static void PinUnpinTaskBar(string filePath, bool pin)
+		 void PinUnpinTaskBar(string filePath, bool pin)
 		{
 			if (!File.Exists(filePath)) throw new FileNotFoundException(filePath);
 

@@ -3,15 +3,14 @@ using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.Events;
+using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
 using VisualCrypt.Desktop.Shared.App;
-using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
-using VisualCrypt.Desktop.Shared.Services;
 using VisualCrypt.Desktop.Shared.Settings;
 using VisualCrypt.Language;
 
@@ -23,7 +22,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		#region Initialization
 
 		IEditor _editor;
-
+	    IEditorContext _context;
 		public IMessageBoxService _messageBoxService;
 		readonly IEventAggregator _eventAggregator;
 
@@ -37,7 +36,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 		public void OnViewLoaded(IEditor editor)
 		{
 			_editor = editor;
-			SettingsManager.EditorSettings.FontSettings.ApplyTo(_editor.TextBox1);
+			SettingsManager.FontSettings.ApplyTo(_editor.TextBox1);
 			SearchOptions = new SearchOptions();
 			ExecuteZoom100();
 			Loc.LocaleChanged += delegate
@@ -73,18 +72,18 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			_editor.TextBox1.IsUndoEnabled = false;
 
-			var backup = FileManager.FileModel.IsDirty;
-			_editor.TextBox1.Text = newText; // triggers Text_Changed which sets FileManager.FileModel.IsDirty = true;
-			FileManager.FileModel.IsDirty = backup;
+			var backup = _context.FileModel.IsDirty;
+			_editor.TextBox1.Text = newText; // triggers Text_Changed which sets FileService.FileModel.IsDirty = true;
+			_context.FileModel.IsDirty = backup;
 
-			if (FileManager.FileModel.IsEncrypted)
+			if (_context.FileModel.IsEncrypted)
 			{
 				_editor.TextBox1.IsUndoEnabled = false;
 				_editor.TextBox1.IsReadOnly = true;
 			}
 			else
 			{
-				if (FileManager.FileModel.SaveEncoding != null)
+				if (_context.FileModel.SaveEncoding != null)
 				{
 					_editor.TextBox1.IsUndoEnabled = true;
 					_editor.TextBox1.IsReadOnly = false;
@@ -102,7 +101,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		void OnTextChanged(object sender, TextChangedEventArgs e)
 		{
-			FileManager.FileModel.IsDirty = true;
+			_context.FileModel.IsDirty = true;
 			UpdateStatusBar();
 		}
 
@@ -155,7 +154,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public void ExecuteZoom100()
 		{
-			_editor.TextBox1.FontSize = SettingsManager.EditorSettings.FontSettings.FontSize;
+			_editor.TextBox1.FontSize = SettingsManager.FontSettings.FontSize;
 			UpdateZoomLevelMenuText();
 
 			//Zoom100Command.RaiseCanExecuteChanged();
@@ -168,12 +167,12 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			if(_editor == null) // this method is hooked to the LocalChanged event and may be called any time
 				return;
 
-			var zoomLevel = (int)((_editor.TextBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100);
+			var zoomLevel = (int)((_editor.TextBox1.FontSize / SettingsManager.FontSettings.FontSize) * 100);
 			var zoomLevelMenuText = string.Format(Loc.Strings.miViewZoomLevelText, zoomLevel);
 			SettingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
 			SettingsManager.EditorSettings.IsZoom100Checked =
-				Math.Abs(((_editor.TextBox1.FontSize / SettingsManager.EditorSettings.FontSettings.FontSize) * 100) - 100) < 0.1;
+				Math.Abs(((_editor.TextBox1.FontSize / SettingsManager.FontSettings.FontSize) * 100) - 100) < 0.1;
 		}
 
 		#endregion
@@ -293,7 +292,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteReplaceMenuCommand()
 		{
-			return _editor.TextBox1.Text.Length > 0 && FileManager.FileModel.SaveEncoding != null;
+			return _editor.TextBox1.Text.Length > 0 && _context.FileModel.SaveEncoding != null;
 		}
 
 		public void ExecuteReplaceMenuCommand()
@@ -379,11 +378,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			if (!found && SearchOptions.UseRegEx == false)
 				_messageBoxService.Show(string.Format("'{0}' is not in the document.", FindString), "Find",
-					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+					RequestButton.OK, RequestImage.Exclamation);
 			if (!found && SearchOptions.UseRegEx)
 				_messageBoxService.Show(
 					string.Format("The expression '{0}' yields no matches in the document.", FindString), "Find",
-					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+					RequestButton.OK, RequestImage.Exclamation);
 		}
 
 		SearchResult? Find(bool wrapSearchPos, bool isReplace)
@@ -423,10 +422,10 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 			if (!found && SearchOptions.UseRegEx == false)
 				_messageBoxService.Show(string.Format("'{0}' could not be found.", FindString), "Replace",
-					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+					RequestButton.OK, RequestImage.Exclamation);
 			if (!found && SearchOptions.UseRegEx)
 				_messageBoxService.Show(string.Format("No match for '{0}' could be found.", FindString), "Replace",
-					MessageBoxButton.OK, MessageBoxImage.Exclamation);
+					RequestButton.OK, RequestImage.Exclamation);
 		}
 
 		#endregion
@@ -463,11 +462,11 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 				goto start;
 			}
-			var image = (count > 0) ? MessageBoxImage.Information : MessageBoxImage.Exclamation;
+			var image = (count > 0) ? RequestImage.Information : RequestImage.Exclamation;
 
 
 			_messageBoxService.Show(string.Format("{0} occurrences were replaced.", count), "Replace All",
-				MessageBoxButton.OK, image);
+				RequestButton.OK, image);
 		}
 
 		#endregion
@@ -483,8 +482,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			{
 				if (SearchOptions.UseRegEx)
 				{
-					_messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", MessageBoxButton.OK,
-						MessageBoxImage.Error);
+					_messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", RequestButton.OK,
+						RequestImage.Error);
 					return null;
 				}
 				throw;
@@ -506,8 +505,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 					{
 						var result = _messageBoxService.Show(
 							"Nothing found - Search again from the top of the document?", "Replace",
-							MessageBoxButton.OKCancel, MessageBoxImage.Question);
-						if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
+							RequestButton.OKCancel, RequestImage.Question);
+						if (result == RequestResult.Cancel || result == RequestResult.None)
 							return null;
 					}
 					Pos = 0;
@@ -519,8 +518,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 						var result =
 							_messageBoxService.Show("Nothing found - Search again from the bottom of the document?",
 								"Replace",
-								MessageBoxButton.OKCancel, MessageBoxImage.Question);
-						if (result == MessageBoxResult.Cancel || result == MessageBoxResult.None)
+								RequestButton.OKCancel, RequestImage.Question);
+						if (result == RequestResult.Cancel || result == RequestResult.None)
 							return null;
 					}
 					Pos = _editor.TextBox1.Text.Length;
@@ -699,7 +698,7 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 
 		public bool CanExecuteInsertDateTime()
 		{
-			return FileManager.FileModel.SaveEncoding != null;
+			return _context.FileModel.SaveEncoding != null;
 		}
 
 		public void ExecuteInsertDateTime()
@@ -744,8 +743,8 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 				if (fontDialog.DialogResult == true)
 				{
 					ExecuteZoom100();
-					Map.Copy(SettingsManager.EditorSettings.FontSettings, _editor.TextBox1);
-					SettingsManager.SaveSettings(SettingsManager.EditorSettings.FontSettings);
+					Map.Copy(SettingsManager.FontSettings, _editor.TextBox1);
+					SettingsManager.SaveSettings();
 				}
 			}
 			catch (Exception e)
@@ -769,9 +768,9 @@ namespace VisualCrypt.Desktop.ModuleEditor.Views
 			_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
 		}
 
-		static string GetEncodingString()
+		string GetEncodingString()
 		{
-			return FileManager.FileModel.SaveEncoding != null ? FileManager.FileModel.SaveEncoding.EncodingName : "Hex View";
+			return _context.FileModel.SaveEncoding != null ? _context.FileModel.SaveEncoding.EncodingName : "Hex View";
 		}
 
 		string GetPositionString()

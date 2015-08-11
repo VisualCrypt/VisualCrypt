@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Documents;
+using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
@@ -202,8 +203,8 @@ namespace VisualCrypt.Windows.Controls
                     string warningMessage = _passwordBoxText.Length == sigCount
                         ? "Use empty password?"
                         : "The password is effectively empty - are you sure?";
-                    var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?", MessageBoxButton.OKCancel,
-                        MessageBoxImage.Warning) == MessageBoxResult.OK;
+                    var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?", RequestButton.OKCancel,
+                        RequestImage.Warning) == RequestResult.OK;
                     if (!okClicked)
                         return;
                 }
