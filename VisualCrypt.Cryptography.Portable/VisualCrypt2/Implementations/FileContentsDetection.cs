@@ -1,12 +1,11 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 using System.Text;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
-	public static class FileContentsDetection
+    public static class FileContentsDetection
 	{
 		/// <summary>
 		/// Detects the contents of an unknown file that is being loaded for display purposes.

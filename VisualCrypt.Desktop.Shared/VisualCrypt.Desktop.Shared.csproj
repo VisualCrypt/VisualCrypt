@@ -80,10 +80,6 @@
     <Compile Include="Commands\EditorCommands.cs" />
     <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />
-    <Compile Include="Events\EditorShouldSendText.cs" />
-    <Compile Include="Events\EditorSendsText.cs" />
-    <Compile Include="Events\EditorReceivesText.cs" />
-    <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
     <Compile Include="Files\BindableFileInfo.cs" />
     <Compile Include="Files\BindablePasswordInfo.cs" />
     <Compile Include="Files\FileManager.cs" />

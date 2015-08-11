@@ -8,19 +8,30 @@
     NavigationCacheMode="Disabled"
     mc:Ignorable="d">
     <Page.TopAppBar>
-        <CommandBar IsOpen="True" IsSticky="True">
-            <AppBarButton Label="Encrypt" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Icon="Permissions" />
-            <AppBarButton Label="Decrypt" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Icon="View" />
-            <AppBarButton Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="SaveLocal" />
-            <AppBarButton Label="Save As" Command="{x:Bind _viewModel.SaveAsCommand}" Icon="Save" />
-            <AppBarButton Label="Export Cleartex" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
-            <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.PasswordCommand}" Icon="HideBcc" />
-        </CommandBar>
+        <AppBar IsOpen="True" IsSticky="True">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{x:Bind _viewModel.FileModel.ShortFilename, Mode=OneWay}"></TextBlock>
+                <StackPanel Grid.Column="1" Orientation="Horizontal">
+                   
+                    <AppBarButton Label="Encrypt" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Icon="Permissions" />
+                    <AppBarButton Label="Decrypt" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Icon="View" />
+                    <AppBarButton Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="SaveLocal" />
+                    <AppBarButton Label="Save As" Command="{x:Bind _viewModel.SaveAsCommand}" Icon="Save" />
+                    <AppBarButton Label="Export Cleartex" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
+                    <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.PasswordCommand}" Icon="HideBcc" />
+                </StackPanel>
+            </Grid>
+        </AppBar>
     </Page.TopAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
         <StackPanel Padding="24,0" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
             <StackPanel Orientation="Horizontal">
@@ -35,14 +46,15 @@
                              IsIndeterminate="False" 
                              Foreground="#FF77FF77"
                              BorderThickness="0" 
-                             Value="{x:Bind _viewModel.FileInfo.ProgressPercent, Mode=OneWay}" />
+                             Value="{x:Bind _viewModel.StatusBarModel.ProgressPercent, Mode=OneWay}" />
                 <TextBlock>
-                <Run Text="{x:Bind _viewModel.FileInfo.ProgressBarOpName, Mode=OneWay}" />
-                <Run Text="{x:Bind _viewModel.FileInfo.ProgressMessage, Mode=OneWay}" />
+                <Run Text="{x:Bind _viewModel.StatusBarModel.ProgressBarOpName, Mode=OneWay}" />
+                <Run Text="{x:Bind _viewModel.StatusBarModel.ProgressMessage, Mode=OneWay}" />
                 </TextBlock>
             </StackPanel>
 
         </StackPanel>
         <controls:Editor x:Name="EditorControl" Grid.Row="1"></controls:Editor>
+        <TextBlock Grid.Row="2" Text="{x:Bind _viewModel.StatusBarModel.StatusBarText, Mode=OneWay}"></TextBlock>
     </Grid>
 </Page>

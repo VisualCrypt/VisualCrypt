@@ -5,10 +5,10 @@ using System.Windows;
 using System.Windows.Controls;
 using Microsoft.Practices.Prism.Commands;
 using Microsoft.Practices.Prism.PubSubEvents;
+using VisualCrypt.Cryptography.Portable.Events;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
 using VisualCrypt.Desktop.Shared.App;
-using VisualCrypt.Desktop.Shared.Events;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
@@ -17,7 +17,7 @@ using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {
-	[Export]
+    [Export]
 	public class EditorViewModel : ViewModelBase
 	{
 		#region Initialization

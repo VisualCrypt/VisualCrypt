@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Threading.Tasks;
 using Windows.UI.Popups;
 
 namespace VisualCrypt.Windows.Services

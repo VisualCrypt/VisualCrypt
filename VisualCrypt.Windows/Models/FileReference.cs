@@ -1,4 +1,4 @@
-﻿using VisualCrypt.Windows.Infrastructure;
+﻿using VisualCrypt.Cryptography.Portable.MVVM;
 
 namespace VisualCrypt.Windows.Models
 {

@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Linq;
-using System.Windows.Controls;
-using Microsoft.Practices.Prism.Commands;
+﻿using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
@@ -10,7 +7,7 @@ using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.Tests
 {
-	[TestClass]
+    [TestClass]
 	public class FindReplaceTests
 	{
 		readonly IEditor _editor = new FakeEditor();

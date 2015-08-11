@@ -1,5 +1,4 @@
-﻿using System;
-namespace VisualCrypt.Windows.Pages
+﻿namespace VisualCrypt.Windows.Pages
 {
     interface IActiveCleanup
     {

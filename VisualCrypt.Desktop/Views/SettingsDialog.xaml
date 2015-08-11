@@ -36,13 +36,15 @@
                         </ComboBox>
                         <TextBlock>
                             Read the
-                            <Hyperlink ToolTip="{Binding Source={x:Static language:Loc.Strings},Path=uriPWSpecUrl, Mode=OneWay}"
-                                       Click="Hyperlink_Spec_OnClick">
+                            <Hyperlink
+                                ToolTip="{Binding Source={x:Static language:Loc.Strings},Path=uriPWSpecUrl, Mode=OneWay}"
+                                Click="Hyperlink_Spec_OnClick">
                                 Spec
                             </Hyperlink>
                             or view the
-                            <Hyperlink ToolTip="{Binding Source={x:Static language:Loc.Strings}, Path=uriSourceUrl, Mode=OneWay}"
-                                       Click="Hyperlink_Source_OnClick">
+                            <Hyperlink
+                                ToolTip="{Binding Source={x:Static language:Loc.Strings}, Path=uriSourceUrl, Mode=OneWay}"
+                                Click="Hyperlink_Source_OnClick">
                                 Source Code
                             </Hyperlink>
                             .

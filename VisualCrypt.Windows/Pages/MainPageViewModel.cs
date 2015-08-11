@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Navigation;
 using Microsoft.Practices.Prism.PubSubEvents;
-using Microsoft.VisualBasic;
+using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
@@ -14,7 +14,6 @@ using VisualCrypt.Language;
 using VisualCrypt.Windows.Controls;
 using VisualCrypt.Windows.Controls.EditorSupport;
 using VisualCrypt.Windows.Events;
-using VisualCrypt.Windows.Infrastructure;
 using VisualCrypt.Windows.Models;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Static;
@@ -22,12 +21,13 @@ using VisualCrypt.Windows.V2;
 
 namespace VisualCrypt.Windows.Pages
 {
-    internal class MainPageViewModel : ViewModelBase, IActiveCleanup, IEditorContext
+    sealed class MainPageViewModel : ViewModelBase, IActiveCleanup, IEditorContext
     {
         public readonly PasswordInfo PasswordInfo = new PasswordInfo();
-        public readonly BindableFileInfo FileInfo = new BindableFileInfo();
+        public readonly StatusBarModel StatusBarModel = new StatusBarModel();
+        public readonly FileModel FileModel;
+       
 
-        public FileModel FileModel { get; private set; }
         IFileModel IEditorContext.FileModel => FileModel;
 
         readonly IEncryptionService _encryptionService = new EncryptionService();
@@ -40,7 +40,7 @@ namespace VisualCrypt.Windows.Pages
         {
             _frameNavigation = frameNavigation;
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
-            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(OnEditorSendsStatusBarInfo);
+            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(StatusBarModel.UpdateStatusBarText);
             FileModel = FileModel.EmptyCleartext();
         }
         
@@ -64,11 +64,7 @@ namespace VisualCrypt.Windows.Pages
         }
 
 
-        void OnEditorSendsStatusBarInfo(string obj)
-        {
-
-        }
-
+       
 
         static void ExecuteEditorSendsTextCallback(EditorSendsText args)
         {
@@ -100,7 +96,7 @@ namespace VisualCrypt.Windows.Pages
             if (!ConfirmToDiscardText())
                 return;
 
-            FileModel = FileModel.EmptyCleartext();
+            FileModel.UpdateFrom(FileModel.EmptyCleartext());
 
             var ert = _eventAggregator.GetEvent<EditorReceivesText>();
             ert.Publish(FileModel.ClearTextContents);
@@ -208,7 +204,7 @@ namespace VisualCrypt.Windows.Pages
                         MessageBoxButton.OKCancel, MessageBoxImage.Warning) == MessageBoxResult.Cancel)
                         return;
                 }
-                FileModel = openFileResponse.Result;
+                FileModel.UpdateFrom(openFileResponse.Result);
                 SettingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
                 var ert = _eventAggregator.GetEvent<EditorReceivesText>();
@@ -240,7 +236,7 @@ namespace VisualCrypt.Windows.Pages
                     if (decryptForDisplayResult.IsSuccess)
                     {
                         // we were lucky, the password we have is correct!
-                        FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
+                        FileModel.UpdateFrom(decryptForDisplayResult.Result); // do this before pushing the text to the editor
                         _eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
                         UpdateCanExecuteChanged();
                         return; // exit from this goto-loop, we have a new decrypted file
@@ -250,7 +246,7 @@ namespace VisualCrypt.Windows.Pages
                         return; // we also exit from whole procedure (we could also move on to redisplay 
                                 // the password entry, as below, in case of error, which we interpret as wrong password).
                     }
-                    FileInfo.ShowEncryptedBar(); // Error, i.e. wrong password, show EncryptedBar
+                    StatusBarModel.ShowEncryptedBar(); // Error, i.e. wrong password, show EncryptedBar
                 }
 
                 // As we tested that it's valid VisualCrypt in the open routine, we can assume we are here because
@@ -269,17 +265,17 @@ namespace VisualCrypt.Windows.Pages
 
         LongRunningOperation StartLongRunnungOperation(string description)
         {
-            FileInfo.ShowWorkingBar(description);
+            StatusBarModel.ShowProgressBar(description);
 
             Action<EncryptionProgress> updateProgressBar = encryptionProgress =>
             {
-                FileInfo.ProgressPercent = encryptionProgress.Percent;
-                FileInfo.ProgressMessage = encryptionProgress.Message;
+                StatusBarModel.ProgressPercent = encryptionProgress.Percent;
+                StatusBarModel.ProgressMessage = encryptionProgress.Message;
             };
 
             var switchBackToPreviousBar = FileModel.IsEncrypted
-                ? (Action)FileInfo.ShowEncryptedBar
-                : FileInfo.ShowPlainTextBar;
+                ? (Action)StatusBarModel.ShowEncryptedBar
+                : StatusBarModel.ShowPlainTextBar;
 
             return new LongRunningOperation(updateProgressBar, switchBackToPreviousBar);
         }
@@ -398,9 +394,9 @@ namespace VisualCrypt.Windows.Pages
                     string visualCryptTextSaved = encryptAndSaveFileResponse.Result;
                     // We are done with successful saving. Show that we did encrypt the text:
                     _eventAggregator.GetEvent<EditorReceivesText>().Publish(visualCryptTextSaved);
-                    FileInfo.ShowEncryptedBar();
+                    StatusBarModel.ShowEncryptedBar();
                     await Task.Delay(2000);
-                    FileInfo.ShowPlainTextBar();
+                    StatusBarModel.ShowPlainTextBar();
                     // Redisplay the clear text, to allow continue editing.
                     FileModel.IsDirty = false;
 
@@ -414,7 +410,7 @@ namespace VisualCrypt.Windows.Pages
                     return; // Cancel means the user can continue editing clear text
                 }
                 // other error, switch back to PlainTextBar
-                FileInfo.ShowPlainTextBar();
+                StatusBarModel.ShowPlainTextBar();
                 throw new Exception(encryptAndSaveFileResponse.Error);
             }
         }
@@ -560,7 +556,7 @@ namespace VisualCrypt.Windows.Pages
                                     _encryptionService.EncryptForDisplay(FileModel, textBufferContents, new RoundsExponent(SettingsManager.EditorSettings.CryptographySettings.LogRounds), _longRunningOperation.Context));
                     if (createEncryptedFileResponse.IsSuccess)
                     {
-                        FileModel = createEncryptedFileResponse.Result; // do this before pushing the text to the editor
+                        FileModel.UpdateFrom(createEncryptedFileResponse.Result);  // do this BEFORE pushing the text to the editor
                         _eventAggregator.GetEvent<EditorReceivesText>().Publish(createEncryptedFileResponse.Result.VisualCryptText);
                         UpdateCanExecuteChanged();
                         return;
@@ -568,7 +564,7 @@ namespace VisualCrypt.Windows.Pages
                     if (createEncryptedFileResponse.IsCanceled)
                         return;
                     // other error, switch back to PlainTextBar and show error
-                    FileInfo.ShowPlainTextBar();
+                    StatusBarModel.ShowPlainTextBar();
                     _messageBoxService.ShowError(createEncryptedFileResponse.Error);
                 }
             }
@@ -583,6 +579,7 @@ namespace VisualCrypt.Windows.Pages
         #region DecryptEditorContentsCommand
 
         DelegateCommand _decryptEditorContentsCommand;
+       
 
         public DelegateCommand DecryptEditorContentsCommand
         {
@@ -617,7 +614,7 @@ namespace VisualCrypt.Windows.Pages
                                     _encryptionService.DecryptForDisplay(FileModel, textBufferContents, _longRunningOperation.Context));
                     if (decryptForDisplayResult.IsSuccess)
                     {
-                        FileModel = decryptForDisplayResult.Result; // do this before pushing the text to the editor
+                        FileModel.UpdateFrom(decryptForDisplayResult.Result); // do this BEFORE pushing the text to the editor
                         _eventAggregator.GetEvent<EditorReceivesText>().Publish(decryptForDisplayResult.Result.ClearTextContents);
                         UpdateCanExecuteChanged();
                         return;
@@ -625,7 +622,7 @@ namespace VisualCrypt.Windows.Pages
                     if (decryptForDisplayResult.IsCanceled)
                         return;
                     // other error, switch back to EncryptedBar
-                    FileInfo.ShowEncryptedBar();
+                    StatusBarModel.ShowEncryptedBar();
                     _messageBoxService.ShowError(decryptForDisplayResult.Error);
                 }
             }
@@ -661,7 +658,7 @@ namespace VisualCrypt.Windows.Pages
         {
             _eventAggregator.GetEvent<EditorShouldCleanup>().Publish(null);
             _eventAggregator.GetEvent<EditorSendsText>().Unsubscribe(ExecuteEditorSendsTextCallback);
-            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(OnEditorSendsStatusBarInfo);
+            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(StatusBarModel.UpdateStatusBarText);
             _frameNavigation = null;
         }
 

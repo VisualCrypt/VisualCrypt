@@ -2,12 +2,11 @@
 using System.Security;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.Shared.Tools;
 
 namespace VisualCrypt.Desktop.Tests
 {
-	[TestClass]
+    [TestClass]
 	public class SecureStringTests
 	{
 		[TestMethod]

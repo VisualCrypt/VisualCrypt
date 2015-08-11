@@ -32,6 +32,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					throw new ArgumentNullException("filename");
 
 				var rawBytesFromFile = File.ReadAllBytes(filename);
+			    var shortFilename = Path.GetFileName(filename);
 
 				Response<string, Encoding> getStringResponse = _visualCrypt2API.GetStringFromFile(rawBytesFromFile,
 					Encoding.Default);
@@ -49,13 +50,13 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				if (decodeResponse.IsSuccess)
 				{
 					// it's VisualCrypt!
-					var encryptedFileModel = FileModel.Encrypted(decodeResponse.Result, filename, getStringResponse.Result);
+					var encryptedFileModel = FileModel.Encrypted(decodeResponse.Result, filename, shortFilename, getStringResponse.Result);
 					response.Result = encryptedFileModel;
 				}
 				else
 				{
 					// it's Cleartext
-					var cleartextFileModel = FileModel.Cleartext(filename, getStringResponse.Result, getStringResponse.Result2);
+					var cleartextFileModel = FileModel.Cleartext(filename, shortFilename, getStringResponse.Result, getStringResponse.Result2);
 					response.Result = cleartextFileModel;
 				}
 				response.SetSuccess();
@@ -88,7 +89,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					{
 						VisualCryptText visualCryptText = encodeResponse.Result;
 						CipherV2 cipherV2 = encryptResponse.Result;
-						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, visualCryptText.Text);
+						var encryptedFileModel = FileModel.Encrypted(cipherV2, fileModel.Filename, fileModel.ShortFilename,visualCryptText.Text);
 						encryptedFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = encryptedFileModel;
 						response.SetSuccess();
@@ -161,7 +162,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 					if (decrpytResponse.IsSuccess)
 					{
 						Cleartext cleartext = decrpytResponse.Result;
-						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, cleartext.Text, fileModel.SaveEncoding);
+						var clearTextFileModel = FileModel.Cleartext(fileModel.Filename, fileModel.ShortFilename, cleartext.Text, fileModel.SaveEncoding);
 						clearTextFileModel.IsDirty = fileModel.IsDirty; // preserve IsDirty
 						response.Result = clearTextFileModel;
 						response.SetSuccess();

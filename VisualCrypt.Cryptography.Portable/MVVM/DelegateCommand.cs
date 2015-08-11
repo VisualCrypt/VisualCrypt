@@ -18,10 +18,10 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace VisualCrypt.Windows.Infrastructure
+namespace VisualCrypt.Cryptography.Portable.MVVM
 {
     /// <summary>
-    /// An <see cref="ICommand"/> whose delegates can be attached for <see cref="Execute"/> and <see cref="CanExecute"/>.
+    /// An ICommand whose delegates can be attached for <see cref="Execute"/> and <see cref="CanExecute"/>.
     /// </summary>
     /// <typeparam name="T">Parameter type.</typeparam>
     /// <remarks>
@@ -93,7 +93,7 @@ namespace VisualCrypt.Windows.Infrastructure
     }
 
     /// <summary>
-    /// An <see cref="ICommand"/> whose delegates do not take any parameters for <see cref="Execute"/> and <see cref="CanExecute"/>.
+    /// An ICommand whose delegates do not take any parameters for <see cref="Execute"/> and <see cref="CanExecute"/>.
     /// </summary>
     /// <seealso cref="DelegateCommandBase"/>
     /// <seealso cref="DelegateCommand{T}"/>
@@ -102,7 +102,7 @@ namespace VisualCrypt.Windows.Infrastructure
         /// <summary>
         /// Creates a new instance of <see cref="DelegateCommand"/> with the <see cref="Action"/> to invoke on execution.
         /// </summary>
-        /// <param name="executeMethod">The <see cref="Action"/> to invoke when <see cref="ICommand.Execute"/> is called.</param>
+        /// <param name="executeMethod">The <see cref="Action"/> to invoke when ICommand.Execute is called.</param>
         public DelegateCommand(Action executeMethod)
             : this(executeMethod, () => true)
         {
@@ -112,8 +112,8 @@ namespace VisualCrypt.Windows.Infrastructure
         /// Creates a new instance of <see cref="DelegateCommand"/> with the <see cref="Action"/> to invoke on execution
         /// and a <see langword="Func" /> to query for determining if the command can execute.
         /// </summary>
-        /// <param name="executeMethod">The <see cref="Action"/> to invoke when <see cref="ICommand.Execute"/> is called.</param>
-        /// <param name="canExecuteMethod">The <see cref="Func{TResult}"/> to invoke when <see cref="ICommand.CanExecute"/> is called</param>
+        /// <param name="executeMethod">The <see cref="Action"/> to invoke when ICommand.Execute is called.</param>
+        /// <param name="canExecuteMethod">The <see cref="Func{TResult}"/> to invoke when ICommand.CanExecute is called</param>
         public DelegateCommand(Action executeMethod, Func<bool> canExecuteMethod)
             : base(o => executeMethod(), o => canExecuteMethod())
         {

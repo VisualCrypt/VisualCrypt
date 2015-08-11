@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Animation;
-using VisualCrypt.Windows.Infrastructure;
+using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Windows.Models;
 using VisualCrypt.Windows.Temp;
 

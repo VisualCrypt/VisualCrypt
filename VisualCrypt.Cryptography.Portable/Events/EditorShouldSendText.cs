@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Practices.Prism.PubSubEvents;
 
-namespace VisualCrypt.Desktop.Shared.Events
+namespace VisualCrypt.Cryptography.Portable.Events
 {
 	public class EditorShouldSendText : PubSubEvent<Action<string>>
 	{

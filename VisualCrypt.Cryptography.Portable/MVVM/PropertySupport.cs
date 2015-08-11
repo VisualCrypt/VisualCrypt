@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace VisualCrypt.Windows.Infrastructure
+namespace VisualCrypt.Cryptography.Portable.MVVM
 {
     ///<summary>
     /// Provides support for extracting property information based on a property expression.

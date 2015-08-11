@@ -1,6 +1,6 @@
 ﻿using Microsoft.Practices.Prism.PubSubEvents;
 
-namespace VisualCrypt.Windows.Events
+namespace VisualCrypt.Cryptography.Portable.Events
 {
     public class EditorShouldCleanup: PubSubEvent<EditorShouldCleanup>
 	{

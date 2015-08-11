@@ -8,7 +8,6 @@ using System.Windows.Input;
 using Microsoft.Practices.Prism.Commands;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
-using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.Files;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Services;
@@ -138,7 +137,8 @@ namespace VisualCrypt.Desktop.Views
                     string warningMessage = PwBox.Text.Length == sigCount
                         ? "Use empty password?"
                         : "The password is effectively empty - are you sure?";
-                    var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?", MessageBoxButton.OKCancel,
+                    var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?",
+                        MessageBoxButton.OKCancel,
                         MessageBoxImage.Warning) == MessageBoxResult.OK;
                     if (!okClicked)
                         return;
@@ -257,7 +257,11 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                using (var process = new Process { StartInfo = { UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl } })
+                using (
+                    var process = new Process
+                    {
+                        StartInfo = {UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl}
+                    })
                     process.Start();
             }
             catch (Exception ex)

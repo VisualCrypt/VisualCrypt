@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
+using VisualCrypt.Cryptography.Portable.MVVM;
 using VisualCrypt.Language;
-using VisualCrypt.Windows.Infrastructure;
 
 namespace VisualCrypt.Windows.Models
 {
