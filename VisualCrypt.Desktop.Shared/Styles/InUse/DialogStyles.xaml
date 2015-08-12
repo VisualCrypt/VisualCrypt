@@ -20,7 +20,7 @@
     <Style TargetType="TextBox">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily"
-                Value="{Binding Source={x:Static app:SettingsManager.EditorSettings}, Path=FontSettings.FontFamily}" />
+                Value="{Binding Source={x:Static app:SettingsManager.Instance}, Path=FontSettings.FontFamily}" />
         <Setter Property="Margin" Value="15,0,15,10" />
     </Style>
     <Style TargetType="ComboBox">

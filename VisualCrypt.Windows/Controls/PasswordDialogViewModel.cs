@@ -2,20 +2,20 @@
 using System.ComponentModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Documents;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.MVVM;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.Apps.Models;
+using VisualCrypt.Cryptography.Portable.Apps.MVVM;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
+using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Language;
-using VisualCrypt.Windows.Pages;
 using VisualCrypt.Windows.Services;
-using VisualCrypt.Windows.Static;
 
 namespace VisualCrypt.Windows.Controls
 {
     class PasswordDialogViewModel : ViewModelBase, IActiveCleanup
     {
-        readonly IMessageBoxService _messageBoxService = SharedInstances.MessageBoxService;
+        readonly IMessageBoxService _messageBoxService = Svc.MessageBoxService;
         readonly IEncryptionService _encryptionService;
         readonly Action<bool> _closePopup;
         readonly Action<bool> _setIsPasswordSet;

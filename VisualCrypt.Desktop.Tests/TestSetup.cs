@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
+using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VisualCrypt.Desktop.Shared.App;
@@ -21,7 +22,8 @@ namespace VisualCrypt.Desktop.Tests
 
 		protected override System.Windows.DependencyObject CreateShell()
 		{
-			SettingsManager.LoadOrInitSettings();
+		    var settings = new SettingsManager(new EmptyLogger());
+            settings.LoadOrInitSettings();
 			return Container.GetExportedValue<ShellWindow>();
 		}
 

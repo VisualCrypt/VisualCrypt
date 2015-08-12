@@ -10,6 +10,7 @@
                     Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/VisualCryptColors.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
+            <valueConverters:IsHiddenVisibilityConverter x:Key="IsHiddenVisibilityConverter" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

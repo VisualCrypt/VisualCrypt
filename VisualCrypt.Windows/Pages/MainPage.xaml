@@ -22,7 +22,7 @@
                     <AppBarButton Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="SaveLocal" />
                     <AppBarButton Label="Save As" Command="{x:Bind _viewModel.SaveAsCommand}" Icon="Save" />
                     <AppBarButton Label="Export Cleartex" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
-                    <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.PasswordCommand}" Icon="HideBcc" />
+                    <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc" />
                 </StackPanel>
             </Grid>
         </AppBar>

@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.MVVM;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.Apps.MVVM;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Language;
@@ -31,7 +31,7 @@ namespace VisualCrypt.Desktop.Views
             InitializeComponent();
             DataContext = this;
 
-            LogRounds = SettingsManager.CryptographySettings.LogRounds;
+            LogRounds = SettingsManager.Instance.CryptographySettings.LogRounds;
 
 
             PreviewKeyDown += CloseWithEscape;
@@ -62,7 +62,7 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                SettingsManager.CryptographySettings.LogRounds = LogRounds;
+                SettingsManager.Instance.CryptographySettings.LogRounds = LogRounds;
                 DialogResult = true;
                 Close();
             }

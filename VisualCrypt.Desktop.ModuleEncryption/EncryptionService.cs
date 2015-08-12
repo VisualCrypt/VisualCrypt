@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
 using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;

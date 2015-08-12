@@ -3,13 +3,13 @@ using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.MVVM;
+using VisualCrypt.Cryptography.Portable.Apps.Events;
+using VisualCrypt.Cryptography.Portable.Apps.MVVM;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
+using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
 using VisualCrypt.Language;
 using VisualCrypt.Windows.Controls.EditorSupport;
 using VisualCrypt.Windows.Controls.EditorSupport.FindReplace;
-using VisualCrypt.Windows.Events;
-using VisualCrypt.Windows.Pages;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Static;
 
@@ -17,8 +17,8 @@ namespace VisualCrypt.Windows.Controls
 {
     class EditorViewModel : ViewModelBase, IActiveCleanup
     {
-        readonly IMessageBoxService _messageBoxService = SharedInstances.MessageBoxService;
-        readonly IEventAggregator _eventAggregator = SharedInstances.EventAggregator;
+        readonly IMessageBoxService _messageBoxService = Svc.MessageBoxService;
+        readonly IEventAggregator _eventAggregator = Svc.EventAggregator;
         IEditor _editor;
         IEditorContext _context;
 
@@ -91,7 +91,7 @@ namespace VisualCrypt.Windows.Controls
                 }
                 else
                 {
-                    SettingsManager.EditorSettings.IsWordWrapChecked = false;
+                    Svc.SettingsManager.EditorSettings.IsWordWrapChecked = false;
                     //_editor.TextBox1.IsUndoEnabled = false;
                     _editor.TextBox1.IsReadOnly = true;
                 }
@@ -108,7 +108,7 @@ namespace VisualCrypt.Windows.Controls
 
         void OnSelectionChanged(object sender, RoutedEventArgs routedEventArgs)
         {
-            if ((SettingsManager.EditorSettings.IsStatusBarChecked))
+            if ((Svc.SettingsManager.EditorSettings.IsStatusBarChecked))
                 UpdateStatusBar();
         }
 

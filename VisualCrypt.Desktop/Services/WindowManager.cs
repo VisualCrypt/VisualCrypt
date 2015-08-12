@@ -1,17 +1,19 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Desktop.Shared.Controls;
 using VisualCrypt.Desktop.Views;
 
 namespace VisualCrypt.Desktop.Services
 {
 	
-
+	[Export(typeof(IWindowManager))]
 	public  class WindowManager : IWindowManager
 	{
 		static readonly ILoggerFacade Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
@@ -58,6 +60,21 @@ namespace VisualCrypt.Desktop.Services
 
 			var selectedEncoding = importEncodingDialog.SelectedEncodingInfo.GetEncoding();
 			return new Tuple<bool?, Encoding>(importEncodingDialog.DialogResult, selectedEncoding);
+		}
+
+		public Task GetBoolFromShowDialogAsyncWhenClosed_SettingsDialog()
+		{
+			return GetBoolFromShowDialogAsyncWhenClosed<SettingsDialog>();
+		}
+
+		public Task ShowAboutDialogAsync()
+		{
+			return GetBoolFromShowDialogAsyncWhenClosed<AboutDialog>();
+		}
+
+		public Task ShowLogWindowAsync()
+		{
+			return GetBoolFromShowDialogAsyncWhenClosed<LogWindow>();
 		}
 
 		public  async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : class 

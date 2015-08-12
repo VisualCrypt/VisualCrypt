@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
+using System.Windows.Media.Animation;
 using Microsoft.Practices.Prism.Logging;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 
 namespace VisualCrypt.Desktop
 {
+	[Export(typeof(ILog))]
 	public class ReplayLogger : ILoggerFacade, ILog
 	{
 		readonly Queue<Tuple<string, Category, Priority>> _savedLogs =

@@ -59,15 +59,15 @@ namespace VisualCrypt.Desktop.Views
                 ViewModel.ClearPasswordCommand.Execute();
 
             if (e.Key == Key.F12)
-                SettingsManager.EditorSettings.IsStatusBarChecked = !SettingsManager.EditorSettings.IsStatusBarChecked;
+                SettingsManager.Instance.EditorSettings.IsStatusBarChecked = !SettingsManager.Instance.EditorSettings.IsStatusBarChecked;
             if (e.Key == Key.Escape)
-                SettingsManager.EditorSettings.IsToolAreaChecked = !SettingsManager.EditorSettings.IsToolAreaChecked;
+                SettingsManager.Instance.EditorSettings.IsToolAreaChecked = !SettingsManager.Instance.EditorSettings.IsToolAreaChecked;
 
             if (e.Key == Key.W && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                SettingsManager.EditorSettings.IsWordWrapChecked = !SettingsManager.EditorSettings.IsWordWrapChecked;
+                SettingsManager.Instance.EditorSettings.IsWordWrapChecked = !SettingsManager.Instance.EditorSettings.IsWordWrapChecked;
             if (e.Key == Key.L && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                SettingsManager.EditorSettings.IsSpellCheckingChecked =
-                    !SettingsManager.EditorSettings.IsSpellCheckingChecked;
+                SettingsManager.Instance.EditorSettings.IsSpellCheckingChecked =
+                    !SettingsManager.Instance.EditorSettings.IsSpellCheckingChecked;
         }
 
 
@@ -111,11 +111,11 @@ namespace VisualCrypt.Desktop.Views
                         "The region {0} is missing and has probably not been defined in Xaml.",
                         RegionNames.EditorRegion));
 
-            var view = mainRegion.GetView(typeof (IEditor).Name) as IEditor;
+            var view = mainRegion.GetView(typeof (IEditorView).Name) as IEditorView;
             if (view == null)
             {
-                view = ServiceLocator.Current.GetInstance<IEditor>();
-                mainRegion.Add(view, typeof (IEditor).Name); // automatically activates the view
+                view = ServiceLocator.Current.GetInstance<IEditorView>();
+                mainRegion.Add(view, typeof (IEditorView).Name); // automatically activates the view
             }
             else
             {

@@ -1,8 +1,7 @@
 ﻿using System.Linq;
 using Windows.UI.Xaml.Controls;
-using VisualCrypt.Cryptography.Portable.Models;
+using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Windows.Services;
-using VisualCrypt.Windows.Static;
 using VisualCrypt.Windows.V2;
 
 namespace VisualCrypt.Windows.Pages
@@ -15,8 +14,8 @@ namespace VisualCrypt.Windows.Pages
         {
             InitializeComponent();
             _viewModel = new FilesPageViewModel(new NavigationService(Frame),
-                new PasswordDialogDispatcher(), new EncryptionService(), new MessageBoxService(), SharedInstances.EventAggregator,
-                SharedInstances.SettingsManager, new FileService());
+                new PasswordDialogDispatcher(), new EncryptionService(), new MessageBoxService(), Svc.EventAggregator,
+                Svc.SettingsManager, new FileService());
             Loaded += async (s,e)=> await _viewModel.OnNavigatedToCompleteAndLoaded();
         }
 

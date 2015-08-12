@@ -109,11 +109,6 @@
       <DependentUpon>PasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PasswordDialogViewModel.cs" />
-    <Compile Include="Events\EditorReceivesText.cs" />
-    <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
-    <Compile Include="Events\EditorSendsText.cs" />
-    <Compile Include="Events\EditorShouldCleanup.cs" />
-    <Compile Include="Events\EditorShouldSendText.cs" />
     <Compile Include="Pages\FilesPage.xaml.cs">
       <DependentUpon>FilesPage.xaml</DependentUpon>
     </Compile>
@@ -125,17 +120,20 @@
     <Compile Include="Pages\NavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\Log.cs" />
     <Compile Include="Services\MessageBoxService.cs" />
-    <Compile Include="Static\CryptographySettings.cs" />
-    <Compile Include="Static\EditorSettings.cs" />
-    <Compile Include="Static\FontSettings.cs" />
+    <Compile Include="Services\BrowserService.cs" />
+    <Compile Include="Services\ClipBoardService.cs" />
+    <Compile Include="Controls\EditorSupport\FontSettings.cs" />
+    <Compile Include="Services\LifeTimeService.cs" />
     <Compile Include="Static\Map.cs" />
     <Compile Include="Static\Serializer.cs" />
-    <Compile Include="Static\SettingsManager.cs" />
-    <Compile Include="Static\SharedInstances.cs" />
+    <Compile Include="Services\SettingsManager.cs" />
+    <Compile Include="Services\Svc.cs" />
+    <Compile Include="Services\WindowManager.cs" />
     <Compile Include="Temp\SampleFiles.cs" />
-    <Compile Include="V2\Platform_UWP.cs" />
-    <Compile Include="V2\EncryptionService.cs" />
+    <Compile Include="Cryptography\Platform_UWP.cs" />
+    <Compile Include="Cryptography\EncryptionService.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -192,11 +190,16 @@
       <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
       <Name>VisualCrypt.Cryptography.Portable</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Cryptography.UWP\VisualCrypt.Cryptography.UWP.csproj">
+      <Project>{deab06af-16a0-43b9-aad2-6813990e35be}</Project>
+      <Name>VisualCrypt.Cryptography.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Language\VisualCrypt.Language.csproj">
       <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
       <Name>VisualCrypt.Language</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

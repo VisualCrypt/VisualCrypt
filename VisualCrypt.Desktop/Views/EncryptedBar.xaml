@@ -3,10 +3,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
              xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+             xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance views:ShellViewModel}">
     <UserControl.Resources>
         <ResourceDictionary
             Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/BarStyles.xaml" />
@@ -18,16 +18,16 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <TextBlock Grid.Column="0"
-                   Text="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=EncrytedBarText}" />
+                   Text="{Binding Path=StatusBarModel.EncrytedBarText}" />
         <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
             <TextBlock>
                 <Hyperlink Click="Hyperlink_SetPassword_Click">
                     <Run
-                        Text="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=PasswordStatus, Mode=OneWay}" />
+                        Text="{Binding Path=PasswordInfo.PasswordStatus, Mode=OneWay}" />
                 </Hyperlink>
                 <Hyperlink Click="Hyperlink_ClearPassword_MouseDown">
                     <TextBlock Padding="0" Margin="0" FontWeight="Normal" FontFamily="WebDings"
-                               Visibility="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=TextBlockClearPasswordVisibility}">
+                               Visibility="{Binding Path=PasswordInfo.IsTextBlockClearPasswordHidden, Converter={StaticResource IsHiddenVisibilityConverter}}">
                         r
                     </TextBlock>
                 </Hyperlink>
@@ -44,7 +44,7 @@
                 </Hyperlink>
                 <Run xml:space="preserve" />
                 <Hyperlink Click="Hyperlink_Save_Click"
-                           IsEnabled="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=IsDirty}">
+                           IsEnabled="{Binding FileModel.IsDirty}">
                     <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termSave,Mode=OneWay}" />
                 </Hyperlink>
                 <Run xml:space="preserve" />

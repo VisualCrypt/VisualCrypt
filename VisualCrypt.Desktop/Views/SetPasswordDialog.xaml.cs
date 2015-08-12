@@ -7,10 +7,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.MVVM;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.Apps.Models;
+using VisualCrypt.Cryptography.Portable.Apps.MVVM;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
-using VisualCrypt.Desktop.Shared.Files;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Language;
 
@@ -22,7 +23,8 @@ namespace VisualCrypt.Desktop.Views
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
-
+	    readonly Action<bool> _setIsPasswordSet;
+	    readonly bool _isPasswordSet;
         [ImportingConstructor]
         public SetPasswordDialog(IMessageBoxService messageBoxService,
             IEncryptionService encryptionService, IParamsProvider paramsProvider)
@@ -40,7 +42,10 @@ namespace VisualCrypt.Desktop.Views
             PwBox.Focus();
 
             PreviewKeyDown += CloseWithEscape;
-            SetMode(paramsProvider.GetParams<SetPasswordDialog, SetPasswordDialogMode>());
+			var parameters = paramsProvider.GetParams<SetPasswordDialog,Tuple<SetPasswordDialogMode,Action<bool>,bool>>();
+            SetMode(parameters.Item1);
+	        _setIsPasswordSet = parameters.Item2;
+	        _isPasswordSet = parameters.Item3;
         }
 
         void PwBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -148,11 +153,11 @@ namespace VisualCrypt.Desktop.Views
                 var setPasswordResponse = _encryptionService.SetPassword(PwBox.Text);
                 if (!setPasswordResponse.IsSuccess)
                 {
-                    PasswordManager.PasswordInfo.IsPasswordSet = false;
+                    _setIsPasswordSet(false);
                     _messageBoxService.ShowError(setPasswordResponse.Error);
                     return;
                 }
-                PasswordManager.PasswordInfo.IsPasswordSet = true;
+				_setIsPasswordSet(true);
                 DialogResult = true;
                 Close();
             }
@@ -203,7 +208,7 @@ namespace VisualCrypt.Desktop.Views
                 var setPasswordResponse = _encryptionService.SetPassword(string.Empty);
                 if (setPasswordResponse.IsSuccess)
                 {
-                    PasswordManager.PasswordInfo.IsPasswordSet = false;
+					_setIsPasswordSet(false);
                     PwBox.Text = string.Empty;
                     DialogResult = true;
                     Close();
@@ -217,7 +222,7 @@ namespace VisualCrypt.Desktop.Views
 
         bool CanExecuteClearPasswordCommand()
         {
-            if (PwBox.Text.Length > 0 || PasswordManager.PasswordInfo.IsPasswordSet)
+            if (PwBox.Text.Length > 0 || _isPasswordSet)
             {
                 return true;
             }

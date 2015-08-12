@@ -161,10 +161,11 @@
     <Compile Include="Views\SetPasswordDialog.xaml.cs">
       <DependentUpon>SetPasswordDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ShellViewModel.cs" />
     <Compile Include="Views\ShellWindow.xaml.cs">
       <DependentUpon>ShellWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShellViewModel.cs" />
+    <Compile Include="Views\Old_ShellViewModel.cs" />
     <Compile Include="Views\WorkingBar.xaml.cs">
       <DependentUpon>WorkingBar.xaml</DependentUpon>
     </Compile>

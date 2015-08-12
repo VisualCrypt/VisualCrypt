@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Windows;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Desktop.Shared.Services;
 
 namespace VisualCrypt.Desktop.Tests

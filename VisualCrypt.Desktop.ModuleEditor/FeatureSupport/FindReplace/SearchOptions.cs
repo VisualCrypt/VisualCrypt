@@ -1,4 +1,4 @@
-﻿using VisualCrypt.Cryptography.Portable.MVVM;
+﻿using VisualCrypt.Cryptography.Portable.Apps.MVVM;
 
 namespace VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace
 {

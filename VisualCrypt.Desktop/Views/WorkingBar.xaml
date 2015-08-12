@@ -3,11 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
 
              xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+             xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance views:ShellViewModel }">
     <UserControl.Resources>
         <ResourceDictionary
             Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/BarStyles.xaml" />
@@ -22,10 +22,10 @@
 
             <ProgressBar Width="150" Height="8" Margin="5,4,5,0" IsIndeterminate="False" Foreground="#FF77FF77"
                          BorderThickness="0" Background="{DynamicResource BarColorBrush}"
-                         Value="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=ProgressPercent}" />
+                         Value="{Binding Path=StatusBarModel.ProgressPercent}" />
             <TextBlock>
-                <Run Text="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=ProgressBarOpName}" />
-                <Run Text="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=ProgressMessage}" />
+                <Run Text="{Binding Path=StatusBarModel.ProgressBarOpName}" />
+                <Run Text="{Binding Path=StatusBarModel.ProgressMessage}" />
             </TextBlock>
         </StackPanel>
 

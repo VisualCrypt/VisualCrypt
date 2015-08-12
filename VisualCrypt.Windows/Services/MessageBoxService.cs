@@ -1,6 +1,6 @@
 ﻿using System;
 using Windows.UI.Popups;
-using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 
 namespace VisualCrypt.Windows.Services
 {

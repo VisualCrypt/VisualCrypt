@@ -1,10 +1,13 @@
 ﻿using System;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
 using System.Windows;
 using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
 
 namespace VisualCrypt.Desktop.Shared.Services
 {
+	[Export(typeof(ILifeTimeService))]
 	public class LifeTimeService :ILifeTimeService
 	{
 		bool _isExitConfirmed;

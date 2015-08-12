@@ -7,12 +7,11 @@
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     xmlns:commands="clr-namespace:VisualCrypt.Desktop.Shared.Commands;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
-                    xmlns:files="clr-namespace:VisualCrypt.Desktop.Shared.Files;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:prismSupport="clr-namespace:VisualCrypt.Desktop.Shared.PrismSupport;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
-                    Title="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=Filename}"
+                    Title="{Binding FileModel.Filename}"
                     Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
                     Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
                     WindowStartupLocation="CenterScreen"
@@ -89,7 +88,7 @@
             </MenuItem>
             <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miVC,Mode=OneWay}">
                 <MenuItem
-                    Header="{Binding Source={x:Static files:PasswordManager.PasswordInfo}, Path=MenuPasswordText}"
+                    Header="{Binding PasswordInfo.MenuPasswordText}"
                     Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miVCEncrypt,Mode=OneWay}"
                           Command="{Binding EncryptEditorContentsCommand}"
@@ -141,12 +140,12 @@
             <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormat,Mode=OneWay}">
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormatWordWrap,Mode=OneWay}"
                           IsCheckable="True"
-                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsWordWrapChecked, Mode=TwoWay}"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.IsWordWrapChecked, Mode=TwoWay}"
                           InputGestureText="Ctrl+W" />
                 <MenuItem
                     Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormatCheckSpelling,Mode=OneWay}"
                     IsCheckable="True"
-                    IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsSpellCheckingChecked, Mode=TwoWay}"
+                    IsChecked="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.IsSpellCheckingChecked, Mode=TwoWay}"
                     InputGestureText="Ctrl+L" />
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormatFont,Mode=OneWay}"
                           Command="commands:EditorCommands.Font" InputGestureText="Ctrl+Alt+F" />
@@ -154,11 +153,11 @@
             <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miView,Mode=OneWay}">
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewStatusBar,Mode=OneWay}"
                           IsCheckable="True"
-                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Mode=TwoWay}"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.IsStatusBarChecked, Mode=TwoWay}"
                           InputGestureText="F12" />
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewToolArea,Mode=OneWay}"
                           IsCheckable="True"
-                          IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsToolAreaChecked, Mode=TwoWay}"
+                          IsChecked="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.IsToolAreaChecked, Mode=TwoWay}"
                           InputGestureText="ESC" />
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewLanguage,Mode=OneWay}">
                     <MenuItem Header="English" Command="{Binding SwitchLanguageCommand}" CommandParameter="EN"
@@ -167,7 +166,7 @@
                               IsChecked="{Binding Source={x:Static language:Loc.Strings}, Path=IsDE,Mode=OneWay}" />
                 </MenuItem>
                 <MenuItem
-                    Header="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=ZoomLevelMenuText}">
+                    Header="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.ZoomLevelMenuText}">
                     <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewZoomIn,Mode=OneWay}"
                               InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn" />
                     <MenuItem
@@ -175,7 +174,7 @@
                         InputGestureText="Ctrl -" Command="commands:EditorCommands.ZoomOut" />
                     <Separator />
                     <MenuItem Header="1_00%" InputGestureText="Ctrl+0" IsCheckable="false"
-                              IsChecked="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsZoom100Checked, Mode=OneWay}"
+                              IsChecked="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.IsZoom100Checked, Mode=OneWay}"
                               Command="commands:EditorCommands.Zoom100" />
                 </MenuItem>
 
@@ -197,14 +196,14 @@
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Border Grid.Row="2" Height="28" Background="{DynamicResource AccentColorBrush}"
-                Visibility="{Binding Source={x:Static state:SettingsManager.EditorSettings}, Path=IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
+                Visibility="{Binding Source={x:Static state:SettingsManager.Instance}, Path=EditorSettings.IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
             <StackPanel>
                 <views:PlainTextBar
-                    Visibility="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=PlainTextBarVisibility}" />
+                    Visibility="{Binding StatusBarModel.IsPlaintextBarHidden, Converter={StaticResource IsHiddenVisibilityConverter}}" />
                 <views:WorkingBar
-                    Visibility="{Binding Source={x:Static files:FileService.BindableFileInfo}, Path=WorkingBarVisibility}" />
+                    Visibility="{Binding StatusBarModel.IsProgressBarHidden,Converter={StaticResource IsHiddenVisibilityConverter}}" />
                 <views:EncryptedBar
-                    Visibility="{Binding  Source={x:Static files:FileService.BindableFileInfo}, Path=EncryptedBarVisibility}" />
+                    Visibility="{Binding  StatusBarModel.IsEncryptedBarHidden, Converter={StaticResource IsHiddenVisibilityConverter}}" />
             </StackPanel>
         </Border>
     </Grid>

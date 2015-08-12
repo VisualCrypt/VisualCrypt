@@ -9,21 +9,46 @@ using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using Shell32;
-using VisualCrypt.Cryptography.Portable.Settings;
+using VisualCrypt.Cryptography.Portable.Apps.Settings;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
 {
 	[Export(typeof(ISettingsManager))]
-	[PartCreationPolicy(CreationPolicy.NonShared)]
-	public  class SettingsManager
+	[PartCreationPolicy(CreationPolicy.Shared)]
+	public  class SettingsManager : ISettingsManager
 	{
-		readonly ILoggerFacade Logger;
+		static SettingsManager _instance;
+		public static SettingsManager Instance
+		{
+			get
+			{
+				if (_instance == null)
+				//{
+				//	_instance = (SettingsManager)ServiceLocator.Current.GetInstance<ISettingsManager>();
+				//}
+					throw new InvalidOperationException("Error - the SettingsManager instance has not yet been constructed.");
+				return _instance;
+			}
+		}
+
+		readonly ILoggerFacade _logger;
 		string _currentDirectoryName;
+
+		[ImportingConstructor]
+		public SettingsManager(ILoggerFacade logger)
+		{
+			_instance = this;
+			_logger = logger;
+			FactorySettings();
+		}
+
+		
+
 
 		public  EditorSettings EditorSettings { get; private set; }
 
-	    public  FontSettings FontSettings { get; private set; }
+	    public  object FontSettings { get; private set; }
 
         public  CryptographySettings CryptographySettings { get; private set; }
 
@@ -38,42 +63,33 @@ namespace VisualCrypt.Desktop.Shared.App
 			set { _currentDirectoryName = value; }
 		}
 
-		 SettingsManager()
-		{
-			try
-			{
-				Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
-			}
-			catch (InvalidOperationException)
-			{
-				// Work around the "ServicelocationProvider must be set" error in VS Xaml designer
-				// when editing ShellWindow.xaml
-			}
-
-			FactorySettings();
-		}
+	
 
 		public  void LoadOrInitSettings()
 		{
-		    Tuple<EditorSettings, FontSettings, CryptographySettings> settings;
-            if (!TryGetSettings(out settings))
+		    Tuple<EditorSettings, FontSettings, CryptographySettings> settings = TryGetSettings();
+			if (settings == null || settings.Item1 == null || settings.Item2 == null || settings.Item3 == null)
 			{
-				Logger.Log("Could not load settings, using factory settings.", Category.Warn, Priority.Medium);
+				_logger.Log("Could not load settings, using factory settings.", Category.Warn, Priority.Medium);
 				FactorySettings();
 				SaveSettings();
 			}
 			else
-				Logger.Log("Settings successfully loaded!.", Category.Info, Priority.Medium);
+			{
+				EditorSettings = settings.Item1;
+				FontSettings = settings.Item2;
+				CryptographySettings = settings.Item3;
+				_logger.Log("Settings successfully loaded!.", Category.Info, Priority.Medium);
+			}
+				
 
-			EditorSettings = settings.Item1;
-		    FontSettings = settings.Item2;
-		    CryptographySettings = settings.Item3;
+		
 
 			TryPinToTaskbarOnFirstRun();
 
             EditorSettings.PropertyChanged += SettingsChanged;
 		    CryptographySettings.PropertyChanged += SettingsChanged;
-            FontSettings.PropertyChanged += SettingsChanged;
+            ((FontSettings)FontSettings).PropertyChanged += SettingsChanged;
         }
 
          void SettingsChanged(object sender, PropertyChangedEventArgs e)
@@ -91,12 +107,12 @@ namespace VisualCrypt.Desktop.Shared.App
 
 				using (var visualCryptKey = GetOrCreateVisualCryptKey())
 					visualCryptKey.SetValue(Constants.Key_EditorSettings, serializedSettings);
-				Logger.Log("Settings saved!", Category.Info,
+				_logger.Log("Settings saved!", Category.Info,
 					Priority.Low);
 			}
 			catch (Exception e)
 			{
-				Logger.Log(e.Message, Category.Exception, Priority.Medium);
+				_logger.Log(e.Message, Category.Exception, Priority.Medium);
 			}
 		}
 
@@ -123,7 +139,7 @@ namespace VisualCrypt.Desktop.Shared.App
 		    CryptographySettings = new CryptographySettings {LogRounds = 10};
 		}
 
-		 bool TryGetSettings(out Tuple<EditorSettings,FontSettings,CryptographySettings> settings)
+		 Tuple<EditorSettings,FontSettings,CryptographySettings> TryGetSettings()
 		{
              
             try
@@ -151,18 +167,17 @@ namespace VisualCrypt.Desktop.Shared.App
                         {
                             cryptoSettings = Serializer<CryptographySettings>.Deserialize(cryptoSettingsString);
                         }
-                        settings = new Tuple<EditorSettings, FontSettings, CryptographySettings>(editorSettings, fontSettings,
+                        return new Tuple<EditorSettings, FontSettings, CryptographySettings>(editorSettings, fontSettings,
 					        cryptoSettings);
-					    return true;
 					}
 				}
 			}
 			catch (Exception e)
 			{
-				Logger.Log(e.Message, Category.Exception, Priority.Medium);
+				_logger.Log(e.Message, Category.Exception, Priority.Medium);
+				
 			}
-			settings = null;
-			return false;
+			return null;
 		}
 
 		 RegistryKey GetOrCreateVisualCryptKey()
@@ -190,11 +205,11 @@ namespace VisualCrypt.Desktop.Shared.App
 						visualCryptKey.SetValue(Constants.Key_HasRunOnce, 1);
 					}
 				}
-				Logger.Log("Pinned to Taskbar", Category.Info, Priority.Low);
+				_logger.Log("Pinned to Taskbar", Category.Info, Priority.Low);
 			}
 			catch (Exception e)
 			{
-				Logger.Log(e.Message, Category.Exception, Priority.Low);
+				_logger.Log(e.Message, Category.Exception, Priority.Low);
 			}
 		}
 

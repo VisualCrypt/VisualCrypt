@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls.Primitives;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.AppLogic;
+using VisualCrypt.Cryptography.Portable.Apps.Models;
+using VisualCrypt.Cryptography.Portable.Apps.Services;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Windows.Controls;
 
 namespace VisualCrypt.Windows.Pages

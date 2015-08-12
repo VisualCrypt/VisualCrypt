@@ -6,6 +6,9 @@ using System.Globalization;
 using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions;
+using Microsoft.Practices.ServiceLocation;
+using VisualCrypt.Cryptography.Portable;
+using VisualCrypt.Cryptography.Portable.Apps.Settings;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 
@@ -31,9 +34,26 @@ namespace VisualCrypt.Desktop
 
         protected override DependencyObject CreateShell()
         {
-            SettingsManager.LoadOrInitSettings();
+			TriggerCompositionErrors<ShellViewModel>();
+	      
+			ServiceLocator.Current.GetInstance<ISettingsManager>().LoadOrInitSettings();
+           
             return Container.GetExportedValue<ShellWindow>();
         }
+
+		/// <summary>
+		/// This is a tool. 
+		/// Triggers Exceptions in composition and writes debug info to the output window, like
+		/// 1) No exports were found that match the constraint: 
+		///		ContractName	VisualCrypt.Cryptography.Portable.ILog
+		///		RequiredTypeIdentity	VisualCrypt.Cryptography.Portable.ILog
+		/// </summary>
+		/// <typeparam name="T">The suspicious Type</typeparam>
+	    void TriggerCompositionErrors<T>()
+	    {
+			Container.ComposeExportedValue(typeof(T));
+			var test = ServiceLocator.Current.GetInstance<T>();
+	    }
 
         protected override void InitializeShell()
         {
@@ -51,6 +71,7 @@ namespace VisualCrypt.Desktop
             AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof (Constants).Assembly));
             AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof (ModuleEditor.ModuleEditor).Assembly));
             AggregateCatalog.Catalogs.Add(new AssemblyCatalog(typeof (ModuleEncryption.ModuleEncryption).Assembly));
+			
         }
 
         /// <summary>
@@ -65,6 +86,7 @@ namespace VisualCrypt.Desktop
             // Because we created the ReplayLogger and it needs to be used immediately, 
             // we compose it to satisfy any imports it has.
             Container.ComposeExportedValue(_replayLogger);
+			
         }
 
 

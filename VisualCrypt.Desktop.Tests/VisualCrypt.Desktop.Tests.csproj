@@ -83,7 +83,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="EncryptionTests_V2.cs" />
-    <Compile Include="FakeEditor.cs" />
+    <Compile Include="FakeEditorView.cs" />
     <Compile Include="FindReplaceTests.cs" />
     <Compile Include="FakeOkMessageBoxService.cs" />
     <Compile Include="MockEventAggregator.cs" />

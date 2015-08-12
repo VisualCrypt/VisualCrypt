@@ -10,7 +10,7 @@ namespace VisualCrypt.Desktop.Tests
     [TestClass]
 	public class FindReplaceTests
 	{
-		readonly IEditor _editor = new FakeEditor();
+		readonly IEditorView _editorView = new FakeEditorView();
 
 		[TestMethod]
 		public void ReplaceAll_One_With_One()
@@ -84,34 +84,34 @@ namespace VisualCrypt.Desktop.Tests
 			// search forward with wrapping
 			vm.SearchOptions.SearchUp = false;
 
-			_editor.TextBox1.CaretIndex = 0;
+			_editorView.TextBox1.CaretIndex = 0;
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 1);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 1);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 1);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 1);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 
 			// search backwards with wrapping
 			vm.SearchOptions.SearchUp = true;
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 1);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 1);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 1);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 1);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 		}
 
 		[TestMethod]
@@ -125,42 +125,42 @@ namespace VisualCrypt.Desktop.Tests
 			// search forward with wrapping
 			vm.SearchOptions.SearchUp = false;
 
-			_editor.TextBox1.CaretIndex = 0;
+			_editorView.TextBox1.CaretIndex = 0;
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 4);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 4);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 6);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 6);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 
 			// search backwards with wrapping
 			vm.SearchOptions.SearchUp = true;
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 7);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 7);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 5);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 5);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 3);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 3);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 1);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 1);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 7);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 7);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 5);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 5);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 3);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 3);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 1);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 1);
 			vm.FindNextButtonCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 7);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 7);
 		}
 
 		[TestMethod]
@@ -175,7 +175,7 @@ namespace VisualCrypt.Desktop.Tests
 			// search forward with wrapping
 			vm.SearchOptions.SearchUp = false;
 
-			_editor.TextBox1.CaretIndex = 0;
+			_editorView.TextBox1.CaretIndex = 0;
 			vm.ReplaceCommand.Execute();
 			vm.ReplaceCommand.Execute();
 			vm.ReplaceCommand.Execute();
@@ -197,7 +197,7 @@ namespace VisualCrypt.Desktop.Tests
 			// search forward with wrapping
 			vm.SearchOptions.SearchUp = false;
 
-			_editor.TextBox1.CaretIndex = 0;
+			_editorView.TextBox1.CaretIndex = 0;
 			vm.ReplaceCommand.Execute();
 			vm.ReplaceCommand.Execute();
 
@@ -221,13 +221,13 @@ namespace VisualCrypt.Desktop.Tests
 			// search forward with wrapping
 			vm.SearchOptions.SearchUp = false;
 
-			_editor.TextBox1.CaretIndex = 0;
+			_editorView.TextBox1.CaretIndex = 0;
 			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2);
 			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 6);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 6);
 			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 10);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 10);
 
 			vm.FindString = "aaaaaaaaaaaaaa";
 			vm.ReplaceString = "z";
@@ -236,7 +236,7 @@ namespace VisualCrypt.Desktop.Tests
 			var results_z = CountChars('z');
 			Assert.IsTrue(results_z == 1);
 
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 		}
 
 		[TestMethod]
@@ -251,13 +251,13 @@ namespace VisualCrypt.Desktop.Tests
 			// search forward with wrapping
 			vm.SearchOptions.SearchUp = true;
 
-			_editor.TextBox1.CaretIndex = 0;
+			_editorView.TextBox1.CaretIndex = 0;
 			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 4); // is 4
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 4); // is 4
 			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 3); // sb 3
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 3); // sb 3
 			vm.ReplaceCommand.Execute();
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 2); // sb 2
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 2); // sb 2
 
 			vm.FindString = "aaaaaaaaaaaaaa";
 			vm.ReplaceString = "z";
@@ -266,12 +266,12 @@ namespace VisualCrypt.Desktop.Tests
 			var results_z = CountChars('z');
 			Assert.IsTrue(results_z == 1);
 
-			Assert.IsTrue(_editor.TextBox1.CaretIndex == 0);
+			Assert.IsTrue(_editorView.TextBox1.CaretIndex == 0);
 		}
 
 		int CountChars(char character)
 		{
-			return (from c in _editor.TextBox1.Text
+			return (from c in _editorView.TextBox1.Text
 				where c == character
 				select c).Count();
 		}
@@ -281,13 +281,13 @@ namespace VisualCrypt.Desktop.Tests
 
 			var vm = ServiceLocator.Current.GetInstance<EditorViewModel>();
 			vm._messageBoxService = new FakeOkMessageBoxService();
-			vm.OnViewLoaded(_editor);
+			vm.OnViewLoaded(_editorView, null);
 			return vm;
 		}
 
 		void FillWithText(string text)
 		{
-			_editor.TextBox1.Text = text;
+			_editorView.TextBox1.Text = text;
 		}
 	}
 }

@@ -6,7 +6,7 @@
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
                     mc:Ignorable="d"
                     Background="{DynamicResource BarColorBrush}"
-                    Title="About VisualCrypt Editor" Height="300" Width="500" WindowStartupLocation="CenterOwner">
+                    Title="About VisualCrypt editorView" Height="300" Width="500" WindowStartupLocation="CenterOwner">
     <controls:AppDialog.Resources>
         <ResourceDictionary
             Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
@@ -32,7 +32,7 @@
                         </StackPanel>
                         <TextBlock />
                         <TextBlock TextWrapping="Wrap">
-                            This version of VisualCrypt Editor is Open Source and free for private use. Please use only the offical download from
+                            This version of VisualCrypt editorView is Open Source and free for private use. Please use only the offical download from
                             <Hyperlink>https://visualcrypt.com</Hyperlink> for your security!
                         </TextBlock>
                         <TextBlock />
