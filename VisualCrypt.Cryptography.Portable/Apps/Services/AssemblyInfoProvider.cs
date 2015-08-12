@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Composition;
 using System.Linq;
 using System.Reflection;
 
 namespace VisualCrypt.Cryptography.Portable.Apps.Services
 {
-	[Export(typeof(IAssemblyInfoProvider))]
 	public class AssemblyInfoProvider : IAssemblyInfoProvider
 	{
 		readonly Assembly _assembly;
