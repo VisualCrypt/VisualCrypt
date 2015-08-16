@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VisualCrypt.Cryptography.Portable</RootNamespace>
+    <AssemblyName>VisualCrypt.Cryptography.Portable</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>YourKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="packages.config" />
+    <None Include="YourKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Apps\Services\AssemblyInfoProvider.cs" />
+    <Compile Include="Apps\Events\FileModelChanged.cs" />
+    <Compile Include="Apps\Services\IAssemblyInfoProvider.cs" />
+    <Compile Include="Apps\Services\IBrowserService.cs" />
+    <Compile Include="Apps\Services\IClipBoardService.cs" />
+    <Compile Include="Apps\Services\IFileService.cs" />
+    <Compile Include="Apps\Services\ILifeTimeService.cs" />
+    <Compile Include="Apps\Services\ILog.cs" />
+    <Compile Include="Apps\Services\IWindowManager.cs" />
+    <Compile Include="Apps\Settings\CryptographySettings.cs" />
+    <Compile Include="Apps\Settings\EditorSettings.cs" />
+    <Compile Include="Apps\Events\EditorReceivesText.cs" />
+    <Compile Include="Apps\Events\EditorSendsStatusBarInfo.cs" />
+    <Compile Include="Apps\Events\EditorSendsText.cs" />
+    <Compile Include="Apps\Events\EditorShouldCleanup.cs" />
+    <Compile Include="Apps\Events\EditorShouldSendText.cs" />
+    <Compile Include="Apps\Models\FilesPageCommandArgs.cs" />
+    <Compile Include="Apps\ViewModels\IActiveCleanup.cs" />
+    <Compile Include="Apps\ViewModels\IEditorContext.cs" />
+    <Compile Include="Apps\Services\IMessageBoxService.cs" />
+    <Compile Include="Apps\Services\INavigationService.cs" />
+    <Compile Include="Apps\Services\IPasswordDialogDispatcher.cs" />
+    <Compile Include="Apps\Settings\ISettingsManager.cs" />
+    <Compile Include="Apps\ViewModels\PortableMainViewModel.cs" />
+    <Compile Include="Apps\Models\FileReference.cs" />
+    <Compile Include="Apps\Models\PasswordInfo.cs" />
+    <Compile Include="Apps\MVVM\DelegateCommand.cs" />
+    <Compile Include="Apps\MVVM\DelegateCommandBase.cs" />
+    <Compile Include="Apps\MVVM\PropertySupport.cs" />
+    <Compile Include="Apps\MVVM\ViewModelBase.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Apps\Settings\Serializer.cs" />
+    <Compile Include="Apps\Models\DialogDirection.cs" />
+    <Compile Include="Apps\Models\DialogFilters.cs" />
+    <Compile Include="Apps\Models\FileModel.cs" />
+    <Compile Include="VisualCrypt2\Implementations\IEncryptionService.cs" />
+    <Compile Include="Apps\Models\IFileModel.cs" />
+    <Compile Include="Apps\Constants\PortableConstants.cs" />
+    <Compile Include="Apps\Models\SetPasswordDialogMode.cs" />
+    <Compile Include="Apps\Models\StatusBarModel.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\RandomKeyCipher32.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\PlainTextPadding.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\RoundsExponent.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\RandomKey32.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\SecureBytes.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\PrunedPassword.cs" />
+    <Compile Include="VisualCrypt2\Implementations\AESDir.cs" />
+    <Compile Include="VisualCrypt2\Implementations\Deflate.cs" />
+    <Compile Include="VisualCrypt2\Implementations\KeyStore.cs" />
+    <Compile Include="VisualCrypt2\Implementations\VisualCryptAPI2Internal.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\EncryptionProgress.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\Guard.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\IEncryptionProgress.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\LongRunningOperation.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\LongRunningOperationContext.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\MAC16.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\PaddedData.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\IV16.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\Compressed.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\BCrypt24.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\PasswordDerivedKey32.cs" />
+    <Compile Include="VisualCrypt2\Implementations\FileContentsDetection.cs" />
+    <Compile Include="VisualCrypt2\Implementations\VisualCrypt2API.cs" />
+    <Compile Include="VisualCrypt2\Implementations\VisualCrypt2Formatter.cs" />
+    <Compile Include="VisualCrypt2\Implementations\IPlatform.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\CipherV2.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\ClearText.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\VisualCryptText.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\SHA512PW64.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\Response.cs" />
+    <Compile Include="VisualCrypt2\Implementations\IVisualCrypt2API.cs" />
+    <Compile Include="VisualCrypt2\Implementations\BCrypt.cs" />
+    <Compile Include="VisualCrypt2\Implementations\Base64Encoder.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\ByteArrays.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\FillWithZeros.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\StringExtensions.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\ToHexView.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\FormatInvariant.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\misc\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
+      <Name>VisualCrypt.Language</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Prism.PubSubEvents.1.1.2\lib\portable-sl5+windowsphone8+windows8+net40+wpa81\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
