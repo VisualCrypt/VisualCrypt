@@ -1,6 +1,6 @@
 # VisualCrypt Editor
 
-[![Build status](https://ci.appveyor.com/api/projects/status/1vnngtra9xkue13s?svg=true)](https://ci.appveyor.com/project/pragmatrix/visualcrypt-editor)
+[![Build status](https://ci.appveyor.com/api/projects/status/nua1qwlekntyi4kq?svg=true)](https://ci.appveyor.com/project/aubergemediale/visualcrypt)
 
 ##License
 
