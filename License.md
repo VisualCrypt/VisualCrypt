@@ -1,12 +1,8 @@
-# VisualCrypt Editor
+###License
 
-[![Build status](https://ci.appveyor.com/api/projects/status/nua1qwlekntyi4kq?svg=true)](https://ci.appveyor.com/project/aubergemediale/visualcrypt)
+VisualCrypt: Copyright (c) 2014 - 2015 VisualCrypt AG and  Claus Ehrenberg.
 
-##License
-
-Copyright (c) 2014 - 2015 VisualCrypt AG, Claus Ehrenberg.
-
-This software is released under the GNU GPL V3:
+License: GNU GPL V3
 
 ### GNU GENERAL PUBLIC LICENSE
 
@@ -602,4 +598,4 @@ proprietary programs. If your program is a subroutine library, you may consider 
 more useful to permit linking proprietary applications with the library. If this is
 what you want to do, use the GNU Lesser General Public License instead of this
 License. But first, please read
-&lt;<http://www.gnu.org/philosophy/why-not-lgpl.html>&gt;.
+&lt;<http://www.gnu.org/philosophy/why-not-lgpl.html>&gt;
