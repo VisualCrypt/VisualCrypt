@@ -14,4 +14,4 @@ Website: <https://visualcrypt.com>
 
 ###License
 
-License: see [License.md](https://github.com/VisualCrypt/VisualCrypt/blob/master/Readme.md) , Copyright (c) 2014 - 2015 VisualCrypt AG and  Claus Ehrenberg.
+License: see [License.md](https://github.com/VisualCrypt/VisualCrypt/blob/master/License.md) , Copyright (c) 2014 - 2015 VisualCrypt AG and  Claus Ehrenberg.
