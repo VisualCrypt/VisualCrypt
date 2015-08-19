@@ -2,7 +2,8 @@
 
 VisualCrypt: Copyright (c) 2014 - 2015 VisualCrypt AG and  Claus Ehrenberg.
 
-License: GNU GPL V3
+License: GNU GPL V3 and
+VisualCrypt Terms of Service par. 3-4 &lt;<https://visualcrypt.com/post/privacy-and-terms>&gt;.
 
 ### GNU GENERAL PUBLIC LICENSE
 
