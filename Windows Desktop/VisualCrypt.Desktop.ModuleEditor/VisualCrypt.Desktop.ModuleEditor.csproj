@@ -91,6 +91,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Applications.Portable\VisualCrypt.Applications.Portable.csproj">
+      <Project>{8e8852aa-f427-4cd4-bd50-ad3b44e6d57d}</Project>
+      <Name>VisualCrypt.Applications.Portable</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj">
       <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
       <Name>VisualCrypt.Cryptography.Portable</Name>

@@ -1,6 +1,6 @@
-﻿using VisualCrypt.Cryptography.Portable.Apps.Models;
+﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 
-namespace VisualCrypt.Cryptography.Portable.Apps.ViewModels
+namespace VisualCrypt.Applications.Portable.Apps.ViewModels
 {
     public interface IEditorContext
     {

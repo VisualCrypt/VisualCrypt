@@ -6,10 +6,9 @@ using System.Reflection;
 using System.Windows;
 using System.Windows.Media;
 using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using Shell32;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
+using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App

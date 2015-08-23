@@ -1,7 +1,8 @@
 ﻿using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
+using VisualCrypt.Applications.Portable.Apps.Models;
+using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 
-namespace VisualCrypt.Cryptography.Portable.Apps.Events
+namespace VisualCrypt.Applications.Portable.Apps.Events
 {
 	public class FileModelChanged : PubSubEvent<FileModel>
 	{

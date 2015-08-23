@@ -1,9 +1,8 @@
 ﻿using System.ComponentModel.Composition;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
-using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
+using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Settings;
+using VisualCrypt.Applications.Portable.Apps.ViewModels;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.ModuleEditor.Views;
 

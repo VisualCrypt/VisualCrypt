@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Cryptography.Portable.Apps.Settings
+﻿namespace VisualCrypt.Applications.Portable.Apps.Settings
 {
     public interface ISettingsManager
     {

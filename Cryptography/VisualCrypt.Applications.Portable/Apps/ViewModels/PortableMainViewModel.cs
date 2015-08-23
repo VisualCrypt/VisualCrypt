@@ -6,18 +6,19 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable.Apps.Constants;
-using VisualCrypt.Cryptography.Portable.Apps.Events;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
-using VisualCrypt.Cryptography.Portable.Apps.MVVM;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
+using VisualCrypt.Applications.Portable.Apps.Constants;
+using VisualCrypt.Applications.Portable.Apps.Events;
+using VisualCrypt.Applications.Portable.Apps.Models;
+using VisualCrypt.Applications.Portable.Apps.MVVM;
+using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 using VisualCrypt.Language;
+using FileModel = VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes.FileModel;
 
-namespace VisualCrypt.Cryptography.Portable.Apps.ViewModels
+namespace VisualCrypt.Applications.Portable.Apps.ViewModels
 {
 	public class PortableMainViewModel : ViewModelBase, IActiveCleanup, IEditorContext
 	{

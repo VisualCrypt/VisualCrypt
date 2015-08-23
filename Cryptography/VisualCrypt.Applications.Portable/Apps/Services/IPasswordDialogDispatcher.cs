@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
+using VisualCrypt.Applications.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 
-namespace VisualCrypt.Cryptography.Portable.Apps.Services
+namespace VisualCrypt.Applications.Portable.Apps.Services
 {
     public interface IPasswordDialogDispatcher
     {

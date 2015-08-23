@@ -50,8 +50,8 @@
   <ItemGroup>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="VisualCrypt2\DataTypes\FileModel.cs" />
-    <Compile Include="VisualCrypt2\DataTypes\IFileModel.cs" />
-    <Compile Include="VisualCrypt2\Implementations\IEncryptionService.cs" />
+    <Compile Include="VisualCrypt2\Interfaces\IFileModel.cs" />
+    <Compile Include="VisualCrypt2\Interfaces\IEncryptionService.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RandomKeyCipher32.cs" />
@@ -66,7 +66,7 @@
     <Compile Include="VisualCrypt2\Implementations\VisualCryptAPI2Internal.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\EncryptionProgress.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\Guard.cs" />
-    <Compile Include="VisualCrypt2\Infrastructure\IEncryptionProgress.cs" />
+    <Compile Include="VisualCrypt2\Interfaces\IEncryptionProgress.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\LongRunningOperation.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\LongRunningOperationContext.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MAC16.cs" />
@@ -78,13 +78,13 @@
     <Compile Include="VisualCrypt2\Implementations\FileContentsDetection.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2API.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2Formatter.cs" />
-    <Compile Include="VisualCrypt2\Implementations\IPlatform.cs" />
+    <Compile Include="VisualCrypt2\Interfaces\IPlatform.cs" />
     <Compile Include="VisualCrypt2\DataTypes\CipherV2.cs" />
     <Compile Include="VisualCrypt2\DataTypes\ClearText.cs" />
     <Compile Include="VisualCrypt2\DataTypes\VisualCryptText.cs" />
     <Compile Include="VisualCrypt2\DataTypes\SHA512PW64.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\Response.cs" />
-    <Compile Include="VisualCrypt2\Implementations\IVisualCrypt2API.cs" />
+    <Compile Include="VisualCrypt2\Interfaces\IVisualCrypt2API.cs" />
     <Compile Include="VisualCrypt2\Implementations\BCrypt.cs" />
     <Compile Include="VisualCrypt2\Implementations\Base64Encoder.cs" />
     <Compile Include="GlobalSuppressions.cs" />

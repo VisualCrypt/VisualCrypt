@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VisualCrypt.Cryptography.Portable.Apps.Services
+namespace VisualCrypt.Applications.Portable.Apps.Services
 {
 	public interface ILog
 	{

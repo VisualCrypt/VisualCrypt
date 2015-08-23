@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Models;
+using VisualCrypt.Applications.Portable.Apps.Services;
 
 namespace VisualCrypt.Desktop.Shared.Services
 {

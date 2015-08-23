@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using System.Windows.Media.Animation;
 using Microsoft.Practices.Prism.Logging;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Services;
 
 namespace VisualCrypt.Desktop
 {

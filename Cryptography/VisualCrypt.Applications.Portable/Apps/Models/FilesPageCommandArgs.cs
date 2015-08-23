@@ -1,5 +1,5 @@
 ﻿
-namespace VisualCrypt.Cryptography.Portable.Apps.Models
+namespace VisualCrypt.Applications.Portable.Apps.Models
 {
     public class FilesPageCommandArgs
     {

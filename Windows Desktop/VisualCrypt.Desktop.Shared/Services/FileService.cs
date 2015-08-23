@@ -5,10 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.Apps.Constants;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
+using VisualCrypt.Applications.Portable.Apps.Constants;
+using VisualCrypt.Applications.Portable.Apps.Models;
+using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Language;
 

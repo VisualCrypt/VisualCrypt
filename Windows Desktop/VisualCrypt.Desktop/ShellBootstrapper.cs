@@ -7,8 +7,7 @@ using System.Windows;
 using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.Prism.MefExtensions;
 using Microsoft.Practices.ServiceLocation;
-using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
+using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 
