@@ -18,7 +18,7 @@
 using System;
 using System.Diagnostics.Contracts;
 
-namespace VisualCrypt.Applications.Portable.Apps.MVVM
+namespace VisualCrypt.Applications.Apps.MVVM
 {
     /// <summary>
     /// An ICommand whose delegates can be attached for <see cref="Execute"/> and <see cref="CanExecute"/>.

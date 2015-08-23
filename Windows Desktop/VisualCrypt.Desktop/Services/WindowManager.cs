@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Microsoft.Practices.ServiceLocation;
 using Prism.Logging;
-using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Apps.Services;
 using VisualCrypt.Desktop.Shared.Controls;
 using VisualCrypt.Desktop.Views;
 

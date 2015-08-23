@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.Diagnostics;
-using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Apps.Services;
 
 namespace VisualCrypt.Desktop.Shared.Services
 {

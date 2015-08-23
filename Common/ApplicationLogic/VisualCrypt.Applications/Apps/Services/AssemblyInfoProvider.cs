@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 
-namespace VisualCrypt.Applications.Portable.Apps.Services
+namespace VisualCrypt.Applications.Apps.Services
 {
 	public class AssemblyInfoProvider : IAssemblyInfoProvider
 	{

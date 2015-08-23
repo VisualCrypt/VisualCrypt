@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using VisualCrypt.Applications.Portable.Apps.Models;
+using VisualCrypt.Applications.Apps.Models;
 
-namespace VisualCrypt.Applications.Portable.Apps.Services
+namespace VisualCrypt.Applications.Apps.Services
 {
     public interface IFileService
     {

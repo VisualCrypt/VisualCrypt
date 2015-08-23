@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Applications.Portable.Apps.Constants
+﻿namespace VisualCrypt.Applications.Apps.Constants
 {
     public class PortableConstants
     {

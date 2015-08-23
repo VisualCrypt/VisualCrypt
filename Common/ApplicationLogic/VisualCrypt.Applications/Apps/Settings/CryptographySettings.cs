@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace VisualCrypt.Applications.Portable.Apps.Settings
+namespace VisualCrypt.Applications.Apps.Settings
 {
 	[DataContract]
 	public class CryptographySettings : INotifyPropertyChanged

@@ -4,16 +4,16 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 using Prism.Events;
-using VisualCrypt.Applications.Portable.Apps.Events;
+using VisualCrypt.Applications.Apps.Events;
+using VisualCrypt.Applications.Apps.MVVM;
+using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications.Apps.ViewModels;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Shared.Settings;
 using VisualCrypt.Language;
-using VisualCrypt.Applications.Portable.Apps.Services;
-using VisualCrypt.Applications.Portable.Apps.MVVM;
-using VisualCrypt.Applications.Portable.Apps.ViewModels;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views
 {

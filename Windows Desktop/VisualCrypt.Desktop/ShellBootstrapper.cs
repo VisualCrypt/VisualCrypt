@@ -7,7 +7,7 @@ using System.Windows;
 using Microsoft.Practices.ServiceLocation;
 using Prism.Logging;
 using Prism.Mef;
-using VisualCrypt.Applications.Portable.Apps.Settings;
+using VisualCrypt.Applications.Apps.Settings;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 

@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Applications.Portable.Apps.ViewModels
+﻿namespace VisualCrypt.Applications.Apps.ViewModels
 {
     public interface IActiveCleanup
     {

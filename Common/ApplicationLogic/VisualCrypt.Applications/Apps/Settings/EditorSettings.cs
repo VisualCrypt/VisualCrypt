@@ -2,7 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
-namespace VisualCrypt.Applications.Portable.Apps.Settings
+namespace VisualCrypt.Applications.Apps.Settings
 {
 	/// <summary>
 	/// Tracks the state of the editor. Some properties will be serialized, some not.

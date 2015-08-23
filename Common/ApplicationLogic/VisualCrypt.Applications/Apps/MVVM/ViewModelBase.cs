@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 
-namespace VisualCrypt.Applications.Portable.Apps.MVVM
+namespace VisualCrypt.Applications.Apps.MVVM
 {
     /// <summary>
     /// Implementation of <see cref="INotifyPropertyChanged"/> to simplify models.

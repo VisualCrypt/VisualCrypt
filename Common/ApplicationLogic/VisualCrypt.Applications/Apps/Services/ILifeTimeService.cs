@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace VisualCrypt.Applications.Portable.Apps.Services
+namespace VisualCrypt.Applications.Apps.Services
 {
 	public interface ILifeTimeService
 	{

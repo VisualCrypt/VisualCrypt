@@ -1,8 +1,8 @@
-﻿using VisualCrypt.Applications.Portable.Apps.MVVM;
+﻿using VisualCrypt.Applications.Apps.MVVM;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Language;
 
-namespace VisualCrypt.Applications.Portable.Apps.Models
+namespace VisualCrypt.Applications.Apps.Models
 {
     public class StatusBarModel : ViewModelBase
     {

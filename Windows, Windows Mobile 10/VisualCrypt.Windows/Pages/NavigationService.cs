@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
-using VisualCrypt.Applications.Portable.Apps.Models;
-using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Apps.Models;
+using VisualCrypt.Applications.Apps.Services;
 
 namespace VisualCrypt.Windows.Pages
 {

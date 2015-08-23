@@ -1,8 +1,9 @@
 
 
 using System;
+using Microsoft.Practices.ServiceLocation;
 
-namespace Microsoft.Practices.ServiceLocation
+namespace Prism.Extensions
 {
     /// <summary>
     /// Defines extension methods for the <see cref="ServiceLocator"/> class.

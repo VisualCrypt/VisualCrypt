@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Applications.Portable.Apps.Models
+﻿namespace VisualCrypt.Applications.Apps.Models
 {
 	public enum DialogDirection
 	{

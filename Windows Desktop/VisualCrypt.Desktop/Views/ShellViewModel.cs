@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.Composition;
 using Prism.Events;
-using VisualCrypt.Applications.Portable.Apps.Services;
-using VisualCrypt.Applications.Portable.Apps.Settings;
-using VisualCrypt.Applications.Portable.Apps.ViewModels;
+using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications.Apps.Settings;
+using VisualCrypt.Applications.Apps.ViewModels;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Desktop.ModuleEditor.Views;
 

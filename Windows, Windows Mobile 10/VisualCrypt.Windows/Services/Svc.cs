@@ -1,7 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Prism.Events;
-using VisualCrypt.Applications.Portable.Apps.Services;
-using VisualCrypt.Applications.Portable.Apps.Settings;
+using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications.Apps.Settings;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Windows.Cryptography;
 using VisualCrypt.Windows.Pages;

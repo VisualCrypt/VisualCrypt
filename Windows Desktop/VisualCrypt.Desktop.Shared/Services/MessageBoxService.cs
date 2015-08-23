@@ -2,7 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Runtime.CompilerServices;
 using System.Windows;
-using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Apps.Services;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Desktop.Shared.Services

@@ -1,5 +1,5 @@
 ﻿using Windows.UI.Xaml.Controls;
-using VisualCrypt.Applications.Portable.Apps.ViewModels;
+using VisualCrypt.Applications.Apps.ViewModels;
 using VisualCrypt.Windows.Controls.EditorSupport;
 
 namespace VisualCrypt.Windows.Controls

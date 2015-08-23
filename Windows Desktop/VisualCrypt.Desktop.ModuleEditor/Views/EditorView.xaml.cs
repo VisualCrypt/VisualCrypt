@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using VisualCrypt.Applications.Portable.Apps.ViewModels;
+using VisualCrypt.Applications.Apps.ViewModels;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.ModuleEditor.Views

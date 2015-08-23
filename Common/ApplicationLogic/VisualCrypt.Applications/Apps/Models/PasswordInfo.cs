@@ -1,7 +1,7 @@
-﻿using VisualCrypt.Applications.Portable.Apps.MVVM;
+﻿using VisualCrypt.Applications.Apps.MVVM;
 using VisualCrypt.Language;
 
-namespace VisualCrypt.Applications.Portable.Apps.Models
+namespace VisualCrypt.Applications.Apps.Models
 {
     public class PasswordInfo : ViewModelBase
     {

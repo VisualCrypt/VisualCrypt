@@ -1,6 +1,6 @@
-﻿using VisualCrypt.Applications.Portable.Apps.MVVM;
+﻿using VisualCrypt.Applications.Apps.MVVM;
 
-namespace VisualCrypt.Applications.Portable.Apps.Models
+namespace VisualCrypt.Applications.Apps.Models
 {
     public class FileReference : ViewModelBase
     {

@@ -19,7 +19,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Windows.Input;
 
-namespace VisualCrypt.Applications.Portable.Apps.MVVM
+namespace VisualCrypt.Applications.Apps.MVVM
 {
     /// <summary>
     /// An <see cref="Execute"/> whose delegates can be attached for <see cref="CanExecute"/> and <see cref="ICommand"/>.

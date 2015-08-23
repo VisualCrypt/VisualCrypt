@@ -2,7 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 
-namespace VisualCrypt.Applications.Portable.Apps.Services
+namespace VisualCrypt.Applications.Apps.Services
 {
 	public interface IWindowManager
 	{

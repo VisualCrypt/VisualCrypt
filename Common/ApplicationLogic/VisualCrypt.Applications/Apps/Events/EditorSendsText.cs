@@ -1,7 +1,7 @@
 ﻿using System;
 using Prism.Events;
 
-namespace VisualCrypt.Applications.Portable.Apps.Events
+namespace VisualCrypt.Applications.Apps.Events
 {
     public class EditorSendsText : PubSubEvent<EditorSendsText>
 	{

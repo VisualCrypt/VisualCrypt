@@ -8,7 +8,7 @@ using System.Windows.Media;
 using Microsoft.Win32;
 using Prism.Logging;
 using Shell32;
-using VisualCrypt.Applications.Portable.Apps.Settings;
+using VisualCrypt.Applications.Apps.Settings;
 using VisualCrypt.Desktop.Shared.Settings;
 
 namespace VisualCrypt.Desktop.Shared.App
