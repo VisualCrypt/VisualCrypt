@@ -3,7 +3,7 @@ using Microsoft.Practices.Prism.MefExtensions.Modularity;
 using Microsoft.Practices.Prism.Modularity;
 using System;
 using System.ComponentModel.Composition;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Desktop.ModuleEncryption
 {

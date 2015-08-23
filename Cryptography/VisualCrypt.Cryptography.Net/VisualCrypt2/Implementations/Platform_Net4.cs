@@ -1,8 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Security.Cryptography;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations
 {

@@ -8,11 +8,11 @@ using System.Runtime.CompilerServices;
 // associated with an assembly.
 using System.Runtime.InteropServices;
 
-[assembly: AssemblyTitle("VisualCrypt.Cryptography.Portable")]
+[assembly: AssemblyTitle("VisualCrypt.Cryptography")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VisualCrypt AG")]
-[assembly: AssemblyProduct("VisualCrypt.Cryptography.Portable")]
+[assembly: AssemblyProduct("VisualCrypt.Cryptography")]
 [assembly: AssemblyCopyright("Copyright © Claus Ehrenberg 2014-2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -30,8 +30,8 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: InternalsVisibleTo("VisualCrypt.Desktop.Tests,PublicKey="+
 "00240000048000009400000006020000002400005253413100040000010001000df36179496bae"+
 "01599007525ac854664cdfea8c37f7c0b09f83dca25654bcb55e969a9bc63cba32fc6d2cdeacae"+

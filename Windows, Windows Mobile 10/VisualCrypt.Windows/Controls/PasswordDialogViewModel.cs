@@ -5,8 +5,8 @@ using Windows.UI.Xaml.Documents;
 using VisualCrypt.Cryptography.Portable.Apps.MVVM;
 using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Language;
 using VisualCrypt.Windows.Services;
 

@@ -1,7 +1,8 @@
 ﻿
 using System;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
+namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 {
 	public sealed class EncryptionProgress : Progress<EncryptionProgress>, IEncryptionProgress
 	{

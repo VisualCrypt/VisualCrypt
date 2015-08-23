@@ -188,9 +188,9 @@
       <Project>{8e8852aa-f427-4cd4-bd50-ad3b44e6d57d}</Project>
       <Name>VisualCrypt.Applications.Portable</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj">
+    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
-      <Name>VisualCrypt.Cryptography.Portable</Name>
+      <Name>VisualCrypt.Cryptography</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\misc\VisualCrypt.Language\VisualCrypt.Language.csproj">
       <Project>{cc794610-54c9-4f5f-ac82-005260fbb8de}</Project>

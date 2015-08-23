@@ -7,7 +7,8 @@ using System.Windows;
 using System.Windows.Input;
 using VisualCrypt.Applications.Portable.Apps.MVVM;
 using VisualCrypt.Applications.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Language;
 

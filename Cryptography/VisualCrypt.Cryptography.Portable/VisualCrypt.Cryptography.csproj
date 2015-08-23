@@ -8,8 +8,8 @@
     <ProjectGuid>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>VisualCrypt.Cryptography.Portable</RootNamespace>
-    <AssemblyName>VisualCrypt.Cryptography.Portable</AssemblyName>
+    <RootNamespace>VisualCrypt.Cryptography</RootNamespace>
+    <AssemblyName>VisualCrypt.Cryptography</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>

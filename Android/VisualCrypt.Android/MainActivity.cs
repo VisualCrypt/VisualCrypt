@@ -6,7 +6,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 
 namespace VisualCrypt.Android
 {

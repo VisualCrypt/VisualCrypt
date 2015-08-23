@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Runtime.InteropServices;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
+namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 {
 	public class SecureBytes
 	{

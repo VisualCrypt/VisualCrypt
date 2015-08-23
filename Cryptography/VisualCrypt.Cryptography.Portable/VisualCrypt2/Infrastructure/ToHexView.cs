@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
+namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 {
 	public static class ByteArrayToHexView
 	{

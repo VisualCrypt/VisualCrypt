@@ -113,9 +113,9 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj">
+    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
-      <Name>VisualCrypt.Cryptography.Portable</Name>
+      <Name>VisualCrypt.Cryptography</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

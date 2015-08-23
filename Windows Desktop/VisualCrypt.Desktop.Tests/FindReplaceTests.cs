@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.Practices.ServiceLocation;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 using VisualCrypt.Desktop.ModuleEditor.Views;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 

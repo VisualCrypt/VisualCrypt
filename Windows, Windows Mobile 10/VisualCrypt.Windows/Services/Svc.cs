@@ -2,7 +2,7 @@
 using Microsoft.Practices.Prism.PubSubEvents;
 using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.Apps.Settings;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Windows.Cryptography;
 using VisualCrypt.Windows.Pages;
 using VisualCrypt.Windows.Static;

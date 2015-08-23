@@ -1,5 +1,5 @@
 ﻿using VisualCrypt.Applications.Portable.Apps.MVVM;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Language;
 
 namespace VisualCrypt.Applications.Portable.Apps.Models

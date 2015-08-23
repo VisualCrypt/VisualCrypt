@@ -12,11 +12,11 @@ using VisualCrypt.Applications.Portable.Apps.Models;
 using VisualCrypt.Applications.Portable.Apps.MVVM;
 using VisualCrypt.Applications.Portable.Apps.Services;
 using VisualCrypt.Applications.Portable.Apps.Settings;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Language;
-using FileModel = VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes.FileModel;
+using FileModel = VisualCrypt.Cryptography.VisualCrypt2.DataTypes.FileModel;
 
 namespace VisualCrypt.Applications.Portable.Apps.ViewModels
 {

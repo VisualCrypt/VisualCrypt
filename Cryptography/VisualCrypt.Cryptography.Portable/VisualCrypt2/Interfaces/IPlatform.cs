@@ -1,4 +1,6 @@
-﻿namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
+﻿using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
+
+namespace VisualCrypt.Cryptography.VisualCrypt2.Interfaces
 {
 	public interface IPlatform
 	{

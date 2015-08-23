@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.Desktop.Tests
 {

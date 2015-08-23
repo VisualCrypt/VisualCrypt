@@ -3,7 +3,7 @@ using Microsoft.Practices.Prism.PubSubEvents;
 using VisualCrypt.Applications.Portable.Apps.Services;
 using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Applications.Portable.Apps.ViewModels;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Desktop.ModuleEditor.Views;
 
 namespace VisualCrypt.Desktop.Views

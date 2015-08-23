@@ -1,8 +1,8 @@
 ﻿using System.Text;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
+namespace VisualCrypt.Cryptography.VisualCrypt2.Interfaces
 {
 	public interface IVisualCrypt2API
 	{

@@ -1,4 +1,4 @@
-﻿namespace VisualCrypt.Cryptography.Portable.VisualCrypt2
+﻿namespace VisualCrypt.Cryptography.VisualCrypt2
 {
     public static class LocalizableStrings
     {

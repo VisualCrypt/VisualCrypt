@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
+namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 {
 	public sealed class Cleartext
 	{

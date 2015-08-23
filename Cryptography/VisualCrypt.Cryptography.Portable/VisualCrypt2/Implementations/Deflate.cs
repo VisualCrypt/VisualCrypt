@@ -3,7 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
+namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 {
     public static class Deflate
     {

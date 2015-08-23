@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
+namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 {
 	public static class Base64Encoder
 	{

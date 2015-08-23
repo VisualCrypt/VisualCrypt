@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Text;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
+namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 {
     public class FileModel :  IFileModel
     {

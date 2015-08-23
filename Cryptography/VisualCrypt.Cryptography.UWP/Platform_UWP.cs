@@ -2,8 +2,9 @@
 using Windows.Security.Cryptography;
 using Windows.Security.Cryptography.Core;
 using Windows.Storage.Streams;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.Cryptography.UWP
 {

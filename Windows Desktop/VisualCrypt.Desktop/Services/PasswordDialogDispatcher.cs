@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using VisualCrypt.Applications.Portable.Apps.Models;
 using VisualCrypt.Applications.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Views;
 

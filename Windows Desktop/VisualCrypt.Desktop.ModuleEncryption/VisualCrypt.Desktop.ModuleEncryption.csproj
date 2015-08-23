@@ -71,9 +71,9 @@
       <Project>{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}</Project>
       <Name>VisualCrypt.Cryptography.Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj">
+    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
       <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
-      <Name>VisualCrypt.Cryptography.Portable</Name>
+      <Name>VisualCrypt.Cryptography</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+﻿using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.Applications.Portable.Apps.ViewModels
 {

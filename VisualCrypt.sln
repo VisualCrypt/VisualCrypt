@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Desktop.Shared"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cryptography", "Cryptography", "{EF8BCF4C-C0FA-46EB-85EA-813C022F6799}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Cryptography.Portable", "Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.Portable.csproj", "{A0AEFEF6-E642-4247-85F6-F2F0B329D935}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Cryptography", "Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj", "{A0AEFEF6-E642-4247-85F6-F2F0B329D935}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt.Cryptography.Net", "Cryptography\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj", "{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}"
 EndProject

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure
+namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 {
 	public static class ByteArrays
 	{

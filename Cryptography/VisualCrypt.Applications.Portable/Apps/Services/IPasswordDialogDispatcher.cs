@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using VisualCrypt.Applications.Portable.Apps.Models;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.Applications.Portable.Apps.Services
 {
