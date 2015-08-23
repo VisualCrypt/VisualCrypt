@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using VisualCrypt.Applications.Portable.Apps.Models;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236

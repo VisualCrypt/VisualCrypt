@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{8E8852AA-F427-4CD4-BD50-AD3B44E6D57D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>VisualCrypt.Applications</RootNamespace>
+    <AssemblyName>VisualCrypt.Applications</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>YourKey.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <None Include="YourKey.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Apps\Models\FileModel.cs" />
+    <Compile Include="Apps\Services\AssemblyInfoProvider.cs" />
+    <Compile Include="Apps\Events\FileModelChanged.cs" />
+    <Compile Include="Apps\Services\IAssemblyInfoProvider.cs" />
+    <Compile Include="Apps\Services\IBrowserService.cs" />
+    <Compile Include="Apps\Services\IClipBoardService.cs" />
+    <Compile Include="Apps\Services\IFileService.cs" />
+    <Compile Include="Apps\Services\ILifeTimeService.cs" />
+    <Compile Include="Apps\Services\ILog.cs" />
+    <Compile Include="Apps\Services\IWindowManager.cs" />
+    <Compile Include="Apps\Settings\CryptographySettings.cs" />
+    <Compile Include="Apps\Settings\EditorSettings.cs" />
+    <Compile Include="Apps\Events\EditorReceivesText.cs" />
+    <Compile Include="Apps\Events\EditorSendsStatusBarInfo.cs" />
+    <Compile Include="Apps\Events\EditorSendsText.cs" />
+    <Compile Include="Apps\Events\EditorShouldCleanup.cs" />
+    <Compile Include="Apps\Events\EditorShouldSendText.cs" />
+    <Compile Include="Apps\Models\FilesPageCommandArgs.cs" />
+    <Compile Include="Apps\ViewModels\IActiveCleanup.cs" />
+    <Compile Include="Apps\ViewModels\IEditorContext.cs" />
+    <Compile Include="Apps\Services\IMessageBoxService.cs" />
+    <Compile Include="Apps\Services\INavigationService.cs" />
+    <Compile Include="Apps\Services\IPasswordDialogDispatcher.cs" />
+    <Compile Include="Apps\Settings\ISettingsManager.cs" />
+    <Compile Include="Apps\ViewModels\PortableMainViewModel.cs" />
+    <Compile Include="Apps\Models\FileReference.cs" />
+    <Compile Include="Apps\Models\PasswordInfo.cs" />
+    <Compile Include="Apps\MVVM\DelegateCommand.cs" />
+    <Compile Include="Apps\MVVM\DelegateCommandBase.cs" />
+    <Compile Include="Apps\MVVM\PropertySupport.cs" />
+    <Compile Include="Apps\MVVM\ViewModelBase.cs" />
+    <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="Apps\Settings\Serializer.cs" />
+    <Compile Include="Apps\Models\DialogDirection.cs" />
+    <Compile Include="Apps\Models\DialogFilters.cs" />
+    <Compile Include="Apps\Constants\PortableConstants.cs" />
+    <Compile Include="Apps\Models\SetPasswordDialogMode.cs" />
+    <Compile Include="Apps\Models\StatusBarModel.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
+      <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
+      <Name>VisualCrypt.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Lib\Prism\Prism.csproj">
+      <Project>{E6C50355-D01E-4CAA-884D-D7929861315C}</Project>
+      <Name>Prism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{cc794610-54c9-4f5f-ac82-005260fbb8de}</Project>
+      <Name>VisualCrypt.Language</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

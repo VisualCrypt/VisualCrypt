@@ -2,11 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
-using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable.Apps.MVVM;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
-using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
+using Prism.Events;
+using VisualCrypt.Applications.Portable.Apps.Models;
+using VisualCrypt.Applications.Portable.Apps.MVVM;
+using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Settings;
+using VisualCrypt.Applications.Portable.Apps.ViewModels;
 using VisualCrypt.Windows.Cryptography;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Temp;

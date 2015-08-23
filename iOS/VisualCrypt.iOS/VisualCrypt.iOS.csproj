@@ -113,7 +113,7 @@
     <Content Include="Entitlements.plist" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
       <Name>VisualCrypt.Cryptography</Name>
     </ProjectReference>

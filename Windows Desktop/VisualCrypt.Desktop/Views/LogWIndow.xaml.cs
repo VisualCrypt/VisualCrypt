@@ -2,7 +2,7 @@ using System;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
-using Microsoft.Practices.Prism.Logging;
+using Prism.Logging;
 
 namespace VisualCrypt.Desktop.Views
 {

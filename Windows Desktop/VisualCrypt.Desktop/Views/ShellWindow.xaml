@@ -3,7 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-                    xmlns:regions="http://www.codeplex.com/CompositeWPF"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     xmlns:commands="clr-namespace:VisualCrypt.Desktop.Shared.Commands;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:state="clr-namespace:VisualCrypt.Desktop.Shared.App;assembly=VisualCrypt.Desktop.Shared"
@@ -11,6 +10,7 @@
                     xmlns:prismSupport="clr-namespace:VisualCrypt.Desktop.Shared.PrismSupport;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.Shared.ValueConverters;assembly=VisualCrypt.Desktop.Shared"
                     xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+                    xmlns:regions1="http://prismlibrary.com/"
                     Title="{Binding FileModel.Filename}"
                     Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
                     Width="{Binding Source={x:Static controls:AppWindow.StartupWidth}}"
@@ -192,7 +192,7 @@
             </MenuItem>
         </Menu>
         <ContentControl x:Name="ContentEditorRegion" Grid.Row="1"
-                        regions:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
+                        regions1:RegionManager.RegionName="{x:Static prismSupport:RegionNames.EditorRegion}"
                         VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
         <Border Grid.Row="2" Height="28" Background="{DynamicResource AccentColorBrush}"

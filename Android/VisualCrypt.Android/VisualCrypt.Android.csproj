@@ -72,11 +72,11 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
       <Project>{4c372f99-2c82-4b56-af6c-edf8751acc86}</Project>
       <Name>VisualCrypt.Cryptography.Net</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
       <Name>VisualCrypt.Cryptography</Name>
     </ProjectReference>

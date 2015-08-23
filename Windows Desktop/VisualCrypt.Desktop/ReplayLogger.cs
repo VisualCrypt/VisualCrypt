@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
-using Microsoft.Practices.Prism.Logging;
+using Prism.Logging;
 using VisualCrypt.Applications.Portable.Apps.Services;
 
 namespace VisualCrypt.Desktop

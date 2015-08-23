@@ -5,8 +5,8 @@ using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using Microsoft.Practices.Prism.Logging;
 using Microsoft.Practices.ServiceLocation;
+using Prism.Logging;
 
 namespace VisualCrypt.Desktop.Shared.Settings
 {

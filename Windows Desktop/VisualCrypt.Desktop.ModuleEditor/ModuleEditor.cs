@@ -1,8 +1,8 @@
 using System;
 using System.ComponentModel.Composition;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.MefExtensions.Modularity;
-using Microsoft.Practices.Prism.Modularity;
+using Prism.Logging;
+using Prism.Mef.Modularity;
+using Prism.Modularity;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 
 namespace VisualCrypt.Desktop.ModuleEditor

@@ -1,7 +1,5 @@
-﻿using System;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
+﻿using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Windows.Controls.EditorSupport;
-using VisualCrypt.Windows.Static;
 
 namespace VisualCrypt.Windows.Services
 {

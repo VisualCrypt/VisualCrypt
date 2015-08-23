@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.Composition;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Events;
 using VisualCrypt.Applications.Portable.Apps.Services;
 using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Applications.Portable.Apps.ViewModels;

@@ -1,11 +1,10 @@
 ﻿using Windows.UI.Xaml.Controls;
-using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.Apps.Settings;
+using Prism.Events;
+using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.Settings;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Windows.Cryptography;
 using VisualCrypt.Windows.Pages;
-using VisualCrypt.Windows.Static;
 
 namespace VisualCrypt.Windows.Services
 {

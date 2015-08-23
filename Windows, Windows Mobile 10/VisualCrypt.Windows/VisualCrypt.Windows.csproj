@@ -186,16 +186,27 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
-      <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
-      <Name>VisualCrypt.Cryptography</Name>
+    <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
+      <Project>{8e8852aa-f427-4cd4-bd50-ad3b44e6d57d}</Project>
+      <Name>VisualCrypt.Applications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\misc\VisualCrypt.Language\VisualCrypt.Language.csproj">
-      <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
+    <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{cc794610-54c9-4f5f-ac82-005260fbb8de}</Project>
       <Name>VisualCrypt.Language</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.UWP\VisualCrypt.Cryptography.UWP.csproj">
+      <Project>{deab06af-16a0-43b9-aad2-6813990e35be}</Project>
+      <Name>VisualCrypt.Cryptography.UWP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
+      <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
+      <Name>VisualCrypt.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Lib\Prism\Prism.csproj">
+      <Project>{E6C50355-D01E-4CAA-884D-D7929861315C}</Project>
+      <Name>Prism</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

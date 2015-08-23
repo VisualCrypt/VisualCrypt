@@ -1,8 +1,8 @@
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.MefExtensions.Modularity;
-using Microsoft.Practices.Prism.Modularity;
 using System;
 using System.ComponentModel.Composition;
+using Prism.Logging;
+using Prism.Mef.Modularity;
+using Prism.Modularity;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Desktop.ModuleEncryption

@@ -4,8 +4,8 @@ using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Input;
-using Microsoft.Practices.Prism.Regions;
 using Microsoft.Practices.ServiceLocation;
+using Prism.Regions;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Shared.PrismSupport;
 

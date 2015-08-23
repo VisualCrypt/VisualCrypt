@@ -3,7 +3,7 @@ using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
-using Microsoft.Practices.Prism.PubSubEvents;
+using Prism.Events;
 using VisualCrypt.Applications.Portable.Apps.Events;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.FindReplace;
 using VisualCrypt.Desktop.ModuleEditor.FeatureSupport.Printing;

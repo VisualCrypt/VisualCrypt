@@ -1,4 +1,4 @@
-﻿using Microsoft.Practices.Prism.PubSubEvents;
+﻿using Prism.Events;
 
 namespace VisualCrypt.Desktop.Tests
 {

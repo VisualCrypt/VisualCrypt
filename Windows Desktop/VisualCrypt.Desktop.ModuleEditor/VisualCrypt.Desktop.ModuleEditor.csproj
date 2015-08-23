@@ -39,24 +39,13 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>true</SignAssembly>
+    <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>YourKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Prism.Composition, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Prism.Composition.5.0.0\lib\NET45\Microsoft.Practices.Prism.Composition.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.MefExtensions, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Prism.MEFExtensions.5.0.0\lib\NET45\Microsoft.Practices.Prism.MefExtensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Microsoft.Practices.Prism.PubSubEvents, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Prism.PubSubEvents.1.1.2\lib\portable-sl5+windowsphone8+windows8+net40+wpa81\Microsoft.Practices.Prism.PubSubEvents.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -91,27 +80,34 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Applications.Portable\VisualCrypt.Applications.Portable.csproj">
+    <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
       <Project>{8e8852aa-f427-4cd4-bd50-ad3b44e6d57d}</Project>
-      <Name>VisualCrypt.Applications.Portable</Name>
+      <Name>VisualCrypt.Applications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Cryptography\VisualCrypt.Cryptography.Portable\VisualCrypt.Cryptography.csproj">
-      <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
+    <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Language\VisualCrypt.Language.csproj">
+      <Project>{cc794610-54c9-4f5f-ac82-005260fbb8de}</Project>
+      <Name>VisualCrypt.Language</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
+      <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
       <Name>VisualCrypt.Cryptography</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Lib\Prism.Mef.Wpf\Prism.Mef.Wpf.csproj">
+      <Project>{3d6aebe9-f824-4350-a007-eac3cf030338}</Project>
+      <Name>Prism.Mef.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Lib\Prism.Wpf\Prism.Wpf.csproj">
+      <Project>{5912ff03-c72b-4f56-baa1-8642fdbfbc26}</Project>
+      <Name>Prism.Wpf</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Common\Lib\Prism\Prism.csproj">
+      <Project>{e6c50355-d01e-4caa-884d-d7929861315c}</Project>
+      <Name>Prism</Name>
     </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
       <Project>{1A98F3E7-2163-46CE-9B6A-E204FFF4F3B8}</Project>
       <Name>VisualCrypt.Desktop.Shared</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\misc\VisualCrypt.Language\VisualCrypt.Language.csproj">
-      <Project>{CC794610-54C9-4F5F-AC82-005260FBB8DE}</Project>
-      <Name>VisualCrypt.Language</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-    <None Include="YourKey.snk" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\EditorView.xaml">

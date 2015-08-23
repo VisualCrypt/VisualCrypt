@@ -2,16 +2,15 @@
 using System.Globalization;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable.Apps.Events;
-using VisualCrypt.Cryptography.Portable.Apps.MVVM;
-using VisualCrypt.Cryptography.Portable.Apps.Services;
-using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
+using Prism.Events;
+using VisualCrypt.Applications.Portable.Apps.Events;
+using VisualCrypt.Applications.Portable.Apps.MVVM;
+using VisualCrypt.Applications.Portable.Apps.Services;
+using VisualCrypt.Applications.Portable.Apps.ViewModels;
 using VisualCrypt.Language;
 using VisualCrypt.Windows.Controls.EditorSupport;
 using VisualCrypt.Windows.Controls.EditorSupport.FindReplace;
 using VisualCrypt.Windows.Services;
-using VisualCrypt.Windows.Static;
 
 namespace VisualCrypt.Windows.Controls
 {

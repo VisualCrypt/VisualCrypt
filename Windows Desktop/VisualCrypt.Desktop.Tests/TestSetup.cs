@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
-using Microsoft.Practices.Prism.Logging;
-using Microsoft.Practices.Prism.MefExtensions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Prism.Logging;
+using Prism.Mef;
 using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Desktop.Views;
 
