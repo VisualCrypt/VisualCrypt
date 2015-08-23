@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Windows.UI.Xaml.Controls;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Windows.Cryptography;
 using VisualCrypt.Windows.Services;
 

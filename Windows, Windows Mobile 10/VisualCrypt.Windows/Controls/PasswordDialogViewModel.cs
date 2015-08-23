@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Documents;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.Apps.MVVM;
 using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.Apps.ViewModels;

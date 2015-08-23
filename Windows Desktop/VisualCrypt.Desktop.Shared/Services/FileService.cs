@@ -7,7 +7,6 @@ using Microsoft.Practices.ServiceLocation;
 using Microsoft.Win32;
 using VisualCrypt.Cryptography.Portable;
 using VisualCrypt.Cryptography.Portable.Apps.Constants;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.Apps.Settings;
 using VisualCrypt.Desktop.Shared.App;

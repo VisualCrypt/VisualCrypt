@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
-using VisualCrypt.Language;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 {
@@ -105,7 +104,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.Padding.ByteValue },
 				new[] { CipherV2.Version });
 
-			context.EncryptionProgress.Message = Loc.Strings.encProgr_CalculatingMAC;
+			context.EncryptionProgress.Message = LocalizableStrings.MsgCalculatingMAC;
 			BCrypt24 slowMAC = BCrypt.CreateHash(cipherV2.IV16, securables, cipherV2.RoundsExponent.Value, context);
 
 			// See e.g. http://csrc.nist.gov/publications/fips/fips180-4/fips-180-4.pdf Chapter 7 for hash truncation.
@@ -125,7 +124,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 0, leftSHA512, 0, 32);
 			Buffer.BlockCopy(sha512PW64.GetBytes(), 32, rightSHA512, 0, 32);
 
-			context.EncryptionProgress.Message = Loc.Strings.encProgr_ProcessingKey;
+			context.EncryptionProgress.Message = LocalizableStrings.MsgProcessingKey;
 
 			// Compute the left side on a ThreadPool thread
 			var task = Task.Run(() => BCrypt.CreateHash(iv, leftSHA512, roundsExponent.Value, context));
@@ -201,7 +200,7 @@ namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations
 
 				if (!actualMAC.GetBytes().SequenceEqual(decryptedMAC.GetBytes()))
 				{
-					response.SetError(Loc.Strings.msgPasswordError);
+					response.SetError(LocalizableStrings.MsgPasswordError);
 					return response;
 				}
 

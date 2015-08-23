@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace VisualCrypt.Cryptography.Portable.Apps.Models
+namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes
 {
     public interface IFileModel
     {

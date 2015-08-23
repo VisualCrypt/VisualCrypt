@@ -1,6 +1,5 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.Apps.ViewModels;
 using VisualCrypt.Windows.Services;
 

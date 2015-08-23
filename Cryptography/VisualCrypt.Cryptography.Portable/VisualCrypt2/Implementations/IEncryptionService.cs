@@ -1,5 +1,4 @@
-﻿using VisualCrypt.Cryptography.Portable.Apps.Models;
-using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
+﻿using VisualCrypt.Cryptography.Portable.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations

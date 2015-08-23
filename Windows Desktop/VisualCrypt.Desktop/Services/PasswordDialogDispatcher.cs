@@ -2,7 +2,6 @@
 using System.ComponentModel.Composition;
 using System.Threading.Tasks;
 using VisualCrypt.Cryptography.Portable;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.VisualCrypt2.Implementations;
 using VisualCrypt.Desktop.Shared.PrismSupport;

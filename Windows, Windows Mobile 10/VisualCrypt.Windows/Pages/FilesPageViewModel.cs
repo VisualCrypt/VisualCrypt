@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Microsoft.Practices.Prism.PubSubEvents;
-using VisualCrypt.Cryptography.Portable.Apps.Models;
 using VisualCrypt.Cryptography.Portable.Apps.MVVM;
 using VisualCrypt.Cryptography.Portable.Apps.Services;
 using VisualCrypt.Cryptography.Portable.Apps.Settings;

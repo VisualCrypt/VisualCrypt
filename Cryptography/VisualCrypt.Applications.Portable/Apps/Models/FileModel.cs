@@ -6,7 +6,7 @@ using VisualCrypt.Language;
 
 namespace VisualCrypt.Cryptography.Portable.Apps.Models
 {
-    public class FileModel : ViewModelBase, IFileModel
+    public class FileModel : ViewModelBase, IFileModel  // this the the duplication that supports DataBinding
     {
         static readonly Encoding VisualCryptTextSaveEncoding = new UTF8Encoding(false, true);
         static readonly Encoding DefaultClearTextSaveEncoding = VisualCryptTextSaveEncoding;
