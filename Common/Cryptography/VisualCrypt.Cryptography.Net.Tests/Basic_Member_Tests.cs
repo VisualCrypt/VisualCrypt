@@ -13,22 +13,22 @@ using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 namespace VisualCrypt.Cryptography.Net.Tests
 {
     /// <summary>
-    ///     Tests the basic functionality of VisualCrypt2API with correct
+    ///     Tests the basic functionality of VisualCrypt2Service with correct
     ///     or obviously incorrect parameters.
-    ///     Demonstrates the use of the Response class. Members of VisualCrypt2API must not throw
+    ///     Demonstrates the use of the Response class. Members of VisualCrypt2Service must not throw
     ///     Exceptions. Instead, a success is indicated with IsSuccess == true and failure with IsSuccess
     ///     == false. In case of an internal error Response.Error carries the error message.
     /// </summary>
     [TestClass]
     public class Basic_Member_Tests
     {
-        readonly IVisualCrypt2API _api;
+        readonly IVisualCrypt2Service _service;
         readonly IReadOnlyCollection<string> _strings;
 
         public Basic_Member_Tests()
         {
             IPlatform platform = new Platform_Net4();
-            _api = new VisualCrypt2API(platform);
+            _service = new VisualCrypt2Service(platform);
 
             _strings = CreateStringsOfVariousLenghts();
         }
@@ -38,7 +38,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
         public void Constructor_Platform_Is_Required()
         {
             IPlatform platform = null;
-            new VisualCrypt2API(platform);
+            new VisualCrypt2Service(platform);
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var passwordHash = CreatePasswordHash("some password");
             var rounds = new RoundsExponent(4);
 
-            var response = _api.Encrypt(secret, passwordHash, rounds, CreateContext());
+            var response = _service.Encrypt(secret, passwordHash, rounds, CreateContext());
 
             Assert.IsTrue(response.IsSuccess);
         }
@@ -89,7 +89,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var passwordHash = CreatePasswordHash("some password");
             var rounds = new RoundsExponent(4);
 
-            var response = _api.Encrypt(secret, passwordHash, rounds, null);
+            var response = _service.Encrypt(secret, passwordHash, rounds, null);
 
             Assert.IsFalse(response.IsSuccess);
         }
@@ -100,7 +100,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var cipherV2 = CreateArbitraryCipherV2();
             var passwordHash = CreatePasswordHash("some password");
 
-            var response = _api.Decrypt(cipherV2, passwordHash, CreateContext());
+            var response = _service.Decrypt(cipherV2, passwordHash, CreateContext());
 
             Assert.IsFalse(response.IsSuccess);
             Assert.IsTrue(response.Error == LocalizableStrings.MsgPasswordError, "Expected 'Password Error' when decrypting arbitrary data");
@@ -112,7 +112,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var cipherV2 = CreateCipherV2("my password", "my message");
             var passwordHash = CreatePasswordHash("my password");
 
-            var response = _api.Decrypt(cipherV2, passwordHash, CreateContext());
+            var response = _service.Decrypt(cipherV2, passwordHash, CreateContext());
 
             Assert.IsTrue(response.IsSuccess);
             Assert.AreEqual(response.Result.Text, "my message");
@@ -122,10 +122,10 @@ namespace VisualCrypt.Cryptography.Net.Tests
         public void Member_Decrypt_Can_Decrypt_Specific_Message()
         {
             var specificMessage = "VisualCrypt/AgoDqjwFKw84kRUVeg3hUfVMiP7Yr9lAlpOT2Af+D10ly$zLQ6UrAWZyHHspGYP57e4Xtj7mYNIx4ZHhRbII7WAP8GAOsHPkt6ZJrmf4$YjjHYA = ";
-            CipherV2 decoded = _api.TryDecodeVisualCryptText(specificMessage).Result;
+            CipherV2 decoded = _service.DecodeVisualCrypt(specificMessage).Result;
             var passwordHash = CreatePasswordHash("the password");
 
-            var response = _api.Decrypt(decoded, passwordHash, CreateContext());
+            var response = _service.Decrypt(decoded, passwordHash, CreateContext());
 
             Assert.IsTrue(response.IsSuccess);
             Assert.AreEqual(response.Result.Text, "Hello World", "If this fails we've broken compatibility.");
@@ -140,14 +140,14 @@ namespace VisualCrypt.Cryptography.Net.Tests
                 var message = m + "message";
                 var password = m + "password";
 
-                var hashPasswordResponse = _api.CreateSHA512PW64(password);
+                var hashPasswordResponse = _service.HashPassword(_service.NormalizePassword(password).Result);
 
                 // encrypt
                 string visualCrypt;
-                var encryptResponse = _api.Encrypt(new Cleartext(message), hashPasswordResponse.Result, new RoundsExponent(4), CreateContext());
+                var encryptResponse = _service.Encrypt(new Cleartext(message), hashPasswordResponse.Result, new RoundsExponent(4), CreateContext());
                 if (encryptResponse.IsSuccess)
                 {
-                    var encodeResponse = _api.EncodeToVisualCryptText(encryptResponse.Result);
+                    var encodeResponse = _service.EncodeVisualCrypt(encryptResponse.Result);
                     if (encodeResponse.IsSuccess)
                     {
                         visualCrypt = encodeResponse.Result.Text;
@@ -159,12 +159,12 @@ namespace VisualCrypt.Cryptography.Net.Tests
                     throw new Exception(encryptResponse.Error);
 
                 // decrypt
-                var decodeResponse = _api.TryDecodeVisualCryptText(visualCrypt);
+                var decodeResponse = _service.DecodeVisualCrypt(visualCrypt);
 
                 if (!decodeResponse.IsSuccess)
                     throw new Exception(decodeResponse.Error);
 
-                var decryptResponse = _api.Decrypt(decodeResponse.Result, hashPasswordResponse.Result, CreateContext());
+                var decryptResponse = _service.Decrypt(decodeResponse.Result, hashPasswordResponse.Result, CreateContext());
 
                 Assert.IsTrue(decryptResponse.IsSuccess);
                 Assert.IsTrue(decryptResponse.Result.Text.Equals(message), "The decrypted message does not equal the original message");
@@ -181,14 +181,14 @@ namespace VisualCrypt.Cryptography.Net.Tests
                 var message = m + "message";
                 var password = m + "password";
 
-                var hashPasswordResponse = _api.CreateSHA512PW64(password);
+                var hashPasswordResponse = _service.HashPassword(_service.NormalizePassword(password).Result);
 
                 // encrypt
                 string visualCrypt;
-                var encryptResponse = _api.Encrypt(new Cleartext(message), hashPasswordResponse.Result, new RoundsExponent(4), CreateContext());
+                var encryptResponse = _service.Encrypt(new Cleartext(message), hashPasswordResponse.Result, new RoundsExponent(4), CreateContext());
                 if (encryptResponse.IsSuccess)
                 {
-                    var encodeResponse = _api.EncodeToVisualCryptText(encryptResponse.Result);
+                    var encodeResponse = _service.EncodeVisualCrypt(encryptResponse.Result);
                     if (encodeResponse.IsSuccess)
                     {
                         visualCrypt = encodeResponse.Result.Text;
@@ -200,15 +200,15 @@ namespace VisualCrypt.Cryptography.Net.Tests
                     throw new Exception(encryptResponse.Error);
 
                 // set incorrect password
-                hashPasswordResponse = _api.CreateSHA512PW64("incorrect" + password);
+                hashPasswordResponse = _service.HashPassword(_service.NormalizePassword("incorrect" + password).Result);
 
                 // decrypt
-                var decodeResponse = _api.TryDecodeVisualCryptText(visualCrypt);
+                var decodeResponse = _service.DecodeVisualCrypt(visualCrypt);
 
                 if (!decodeResponse.IsSuccess)
                     throw new Exception(decodeResponse.Error);
 
-                var decryptResponse = _api.Decrypt(decodeResponse.Result, hashPasswordResponse.Result, CreateContext());
+                var decryptResponse = _service.Decrypt(decodeResponse.Result, hashPasswordResponse.Result, CreateContext());
                 Assert.IsFalse(decryptResponse.IsSuccess);
                 Assert.IsTrue(decryptResponse.Error == LocalizableStrings.MsgPasswordError, "Expected 'Password Error' when decrypting arbitrary data");
             }
@@ -219,7 +219,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
         {
             var correctCipherV2 = CreateCipherV2("my password", "my message");
 
-            VisualCryptText visualCryptText = _api.EncodeToVisualCryptText(correctCipherV2).Result;
+            VisualCryptText visualCryptText = _service.EncodeVisualCrypt(correctCipherV2).Result;
 
             Assert.IsTrue(visualCryptText.Text.StartsWith("VisualCrypt/"));
             Assert.IsTrue(visualCryptText.Text.Length == 126);  // if the message fits one block lenght will be 126
@@ -230,7 +230,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
         {
             var arbitraryCipherV2 = CreateArbitraryCipherV2();
 
-            VisualCryptText visualCryptText = _api.EncodeToVisualCryptText(arbitraryCipherV2).Result;
+            VisualCryptText visualCryptText = _service.EncodeVisualCrypt(arbitraryCipherV2).Result;
 
             Assert.IsTrue(visualCryptText.Text.StartsWith("VisualCrypt/"));
             Assert.IsTrue(visualCryptText.Text.Length == 126); // if the message fits one block lenght will be 126
@@ -243,12 +243,12 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var visualCryptText = @"VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSs
                                     zXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg=";
 
-            var response = _api.TryDecodeVisualCryptText(visualCryptText);
+            var response = _service.DecodeVisualCrypt(visualCryptText);
 
             Assert.IsTrue(response.IsSuccess);
             CipherV2 cipherV2 = response.Result;
 
-            var decrpytResponse = _api.Decrypt(cipherV2, CreatePasswordHash("my password"), CreateContext());
+            var decrpytResponse = _service.Decrypt(cipherV2, CreatePasswordHash("my password"), CreateContext());
             Assert.IsTrue(decrpytResponse.IsSuccess);
             Assert.IsTrue(decrpytResponse.Result.Text.Equals("my message"));
         }
@@ -258,13 +258,13 @@ namespace VisualCrypt.Cryptography.Net.Tests
         public void Member_TryDecodeVisualCryptText_Arbitrary()
         {
             var arbitraryCipherV2 = CreateArbitraryCipherV2();
-            string arbitraryVisualCryptText = _api.EncodeToVisualCryptText(arbitraryCipherV2).Result.Text;
+            string arbitraryVisualCryptText = _service.EncodeVisualCrypt(arbitraryCipherV2).Result.Text;
 
-            var response = _api.TryDecodeVisualCryptText(arbitraryVisualCryptText);
+            var response = _service.DecodeVisualCrypt(arbitraryVisualCryptText);
 
             Assert.IsTrue(response.IsSuccess);
 
-            var decrpytResponse = _api.Decrypt(response.Result, CreatePasswordHash("some password"), CreateContext());
+            var decrpytResponse = _service.Decrypt(response.Result, CreatePasswordHash("some password"), CreateContext());
             Assert.IsFalse(decrpytResponse.IsSuccess);
             Assert.IsTrue(decrpytResponse.Error.Equals(LocalizableStrings.MsgPasswordError));
         }
@@ -275,17 +275,17 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var tests = new List<Response<CipherV2>>
             {
                 // empty string
-                _api.TryDecodeVisualCryptText(""),
+                _service.DecodeVisualCrypt(""),
                 // just something
-                _api.TryDecodeVisualCryptText("390214829374023"),
+                _service.DecodeVisualCrypt("390214829374023"),
                 // xyz after VisualCrypt/ is not valid
-                _api.TryDecodeVisualCryptText("VisualCrypt/xyzoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
+                _service.DecodeVisualCrypt("VisualCrypt/xyzoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
                 // truncated, too short
-                _api.TryDecodeVisualCryptText("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6Kqh"),
+                _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6Kqh"),
                 // invalid Base64 char 'ä' included
-                 _api.TryDecodeVisualCryptText("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCedä775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
+                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCedä775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
                  // Chinese inserted in in otherwise correct format
-                 _api.TryDecodeVisualCryptText("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQs菲舍爾的弗里茨才對鮮魚rwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
+                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQs菲舍爾的弗里茨才對鮮魚rwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
         };
 
 
@@ -306,7 +306,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             const decimal sampleSize = 1000m;
 
             for (int i = 1; i <= sampleSize; i++)
-                tests.Add(_api.GenerateRandomPassword());
+                tests.Add(_service.SuggestRandomPassword());
 
             foreach (var test in tests) // Assert general success and that the lenght is correct
             {
@@ -349,25 +349,25 @@ namespace VisualCrypt.Cryptography.Net.Tests
 
             // New Line(s) -> single space
             const string input1 = "Hello\r\nWorld";
-            Assert.AreEqual(expected, _api.PrunePassword(input1).Result.Text);
+            Assert.AreEqual(expected, _service.NormalizePassword(input1).Result.Text);
 
             const string input2 = "Hello\r\n\r\nWorld";
-            Assert.AreEqual(expected, _api.PrunePassword(input2).Result.Text);
+            Assert.AreEqual(expected, _service.NormalizePassword(input2).Result.Text);
 
             const string input3 = "\nHello\n\r\n\nWorld\r\n";
-            Assert.AreEqual(expected, _api.PrunePassword(input3).Result.Text);
+            Assert.AreEqual(expected, _service.NormalizePassword(input3).Result.Text);
 
             // Spaces -> single Space
             const string input4 = " \n  Hello\n\r\n\nWorld\r\n  ";
-            Assert.AreEqual(expected, _api.PrunePassword(input4).Result.Text);
+            Assert.AreEqual(expected, _service.NormalizePassword(input4).Result.Text);
 
             // Remove Control Chars
             const string input5 = " \n\n\x01\x02\0Hello\n\r\n\nWorld\r\n  ";
-            Assert.AreEqual(expected, _api.PrunePassword(input5).Result.Text);
+            Assert.AreEqual(expected, _service.NormalizePassword(input5).Result.Text);
 
             // Remove Control Chars with Spaces
             const string input6 = " \n\n\x01 \x02 \0 H\x01\x02\0ello\n\r\n\n \n\n\x01 \x02 \0 World \n\n\x01 \x02 \0 \r\n  ";
-            Assert.AreEqual(expected, _api.PrunePassword(input6).Result.Text);
+            Assert.AreEqual(expected, _service.NormalizePassword(input6).Result.Text);
 
         }
 
@@ -391,7 +391,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
 
         SHA512PW64 CreatePasswordHash(string unprunedPassword)
         {
-            var response = _api.CreateSHA512PW64(unprunedPassword);
+            var response = _service.HashPassword(_service.NormalizePassword(unprunedPassword).Result);
             if (response.IsSuccess)
                 return response.Result;
             throw new Exception(response.Error);
@@ -409,7 +409,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var rounds = new RoundsExponent(4);
             var context = CreateContext();
 
-            var response = _api.Encrypt(secret, passwordHash, rounds, context);
+            var response = _service.Encrypt(secret, passwordHash, rounds, context);
             if (response.IsSuccess)
                 return response.Result;
             throw new Exception(response.Error);

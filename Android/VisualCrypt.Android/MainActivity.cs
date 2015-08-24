@@ -24,8 +24,8 @@ namespace VisualCrypt.Android
 
             button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
 
-            var api = new VisualCrypt2API(new Platform_Net4());
-            button.Text = api.GenerateRandomPassword().Result;
+            var api = new VisualCrypt2Service(new Platform_Net4());
+            button.Text = api.SuggestRandomPassword().Result;
         }
     }
 }

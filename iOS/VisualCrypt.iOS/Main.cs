@@ -12,7 +12,7 @@ namespace VisualCrypt.iOS
             Console.WriteLine("Hello");
             // if you want to use a different Application Delegate class from "AppDelegate"
             // you can specify it here.
-            var api = new VisualCrypt2API(null);
+            var api = new VisualCrypt2Service(null);
             UIApplication.Main(args, null, "AppDelegate");
         }
     }

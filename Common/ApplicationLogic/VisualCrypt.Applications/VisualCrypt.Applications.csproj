@@ -87,7 +87,6 @@
     <Compile Include="Apps\Constants\PortableConstants.cs" />
     <Compile Include="Apps\Models\SetPasswordDialogMode.cs" />
     <Compile Include="Apps\Models\StatusBarModel.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

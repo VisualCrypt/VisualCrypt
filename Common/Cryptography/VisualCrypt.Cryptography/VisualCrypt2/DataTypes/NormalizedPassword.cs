@@ -3,7 +3,7 @@ using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 {
-	public sealed class PrunedPassword
+	public sealed class NormalizedPassword
 	{
 		public const int MaxSanitizedPasswordLength = 1000000;
 
@@ -18,7 +18,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 		}
 		readonly string _unprunedPassword;
 
-		public PrunedPassword(string unprunedPassword)
+		public NormalizedPassword(string unprunedPassword)
 		{
 			if (unprunedPassword == null)
 				throw new ArgumentNullException("unprunedPassword");

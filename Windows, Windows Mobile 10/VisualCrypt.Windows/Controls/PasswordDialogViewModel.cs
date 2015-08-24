@@ -96,7 +96,7 @@ namespace VisualCrypt.Windows.Controls
                 {
                     var sigCount = response.Result.Length;
                     SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"),
-                        PrunedPassword.MaxSanitizedPasswordLength.ToString("N0"));
+                        NormalizedPassword.MaxSanitizedPasswordLength.ToString("N0"));
                 }
                 else
                 {

@@ -9,12 +9,12 @@ using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 {
-    public class VisualCrypt2API : IVisualCrypt2API
+    public class VisualCrypt2Service : IVisualCrypt2Service
     {
         readonly IPlatform _platform;
         readonly VisualCryptAPI2Internal _internal;
 
-        public VisualCrypt2API(IPlatform platform)
+        public VisualCrypt2Service(IPlatform platform)
         {
             if (platform == null)
                 throw new ArgumentNullException("platform", "The platform-specific API part is mandantory.");
@@ -24,26 +24,19 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-        public Response<SHA512PW64> CreateSHA512PW64(string unpruned)
+        public Response<SHA512PW64> HashPassword(NormalizedPassword normalizedPassword)
         {
             var response = new Response<SHA512PW64>();
 
             try
             {
-                if (unpruned == null)
+                if (normalizedPassword == null)
                 {
-                    response.SetError("Argument null: 'unpruned'");
+                    response.SetError("Argument null: 'NormalizedPassword'");
                     return response;
                 }
 
-                var prunedPasswordResponse = PrunePassword(unpruned);
-                if (!prunedPasswordResponse.IsSuccess)
-                {
-                    response.SetError(prunedPasswordResponse.Error);
-                    return response;
-                }
-
-                var utf16LEBytes = Encoding.Unicode.GetBytes(prunedPasswordResponse.Result.Text);
+                var utf16LEBytes = Encoding.Unicode.GetBytes(normalizedPassword.Text);
 
                 var sha512 = _platform.ComputeSHA512(utf16LEBytes);
 
@@ -145,7 +138,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-        public Response<VisualCryptText> EncodeToVisualCryptText(CipherV2 cipherV2)
+        public Response<VisualCryptText> EncodeVisualCrypt(CipherV2 cipherV2)
         {
             var response = new Response<VisualCryptText>();
 
@@ -163,7 +156,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             return response;
         }
 
-        public Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText)
+        public Response<CipherV2> DecodeVisualCrypt(string visualCryptText)
         {
             var response = new Response<CipherV2>();
 
@@ -226,7 +219,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
    
 
 
-        public Response<string> GenerateRandomPassword()
+        public Response<string> SuggestRandomPassword()
         {
             var response = new Response<string>();
             try
@@ -248,15 +241,15 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         /// The control characters are specifically the Unicode values U+0000 to U+001F and U+007F to U+009F;
         /// whitespace characters as defined by Char.IsWhiteSpace in .net 4.5.
         /// </summary>
-        /// <param name="unprunedPassword">The password string obtained from textBox.Text.</param>
+        /// <param name="rawPassword">The password string obtained from textBox.Text.</param>
         /// <returns>The sanitized UTF-16 password string, the bytes of which are used as input for the password hash function.</returns>
         /// <see cref="http://www.unicode.org/Public/UNIDATA/UnicodeData.txt"/>
-        public Response<PrunedPassword> PrunePassword(string unprunedPassword)
+        public Response<NormalizedPassword> NormalizePassword(string rawPassword)
         {
-            var response = new Response<PrunedPassword>();
+            var response = new Response<NormalizedPassword>();
             try
             {
-                Guard.NotNull(unprunedPassword);
+                Guard.NotNull(rawPassword);
 
 
 
@@ -264,12 +257,12 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
                 // The Trim() method removes any leading and trailing characters that produce 
                 // a return value of true when they are passed to the Char.IsWhiteSpace method.
                 string sanitized =
-                    unprunedPassword
+                    rawPassword
                         .FilterNonWhitespaceControlCharacters()
                         .CondenseAndNormalizeWhiteSpace().
                         Trim();
 
-                response.Result = new PrunedPassword(sanitized);
+                response.Result = new NormalizedPassword(sanitized);
                 response.SetSuccess();
             }
             catch (Exception e)
