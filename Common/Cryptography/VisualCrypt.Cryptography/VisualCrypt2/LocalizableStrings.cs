@@ -4,7 +4,8 @@
     {
         public const string UntitledDotVisualCrypt = "Untitled.visualcrypt";
 
-        public static string MsgPasswordError = "MsgPasswordError";
+        public const string MsgPasswordError = "MsgPasswordError";
+        public const string MsgFormatError = "MsgFormatError";
 
         public const string MsgEncryptingRandomKey = "MsgEncryptingRandomKey";
         public const string MsgCalculatingMAC = "MsgCalculatingMAC";

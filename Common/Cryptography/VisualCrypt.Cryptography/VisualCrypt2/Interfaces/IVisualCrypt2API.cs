@@ -1,10 +1,9 @@
-﻿using System.Text;
-using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
+﻿using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.VisualCrypt2.Interfaces
 {
-	public interface IVisualCrypt2API
+    public interface IVisualCrypt2API
 	{
 		Response<SHA512PW64> CreateSHA512PW64(string unpruned);
 
@@ -15,8 +14,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Interfaces
 		Response<CipherV2> TryDecodeVisualCryptText(string visualCryptText);
 
 		Response<Cleartext> Decrypt(CipherV2 cipherV2, SHA512PW64 sha512PW64, LongRunningOperationContext context);
-
-		Response<string, Encoding> GetStringFromFile(byte[] data, Encoding platformDefaultEncoding);
 
 		Response<string> GenerateRandomPassword();
 

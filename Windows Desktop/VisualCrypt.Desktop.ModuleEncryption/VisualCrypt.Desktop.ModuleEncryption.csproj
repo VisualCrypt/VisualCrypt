@@ -23,7 +23,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
@@ -60,6 +60,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
+      <Project>{8E8852AA-F427-4CD4-BD50-AD3B44E6D57D}</Project>
+      <Name>VisualCrypt.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
       <Project>{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}</Project>
       <Name>VisualCrypt.Cryptography.Net</Name>

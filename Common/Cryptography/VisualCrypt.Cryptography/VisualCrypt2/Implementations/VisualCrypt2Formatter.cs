@@ -61,9 +61,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 				var visualCrypt = visualCryptText.Trim();
 
 				if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
-					throw new FormatException(
-						"The data is not in VisualCrypt/text V2 format (because it does not start with '{0}').".FormatInvariant(
-							VisualCryptSlashText));
+					throw CommonFormatException("The prefix '{0}' is missing.".FormatInvariant(VisualCryptSlashText));
 
 				var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length).Replace('$', '/');
 
@@ -86,16 +84,13 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 				var padding = visualCryptTextV2Bytes[2];
 
 				if (version != CipherV2.Version)
-					throw new FormatException(
-						"The data is not in VisualCrypt 2 format. Expected a version byte at index 0 of value '2'.");
+					throw CommonFormatException("Expected a version byte at index 0 of value '2'.");
 
 				if (exponent > 31 || exponent < 4)
-					throw new FormatException(
-						"The data is not in VisualCrypt 2 format. The value for the rounds exponent at index 1 is invalid.");
+                    CommonFormatException("The value for the rounds exponent at index 1 is invalid.");
 
 				if (padding > 15)
-					throw new FormatException(
-						"The data is not in VisualCrypt 2 format. The value at the padding byte at index 1 is invalid.");
+                    CommonFormatException("The value at the padding byte at index 1 is invalid.");
 
 
 				var cipher = new CipherV2 { Padding = new PlaintextPadding(padding), RoundsExponent = new RoundsExponent(exponent) };
@@ -121,8 +116,13 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 			}
 			catch (Exception e)
 			{
-				throw new FormatException("Data invalid or truncated. " + e.Message);
+                throw CommonFormatException(e.Message);
 			}
 		}
+
+	    static FormatException CommonFormatException(string errorDetails)
+	    {
+	        return new FormatException(LocalizableStrings.MsgFormatError + " - " + errorDetails);
+	    }
 	}
 }

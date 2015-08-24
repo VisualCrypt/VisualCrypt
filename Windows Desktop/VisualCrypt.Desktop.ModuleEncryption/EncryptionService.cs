@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.IO;
 using System.Text;
+using VisualCrypt.Applications.Apps.Services;
 using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
@@ -15,10 +16,12 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 	public class EncryptionService : IEncryptionService
 	{
 		readonly IVisualCrypt2API _visualCrypt2API;
+	    readonly IEncodingDetection _encodingDetection;
 
 		public EncryptionService()
 		{
 			_visualCrypt2API = new VisualCrypt2API(new Platform_Net4());
+            _encodingDetection = new EncodingDetection();
 		}
 
 
@@ -34,7 +37,7 @@ namespace VisualCrypt.Desktop.ModuleEncryption
 				var rawBytesFromFile = File.ReadAllBytes(filename);
 			    var shortFilename = Path.GetFileName(filename);
 
-				Response<string, Encoding> getStringResponse = _visualCrypt2API.GetStringFromFile(rawBytesFromFile,
+				Response<string, Encoding> getStringResponse = _encodingDetection.GetStringFromFile(rawBytesFromFile,
 					Encoding.Default);
 
 				if (!getStringResponse.IsSuccess) // we do not even have a string.

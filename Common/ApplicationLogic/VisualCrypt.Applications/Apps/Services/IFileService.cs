@@ -2,6 +2,7 @@
 using System.Text;
 using System.Threading.Tasks;
 using VisualCrypt.Applications.Apps.Models;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Applications.Apps.Services
 {
@@ -16,5 +17,7 @@ namespace VisualCrypt.Applications.Apps.Services
 
 	    Task<Tuple<bool, string>> PickFileAsync(string suggestedFilename, DialogFilter diaglogFilter,
 		    DialogDirection dialogDirection, string title = null);
+
+      
     }
 }

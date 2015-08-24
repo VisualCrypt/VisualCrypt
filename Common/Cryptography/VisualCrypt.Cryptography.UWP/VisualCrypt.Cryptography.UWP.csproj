@@ -119,6 +119,10 @@
     <Content Include="Properties\VisualCrypt.Cryptography.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
+      <Project>{8E8852AA-F427-4CD4-BD50-AD3B44E6D57D}</Project>
+      <Name>VisualCrypt.Applications</Name>
+    </ProjectReference>
     <ProjectReference Include="..\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>
       <Name>VisualCrypt.Cryptography</Name>

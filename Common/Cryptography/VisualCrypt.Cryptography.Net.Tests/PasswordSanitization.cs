@@ -16,42 +16,42 @@ namespace VisualCrypt.Desktop.Tests
 		[TestMethod]
 		public void CondenseWhiteSpace()
 		{
-			var condensed = "Hello  World".CondenseWhiteSpace();
+			var condensed = "Hello  World".CondenseAndNormalizeWhiteSpace();
 			Assert.AreEqual("Hello World", condensed);
 		}
 
 		[TestMethod]
 		public void CondenseWhiteSpaceMultipleAndDifferent()
 		{
-			var condensed = "Hello \t \t\tWorld".CondenseWhiteSpace();
+			var condensed = "Hello \t \t\tWorld".CondenseAndNormalizeWhiteSpace();
 			Assert.AreEqual("Hello World", condensed);
 		}
 
 		[TestMethod]
 		public void CondenseWhiteSpaceAtTheBeginning()
 		{
-			var condensed = "\t\tWorld".CondenseWhiteSpace();
+			var condensed = "\t\tWorld".CondenseAndNormalizeWhiteSpace();
 			Assert.AreEqual(" World", condensed);
 		}
 
 		[TestMethod]
 		public void CondenseWhiteSpaceAtTheEnd()
 		{
-			var condensed = "World  \t".CondenseWhiteSpace();
+			var condensed = "World  \t".CondenseAndNormalizeWhiteSpace();
 			Assert.AreEqual("World ", condensed);
 		}
 
 		[TestMethod]
 		public void CondenseWhiteSpaceEmpty()
 		{
-			var condensed = "".CondenseWhiteSpace();
+			var condensed = "".CondenseAndNormalizeWhiteSpace();
 			Assert.AreEqual("", condensed);
 		}
 
 		[TestMethod]
 		public void CondenseWhiteSpaceCRLF()
 		{
-			var condensed = "Hello\r\nWorld".CondenseWhiteSpace();
+			var condensed = "Hello\r\nWorld".CondenseAndNormalizeWhiteSpace();
 			Assert.AreEqual("Hello World", condensed);
 		}
 	}

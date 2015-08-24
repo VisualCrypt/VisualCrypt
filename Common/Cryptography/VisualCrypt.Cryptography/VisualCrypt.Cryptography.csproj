@@ -26,7 +26,7 @@
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -74,7 +74,6 @@
     <Compile Include="VisualCrypt2\DataTypes\Compressed.cs" />
     <Compile Include="VisualCrypt2\DataTypes\BCrypt24.cs" />
     <Compile Include="VisualCrypt2\DataTypes\PasswordDerivedKey32.cs" />
-    <Compile Include="VisualCrypt2\Implementations\FileContentsDetection.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2API.cs" />
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2Formatter.cs" />
     <Compile Include="VisualCrypt2\Interfaces\IPlatform.cs" />
