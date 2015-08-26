@@ -1,28 +1,21 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.Practices.ServiceLocation;
-using Prism.Logging;
-using VisualCrypt.Applications.Apps.Services;
-using VisualCrypt.Desktop.Shared.Controls;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Desktop.Controls;
 using VisualCrypt.Desktop.Views;
 
 namespace VisualCrypt.Desktop.Services
 {
-	
-	[Export(typeof(IWindowManager))]
 	public  class WindowManager : IWindowManager
 	{
-		static readonly ILoggerFacade Logger = ServiceLocator.Current.GetInstance<ILoggerFacade>();
-
-		public  async Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : class // AppWindow
+		public  async Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : class, new()// AppWindow
 		{
 			var tcs = new TaskCompletionSource<object>();
 			try
 			{
-				var appWindow = ServiceLocator.Current.GetInstance<T>() as AppWindow;
+				var appWindow =new T() as AppWindow;
 
 				appWindow.ShowInTaskbar = true;
 				EnsureCustomWindowConfiguration(appWindow);
@@ -34,17 +27,16 @@ namespace VisualCrypt.Desktop.Services
 
 			catch (Exception e)
 			{
-				Logger.Log(e.Message, Category.Exception, Priority.High);
 				tcs.SetException(e);
 			}
 			return await tcs.Task;
 		}
 
-		public  async Task<T> GetDialogFromShowDialogAsyncWhenClosed<T>() where T : class 
+		public  async Task<T> GetDialogFromShowDialogAsyncWhenClosed<T>() where T : class, new()
 		{
 			var tcs = new TaskCompletionSource<T>();
 
-			var appDialog = ServiceLocator.Current.GetInstance<T>() as AppDialog;
+			var appDialog = new T() as AppDialog;
 			appDialog.ShowInTaskbar = false;
 			EnsureCustomWindowConfiguration(appDialog);
 
@@ -76,11 +68,11 @@ namespace VisualCrypt.Desktop.Services
 			return GetBoolFromShowDialogAsyncWhenClosed<LogWindow>();
 		}
 
-		public  async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : class 
+		public  async Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : class ,new()
 		{
 			var tcs = new TaskCompletionSource<bool>();
 
-			var appDialog = ServiceLocator.Current.GetInstance<T>() as Window;
+			var appDialog = new T() as Window;
 			appDialog.ShowInTaskbar = false;
 			EnsureCustomWindowConfiguration(appDialog);
 

@@ -1,27 +1,27 @@
 ﻿using System;
-using System.ComponentModel.Composition;
 using System.Threading.Tasks;
-using VisualCrypt.Applications.Apps.Models;
-using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
-using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Desktop.Views;
 
 namespace VisualCrypt.Desktop.Services
 {
-	[Export(typeof(IPasswordDialogDispatcher))]
 	public class PasswordDialogDispatcher : IPasswordDialogDispatcher
 	{
 		readonly IWindowManager _windowManager;
-		[ImportingConstructor]
-		public PasswordDialogDispatcher(IWindowManager windowManager)
+	    readonly IParamsProvider _paramsProvider;
+
+		public PasswordDialogDispatcher()
 		{
-			_windowManager = windowManager;
-		}
+			_windowManager = Service.Get<IWindowManager>();
+            _paramsProvider = Service.Get<IParamsProvider>();
+        }
 		public async Task<bool> LaunchAsync(IEncryptionService encryptionServcie, SetPasswordDialogMode setPasswordDialogMode, 
 			Action<bool> setIsPasswordSet, bool isPasswordSet)
 		{
-			ParamsProvider.SetParams(typeof(SetPasswordDialog), new Tuple<SetPasswordDialogMode,Action<bool>,bool>(setPasswordDialogMode,setIsPasswordSet,isPasswordSet));
+			_paramsProvider.SetParams(typeof(SetPasswordDialog), new Tuple<SetPasswordDialogMode,Action<bool>,bool>(setPasswordDialogMode,setIsPasswordSet,isPasswordSet));
 			
 			
 			return await _windowManager.GetBoolFromShowDialogAsyncWhenClosed<SetPasswordDialog>();

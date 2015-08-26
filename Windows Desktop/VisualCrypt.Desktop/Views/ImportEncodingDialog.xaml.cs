@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.ComponentModel.Composition;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -7,8 +6,7 @@ using System.Windows.Input;
 
 namespace VisualCrypt.Desktop.Views
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    
     public partial class ImportEncodingDialog
     {
         EncodingInfo _selectedEncodingInfo;

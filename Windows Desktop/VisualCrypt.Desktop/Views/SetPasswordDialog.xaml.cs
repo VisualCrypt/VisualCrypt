@@ -1,35 +1,34 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using VisualCrypt.Applications.Apps.Models;
-using VisualCrypt.Applications.Apps.MVVM;
-using VisualCrypt.Applications.Apps.Services;
+using Prism.Commands;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
-using VisualCrypt.Desktop.Shared.PrismSupport;
 using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+  
     public sealed partial class SetPasswordDialog : INotifyPropertyChanged
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
+        readonly IParamsProvider _paramsProvider;
 	    readonly Action<bool> _setIsPasswordSet;
 	    readonly bool _isPasswordSet;
-        [ImportingConstructor]
-        public SetPasswordDialog(IMessageBoxService messageBoxService,
-            IEncryptionService encryptionService, IParamsProvider paramsProvider)
+
+        public SetPasswordDialog()
         {
-            _messageBoxService = messageBoxService;
-            _encryptionService = encryptionService;
+            _messageBoxService = Service.Get<IMessageBoxService>();
+            _encryptionService = Service.Get<IEncryptionService>();
+            _paramsProvider = Service.Get<IParamsProvider>();
 
             InitializeComponent();
             DataContext = this;
@@ -41,7 +40,8 @@ namespace VisualCrypt.Desktop.Views
             PwBox.Focus();
 
             PreviewKeyDown += CloseWithEscape;
-			var parameters = paramsProvider.GetParams<SetPasswordDialog,Tuple<SetPasswordDialogMode,Action<bool>,bool>>();
+
+			var parameters = _paramsProvider.GetParams<SetPasswordDialog,Tuple<SetPasswordDialogMode,Action<bool>,bool>>();
             SetMode(parameters.Item1);
 	        _setIsPasswordSet = parameters.Item2;
 	        _isPasswordSet = parameters.Item3;

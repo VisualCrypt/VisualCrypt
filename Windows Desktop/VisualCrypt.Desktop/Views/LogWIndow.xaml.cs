@@ -1,19 +1,19 @@
 using System;
-using System.ComponentModel.Composition;
 using System.Globalization;
 using System.Windows;
 using Prism.Logging;
+using VisualCrypt.Applications.Services.PortableImplementations;
 
 namespace VisualCrypt.Desktop.Views
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+    
     public partial class LogWindow
     {
-        [Import(AllowRecomposition = false)] ReplayLogger _logger;
+       ReplayLogger _logger;
 
         public LogWindow()
         {
+            _logger = new ReplayLogger();
             InitializeComponent();
             Loaded += LogWindow_Loaded;
             Closed += LogWindow_Closed;

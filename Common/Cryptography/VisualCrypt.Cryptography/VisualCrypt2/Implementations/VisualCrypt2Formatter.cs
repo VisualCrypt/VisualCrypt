@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
@@ -54,11 +55,9 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
 		public static CipherV2 DissectVisualCryptText(string visualCryptText)
 		{
-			Guard.NotNull(visualCryptText);
-
 			try
 			{
-				var visualCrypt = visualCryptText.Trim();
+			    var visualCrypt = FilterWhitespaceAndControlCharacters(visualCryptText);
 
 				if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
 					throw CommonFormatException("The prefix '{0}' is missing.".FormatInvariant(VisualCryptSlashText));
@@ -120,7 +119,18 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 			}
 		}
 
-	    static FormatException CommonFormatException(string errorDetails)
+       static string FilterWhitespaceAndControlCharacters(string visualCryptBase64)
+        {
+            var charArray =
+                visualCryptBase64
+                    .ToCharArray()
+                    .Where(c => !char.IsControl(c) && !char.IsWhiteSpace(c))
+                    .ToArray();
+
+            return new string(charArray);
+        }
+
+        static FormatException CommonFormatException(string errorDetails)
 	    {
 	        return new FormatException(LocalizableStrings.MsgFormatError + " - " + errorDetails);
 	    }

@@ -107,10 +107,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Microsoft.Practices.ServiceLocation\Microsoft.Practices.ServiceLocation.csproj">
-      <Project>{3c5486bc-b37d-4158-ab26-30dcb9d0d30e}</Project>
-      <Name>Microsoft.Practices.ServiceLocation</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Prism\Prism.csproj">
       <Project>{e6c50355-d01e-4caa-884d-d7929861315c}</Project>
       <Name>Prism</Name>

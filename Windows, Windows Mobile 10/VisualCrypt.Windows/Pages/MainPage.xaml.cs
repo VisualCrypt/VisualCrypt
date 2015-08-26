@@ -1,7 +1,9 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
-using VisualCrypt.Applications.Apps.Models;
-using VisualCrypt.Applications.Apps.ViewModels;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Windows.Services;
 
 namespace VisualCrypt.Windows.Pages
@@ -13,14 +15,7 @@ namespace VisualCrypt.Windows.Pages
         public MainPage()
         {
             InitializeComponent();
-            _viewModel = new PortableMainViewModel(Svc.EventAggregator, Svc.Log,
-                                                        Svc.MessageBoxService, Svc.EncryptionService,
-                                                        Svc.NavigationService(Frame), Svc.PasswordDialogDispatcher,
-                                                        Svc.SettingsManager, Svc.FileService,
-                                                        Svc.BrowserService, Svc.AssemblyInfoProvider,
-                                                        Svc.LifeTimeService, Svc.ClipBoardService,
-                                                        Svc.WindowManager);
-            EditorControl.Context = _viewModel;
+            _viewModel = Service.Get<PortableMainViewModel>();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -11,18 +11,21 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 {
     public class VisualCrypt2Service : IVisualCrypt2Service
     {
-        readonly IPlatform _platform;
-        readonly VisualCryptAPI2Internal _internal;
+        VisualCryptAPI2Internal _internal;
+        IPlatform _platform;
 
-        public VisualCrypt2Service(IPlatform platform)
+
+        public IPlatform Platform
         {
-            if (platform == null)
-                throw new ArgumentNullException("platform", "The platform-specific API part is mandantory.");
-
-            _platform = platform;
-            _internal = new VisualCryptAPI2Internal(_platform);
+            set
+            {
+                if (_platform != null)
+                    throw new InvalidOperationException("An instance of IPlatform has already been supplied.");
+                _platform = value;
+                _internal = new VisualCryptAPI2Internal(_platform);
+            }
         }
-
+      
 
         public Response<SHA512PW64> HashPassword(NormalizedPassword normalizedPassword)
         {
@@ -30,11 +33,8 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
             try
             {
-                if (normalizedPassword == null)
-                {
-                    response.SetError("Argument null: 'NormalizedPassword'");
-                    return response;
-                }
+                Guard.NotNull(normalizedPassword);
+                EnsurePlatform();
 
                 var utf16LEBytes = Encoding.Unicode.GetBytes(normalizedPassword.Text);
 
@@ -59,6 +59,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             try
             {
                 Guard.NotNull(new object[] { cleartext, sha512PW64, roundsExponent, context });
+                EnsurePlatform();
 
                 Compressed compressed = _internal.Compress(cleartext);
 
@@ -92,7 +93,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
         static MAC16 CreateMAC(CipherV2 cipherV2, LongRunningOperationContext context)
         {
-            Guard.NotNull(new object[] { cipherV2, context });
+
 
             // Create the MAC only for items that, while decrypting, have not been used up to this point but do include the version.
             var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.Padding.ByteValue },
@@ -111,7 +112,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         PasswordDerivedKey32 CreatePasswordDerivedKey(IV16 iv, SHA512PW64 sha512PW64, RoundsExponent roundsExponent,
             LongRunningOperationContext context)
         {
-            Guard.NotNull(new object[] { iv, sha512PW64, roundsExponent, context });
 
             var leftSHA512 = new byte[32];
             var rightSHA512 = new byte[32];
@@ -145,6 +145,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             try
             {
                 Guard.NotNull(cipherV2);
+                EnsurePlatform();
 
                 response.Result = VisualCrypt2Formatter.CreateVisualCryptText(cipherV2);
                 response.SetSuccess();
@@ -163,8 +164,9 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             try
             {
                 Guard.NotNull(visualCryptText);
-                var pruned = visualCryptText.FilterWhitespaceAndControlCharacters();
-                response.Result = VisualCrypt2Formatter.DissectVisualCryptText(pruned);
+                EnsurePlatform();
+
+                response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText);
                 response.SetSuccess();
             }
             catch (Exception e)
@@ -182,6 +184,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             try
             {
                 Guard.NotNull(new object[] { cipherV2, sha512PW64, context });
+                EnsurePlatform();
 
                 PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(cipherV2.IV16, sha512PW64, cipherV2.RoundsExponent,
                     context);
@@ -216,14 +219,12 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-   
-
-
         public Response<string> SuggestRandomPassword()
         {
             var response = new Response<string>();
             try
             {
+                EnsurePlatform();
                 response.Result = _internal.GenerateRandomPassword();
                 response.SetSuccess();
             }
@@ -250,7 +251,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             try
             {
                 Guard.NotNull(rawPassword);
-
+                EnsurePlatform();
 
 
                 // from msdn: White-space characters are defined by the Unicode standard. 
@@ -271,76 +272,11 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             }
             return response;
         }
-    }
 
-    internal static class SanitizationStringExtensions
-    {
-        public static string FilterWhitespaceAndControlCharacters(this string visualCryptBase64)
+        void EnsurePlatform()
         {
-            Guard.NotNull(visualCryptBase64);
-
-            var charArray =
-                visualCryptBase64
-                    .ToCharArray()
-                    .Where(c => !char.IsControl(c) && !char.IsWhiteSpace(c))
-                    .ToArray();
-
-            return new string(charArray);
-        }
-
-        public static string FilterNonWhitespaceControlCharacters(this string unprunedPassword)
-        {
-            Guard.NotNull(unprunedPassword);
-
-            var charArray =
-                unprunedPassword
-                    .ToCharArray()
-                    .Where(c => !(char.IsControl(c) && !char.IsWhiteSpace(c)))
-                    .ToArray();
-
-            return new string(charArray);
-        }
-
-        public static string CondenseAndNormalizeWhiteSpace(this string unpruned)
-        {
-            Guard.NotNull(unpruned);
-
-            var sb = new StringBuilder();
-
-            bool whiteSpaceWritten = false;
-            foreach (var ch in unpruned)
-            {
-                if (char.IsWhiteSpace(ch))
-                {
-                    if (!whiteSpaceWritten)
-                    { 
-                        sb.Append(' ');  // this turns 
-                        whiteSpaceWritten = true;
-                    }
-                }
-                else
-                {
-                    sb.Append(ch);
-                    whiteSpaceWritten = false;
-                }
-            }
-
-            return sb.ToString();
-            //return
-            //    unpruned
-            //        .ToCharArray()
-            //        .Select(c => char.IsWhiteSpace(c) ? ' ' : c)
-            //        .Aggregate(new StringBuilder(),
-            //            (sb, next) =>
-            //            {
-            //                if (sb.Length == 0)
-            //                    return sb.Append(next);
-            //                var previous = sb[sb.Length - 1];
-            //                if (previous == ' ' && next == ' ')
-            //                    return sb;
-            //                return sb.Append(next);
-            //            })
-            //        .ToString();
+            if (_platform == null || _internal == null)
+                throw new InvalidOperationException("You must supply an instance of IPlatform before you can use the service.");
         }
     }
 }

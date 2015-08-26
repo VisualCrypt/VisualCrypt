@@ -1,14 +1,10 @@
 ﻿using System;
-using System.ComponentModel.Composition;
-using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications.Services.Interfaces;
 
 namespace VisualCrypt.Desktop.Tests
 {
-	[Export(typeof(IMessageBoxService))]
 	internal class FakeOkMessageBoxService : IMessageBoxService
 	{
-		
-
 		public void ShowError(Exception e, string callerMemberName = "callerMemberName")
 		{
 		}

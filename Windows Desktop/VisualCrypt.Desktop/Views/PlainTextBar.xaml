@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
              xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+             xmlns:viewModels="clr-namespace:VisualCrypt.Applications.ViewModels;assembly=VisualCrypt.Applications"
              mc:Ignorable="d"
-             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance views:ShellViewModel}">
+             d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:PortableMainViewModel}">
     <UserControl.Resources>
         <ResourceDictionary
-            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/BarStyles.xaml" />
+            Source="/VisualCrypt;component/Styles/InUse/BarStyles.xaml" />
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

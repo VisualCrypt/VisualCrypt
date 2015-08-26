@@ -1,4 +1,4 @@
-﻿using VisualCrypt.Applications.Apps.Services;
+﻿using VisualCrypt.Applications.Services.Interfaces;
 
 namespace VisualCrypt.Windows.Services
 {

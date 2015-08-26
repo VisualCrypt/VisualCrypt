@@ -1,7 +1,8 @@
 ﻿using System;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
-using VisualCrypt.Applications.Apps.Models;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
@@ -17,7 +18,7 @@ namespace VisualCrypt.Windows.Controls
             Action<bool> closePopup, Action<bool> setIsPasswordSet, bool isPasswordSetWhenDialogOpened)
         {
             this.InitializeComponent();
-            _viewModel = new PasswordDialogViewModel(encryptionService, setPasswordDialogMode, closePopup, setIsPasswordSet, isPasswordSetWhenDialogOpened);
+            _viewModel = new PasswordDialogViewModel(setPasswordDialogMode, closePopup, setIsPasswordSet, isPasswordSetWhenDialogOpened);
         }
 
 

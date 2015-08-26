@@ -2,10 +2,11 @@
 using System.ComponentModel;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Documents;
-using VisualCrypt.Applications.Apps.Models;
-using VisualCrypt.Applications.Apps.MVVM;
-using VisualCrypt.Applications.Apps.Services;
-using VisualCrypt.Applications.Apps.ViewModels;
+using Prism.Commands;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Language;
@@ -15,16 +16,18 @@ namespace VisualCrypt.Windows.Controls
 {
     class PasswordDialogViewModel : ViewModelBase, IActiveCleanup
     {
-        readonly IMessageBoxService _messageBoxService = Svc.MessageBoxService;
+        readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
         readonly Action<bool> _closePopup;
         readonly Action<bool> _setIsPasswordSet;
-        bool _isPasswordSetWhenDialogOpened;
+        readonly bool _isPasswordSetWhenDialogOpened;
 
-        public PasswordDialogViewModel(IEncryptionService encryptionService, SetPasswordDialogMode setPasswordDialogMode, 
+        public PasswordDialogViewModel(SetPasswordDialogMode setPasswordDialogMode, 
             Action<bool> closePopup, Action<bool> setIsPasswordSet, bool isPasswordSetWhenDialogOpened)
         {
-            _encryptionService = encryptionService;
+            _encryptionService = Service.Get<IEncryptionService>();
+            _messageBoxService = Service.Get<IMessageBoxService>();
+
             _closePopup = closePopup;
             _setIsPasswordSet = setIsPasswordSet;
             _isPasswordSetWhenDialogOpened = isPasswordSetWhenDialogOpened;

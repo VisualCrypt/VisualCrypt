@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Globalization;
 using VisualCrypt.Windows.Pages;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Services.Interfaces;
 
 namespace VisualCrypt.Windows
 {
@@ -21,6 +24,7 @@ namespace VisualCrypt.Windows
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            Bootstrapper.Run();
         }
 
         /// <summary>
@@ -67,6 +71,9 @@ namespace VisualCrypt.Windows
             }
             // Ensure the current window is active
             Window.Current.Activate();
+            Service.Get<ILog>().Debug(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",
+                  Bootstrapper.StopWatch.ElapsedMilliseconds));
+            Bootstrapper.StopWatch.Stop();
         }
 
         /// <summary>

@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- Make sure to have this attribute in AssemblyInfo.cs:
+    [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)] 
+    It's then not necessary to load this ResourceDictionary in App.xaml, MainWindow.xaml etc.,
+    however, ResourceDictionarys containing DynamicResources, such as colors must be explicitly loaded.
+    Index all Styles that are part of the 'Generic' theme here: -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/AppWindow.Generic.xaml" />
+        <ResourceDictionary Source="/Themes/AppDialog.Generic.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

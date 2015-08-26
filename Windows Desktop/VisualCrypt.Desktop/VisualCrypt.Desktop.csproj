@@ -64,7 +64,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <NoWarn>0649</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -108,9 +108,13 @@
     <AssemblyOriginatorKeyFile>
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>VisualCrypt.Desktop.Bootstrapper</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Printing" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xaml">
@@ -125,8 +129,45 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\EditorCommands.cs" />
+    <Compile Include="Constants.cs" />
+    <Compile Include="Controls\AppDialog.cs" />
+    <Compile Include="Controls\AppWindow.cs" />
+    <Compile Include="Views\Fonts\FontFamilyListItem.cs" />
+    <Compile Include="Views\Fonts\NameDictionaryHelper.cs" />
+    <Compile Include="Views\Fonts\TypefaceListItem.cs" />
+    <Compile Include="Views\EditorView.xaml.cs">
+      <DependentUpon>EditorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Fonts\Font.xaml.cs">
+      <DependentUpon>Font.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BrowserService.cs" />
+    <Compile Include="Services\ClipBoardService.cs" />
+    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\FontManager.cs" />
+    <Compile Include="Services\LifeTimeService.cs" />
+    <Compile Include="Services\MessageBoxService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\PasswordDialogDispatcher.cs" />
+    <Compile Include="Services\Printer.cs" />
+    <Compile Include="Services\SettingsManager.cs" />
+    <Compile Include="Services\TextBoxController.cs" />
     <Compile Include="Services\WindowManager.cs" />
+    <Compile Include="Settings\FontSettings.cs" />
+    <Compile Include="Settings\FontSizeListItem.cs" />
+    <Compile Include="Settings\Map.cs" />
+    <Compile Include="Settings\OnFirstRunTasks.cs" />
+    <Compile Include="ValueConverters\BoolTextWrappingConverter.cs" />
+    <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\IsHiddenVisibilityConverter.cs" />
+    <Compile Include="ValueConverters\ThicknessToDoubleConverter.cs" />
+    <Compile Include="Version.cs" />
     <Compile Include="Views\EncryptedBar.xaml.cs">
       <DependentUpon>EncryptedBar.xaml</DependentUpon>
     </Compile>
@@ -145,14 +186,88 @@
     <Compile Include="Views\SetPasswordDialog.xaml.cs">
       <DependentUpon>SetPasswordDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ShellViewModel.cs" />
-    <Compile Include="Views\ShellWindow.xaml.cs">
-      <DependentUpon>ShellWindow.xaml</DependentUpon>
+    <Compile Include="Views\MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Old_ShellViewModel.cs" />
     <Compile Include="Views\WorkingBar.xaml.cs">
       <DependentUpon>WorkingBar.xaml</DependentUpon>
     </Compile>
+    <Page Include="Views\EditorView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\Fonts\Font.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\BarStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\DialogStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\VisualCryptColors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Anim.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.Buttons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.CheckBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.ContextMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.Label.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.ProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.StatusBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Controls.Tooltip.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\NotInUse\Sizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\AppDialog.Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\AppWindow.Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\EncryptedBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -165,8 +280,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ShellBootstrapper.cs" />
-    <Compile Include="ReplayLogger.cs" />
+    <Compile Include="Bootstrapper.cs" />
     <Compile Include="Views\LogWindow.xaml.cs">
       <DependentUpon>LogWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -191,7 +305,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ShellWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -218,6 +332,17 @@
     <None Include="SetupAssets\VisualCrypt.visualcrypt" />
   </ItemGroup>
   <ItemGroup>
+    <COMReference Include="Shell32">
+      <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
       <Project>{8e8852aa-f427-4cd4-bd50-ad3b44e6d57d}</Project>
       <Name>VisualCrypt.Applications</Name>
@@ -226,37 +351,17 @@
       <Project>{cc794610-54c9-4f5f-ac82-005260fbb8de}</Project>
       <Name>VisualCrypt.Language</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
+      <Project>{4C372F99-2C82-4B56-AF6C-EDF8751ACC86}</Project>
+      <Name>VisualCrypt.Cryptography.Net</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
       <Project>{A0AEFEF6-E642-4247-85F6-F2F0B329D935}</Project>
       <Name>VisualCrypt.Cryptography</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Common\Lib\Microsoft.Practices.ServiceLocation\Microsoft.Practices.ServiceLocation.csproj">
-      <Project>{3c5486bc-b37d-4158-ab26-30dcb9d0d30e}</Project>
-      <Name>Microsoft.Practices.ServiceLocation</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Lib\Prism.Mef.Wpf\Prism.Mef.Wpf.csproj">
-      <Project>{3d6aebe9-f824-4350-a007-eac3cf030338}</Project>
-      <Name>Prism.Mef.Wpf</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Common\Lib\Prism.Wpf\Prism.Wpf.csproj">
-      <Project>{5912ff03-c72b-4f56-baa1-8642fdbfbc26}</Project>
-      <Name>Prism.Wpf</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Common\Lib\Prism\Prism.csproj">
       <Project>{e6c50355-d01e-4caa-884d-d7929861315c}</Project>
       <Name>Prism</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VisualCrypt.Desktop.ModuleEditor\VisualCrypt.Desktop.ModuleEditor.csproj">
-      <Project>{cc737d36-0357-417d-81a1-14077f4b5f1c}</Project>
-      <Name>VisualCrypt.Desktop.ModuleEditor</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VisualCrypt.Desktop.ModuleEncryption\VisualCrypt.Desktop.ModuleEncryption.csproj">
-      <Project>{6e63beea-4535-4428-ac54-01885f74c77e}</Project>
-      <Name>VisualCrypt.Desktop.ModuleEncryption</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
-      <Project>{1A98F3E7-2163-46CE-9B6A-E204FFF4F3B8}</Project>
-      <Name>VisualCrypt.Desktop.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -286,6 +391,16 @@
   <ItemGroup>
     <Resource Include="SetupAssets\I luv VisualCrypt.JPG" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Themes\AppWindowIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(TargetDir)\DirectoryModules" mkdir "$(TargetDir)\DirectoryModules"</PostBuildEvent>

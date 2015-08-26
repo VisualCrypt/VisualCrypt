@@ -3,13 +3,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Controls"
                     mc:Ignorable="d"
                     Background="{DynamicResource BarColorBrush}"
-                    Title="About VisualCrypt editorView" Height="300" Width="500" WindowStartupLocation="CenterOwner">
+                    Title="About VisualCrypt portableEditorView" Height="300" Width="500" WindowStartupLocation="CenterOwner">
     <controls:AppDialog.Resources>
         <ResourceDictionary
-            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
+            Source="/Styles/InUse/DialogStyles.xaml" />
     </controls:AppDialog.Resources>
     <Border x:Name="DialogBorder" Padding="10">
         <Grid>
@@ -32,7 +32,7 @@
                         </StackPanel>
                         <TextBlock />
                         <TextBlock TextWrapping="Wrap">
-                            This version of VisualCrypt editorView is Open Source and free for private use. Please use only the offical download from
+                            This version of VisualCrypt portableEditorView is Open Source and free for private use. Please use only the offical download from
                             <Hyperlink>https://visualcrypt.com</Hyperlink> for your security!
                         </TextBlock>
                         <TextBlock />

@@ -1,4 +1,4 @@
-﻿using VisualCrypt.Applications.Apps.MVVM;
+﻿using VisualCrypt.Applications.Models;
 
 namespace VisualCrypt.Windows.Controls.EditorSupport.FindReplace
 {

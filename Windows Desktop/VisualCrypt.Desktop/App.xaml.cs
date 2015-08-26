@@ -1,15 +1,10 @@
-using System.Windows;
-
 namespace VisualCrypt.Desktop
 {
     public partial class App
     {
-        protected override void OnStartup(StartupEventArgs e)
+        public App()
         {
-            base.OnStartup(e);
-
-            var bootstrapper = new ShellBootstrapper();
-            bootstrapper.Run(true);
+            InitializeComponent();
         }
     }
 }

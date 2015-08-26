@@ -23,5 +23,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 				throw new ArgumentNullException(string.Format("Parameter of method {0}", method));
 			}
 		}
-	}
+
+    }
 }

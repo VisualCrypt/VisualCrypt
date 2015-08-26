@@ -1,0 +1,330 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.BCrypt24" Collapsed="true">
+    <Position X="1.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\BCrypt24.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.CipherV2" Collapsed="true">
+    <Position X="26.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAAAAAIAAAAAAAAAAIAAAAAAQAAAAAIBAQAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\CipherV2.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.Cleartext" Collapsed="true">
+    <Position X="28.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAgAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\ClearText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.Compressed" Collapsed="true">
+    <Position X="10.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\Compressed.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.FileModel" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="33.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAEAAAiQAQAEACAACAgAAAAACAEAAAAQBAIABgAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\FileModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.IV16" Collapsed="true">
+    <Position X="19.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\IV16.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.MAC16" Collapsed="true">
+    <Position X="21.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\MAC16.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.MACCipher16" Collapsed="true">
+    <Position X="3.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\MACCipher16.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.MessageCipher" Collapsed="true">
+    <Position X="8.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\MessageCipher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.NormalizedPassword" Collapsed="true">
+    <Position X="26.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAABAABCAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\NormalizedPassword.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.PaddedData" Collapsed="true">
+    <Position X="12.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\PaddedData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.PasswordDerivedKey32" Collapsed="true">
+    <Position X="17.25" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\PasswordDerivedKey32.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.PlaintextPadding" Collapsed="true">
+    <Position X="28.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAIAAAAAAQAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\PlainTextPadding.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.RandomKey32" Collapsed="true">
+    <Position X="24" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\RandomKey32.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.RandomKeyCipher32" Collapsed="true">
+    <Position X="6" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\RandomKeyCipher32.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.RoundsExponent" Collapsed="true">
+    <Position X="30" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\RoundsExponent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.SecureBytes" Collapsed="true">
+    <Position X="12.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAgAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\SecureBytes.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.SHA512PW64" Collapsed="true">
+    <Position X="15" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\SHA512PW64.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.DataTypes.VisualCryptText" Collapsed="true">
+    <Position X="33.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAACAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\DataTypes\VisualCryptText.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.Base64Encoder" Collapsed="true">
+    <Position X="26.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\Base64Encoder.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.BCrypt" Collapsed="true">
+    <Position X="28.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAgAAAAAFgAQgAAEAQACAgEEAAAEAAgEAAKAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\BCrypt.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.Deflate" Collapsed="true">
+    <Position X="30" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAABAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\Deflate.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.KeyStore" Collapsed="true">
+    <Position X="28.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAIgAAAAAAAAAAAAARAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\KeyStore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.VisualCrypt2Formatter" Collapsed="true">
+    <Position X="28.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAgAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\VisualCrypt2Formatter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.VisualCrypt2Service" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="30" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQABAAAAAAAUAAAQACAIAAAAEAAAAAAACAAAAQAQAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\VisualCrypt2Service.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.SanitizationStringExtensions" Collapsed="true">
+    <Position X="31.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAACACAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\VisualCrypt2Service.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.VisualCryptAPI2Internal" Collapsed="true">
+    <Position X="31.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BACAAAAAABIAAAAEACCAAIAAQAAAACAkAgBAAEAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\VisualCryptAPI2Internal.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.ByteArrays" Collapsed="true">
+    <Position X="31.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\ByteArrays.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.EncryptionProgress" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAABAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\EncryptionProgress.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.ByteArrayFillWithZeros" Collapsed="true">
+    <Position X="30" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\FillWithZeros.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.StringFormatInvariant" Collapsed="true">
+    <Position X="26.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\FormatInvariant.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.Guard" Collapsed="true">
+    <Position X="26.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\Guard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.LongRunningOperation" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="31.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAQiAABAAAAAAAABAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\LongRunningOperation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.LongRunningOperationContext" Collapsed="true">
+    <Position X="33.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAQAAAAAAAAAAAAgAAAAACAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\LongRunningOperationContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.Response" Collapsed="true">
+    <Position X="1.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QAAABAAAAAAYAQAAgAAACAAAAgAAAAAAIAAAAAAAAQA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.Response&lt;T&gt;" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.Response&lt;T, T2&gt;" Collapsed="true">
+    <Position X="2.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAABAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\Response.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.StringExtensions" Collapsed="true">
+    <Position X="33.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\StringExtensions.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.Infrastructure.ByteArrayToHexView" Collapsed="true">
+    <Position X="33.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAAACAQAAAAAgAAACABAAAACAAAQAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Infrastructure\ToHexView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="VisualCrypt.Cryptography.VisualCrypt2.LocalizableStrings" Collapsed="true">
+    <Position X="30" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAQAAAAAAAhAAAAQCAAEAAIIiAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\LocalizableStrings.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="VisualCrypt.Cryptography.VisualCrypt2.Interfaces.IEncryptionProgress" Collapsed="true">
+    <Position X="26.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Interfaces\IEncryptionProgress.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="VisualCrypt.Cryptography.VisualCrypt2.Interfaces.IEncryptionService" Collapsed="true">
+    <Position X="28.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAEAAEAAAAAAAAEAAAIAIAAAEAAEAAAAAAgAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Interfaces\IEncryptionService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="VisualCrypt.Cryptography.VisualCrypt2.Interfaces.IFileModel" Collapsed="true">
+    <Position X="30" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAABAIAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Interfaces\IFileModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="VisualCrypt.Cryptography.VisualCrypt2.Interfaces.IPlatform" Collapsed="true">
+    <Position X="31.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAgAkAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Interfaces\IPlatform.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="VisualCrypt.Cryptography.VisualCrypt2.Interfaces.IVisualCrypt2Service" Collapsed="true">
+    <Position X="33.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQABAAAAAAAUAAAQAAAIAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <FileName>VisualCrypt2\Interfaces\IVisualCrypt2Service.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="VisualCrypt.Cryptography.VisualCrypt2.Implementations.AESDir" Collapsed="true">
+    <Position X="26.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQCAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>VisualCrypt2\Implementations\AESDir.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

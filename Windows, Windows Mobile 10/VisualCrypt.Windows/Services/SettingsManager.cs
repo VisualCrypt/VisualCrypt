@@ -1,4 +1,5 @@
-﻿using VisualCrypt.Applications.Apps.Settings;
+﻿using VisualCrypt.Applications.Models.Settings;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Windows.Controls.EditorSupport;
 
 namespace VisualCrypt.Windows.Services

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
@@ -27,18 +26,19 @@ namespace VisualCrypt.Cryptography.Net.Tests
 
         public Basic_Member_Tests()
         {
-            IPlatform platform = new Platform_Net4();
-            _service = new VisualCrypt2Service(platform);
+            _service = new VisualCrypt2Service();
+            _service.Platform = new Platform_Net4();
 
             _strings = CreateStringsOfVariousLenghts();
         }
 
         [TestMethod]
-        [ExpectedException(typeof(ArgumentNullException))]
-        public void Constructor_Platform_Is_Required()
+        public void Platform_Must_Be_Supplied_Before_Use()
         {
-            IPlatform platform = null;
-            new VisualCrypt2Service(platform);
+            var service = new VisualCrypt2Service();
+            var response = service.SuggestRandomPassword();
+            Assert.IsFalse(response.IsSuccess);
+            Assert.IsTrue(response.Error.Contains("Platform"));
         }
 
         [TestMethod]

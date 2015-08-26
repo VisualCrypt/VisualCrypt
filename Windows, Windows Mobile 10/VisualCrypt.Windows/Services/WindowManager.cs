@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Text;
 using System.Threading.Tasks;
-using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications.Services.Interfaces;
 
 namespace VisualCrypt.Windows.Services
 {
     internal class WindowManager : IWindowManager
     {
-        public Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : class
+        public Task<bool> GetBoolFromShowDialogAsyncWhenClosed<T>() where T : class, new()
         {
             throw new NotImplementedException();
         }
@@ -17,7 +17,7 @@ namespace VisualCrypt.Windows.Services
             throw new NotImplementedException();
         }
 
-        public Task<T> GetDialogFromShowDialogAsyncWhenClosed<T>() where T : class
+        public Task<T> GetDialogFromShowDialogAsyncWhenClosed<T>() where T : class, new()
         {
             throw new NotImplementedException();
         }
@@ -37,7 +37,7 @@ namespace VisualCrypt.Windows.Services
             throw new NotImplementedException();
         }
 
-        public Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : class
+        public Task<object> ShowWindowAsyncAndWaitForClose<T>() where T : class, new()
         {
             throw new NotImplementedException();
         }

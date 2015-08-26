@@ -1,37 +1,35 @@
 ﻿using System;
 using System.ComponentModel;
-using System.ComponentModel.Composition;
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
-using VisualCrypt.Applications.Apps.MVVM;
-using VisualCrypt.Applications.Apps.Services;
+using Prism.Commands;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
-using VisualCrypt.Desktop.Shared.App;
 using VisualCrypt.Language;
 
 namespace VisualCrypt.Desktop.Views
 {
-    [Export]
-    [PartCreationPolicy(CreationPolicy.NonShared)]
+   
     public sealed partial class SettingsDialog : INotifyPropertyChanged
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
+        readonly ISettingsManager _settingsManager;
 
-        [ImportingConstructor]
-        public SettingsDialog(IMessageBoxService messageBoxService,
-            IEncryptionService encryptionService)
+       
+        public SettingsDialog()
         {
-            _messageBoxService = messageBoxService;
-            _encryptionService = encryptionService;
-
+            _messageBoxService =Service.Get<IMessageBoxService>();
+            _encryptionService = Service.Get<IEncryptionService>();
+            _settingsManager = Service.Get<ISettingsManager>();
             InitializeComponent();
             DataContext = this;
 
-            LogRounds = SettingsManager.Instance.CryptographySettings.LogRounds;
+            LogRounds = _settingsManager.CryptographySettings.LogRounds;
 
 
             PreviewKeyDown += CloseWithEscape;
@@ -62,7 +60,7 @@ namespace VisualCrypt.Desktop.Views
         {
             try
             {
-                SettingsManager.Instance.CryptographySettings.LogRounds = LogRounds;
+                _settingsManager.CryptographySettings.LogRounds = LogRounds;
                 DialogResult = true;
                 Close();
             }

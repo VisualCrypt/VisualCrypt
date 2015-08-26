@@ -4,7 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:VisualCrypt.Applications.Apps.Models"
+    xmlns:models="using:VisualCrypt.Applications.Models"
     NavigationCacheMode="Disabled"
     mc:Ignorable="d">
 <Page.TopAppBar>
@@ -34,12 +34,12 @@
                          HorizontalAlignment="Center"
                          Fill="LightGray" />
                 <TextBlock Grid.Row="0" Grid.Column="1"
-                           Text="{x:Bind Filename}"
+                           Text="{x:Bind ShortFilename}"
                            Style="{ThemeResource BaseTextBlockStyle}"
                            Margin="12,6,0,0" />
                 <TextBlock Grid.Column="1"
                            Grid.Row="1"
-                           Text="{x:Bind DirectoryName}"
+                           Text="{x:Bind Filename}"
                            Style="{ThemeResource BodyTextBlockStyle}"
                            Margin="12,0,0,6" />
             </Grid>

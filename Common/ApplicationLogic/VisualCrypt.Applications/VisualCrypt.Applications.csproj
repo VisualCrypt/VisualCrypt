@@ -40,54 +40,68 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>YourKey.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <None Include="YourKey.snk" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Apps\Models\FileModel.cs" />
-    <Compile Include="Apps\Services\AssemblyInfoProvider.cs" />
-    <Compile Include="Apps\Events\FileModelChanged.cs" />
-    <Compile Include="Apps\Services\EncodingDetection.cs" />
-    <Compile Include="Apps\Services\IAssemblyInfoProvider.cs" />
-    <Compile Include="Apps\Services\IBrowserService.cs" />
-    <Compile Include="Apps\Services\IClipBoardService.cs" />
-    <Compile Include="Apps\Services\IEncodingDetection.cs" />
-    <Compile Include="Apps\Services\IFileService.cs" />
-    <Compile Include="Apps\Services\ILifeTimeService.cs" />
-    <Compile Include="Apps\Services\ILog.cs" />
-    <Compile Include="Apps\Services\IWindowManager.cs" />
-    <Compile Include="Apps\Settings\CryptographySettings.cs" />
-    <Compile Include="Apps\Settings\EditorSettings.cs" />
-    <Compile Include="Apps\Events\EditorReceivesText.cs" />
-    <Compile Include="Apps\Events\EditorSendsStatusBarInfo.cs" />
-    <Compile Include="Apps\Events\EditorSendsText.cs" />
-    <Compile Include="Apps\Events\EditorShouldCleanup.cs" />
-    <Compile Include="Apps\Events\EditorShouldSendText.cs" />
-    <Compile Include="Apps\Models\FilesPageCommandArgs.cs" />
-    <Compile Include="Apps\ViewModels\IActiveCleanup.cs" />
-    <Compile Include="Apps\ViewModels\IEditorContext.cs" />
-    <Compile Include="Apps\Services\IMessageBoxService.cs" />
-    <Compile Include="Apps\Services\INavigationService.cs" />
-    <Compile Include="Apps\Services\IPasswordDialogDispatcher.cs" />
-    <Compile Include="Apps\Settings\ISettingsManager.cs" />
-    <Compile Include="Apps\ViewModels\PortableMainViewModel.cs" />
-    <Compile Include="Apps\Models\FileReference.cs" />
-    <Compile Include="Apps\Models\PasswordInfo.cs" />
-    <Compile Include="Apps\MVVM\DelegateCommand.cs" />
-    <Compile Include="Apps\MVVM\DelegateCommandBase.cs" />
-    <Compile Include="Apps\MVVM\PropertySupport.cs" />
-    <Compile Include="Apps\MVVM\ViewModelBase.cs" />
-    <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Apps\Settings\Serializer.cs" />
-    <Compile Include="Apps\Models\DialogDirection.cs" />
-    <Compile Include="Apps\Models\DialogFilters.cs" />
-    <Compile Include="Apps\Constants\PortableConstants.cs" />
-    <Compile Include="Apps\Models\SetPasswordDialogMode.cs" />
-    <Compile Include="Apps\Models\StatusBarModel.cs" />
+    <Compile Include="Constants\TextBoxName.cs" />
+    <Compile Include="Extensions\StringFormatInvariant.cs" />
+    <Compile Include="Models\FilesPageCommand.cs" />
+    <Compile Include="Models\IFileModel.cs" />
+    <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Services\Interfaces\IParamsProvider.cs" />
+    <Compile Include="Services\Interfaces\RequestButton.cs" />
+    <Compile Include="Services\Interfaces\RequestImage.cs" />
+    <Compile Include="Services\Interfaces\RequestResult.cs" />
+    <Compile Include="Services\PortableImplementations\AssemblyInfoProvider.cs" />
+    <Compile Include="Events\FileModelChanged.cs" />
+    <Compile Include="Services\PortableImplementations\EncodingDetection.cs" />
+    <Compile Include="Services\Interfaces\IAssemblyInfoProvider.cs" />
+    <Compile Include="Services\Interfaces\IBrowserService.cs" />
+    <Compile Include="Services\Interfaces\IClipBoardService.cs" />
+    <Compile Include="Services\Interfaces\IEncodingDetection.cs" />
+    <Compile Include="Services\Interfaces\IFileService.cs" />
+    <Compile Include="Services\Interfaces\IFontManager.cs" />
+    <Compile Include="Services\Interfaces\ILifeTimeService.cs" />
+    <Compile Include="Services\Interfaces\ILog.cs" />
+    <Compile Include="Services\Interfaces\IPrinter.cs" />
+    <Compile Include="Services\Interfaces\IWindowManager.cs" />
+    <Compile Include="Services\PortableImplementations\ParamsProvider.cs" />
+    <Compile Include="Services\PortableImplementations\ReplayLogger.cs" />
+    <Compile Include="Models\Settings\CryptographySettings.cs" />
+    <Compile Include="Models\Settings\EditorSettings.cs" />
+    <Compile Include="Events\EditorReceivesText.cs" />
+    <Compile Include="Events\EditorSendsStatusBarInfo.cs" />
+    <Compile Include="Events\EditorSendsText.cs" />
+    <Compile Include="Events\EditorShouldCleanup.cs" />
+    <Compile Include="Events\EditorShouldSendText.cs" />
+    <Compile Include="Models\FilesPageCommandArgs.cs" />
+    <Compile Include="Extensions\ByteArrayToHexView.cs" />
+    <Compile Include="ViewModels\FindReplace\SearchOptions.cs" />
+    <Compile Include="ViewModels\FindReplace\SearchResult.cs" />
+    <Compile Include="ViewModels\FindReplace\SearchStrategy.cs" />
+    <Compile Include="ViewModels\ITextBoxController.cs" />
+    <Compile Include="ViewModels\PortableEditorViewModel.cs" />
+    <Compile Include="ViewModels\IActiveCleanup.cs" />
+    <Compile Include="ViewModels\IEditorContext.cs" />
+    <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
+    <Compile Include="Services\Interfaces\INavigationService.cs" />
+    <Compile Include="Services\Interfaces\IPasswordDialogDispatcher.cs" />
+    <Compile Include="Services\Interfaces\ISettingsManager.cs" />
+    <Compile Include="ViewModels\PortableMainViewModel.cs" />
+    <Compile Include="Models\FileReference.cs" />
+    <Compile Include="Models\PasswordInfo.cs" />
+    <Compile Include="Models\ViewModelBase.cs" />
+    <Compile Include="Services\PortableImplementations\PortableEncryptionService.cs" />
+    <Compile Include="Services\Interfaces\IEncryptionService.cs" />
+    <Compile Include="Models\Settings\Serializer.cs" />
+    <Compile Include="Models\DialogDirection.cs" />
+    <Compile Include="Models\DialogFilter.cs" />
+    <Compile Include="Constants\PortableConstants.cs" />
+    <Compile Include="Models\SetPasswordDialogMode.cs" />
+    <Compile Include="Models\StatusBarModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Interfaces\Service.cs" />
   </ItemGroup>
   <ItemGroup>
     <CodeAnalysisDictionary Include="CustomDictionary.xml" />

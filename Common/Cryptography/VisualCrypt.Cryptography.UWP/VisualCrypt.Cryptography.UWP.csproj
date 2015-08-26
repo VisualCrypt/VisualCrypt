@@ -113,7 +113,6 @@
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EncryptionService.cs" />
     <Compile Include="Platform_UWP.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Content Include="Properties\VisualCrypt.Cryptography.UWP.rd.xml" />

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Windows.UI.Xaml.Controls.Primitives;
-using VisualCrypt.Applications.Apps.Models;
-using VisualCrypt.Applications.Apps.Services;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Windows.Controls;
 

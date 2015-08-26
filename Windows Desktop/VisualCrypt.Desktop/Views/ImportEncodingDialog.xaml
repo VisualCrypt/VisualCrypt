@@ -4,14 +4,14 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
-                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Shared.Controls;assembly=VisualCrypt.Desktop.Shared"
+                    xmlns:controls="clr-namespace:VisualCrypt.Desktop.Controls"
                     mc:Ignorable="d"
                     Title="Import With Encoding" Height="300" Width="500" WindowStartupLocation="CenterOwner"
                     d:DataContext="{d:DesignInstance views:AboutDialog}"
                     Background="{DynamicResource BarColorBrush}">
     <controls:AppDialog.Resources>
         <ResourceDictionary
-            Source="pack://application:,,,/VisualCrypt.Desktop.Shared;component/Styles/InUse/DialogStyles.xaml" />
+            Source="/Styles/InUse/DialogStyles.xaml" />
     </controls:AppDialog.Resources>
     <Border x:Name="DialogBorder" Padding="10">
         <Grid>

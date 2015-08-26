@@ -55,8 +55,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EncryptionService.cs" />
-    <Compile Include="ModuleEncryption.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -83,6 +81,10 @@
     <ProjectReference Include="..\..\Common\Lib\Prism\Prism.csproj">
       <Project>{e6c50355-d01e-4caa-884d-d7929861315c}</Project>
       <Name>Prism</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\VisualCrypt.Desktop.Shared\VisualCrypt.Desktop.Shared.csproj">
+      <Project>{1A98F3E7-2163-46CE-9B6A-E204FFF4F3B8}</Project>
+      <Name>VisualCrypt.Desktop.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

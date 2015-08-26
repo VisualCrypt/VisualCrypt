@@ -2,13 +2,12 @@
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Prism.Commands;
 using Prism.Events;
-using VisualCrypt.Applications.Apps.Models;
-using VisualCrypt.Applications.Apps.MVVM;
-using VisualCrypt.Applications.Apps.Services;
-using VisualCrypt.Applications.Apps.Settings;
-using VisualCrypt.Applications.Apps.ViewModels;
-using VisualCrypt.Windows.Cryptography;
+using VisualCrypt.Applications;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Temp;
 
@@ -17,12 +16,20 @@ namespace VisualCrypt.Windows.Pages
     class FilesPageViewModel : ViewModelBase, IActiveCleanup
     {
         ObservableCollection<FileReference> _fileReferences;
-        INavigationService _navigationService;
+        public INavigationService NavigationService;
+        IMessageBoxService _messageBoxService;
+        IFileService _fileService;
+        ISettingsManager _settingsManager;
+        IEventAggregator _eventAggregator;
 
-        public FilesPageViewModel(NavigationService navigationService, PasswordDialogDispatcher passwordDialogDispatcher, EncryptionService encryptionService, MessageBoxService messageBoxService, IEventAggregator eventAggregator, ISettingsManager settingsManager, FileService fileService)
+        public FilesPageViewModel()
         {
             _fileReferences = new ObservableCollection<FileReference>();
-            _navigationService = navigationService;
+            NavigationService = Service.Get<INavigationService>();
+            _messageBoxService = Service.Get<IMessageBoxService>();
+            _fileService = Service.Get<IFileService>();
+            _settingsManager = Service.Get<ISettingsManager>();
+            _eventAggregator = Service.Get<IEventAggregator>();
         }
        
 
@@ -33,7 +40,7 @@ namespace VisualCrypt.Windows.Pages
 
         void ExecuteNavigateToNewCommand()
         {
-            _navigationService.NavigateToMainPage( new FilesPageCommandArgs { FilesPageCommand = FilesPageCommand.New });
+            NavigationService.NavigateToMainPage( new FilesPageCommandArgs { FilesPageCommand = FilesPageCommand.New });
             Cleanup();
         }
 
@@ -45,7 +52,7 @@ namespace VisualCrypt.Windows.Pages
 
         void ExecuteNavigateToOpenCommand(FileReference fileReference)
         {
-            _navigationService.NavigateToMainPage(new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference });
+            NavigationService.NavigateToMainPage(new FilesPageCommandArgs() { FilesPageCommand = FilesPageCommand.Open, FileReference = fileReference });
             Cleanup();
         }
 
@@ -73,7 +80,7 @@ namespace VisualCrypt.Windows.Pages
             foreach (var item in items)
             {
                 if (item is StorageFile)
-                    files.Add(new FileReference() { Filename = item.Name, DirectoryName = item.Path });
+                    files.Add(new FileReference() { ShortFilename = item.Name, Filename = item.Path });
             }
 
             return files;
@@ -82,7 +89,7 @@ namespace VisualCrypt.Windows.Pages
         public void Cleanup()
         {
             _fileReferences = null;  // will also cease fireing SelectionChanged event
-            _navigationService = null; // release connection to view
+            NavigationService = null; // release connection to view
         }
     }
 }

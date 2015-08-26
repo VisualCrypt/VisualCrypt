@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.Net\Platform_Net4.cs">
+      <Link>Platform_Net4.cs</Link>
+    </Compile>
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -72,9 +75,9 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.Net\VisualCrypt.Cryptography.Net.csproj">
-      <Project>{4c372f99-2c82-4b56-af6c-edf8751acc86}</Project>
-      <Name>VisualCrypt.Cryptography.Net</Name>
+    <ProjectReference Include="..\..\Common\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
+      <Project>{8e8852aa-f427-4cd4-bd50-ad3b44e6d57d}</Project>
+      <Name>VisualCrypt.Applications</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Common\Cryptography\VisualCrypt.Cryptography\VisualCrypt.Cryptography.csproj">
       <Project>{a0aefef6-e642-4247-85f6-f2f0b329d935}</Project>

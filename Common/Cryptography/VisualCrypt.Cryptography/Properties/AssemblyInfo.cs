@@ -33,8 +33,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: InternalsVisibleTo("VisualCrypt.Cryptography.Net.Tests")]
-[assembly: InternalsVisibleTo("VisualCrypt.Desktop.Tests")]
-//[assembly: InternalsVisibleTo("VisualCrypt.Desktop.Tests,PublicKey="+
+//[assembly: InternalsVisibleTo("VisualCrypt.Cryptography.Net.Tests,PublicKey="+
 //"00240000048000009400000006020000002400005253413100040000010001000df36179496bae"+
 //"01599007525ac854664cdfea8c37f7c0b09f83dca25654bcb55e969a9bc63cba32fc6d2cdeacae"+
 //"99ff2df00b85b04355a6623ab892238ed88d78d95ed8ea49b63e56f8b847dddec2a85a461cb610"+

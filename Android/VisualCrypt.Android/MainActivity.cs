@@ -1,8 +1,10 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
-using VisualCrypt.Cryptography.Net.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.Net;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
+using Service = VisualCrypt.Applications.Services.Interfaces.Service;
 
 namespace VisualCrypt.Android
 {
@@ -24,7 +26,7 @@ namespace VisualCrypt.Android
 
             button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
 
-            var api = new VisualCrypt2Service(new Platform_Net4());
+            var api = Service.Get<IVisualCrypt2Service>();
             button.Text = api.SuggestRandomPassword().Result;
         }
     }

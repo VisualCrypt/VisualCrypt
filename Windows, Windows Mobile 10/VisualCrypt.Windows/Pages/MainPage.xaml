@@ -54,7 +54,7 @@
             </StackPanel>
 
         </StackPanel>
-        <controls:Editor x:Name="EditorControl" Grid.Row="1"></controls:Editor>
+        <controls:EditorUserControl x:Name="EditorControl" Grid.Row="1"></controls:EditorUserControl>
         <TextBlock Grid.Row="2" Text="{x:Bind _viewModel.StatusBarModel.StatusBarText, Mode=OneWay}"></TextBlock>
     </Grid>
 </Page>

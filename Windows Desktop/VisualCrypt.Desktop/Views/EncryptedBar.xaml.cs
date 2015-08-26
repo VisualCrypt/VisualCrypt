@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using VisualCrypt.Applications.ViewModels;
 
 namespace VisualCrypt.Desktop.Views
 {
@@ -13,10 +14,10 @@ namespace VisualCrypt.Desktop.Views
             InitializeComponent();
         }
 
-        ShellViewModel ViewModel
+        PortableMainViewModel ViewModel
         {
             set { DataContext = value; }
-            get { return DataContext as ShellViewModel; }
+            get { return DataContext as PortableMainViewModel; }
         }
 
         void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
