@@ -75,7 +75,7 @@ namespace VisualCrypt.Desktop.Services
             }
             catch (Exception e)
             {
-                _messageBoxService.ShowError(e);
+                await _messageBoxService.ShowError(e);
             }
         }
 

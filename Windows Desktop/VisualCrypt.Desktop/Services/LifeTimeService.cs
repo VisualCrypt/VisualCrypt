@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 using System.Windows;
 using VisualCrypt.Applications.Services.Interfaces;
 
@@ -9,7 +10,12 @@ namespace VisualCrypt.Desktop.Services
 	{
 		bool _isExitConfirmed;
 
-		public void HandleExitRequested(CancelEventArgs e, Func<bool> confirmDiscard)
+        public void HandleExitRequested(CancelEventArgs e, Func<Task<bool>> confirmDiscard)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void HandleExitRequested(CancelEventArgs e, Func<bool> confirmDiscard)
 		{
 			bool isInvokedFromWindowCloseEvent = e != null;
 

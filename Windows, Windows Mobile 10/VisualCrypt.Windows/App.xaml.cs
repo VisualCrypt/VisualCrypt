@@ -25,6 +25,7 @@ namespace VisualCrypt.Windows
             this.InitializeComponent();
             this.Suspending += OnSuspending;
             Bootstrapper.Run();
+
         }
 
         /// <summary>

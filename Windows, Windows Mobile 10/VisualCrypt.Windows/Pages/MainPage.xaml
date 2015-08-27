@@ -5,27 +5,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:VisualCrypt.Windows.Controls"
+    xmlns:local="using:VisualCrypt.Windows"
     NavigationCacheMode="Disabled"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    >
+   
+    <d:Page.Resources>
+        <ResourceDictionary>
+            <local:DesignTime x:Key="la" />
+        </ResourceDictionary>
+    </d:Page.Resources>
     <Page.TopAppBar>
-        <AppBar IsOpen="True" IsSticky="True">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="Auto"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <TextBlock Grid.Column="0" Text="{x:Bind _viewModel.FileModel.ShortFilename, Mode=OneWay}"></TextBlock>
-                <StackPanel Grid.Column="1" Orientation="Horizontal">
-                   
-                    <AppBarButton Label="Encrypt" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Icon="Permissions" />
-                    <AppBarButton Label="Decrypt" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Icon="View" />
-                    <AppBarButton Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="SaveLocal" />
-                    <AppBarButton Label="Save As" Command="{x:Bind _viewModel.SaveAsCommand}" Icon="Save" />
-                    <AppBarButton Label="Export Cleartex" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
-                    <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc" />
-                </StackPanel>
-            </Grid>
-        </AppBar>
+        <CommandBar IsOpen="True" IsSticky="True">
+            <AppBarButton Label="Back" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" />
+            <AppBarButton Label="Encrypt" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Icon="Permissions" />
+            <AppBarButton Label="Decrypt" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Icon="View" />
+            <AppBarButton Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="SaveLocal" />
+            <AppBarButton Label="Save As" Command="{x:Bind _viewModel.SaveAsCommand}" Icon="Save" />
+            <AppBarButton Label="Export Cleartex" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
+            <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc" />
+        </CommandBar>
     </Page.TopAppBar>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>

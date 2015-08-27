@@ -189,14 +189,14 @@ namespace VisualCrypt.Windows.Controls
             => CreateCommand(ref _setPasswordCommand, ExecuteSetPasswordCommand, () => true);
         DelegateCommand _setPasswordCommand;
 
-        void ExecuteSetPasswordCommand()
+        async void ExecuteSetPasswordCommand()
         {
             try
             {
                 var response = _encryptionService.SanitizePassword(_passwordBoxText);
                 if (!response.IsSuccess)
                 {
-                    _messageBoxService.ShowError(response.Error);
+                    await _messageBoxService.ShowError(response.Error);
                     return;
                 }
 
@@ -206,7 +206,7 @@ namespace VisualCrypt.Windows.Controls
                     string warningMessage = _passwordBoxText.Length == sigCount
                         ? "Use empty password?"
                         : "The password is effectively empty - are you sure?";
-                    var okClicked = _messageBoxService.Show(warningMessage, "Use empty password?", RequestButton.OKCancel,
+                    var okClicked = await _messageBoxService.Show(warningMessage, "Use empty password?", RequestButton.OKCancel,
                         RequestImage.Warning) == RequestResult.OK;
                     if (!okClicked)
                         return;
@@ -216,7 +216,7 @@ namespace VisualCrypt.Windows.Controls
                 if (!setPasswordResponse.IsSuccess)
                 {
                     _setIsPasswordSet(false);
-                    _messageBoxService.ShowError(setPasswordResponse.Error);
+                    await _messageBoxService.ShowError(setPasswordResponse.Error);
                     return;
                 }
                 _setIsPasswordSet(true);
@@ -224,7 +224,7 @@ namespace VisualCrypt.Windows.Controls
             }
             catch (Exception e)
             {
-                _messageBoxService.ShowError(e);
+                await _messageBoxService.ShowError(e);
             }
             finally
             {

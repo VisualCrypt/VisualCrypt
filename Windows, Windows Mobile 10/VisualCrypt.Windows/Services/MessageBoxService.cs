@@ -1,34 +1,70 @@
 ﻿using System;
 using Windows.UI.Popups;
 using VisualCrypt.Applications.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace VisualCrypt.Windows.Services
 {
     class MessageBoxService : IMessageBoxService
     {
-        public RequestResult Show(string messageBoxText, string title, RequestButton buttons, RequestImage image)
+        RequestResult _requestResult;
+        public async Task<RequestResult> Show(string messageBoxText, string title, RequestButton buttons, RequestImage image)
         {
+            var tcs = new TaskCompletionSource<RequestResult>();
+            var commands = ButtonToCommands(buttons, tcs);
 
-            ShowDialog(messageBoxText);
-          
-           return RequestResult.OK;
-          
+            var md = new MessageDialog(messageBoxText, title);
+
+            foreach (var c in commands)
+                md.Commands.Add(c);
+
+            await md.ShowAsync();
+
+            return _requestResult;
         }
 
-        public void ShowError(Exception e, string callerMemberName = "")
+        List<UICommand> ButtonToCommands(RequestButton buttons, TaskCompletionSource<RequestResult> tcs)
         {
-            ShowDialog(e.Message);
+            var commands = new List<UICommand>();
+            if (buttons == RequestButton.OK)
+            {
+                UICommand okBtn = new UICommand("OK");
+                okBtn.Invoked = (e) => { _requestResult = RequestResult.OK; };
+                commands.Add(okBtn);
+            }
+            if (buttons == RequestButton.OKCancel)
+            {
+                //OK Button
+                UICommand okBtn = new UICommand("OK");
+                okBtn.Invoked = (e) => { _requestResult = RequestResult.OK; };
+                commands.Add(okBtn);
+
+                //OK Button
+                UICommand cancelButton = new UICommand("Cancel");
+                cancelButton.Invoked = (e) => { _requestResult = RequestResult.Cancel; };
+                commands.Add(cancelButton);
+            }
+            else throw new NotImplementedException();
+            return commands;
         }
 
-        public void ShowError(string error)
+        public async Task ShowError(Exception e, string callerMemberName = "")
         {
-            ShowDialog(error);
+            await ShowDialog(e.Message);
         }
 
-        async void ShowDialog(string text)
+        public async Task ShowError(string error)
         {
-            var md = new MessageDialog(text);
+            await ShowDialog(error);
+        }
+
+        async Task ShowDialog(string text)
+        {
+            var md = new MessageDialog(text, "Error");
             await md.ShowAsync();
         }
+
+       
     }
 }

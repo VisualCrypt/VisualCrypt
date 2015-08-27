@@ -58,13 +58,14 @@ namespace VisualCrypt.Windows.Pages
 
         
 
-        // Called From FilesPage.OnLoaded
+        // Called From FilesPage.OnLoaded and when navigating back from MainPage
         internal async Task OnNavigatedToCompleteAndLoaded()
         {
             await SampleFiles.CreateSampleFiles();
-            // because we await here, OnLoaded can finish - good!
-            var fileReferences = await GetFileReferences(ApplicationData.Current.LocalFolder);
 
+            FileReferences.Clear();
+            var fileReferences = await GetFileReferences(ApplicationData.Current.LocalFolder);
+          
             foreach (var fileReference in fileReferences)
             {
                 FileReferences.Add(fileReference);
@@ -88,8 +89,8 @@ namespace VisualCrypt.Windows.Pages
 
         public void Cleanup()
         {
-            _fileReferences = null;  // will also cease fireing SelectionChanged event
-            NavigationService = null; // release connection to view
+            //_fileReferences = null;  // will also cease fireing SelectionChanged event
+           // NavigationService = null; // release connection to view
         }
     }
 }

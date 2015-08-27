@@ -19,7 +19,7 @@ namespace VisualCrypt.Windows
     {
         public static readonly Stopwatch StopWatch = new Stopwatch();
       
-        public static  void Run()
+        public async static  void Run()
         {
             try
             {
@@ -30,7 +30,7 @@ namespace VisualCrypt.Windows
             catch (Exception e)
             {
                 var md = new MessageDialog(e.Message);
-                 md.ShowAsync();
+                 await md.ShowAsync();
             }
         }
 

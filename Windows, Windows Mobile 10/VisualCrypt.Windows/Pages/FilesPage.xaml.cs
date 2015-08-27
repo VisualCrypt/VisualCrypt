@@ -22,7 +22,13 @@ namespace VisualCrypt.Windows.Pages
 
         void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var fileReference = e.AddedItems.FirstOrDefault() as FileReference;
+            //var fileReference = e.AddedItems.FirstOrDefault() as FileReference;
+            //_viewModel.NavigateToOpenCommand.Execute(fileReference);
+        }
+
+        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            var fileReference = e.ClickedItem as FileReference;
             _viewModel.NavigateToOpenCommand.Execute(fileReference);
         }
     }

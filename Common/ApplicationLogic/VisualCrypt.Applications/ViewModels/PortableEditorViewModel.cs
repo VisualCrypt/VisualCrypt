@@ -8,6 +8,7 @@ using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.ViewModels.FindReplace;
 using VisualCrypt.Language;
+using System.Threading.Tasks;
 
 namespace VisualCrypt.Applications.ViewModels
 {
@@ -214,11 +215,11 @@ namespace VisualCrypt.Applications.ViewModels
 
         #region FindNextMenuCommand
 
-        public void ExecuteFindNextMenuCommand()
+        public async void ExecuteFindNextMenuCommand()
         {
             var oldDirection = SearchOptions.SearchUp;
             SearchOptions.SearchUp = false;
-            FindNextButtonCommand.Execute();
+            await FindNextButtonCommand.Execute();
             SearchOptions.SearchUp = oldDirection;
         }
 
@@ -232,11 +233,11 @@ namespace VisualCrypt.Applications.ViewModels
 
         #region FindPreviousMenuCommand
 
-        public void ExecuteFindPreviousMenuCommand()
+        public async void ExecuteFindPreviousMenuCommand()
         {
             var oldDirection = SearchOptions.SearchUp;
             SearchOptions.SearchUp = true;
-            FindNextButtonCommand.Execute();
+            await FindNextButtonCommand.Execute();
             SearchOptions.SearchUp = oldDirection;
         }
 
@@ -308,6 +309,8 @@ namespace VisualCrypt.Applications.ViewModels
 
         string _replaceString = string.Empty;
 
+        #endregion
+
         #region FindNextButtonCommand
 
         public DelegateCommand FindNextButtonCommand
@@ -322,13 +325,13 @@ namespace VisualCrypt.Applications.ViewModels
         DelegateCommand _findNextCommand;
 
 
-        void ExecuteFindNextCommand()
+        async void ExecuteFindNextCommand()
         {
             var found = false;
             if (!SearchOptions.SearchUp)
                 Pos = Pos + _textBox1.SelectionLength;
 
-            var searchResult = Find(true, false);
+            var searchResult = await Find(true, false);
 
             if (searchResult.HasValue)
             {
@@ -337,18 +340,18 @@ namespace VisualCrypt.Applications.ViewModels
             }
 
             if (!found && SearchOptions.UseRegEx == false)
-                _messageBoxService.Show(string.Format("'{0}' is not in the document.", FindString), "Find",
+                await _messageBoxService.Show(string.Format("'{0}' is not in the document.", FindString), "Find",
                     RequestButton.OK, RequestImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
-                _messageBoxService.Show(
+                await _messageBoxService.Show(
                     string.Format("The expression '{0}' yields no matches in the document.", FindString), "Find",
                     RequestButton.OK, RequestImage.Exclamation);
         }
 
-        SearchResult? Find(bool wrapSearchPos, bool isReplace)
+        async Task<SearchResult?> Find(bool wrapSearchPos, bool isReplace)
         {
             _timesNotFound = 0;
-            return SearchRecoursive(wrapSearchPos, isReplace);
+            return await SearchRecoursive(wrapSearchPos, isReplace);
         }
 
         #endregion
@@ -362,14 +365,13 @@ namespace VisualCrypt.Applications.ViewModels
 
         DelegateCommand _replaceCommand;
 
-
-        void ExecuteReplaceCommand()
+        async void ExecuteReplaceCommand()
         {
             var found = false;
             if (!SearchOptions.SearchUp)
                 Pos = Pos + _textBox1.SelectionLength;
 
-            var searchResult = Find(true, true);
+            var searchResult = await Find(true, true);
 
             if (searchResult.HasValue)
             {
@@ -381,10 +383,10 @@ namespace VisualCrypt.Applications.ViewModels
             }
 
             if (!found && SearchOptions.UseRegEx == false)
-                _messageBoxService.Show(string.Format("'{0}' could not be found.", FindString), "Replace",
+                await _messageBoxService.Show(string.Format("'{0}' could not be found.", FindString), "Replace",
                     RequestButton.OK, RequestImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
-                _messageBoxService.Show(string.Format("No match for '{0}' could be found.", FindString), "Replace",
+                await _messageBoxService.Show(string.Format("No match for '{0}' could be found.", FindString), "Replace",
                     RequestButton.OK, RequestImage.Exclamation);
         }
 
@@ -404,14 +406,14 @@ namespace VisualCrypt.Applications.ViewModels
         DelegateCommand _replaceAllCommand;
 
 
-        void ExecuteReplaceAllCommand()
+        async void ExecuteReplaceAllCommand()
         {
             SearchOptions.SearchUp = false;
             Pos = 0;
             var count = 0;
 
             start:
-            var searchResult = Find(false, false);
+            var searchResult = await Find(false, false);
 
             if (searchResult.HasValue)
             {
@@ -425,13 +427,11 @@ namespace VisualCrypt.Applications.ViewModels
             var image = (count > 0) ? RequestImage.Information : RequestImage.Exclamation;
 
 
-            _messageBoxService.Show(string.Format("{0} occurrences were replaced.", count), "Replace All",
+            await _messageBoxService.Show(string.Format("{0} occurrences were replaced.", count), "Replace All",
                 RequestButton.OK, image);
         }
 
-        #endregion
-
-        SearchResult? SearchRecoursive(bool wrapSearchPos, bool isReplace)
+        async System.Threading.Tasks.Task<SearchResult?> SearchRecoursive(bool wrapSearchPos, bool isReplace)
         {
             SearchResult? searchResult;
             try
@@ -442,7 +442,7 @@ namespace VisualCrypt.Applications.ViewModels
             {
                 if (SearchOptions.UseRegEx)
                 {
-                    _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", RequestButton.OK,
+                    await _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", RequestButton.OK,
                         RequestImage.Error);
                     return null;
                 }
@@ -463,7 +463,7 @@ namespace VisualCrypt.Applications.ViewModels
                 {
                     if (isReplace && Pos != 0)
                     {
-                        var result = _messageBoxService.Show(
+                        var result = await _messageBoxService.Show(
                             "Nothing found - Search again from the top of the document?", "Replace",
                             RequestButton.OKCancel, RequestImage.Question);
                         if (result == RequestResult.Cancel || result == RequestResult.None)
@@ -475,7 +475,7 @@ namespace VisualCrypt.Applications.ViewModels
                 {
                     if (isReplace && Pos != _textBox1.Text.Length)
                     {
-                        var result =
+                        var result = await
                             _messageBoxService.Show("Nothing found - Search again from the bottom of the document?",
                                 "Replace",
                                 RequestButton.OKCancel, RequestImage.Question);
@@ -485,7 +485,7 @@ namespace VisualCrypt.Applications.ViewModels
                     Pos = _textBox1.Text.Length;
                 }
 
-                return SearchRecoursive(true, isReplace);
+                return await SearchRecoursive(true, isReplace);
             }
             _timesNotFound = 0;
             return null;
@@ -683,11 +683,6 @@ namespace VisualCrypt.Applications.ViewModels
 
         #endregion
 
-        #region FontCommand
-
-
-
-        #endregion
 
         #region Private methods
 

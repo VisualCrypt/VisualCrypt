@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
-
+[assembly:CLSCompliant(false)]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -40,7 +40,6 @@ using System.Runtime.InteropServices;
 "e25c43ae"
 )]
 
-[assembly: CLSCompliant(true)]
 [assembly: ComVisible(false)]
 
 

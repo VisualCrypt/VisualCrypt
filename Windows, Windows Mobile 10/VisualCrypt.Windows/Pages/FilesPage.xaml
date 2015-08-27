@@ -6,8 +6,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:VisualCrypt.Applications.Models"
     NavigationCacheMode="Disabled"
+      xmlns:local="using:VisualCrypt.Windows"
     mc:Ignorable="d">
-<Page.TopAppBar>
+    <d:Page.Resources>
+        <ResourceDictionary>
+            <local:DesignTime x:Key="la" />
+        </ResourceDictionary>
+    </d:Page.Resources>
+    <Page.TopAppBar>
         <CommandBar>
             <AppBarButton Label="Add" Icon="Add" Command="{x:Bind _viewModel.NavigateToNewCommand}" />
         </CommandBar>
@@ -48,7 +54,9 @@
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ListView
             ItemsSource="{x:Bind _viewModel.FileReferences}"
-            SelectionChanged="Selector_OnSelectionChanged"
+            IsItemClickEnabled="True"
+            SelectionMode="None"
+            ItemClick="ListView_ItemClick"
             ItemTemplate="{StaticResource ContactListViewTemplate }"
             ></ListView>
     </Grid>

@@ -124,9 +124,9 @@ namespace VisualCrypt.Desktop.Controls
 			IntPtr windowHandle = new WindowInteropHelper(this).Handle;
 			ReleaseCapture();
 			var wpfPoint = PointToScreen(mPoint);
-			var x = Convert.ToInt16(wpfPoint.X);
-			var y = Convert.ToInt16(wpfPoint.Y);
-			var lParam = (int) (uint) x | (y << 16);
+			uint x = Convert.ToUInt16(wpfPoint.X);
+			uint y = Convert.ToUInt16(wpfPoint.Y);
+			int lParam = (int) (x | (y << 16));
 
 			SendMessage(windowHandle, WmNclbuttondown, HtCaption, lParam);
 			SetCanResize(true);
