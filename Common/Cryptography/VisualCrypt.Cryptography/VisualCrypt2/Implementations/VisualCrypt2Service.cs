@@ -278,5 +278,21 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             if (_platform == null || _internal == null)
                 throw new InvalidOperationException("You must supply an instance of IPlatform before you can use the service.");
         }
+
+        public Response<QualifiedRandom> TestRandomNumberGeneration(int sampleSize, int randomLenght)
+        {
+            var response = new Response<QualifiedRandom>();
+            try
+            {
+                EnsurePlatform();
+                response.Result = _internal.TestRandomNumberGeneration(sampleSize,randomLenght);
+                response.SetSuccess();
+            }
+            catch (Exception e)
+            {
+                response.SetError(e);
+            }
+            return response;
+        }
     }
 }

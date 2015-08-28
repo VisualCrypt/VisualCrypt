@@ -49,7 +49,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             return new PaddedData(paddedDataBytes, new PlaintextPadding(requiredPadding));
         }
 
-      
+
 
         public void AESEncryptRandomKeyWithPasswordDerivedKey(PasswordDerivedKey32 passwordDerivedKey, RandomKey32 randomKey, CipherV2 cipherV2, LongRunningOperationContext context)
         {
@@ -138,10 +138,10 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-      
 
 
-       
+
+
 
         public MAC16 AESDecryptMAC(CipherV2 cipherV2, RandomKey32 randomKey, LongRunningOperationContext context)
         {
@@ -216,7 +216,35 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             return sb.ToString();
         }
 
-     
+        public QualifiedRandom TestRandomNumberGeneration(int sampleSize, int randomLenght)
+        {
+            checked
+            {
+                if (randomLenght * 255 > int.MaxValue)
+                    throw new ArgumentException(string.Format("The maximum array lenght for this test is {0}", int.MaxValue / 255), "randomLenght");
+
+                var a = randomLenght;
+
+                var X = _platform.GenerateRandomBytes(a);  // a [0..255]
+
+                var Xa = Sum(X);
+
+                var E_Xa = 256 / 2 * a; // discrete uniform distibution
+
+
+                return new QualifiedRandom { X = X, a = a, Xa = Xa, E_Xa = E_Xa, k = sampleSize };
+            }
+        }
+
+        int Sum(byte[] bytes)
+        {
+            int sum = 0;
+            foreach (var b in bytes)
+                sum += b;
+            return sum;
+        }
+
+       
     }
 }
 

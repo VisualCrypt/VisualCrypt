@@ -7,6 +7,8 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Interfaces
     {
         IPlatform Platform { set; }
 
+        Response<QualifiedRandom> TestRandomNumberGeneration(int sampleSize, int randomLenght);
+
         Response<string> SuggestRandomPassword();
 
         Response<NormalizedPassword> NormalizePassword(string rawPassword);

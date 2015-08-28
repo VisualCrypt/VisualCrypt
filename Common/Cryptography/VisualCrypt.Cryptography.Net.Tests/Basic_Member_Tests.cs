@@ -171,8 +171,6 @@ namespace VisualCrypt.Cryptography.Net.Tests
             }
         }
 
-
-
         [TestMethod]
         public void Cannot_Decrypt_With_Incorrect_Password()
         {
@@ -252,7 +250,6 @@ namespace VisualCrypt.Cryptography.Net.Tests
             Assert.IsTrue(decrpytResponse.IsSuccess);
             Assert.IsTrue(decrpytResponse.Result.Text.Equals("my message"));
         }
-
 
         [TestMethod]
         public void Member_TryDecodeVisualCryptText_Arbitrary()
@@ -340,6 +337,48 @@ namespace VisualCrypt.Cryptography.Net.Tests
             Assert.IsTrue(closenessToTrueRandomInPercent < 1, "The generated passwords do not appear to be random.");
             Trace.WriteLine(string.Format("The quality of the 256 Bit random password deviated {0}% from true random data with the given sample size of {1}", closenessToTrueRandomInPercent, sampleSize));
         }
+
+
+
+        [TestMethod]
+        public void Member_TestRandomNumberGeneration_k_1()
+        {
+            var k = 1;   // sample size
+            var a = 32;  // elements of X / lenght
+           
+            var response = _service.TestRandomNumberGeneration(k, a);
+            Assert.IsTrue(response.IsSuccess);
+
+            QualifiedRandom qr = response.Result;
+
+            Assert.IsTrue(qr.a == 32);                                  // 32 = a
+            Assert.IsTrue(qr.k == 1);                                   // 1 = k
+            Assert.IsTrue(qr.E_Xa == 256/2 * 32);                       // 32 = a
+            Assert.IsTrue(qr.X.Length == 32);                           // 32 = a
+            Assert.IsTrue(qr.Xa >= 0 && qr.Xa <= 255 * 32);             // 32 * [0..255]
+        }
+
+        [TestMethod]
+        public void Member_TestRandomNumberGeneration_k_1000()
+        {
+            var k = 1000;   // sample size
+            var a = 32;  // elements of X / lenght
+
+            var response = _service.TestRandomNumberGeneration(k, a);
+            Assert.IsTrue(response.IsSuccess);
+
+            QualifiedRandom qr = response.Result;
+
+            Assert.IsTrue(qr.a == 32);                                  // 32 = a
+            Assert.IsTrue(qr.k == 1000);                                // 1000 = k
+            Assert.IsTrue(qr.E_Xa == 256 / 2 * 32);                     // 32 = a
+            Assert.IsTrue(qr.X.Length == 32);                           // 32 = a
+            Assert.IsTrue(qr.Xa >= 0 && qr.Xa <= 255 * 32);             // 32 * [0..255]
+
+            Assert.IsTrue(Math.Abs(qr.E_Xa - qr.Xa) < 0.01m * 256m * 32m);
+        }
+
+
 
 
         [TestMethod]
