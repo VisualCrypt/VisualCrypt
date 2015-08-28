@@ -10,31 +10,28 @@ namespace VisualCrypt.Desktop.Services
 	{
 		bool _isExitConfirmed;
 
-        public void HandleExitRequested(CancelEventArgs e, Func<Task<bool>> confirmDiscard)
+        public async void HandleExitRequested(CancelEventArgs e, Func<Task<bool>> confirmDiscard)
         {
-            throw new NotImplementedException();
+            bool isInvokedFromWindowCloseEvent = e != null;
+
+            if (isInvokedFromWindowCloseEvent)
+            {
+                if (_isExitConfirmed)
+                    return;
+                if (await confirmDiscard())
+                    return;
+                e.Cancel = true;
+            }
+            else
+            {
+                if (await confirmDiscard())
+                {
+                    _isExitConfirmed = true;
+                    Application.Current.Shutdown();
+                }
+            }
         }
 
-        public void HandleExitRequested(CancelEventArgs e, Func<bool> confirmDiscard)
-		{
-			bool isInvokedFromWindowCloseEvent = e != null;
-
-			if (isInvokedFromWindowCloseEvent)
-			{
-				if (_isExitConfirmed)
-					return;
-				if (confirmDiscard())
-					return;
-				e.Cancel = true;
-			}
-			else
-			{
-				if (confirmDiscard())
-				{
-					_isExitConfirmed = true;
-					Application.Current.Shutdown();
-				}
-			}
-		}
+       
 	}
 }
