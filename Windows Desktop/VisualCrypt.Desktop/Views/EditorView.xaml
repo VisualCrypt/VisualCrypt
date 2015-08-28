@@ -105,7 +105,7 @@
       </TextBox>
         <Grid Grid.Column="1" Background="{DynamicResource BarColorBrush}"
               IsVisibleChanged="ToolArea_OnIsVisibleChanged"
-              Visibility="{Binding SettingsManager.EditorSettings.IsToolAreaChecked, Converter={StaticResource BoolVisibilityConverter}}">
+              Visibility="{Binding SettingsManager.EditorSettings.IsToolAreaVisible, Converter={StaticResource BoolVisibility}}">
             <Grid.Resources>
                 <ResourceDictionary
                     Source="/VisualCrypt;component/Styles/InUse/DialogStyles.xaml" />

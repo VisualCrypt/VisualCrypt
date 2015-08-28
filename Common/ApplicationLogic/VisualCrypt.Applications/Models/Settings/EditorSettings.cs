@@ -11,30 +11,30 @@ namespace VisualCrypt.Applications.Models.Settings
 	public sealed class EditorSettings : INotifyPropertyChanged
 	{
 		[DataMember]
-		public bool IsStatusBarChecked
+		public bool IsStatusBarVisible
 		{
-			get { return _isStatusBarChecked; }
+			get { return _isStatusBarVisible; }
 			set
 			{
-				_isStatusBarChecked = value;
+				_isStatusBarVisible = value;
 				OnPropertyChanged();
 			}
 		}
 
-		bool _isStatusBarChecked;
+		bool _isStatusBarVisible;
 
 		[DataMember]
-		public bool IsToolAreaChecked
+		public bool IsToolAreaVisible
 		{
-			get { return _isToolAreaChecked; }
+			get { return _isToolAreaVisible; }
 			set
 			{
-				_isToolAreaChecked = value;
+				_isToolAreaVisible = value;
 				OnPropertyChanged();
 			}
 		}
 
-		bool _isToolAreaChecked;
+		bool _isToolAreaVisible;
 
 
 		[DataMember]

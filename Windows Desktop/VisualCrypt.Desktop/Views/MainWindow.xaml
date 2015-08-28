@@ -4,12 +4,9 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
-                  
                     xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Controls"
-                    xmlns:valueConverters="clr-namespace:VisualCrypt.Desktop.ValueConverters"
                     xmlns:commands="clr-namespace:VisualCrypt.Desktop.Commands"
-                    xmlns:desktop="clr-namespace:VisualCrypt.Desktop"
                     xmlns:viewModels="clr-namespace:VisualCrypt.Applications.ViewModels;assembly=VisualCrypt.Applications"
                     Title="{Binding FileModel.Filename}"
                     Height="{Binding Source={x:Static controls:AppWindow.StartupHeight}}"
@@ -21,19 +18,8 @@
                     BorderThickness="0"
                     WindowStyle="None"
                     ResizeMode="CanResizeWithGrip"
-                    AllowsTransparency="True" d:DataContext="{d:DesignInstance viewModels:PortableMainViewModel}">
-    <Window.Resources>
-        <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary
-                     Source="/VisualCrypt;component/Styles/InUse/VisualCryptColors.xaml" />
-            </ResourceDictionary.MergedDictionaries>
-            <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
-            <valueConverters:IsHiddenVisibilityConverter x:Key="IsHiddenVisibilityConverter" />
-        </ResourceDictionary>
-      
-    </Window.Resources>
-
+                    AllowsTransparency="True" d:DataContext="{d:DesignInstance viewModels:PortableMainViewModel}"
+                    >
     <Window.InputBindings>
         <!-- File -->
         <KeyBinding Key="N" Modifiers="Control" Command="{Binding NewCommand}" />
@@ -159,11 +145,11 @@
             <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miView,Mode=OneWay}">
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewStatusBar,Mode=OneWay}"
                           IsCheckable="True"
-                          IsChecked="{Binding SettingsManager.EditorSettings.IsStatusBarChecked, Mode=TwoWay}"
+                          IsChecked="{Binding SettingsManager.EditorSettings.IsStatusBarVisible, Mode=TwoWay}"
                           InputGestureText="F12" />
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewToolArea,Mode=OneWay}"
                           IsCheckable="True"
-                          IsChecked="{Binding SettingsManager.EditorSettings.IsToolAreaChecked, Mode=TwoWay}"
+                          IsChecked="{Binding SettingsManager.EditorSettings.IsToolAreaVisible, Mode=TwoWay}"
                           InputGestureText="ESC" />
                 <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewLanguage,Mode=OneWay}">
                     <MenuItem Header="English" Command="{Binding SwitchLanguageCommand}" CommandParameter="EN"
@@ -203,14 +189,14 @@
             <views:EditorUserControl />
         </ContentControl>
         <Border Grid.Row="2" Height="28" Background="{DynamicResource AccentColorBrush}"
-                Visibility="{Binding SettingsManager.EditorSettings.IsStatusBarChecked, Converter={StaticResource BoolVisibilityConverter}}">
+                Visibility="{Binding SettingsManager.EditorSettings.IsStatusBarVisible, Converter={StaticResource BoolVisibility}}">
             <StackPanel>
                 <views:PlainTextBar
-                    Visibility="{Binding StatusBarModel.IsPlaintextBarHidden, Converter={StaticResource IsHiddenVisibilityConverter}}" />
+                    Visibility="{Binding StatusBarModel.IsPlaintextBarVisible, Converter={StaticResource BoolVisibility}}" />
                 <views:WorkingBar
-                    Visibility="{Binding StatusBarModel.IsProgressBarHidden,Converter={StaticResource IsHiddenVisibilityConverter}}" />
+                    Visibility="{Binding StatusBarModel.IsProgressBarVisible,Converter={StaticResource BoolVisibility}}" />
                 <views:EncryptedBar
-                    Visibility="{Binding  StatusBarModel.IsEncryptedBarHidden, Converter={StaticResource IsHiddenVisibilityConverter}}" />
+                    Visibility="{Binding  StatusBarModel.IsEncryptedBarVisible, Converter={StaticResource BoolVisibility}}" />
             </StackPanel>
         </Border>
     </Grid>

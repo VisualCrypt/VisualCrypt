@@ -29,25 +29,25 @@ namespace VisualCrypt.Desktop.Views
             PreviewDrop += MainWindow_PreviewDrop;
         }
 
-      
 
 
-        void MainWindow_Closing(object sender, CancelEventArgs e)
+
+        async void MainWindow_Closing(object sender, CancelEventArgs e)
         {
-            _viewModel.ExitCommand.Execute(e);
+            await _viewModel.ExitCommand.Execute(e);
         }
 
-        void ShellWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        async void ShellWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             // This was in TextBox1_PreviewKeyDown, does this still work?
             if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 && _viewModel.ClearPasswordCommand.CanExecute())
-                _viewModel.ClearPasswordCommand.Execute();
+                await _viewModel.ClearPasswordCommand.Execute();
 
             if (e.Key == Key.F12)
-                _settingsManager.EditorSettings.IsStatusBarChecked = !_settingsManager.EditorSettings.IsStatusBarChecked;
+                _settingsManager.EditorSettings.IsStatusBarVisible = !_settingsManager.EditorSettings.IsStatusBarVisible;
             if (e.Key == Key.Escape)
-                _settingsManager.EditorSettings.IsToolAreaChecked = !_settingsManager.EditorSettings.IsToolAreaChecked;
+                _settingsManager.EditorSettings.IsToolAreaVisible = !_settingsManager.EditorSettings.IsToolAreaVisible;
 
             if (e.Key == Key.W && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 _settingsManager.EditorSettings.IsWordWrapChecked = !_settingsManager.EditorSettings.IsWordWrapChecked;
@@ -72,7 +72,7 @@ namespace VisualCrypt.Desktop.Views
             {
                 if (e.Data.GetDataPresent(DataFormats.FileDrop))
                 {
-                    var files = (string[]) e.Data.GetData(DataFormats.FileDrop);
+                    var files = (string[])e.Data.GetData(DataFormats.FileDrop);
                     _viewModel.OpenFileFromDragDrop(files[0]);
                 }
             }
@@ -88,6 +88,6 @@ namespace VisualCrypt.Desktop.Views
         }
 
 
-       
+
     }
 }

@@ -12,7 +12,7 @@ namespace VisualCrypt.Applications.Models
         void RaiseAllChanged()
         {
             OnPropertyChanged(() => IsPasswordSet);
-            OnPropertyChanged(() => IsTextBlockClearPasswordHidden);
+            OnPropertyChanged(() => IsTextBlockClearPasswordVisible);
             OnPropertyChanged(() => PasswordStatus);
             OnPropertyChanged(() => HyperlinkPasswordText);
             OnPropertyChanged(() => MenuPasswordText);
@@ -30,7 +30,7 @@ namespace VisualCrypt.Applications.Models
 
         bool _isPasswordSet;
 
-        public bool IsTextBlockClearPasswordHidden
+        public bool IsTextBlockClearPasswordVisible
         {
             get { return !IsPasswordSet; }
         }

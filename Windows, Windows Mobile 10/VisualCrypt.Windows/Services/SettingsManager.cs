@@ -17,7 +17,13 @@ namespace VisualCrypt.Windows.Services
 
         public void LoadOrInitSettings()
         {
-            EditorSettings = new EditorSettings();
+            EditorSettings = new EditorSettings()
+            {
+                IsSpellCheckingChecked = true,
+                IsStatusBarVisible = true,
+                IsWordWrapChecked = true,
+                IsToolAreaVisible = false,
+            };
             FontSettings = new FontSettings();
             CryptographySettings = new CryptographySettings { LogRounds = 11 };
         }

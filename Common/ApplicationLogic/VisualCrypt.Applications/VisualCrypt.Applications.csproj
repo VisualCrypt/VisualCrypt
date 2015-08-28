@@ -49,6 +49,7 @@
     <Compile Include="Models\FilesPageCommand.cs" />
     <Compile Include="Models\IFileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Services\Interfaces\ILocale.cs" />
     <Compile Include="Services\Interfaces\IParamsProvider.cs" />
     <Compile Include="Services\Interfaces\RequestButton.cs" />
     <Compile Include="Services\Interfaces\RequestImage.cs" />
@@ -66,6 +67,7 @@
     <Compile Include="Services\Interfaces\ILog.cs" />
     <Compile Include="Services\Interfaces\IPrinter.cs" />
     <Compile Include="Services\Interfaces\IWindowManager.cs" />
+    <Compile Include="Services\PortableImplementations\Locale.cs" />
     <Compile Include="Services\PortableImplementations\ParamsProvider.cs" />
     <Compile Include="Services\PortableImplementations\ReplayLogger.cs" />
     <Compile Include="Models\Settings\CryptographySettings.cs" />

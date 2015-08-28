@@ -131,7 +131,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         void OnSelectionChanged(object sender, object routedEventArgs)
         {
-            if ((_settingsManager.EditorSettings.IsStatusBarChecked))
+            if ((_settingsManager.EditorSettings.IsStatusBarVisible))
                 UpdateStatusBar();
         }
 
@@ -181,7 +181,7 @@ namespace VisualCrypt.Applications.ViewModels
         {
             get
             {
-                return CreateCommand(ref _closeToolAreaCommand, () => _settingsManager.EditorSettings.IsToolAreaChecked = false,
+                return CreateCommand(ref _closeToolAreaCommand, () => _settingsManager.EditorSettings.IsToolAreaVisible = false,
                     () => true);
             }
         }
@@ -199,7 +199,7 @@ namespace VisualCrypt.Applications.ViewModels
         {
             try
             {
-                _settingsManager.EditorSettings.IsToolAreaChecked = true;
+                _settingsManager.EditorSettings.IsToolAreaVisible = true;
                 ToolAreaSelectedIndex = 0;
                 //_portableEditorView.EditorControl.UpdateLayout();
                 _textBoxFind.SelectAll();
@@ -258,7 +258,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         public void ExecuteReplaceMenuCommand()
         {
-            _settingsManager.EditorSettings.IsToolAreaChecked = true;
+            _settingsManager.EditorSettings.IsToolAreaVisible = true;
             ToolAreaSelectedIndex = 1;
             //_portableEditorView.EditorControl.UpdateLayout();
             _textBoxFindReplace.SelectAll();
@@ -631,7 +631,7 @@ namespace VisualCrypt.Applications.ViewModels
         {
             try
             {
-                _settingsManager.EditorSettings.IsToolAreaChecked = true;
+                _settingsManager.EditorSettings.IsToolAreaVisible = true;
                 ToolAreaSelectedIndex = 2;
                 //_portableEditorView.EditorControl.UpdateLayout();
                 _textBoxGoTo.SelectAll();

@@ -26,7 +26,7 @@
                 </Hyperlink>
                 <Hyperlink Click="Hyperlink_ClearPassword_MouseDown">
                     <TextBlock Padding="0" Margin="0" FontWeight="Normal" FontFamily="WebDings"
-                               Visibility="{Binding PasswordInfo.IsTextBlockClearPasswordHidden, Converter={StaticResource IsHiddenVisibilityConverter}}">
+                               Visibility="{Binding PasswordInfo.IsTextBlockClearPasswordVisible, Converter={StaticResource BoolVisibility}}">
                         r
                     </TextBlock>
                 </Hyperlink>

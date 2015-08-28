@@ -165,7 +165,6 @@
     <Compile Include="Settings\OnFirstRunTasks.cs" />
     <Compile Include="ValueConverters\BoolTextWrappingConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
-    <Compile Include="ValueConverters\IsHiddenVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Version.cs" />
     <Compile Include="Views\EncryptedBar.xaml.cs">

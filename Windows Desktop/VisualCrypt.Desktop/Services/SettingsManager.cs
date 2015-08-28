@@ -97,10 +97,12 @@ namespace VisualCrypt.Desktop.Services
 		{
 			EditorSettings =  new EditorSettings
 			{
-				IsStatusBarChecked = true,
+				IsStatusBarVisible = true,
 				IsWordWrapChecked = true,
 				IsSpellCheckingChecked = false,
 				PagePadding = 72,
+                IsToolAreaVisible = false
+
 				
 			};
             FontSettings = new FontSettings
@@ -112,7 +114,7 @@ namespace VisualCrypt.Desktop.Services
 					FontWeight = FontWeights.Normal
                 }
 		    ;
-		    CryptographySettings = new CryptographySettings {LogRounds = 10};
+		    CryptographySettings = new CryptographySettings {LogRounds = 13};
 		}
 
 		 Tuple<EditorSettings,FontSettings,CryptographySettings> TryGetSettings()

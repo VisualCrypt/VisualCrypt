@@ -1,0 +1,44 @@
+﻿<UserControl
+    x:Class="VisualCrypt.Windows.Controls.PlainTextBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary
+            Source="/Styles/InUse/BarStyles.xaml" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Column="0" Text="{x:Bind _viewModel.StatusBarModel.StatusBarText, Mode=OneWay}" />
+        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
+            <TextBlock>
+                <Hyperlink Click="Hyperlink_SetPassword_Click">
+                    <Run
+                        Text="{x:Bind _viewModel.PasswordInfo.PasswordStatus, Mode=OneWay}" />
+                </Hyperlink>
+                    <Hyperlink FontWeight="Normal" FontFamily="WebDings" Click="Hyperlink_ClearPassword_MouseDown"
+                               Foreground="{x:Bind _viewModel.PasswordInfo.IsTextBlockClearPasswordVisible, Mode=OneWay, Converter={StaticResource EnabledToBrush}}">
+                        r
+                    </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <TextBlock>
+                <Hyperlink Click="Hyperlink_Encrypt_Click"><Run x:Uid="termEncrypt" /> </Hyperlink>
+                
+                <Hyperlink Click="Hyperlink_Decrypt_Click"><Run x:Uid="termDecrypt" /> </Hyperlink>
+               
+                <Hyperlink Click="Hyperlink_Save_Click" Foreground="{x:Bind _viewModel.FileModel.IsDirty, Mode=OneWay, Converter={StaticResource EnabledToBrush}}">
+                    <Run x:Uid="termSave"  /> </Hyperlink>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -5,55 +5,43 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:VisualCrypt.Windows.Controls"
-    xmlns:local="using:VisualCrypt.Windows"
     NavigationCacheMode="Disabled"
-    mc:Ignorable="d"
-    >
-   
-    <d:Page.Resources>
-        <ResourceDictionary>
-            <local:DesignTime x:Key="la" />
-        </ResourceDictionary>
-    </d:Page.Resources>
+    mc:Ignorable="d">
     <Page.TopAppBar>
-        <CommandBar IsOpen="True" IsSticky="True">
+        <CommandBar IsOpen="True"  x:Name="TopBar">
             <AppBarButton Label="Back" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" />
             <AppBarButton Label="Encrypt" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Icon="Permissions" />
             <AppBarButton Label="Decrypt" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Icon="View" />
             <AppBarButton Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="SaveLocal" />
             <AppBarButton Label="Save As" Command="{x:Bind _viewModel.SaveAsCommand}" Icon="Save" />
-            <AppBarButton Label="Export Cleartex" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
+            <AppBarButton Label="Export" Command="{x:Bind _viewModel.ExportCommand}" Icon="View" />
             <AppBarButton Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc" />
         </CommandBar>
     </Page.TopAppBar>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+      
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <StackPanel Padding="24,0" Grid.Row="0" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-            <StackPanel Orientation="Horizontal">
-                <Button Style="{StaticResource NavigationBackButtonSmallStyle}"
-                    TabIndex="1"
-                    Margin="0,0,8,0"
-                        Command="{x:Bind _viewModel.GoBackToFilesCommand}"
-                    AutomationProperties.Name="Back" />
-                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Margin="0,8" />
-                <ProgressBar Width="150" Height="8" 
-                             Margin="5,4,5,0" 
-                             IsIndeterminate="False" 
-                             Foreground="#FF77FF77"
-                             BorderThickness="0" 
-                             Value="{x:Bind _viewModel.StatusBarModel.ProgressPercent, Mode=OneWay}" />
-                <TextBlock>
-                <Run Text="{x:Bind _viewModel.StatusBarModel.ProgressBarOpName, Mode=OneWay}" />
-                <Run Text="{x:Bind _viewModel.StatusBarModel.ProgressMessage, Mode=OneWay}" />
-                </TextBlock>
-            </StackPanel>
+        <Border Grid.Row="0"  x:Name="TopBarSpacer"/>
+        <controls:EditorUserControl Grid.Row="2"
+                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+                                    VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
 
-        </StackPanel>
-        <controls:EditorUserControl x:Name="EditorControl" Grid.Row="1"></controls:EditorUserControl>
-        <TextBlock Grid.Row="2" Text="{x:Bind _viewModel.StatusBarModel.StatusBarText, Mode=OneWay}"></TextBlock>
+        <Border Grid.Row="3" Height="28" Background="{StaticResource AccentColorBrush}" 
+                Visibility="{x:Bind _settingsManager.EditorSettings.IsStatusBarVisible, Mode=OneWay, Converter={StaticResource BoolVisibility}}">
+            <StackPanel>
+                <controls:PlainTextBar
+                    Visibility="{x:Bind _viewModel.StatusBarModel.IsPlaintextBarVisible, Mode=OneWay, Converter={StaticResource BoolVisibility}}" />
+                <controls:WorkingBar
+                    Visibility="{x:Bind _viewModel.StatusBarModel.IsProgressBarVisible, Mode=OneWay,Converter={StaticResource BoolVisibility}}" />
+                <controls:EncryptedBar
+                    Visibility="{x:Bind _viewModel.StatusBarModel.IsEncryptedBarVisible, Mode=OneWay,Converter={StaticResource BoolVisibility}}" />
+            </StackPanel>
+        </Border>
     </Grid>
+   
 </Page>

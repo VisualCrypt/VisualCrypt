@@ -20,34 +20,34 @@ namespace VisualCrypt.Desktop.Views
             get { return DataContext as PortableMainViewModel; }
         }
 
-        void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
+        async void Hyperlink_SetPassword_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.ShowSetPasswordDialogCommand.CanExecute())
-                ViewModel.ShowSetPasswordDialogCommand.Execute();
+                await ViewModel.ShowSetPasswordDialogCommand.Execute();
         }
 
-        void Hyperlink_ClearPassword_MouseDown(object sender, RoutedEventArgs e)
+        async void Hyperlink_ClearPassword_MouseDown(object sender, RoutedEventArgs e)
         {
             if (ViewModel.ClearPasswordCommand.CanExecute())
-                ViewModel.ClearPasswordCommand.Execute();
+                await ViewModel.ClearPasswordCommand.Execute();
         }
 
-        void Hyperlink_CopyAll_Click(object sender, RoutedEventArgs e)
+        async void Hyperlink_CopyAll_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.CopyAllCommand.CanExecute())
-                ViewModel.CopyAllCommand.Execute();
+                await ViewModel.CopyAllCommand.Execute();
         }
 
-        void Hyperlink_Decrypt_Click(object sender, RoutedEventArgs e)
+        async void Hyperlink_Decrypt_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.DecryptEditorContentsCommand.CanExecute())
-                ViewModel.DecryptEditorContentsCommand.Execute();
+                await ViewModel.DecryptEditorContentsCommand.Execute();
         }
 
-        void Hyperlink_Save_Click(object sender, RoutedEventArgs e)
+        async void Hyperlink_Save_Click(object sender, RoutedEventArgs e)
         {
             if (ViewModel.SaveCommand.CanExecute())
-                ViewModel.SaveCommand.Execute();
+                await ViewModel.SaveCommand.Execute();
         }
     }
 }

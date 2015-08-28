@@ -5,18 +5,38 @@ using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Windows.Services;
+using Windows.UI.Xaml.Controls;
 
 namespace VisualCrypt.Windows.Pages
 {
     public sealed partial class MainPage
     {
         readonly PortableMainViewModel _viewModel;
+        readonly ISettingsManager _settingsManager;
 
         public MainPage()
         {
             InitializeComponent();
             _viewModel = Service.Get<PortableMainViewModel>();
+            _settingsManager = Service.Get<ISettingsManager>();
+            TopBar.Opening += TopBarOpened;
+            TopBar.Closing += TopBarClosed;
+            TopBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;
+            TopBar.IsSticky = true;
+            
         }
+
+        private void TopBarClosed(object sender, object e)
+        {
+            this.TopBarSpacer.Height =0;
+        }
+
+        private void TopBarOpened(object sender, object e)
+        {
+            this.TopBarSpacer.Height = 12;
+        }
+
+       
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -29,6 +49,8 @@ namespace VisualCrypt.Windows.Pages
             };
             Loaded += handler;
         }
+
+      
 
 
     }

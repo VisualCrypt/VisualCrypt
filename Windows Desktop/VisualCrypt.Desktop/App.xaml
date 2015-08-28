@@ -9,8 +9,7 @@
                 <ResourceDictionary
                     Source="Styles/InUse/VisualCryptColors.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <valueConverters:BoolVisibilityConverter x:Key="BoolVisibilityConverter" />
-            <valueConverters:IsHiddenVisibilityConverter x:Key="IsHiddenVisibilityConverter" />
+            <valueConverters:BoolVisibilityConverter x:Key="BoolVisibility" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

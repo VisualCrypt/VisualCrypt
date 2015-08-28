@@ -105,11 +105,20 @@
     <Compile Include="Controls\EditorSupport\FindReplace\SearchOptions.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchResult.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchStrategy.cs" />
-    <Compile Include="Controls\EditorSupport\TextBoxExtensions.cs" />
+    <Compile Include="Controls\EncryptedBar.xaml.cs">
+      <DependentUpon>EncryptedBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="Controls\PasswordDialog.xaml.cs">
       <DependentUpon>PasswordDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PasswordDialogViewModel.cs" />
+    <Compile Include="Controls\PlainTextBar.xaml.cs">
+      <DependentUpon>PlainTextBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\WorkingBar.xaml.cs">
+      <DependentUpon>WorkingBar.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DesignTime.cs" />
     <Compile Include="FontSettings.cs" />
     <Compile Include="Pages\FilesPage.xaml.cs">
@@ -137,11 +146,13 @@
     <Compile Include="Services\SettingsManager.cs" />
     <Compile Include="Services\WindowManager.cs" />
     <Compile Include="Temp\SampleFiles.cs" />
+    <Compile Include="ValueConverters\EnabledToBrushConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <PRIResource Include="Strings\en-US\Resources.resw" />
     <None Include="VisualCrypt.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -163,7 +174,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\EncryptedBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\PasswordDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\PlainTextBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\WorkingBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

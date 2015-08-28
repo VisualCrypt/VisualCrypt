@@ -7,12 +7,12 @@ namespace VisualCrypt.Applications.Services.Interfaces
     {
         readonly static Dictionary<string, Implementation> Container = new Dictionary<string, Implementation>();
 
-        public static void Register<TInterface, TImplementation>(bool isInstanceShared, string instanceLabel = null, bool replaceExisting = false)
+        public static void Register<TKey, TImplementation>(bool isInstanceShared, string instanceLabel = null, bool replaceExisting = false) where TImplementation : class
         {
             if (replaceExisting)
-                Container.Remove(GetKey<TInterface>(instanceLabel));
+                Container.Remove(GetKey<TKey>(instanceLabel));
 
-            Container.Add(GetKey<TInterface>(instanceLabel), new Implementation
+            Container.Add(GetKey<TKey>(instanceLabel), new Implementation
             {
                 ImplementationType = typeof(TImplementation),
                 Instance = null,
@@ -21,30 +21,31 @@ namespace VisualCrypt.Applications.Services.Interfaces
         }
 
 
-        static string GetKey<TInterface>(string instanceLabel)
+        static string GetKey<TKey>(string instanceLabel)
         {
-            if (instanceLabel == null)
-                return typeof (TInterface).FullName;
-            return string.Format("{0} - {1}", typeof (TInterface).FullName, instanceLabel);
+            return instanceLabel == null 
+                ? typeof(TKey).FullName 
+                : $"{typeof (TKey).FullName} - {instanceLabel}";
         }
 
-        public static TInterface Get<TInterface>(string instanceLabel = null)
+        public static TKey Get<TKey>(string instanceLabel = null)
         {
-            var key = GetKey<TInterface>(instanceLabel);
+            var key = GetKey<TKey>(instanceLabel);
             if (!Container.ContainsKey(key))
-                throw new InvalidOperationException(string.Format("{0} is not available from the container.", typeof(TInterface)));
+                throw new InvalidOperationException($"{typeof (TKey)} is not available from the container.");
 
             var typeInstance = Container[key];
 
             if (!typeInstance.IsInstanceShared)
-                return (TInterface)Activator.CreateInstance(typeInstance.ImplementationType);
+                return (TKey)Activator.CreateInstance(typeInstance.ImplementationType);
 
             if (typeInstance.Instance != null)
-                return (TInterface)typeInstance.Instance;
+                return (TKey)typeInstance.Instance;
 
             typeInstance.Instance = Activator.CreateInstance(typeInstance.ImplementationType);
-            return (TInterface)typeInstance.Instance;
+            return (TKey)typeInstance.Instance;
         }
+
 
         sealed class Implementation
         {
@@ -52,7 +53,5 @@ namespace VisualCrypt.Applications.Services.Interfaces
             public object Instance;
             public bool IsInstanceShared;
         }
-
-        
     }
 }

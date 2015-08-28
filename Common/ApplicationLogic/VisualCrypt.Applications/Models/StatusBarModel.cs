@@ -5,39 +5,39 @@ namespace VisualCrypt.Applications.Models
 {
     public class StatusBarModel : ViewModelBase
     {
-        public bool IsPlaintextBarHidden
+        public bool IsPlaintextBarVisible
         {
-            get { return _isPlaintextBarHidden; }
+            get { return _isPlaintextBarVisible; }
             set
             {
-                _isPlaintextBarHidden = value;
+                _isPlaintextBarVisible = value;
                 OnPropertyChanged();
             }
         }
-        bool _isPlaintextBarHidden;
+        bool _isPlaintextBarVisible;
 
-        public bool IsProgressBarHidden
+        public bool IsProgressBarVisible
         {
-            get { return _isProgressBarHidden; }
+            get { return _isProgressBarVisible; }
             set
             {
-                _isProgressBarHidden = value;
+                _isProgressBarVisible = value;
                 OnPropertyChanged();
             }
         }
 
-        bool _isProgressBarHidden;
+        bool _isProgressBarVisible;
 
-        public bool IsEncryptedBarHidden
+        public bool IsEncryptedBarVisible
         {
-            get { return _isEncryptedBarHidden; }
+            get { return _isEncryptedBarVisible; }
             set
             {
-                _isEncryptedBarHidden = value;
+                _isEncryptedBarVisible = value;
                 OnPropertyChanged();
             }
         }
-        bool _isEncryptedBarHidden;
+        bool _isEncryptedBarVisible;
 
         public int ProgressPercent
         {
@@ -114,24 +114,24 @@ namespace VisualCrypt.Applications.Models
 
         public void ShowProgressBar(string description)
         {
-            IsProgressBarHidden = false;
-            IsPlaintextBarHidden = true;
-            IsEncryptedBarHidden = true;
+            IsProgressBarVisible = true;
+            IsPlaintextBarVisible = false;
+            IsEncryptedBarVisible = false;
             ProgressBarOpName = description;
         }
 
         public void ShowPlainTextBar()
         {
-            IsProgressBarHidden = true;
-            IsPlaintextBarHidden = false;
-            IsEncryptedBarHidden = true;
+            IsProgressBarVisible = false;
+            IsPlaintextBarVisible = true;
+            IsEncryptedBarVisible = false;
         }
 
         public void ShowEncryptedBar()
         {
-            IsProgressBarHidden = true;
-            IsPlaintextBarHidden = true;
-            IsEncryptedBarHidden = false;
+            IsProgressBarVisible = false;
+            IsPlaintextBarVisible = false;
+            IsEncryptedBarVisible = true;
         }
 
 	    public void OnFileModelChanged(FileModel fileModel)
