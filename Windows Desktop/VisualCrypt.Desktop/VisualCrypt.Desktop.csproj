@@ -133,6 +133,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />
+    <Compile Include="Models\SerializableVisualCryptSettings.cs" />
+    <Compile Include="Services\RegistryService.cs" />
     <Compile Include="Views\Fonts\FontFamilyListItem.cs" />
     <Compile Include="Views\Fonts\NameDictionaryHelper.cs" />
     <Compile Include="Views\Fonts\TypefaceListItem.cs" />
@@ -386,9 +388,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="SetupAssets\AddRemovePrograms.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="SetupAssets\I luv VisualCrypt.JPG" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Themes\AppWindowIcon.png" />

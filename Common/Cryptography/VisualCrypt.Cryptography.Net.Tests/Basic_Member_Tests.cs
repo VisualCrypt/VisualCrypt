@@ -322,6 +322,8 @@ namespace VisualCrypt.Cryptography.Net.Tests
                 // Assert that we have 32 bytes of data, i.e. 256 Bit
                 Assert.IsTrue(bytes.Length == 32);
             }
+
+            // TODO: this is too superficial, needs
             // if the password data has random distribution, the expected sum should be near expectedTotal
             const decimal expectedTotal = sampleSize * 32m * 256m / 2m;
 

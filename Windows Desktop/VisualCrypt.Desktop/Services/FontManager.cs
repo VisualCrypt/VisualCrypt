@@ -12,7 +12,7 @@ namespace VisualCrypt.Desktop.Services
     class FontManager : IFontManager
     {
         readonly IWindowManager _windowManager;
-        readonly ISettingsManager _settingsManager;
+        readonly SettingsManager _settingsManager;
         readonly TextBoxController _textBoxController;
         readonly IMessageBoxService _messageBoxService;
         readonly IParamsProvider _paramsProvider;
@@ -20,7 +20,7 @@ namespace VisualCrypt.Desktop.Services
         public FontManager()
         {
             _windowManager = Service.Get<IWindowManager>();
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<ISettingsManager>();
             _textBoxController = Service.Get<ITextBoxController>(TextBoxName.TextBox1) as TextBoxController;
             _messageBoxService = Service.Get<IMessageBoxService>();
             _paramsProvider = Service.Get<IParamsProvider>();
@@ -33,7 +33,7 @@ namespace VisualCrypt.Desktop.Services
 
         public void ApplyFontsFromSettingsToEditor()
         {
-            var fontSettings = _settingsManager.FontSettings as FontSettings;
+            var fontSettings = _settingsManager.FontSettings;
             _textBoxController.ApplyFontSettings(fontSettings);
         }
 
@@ -54,12 +54,12 @@ namespace VisualCrypt.Desktop.Services
         {
             
 
-            var zoomLevel = (int)((_textBoxController.FontSize / (_settingsManager.FontSettings as FontSettings).FontSize) * 100);
+            var zoomLevel = (int)((_textBoxController.FontSize / (_settingsManager.FontSettings).FontSize) * 100);
             var zoomLevelMenuText = string.Format(Loc.Strings.miViewZoomLevelText, zoomLevel);
             _settingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
             _settingsManager.EditorSettings.IsZoom100Checked =
-                Math.Abs(((_textBoxController.FontSize / (_settingsManager.FontSettings as FontSettings).FontSize) * 100) - 100) < 0.1;
+                Math.Abs(((_textBoxController.FontSize / (_settingsManager.FontSettings).FontSize) * 100) - 100) < 0.1;
         }
 
         public bool CanExecuteChooseFont()

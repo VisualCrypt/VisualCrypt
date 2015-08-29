@@ -6,6 +6,11 @@ namespace VisualCrypt.Windows.Services
 {
     class SettingsManager : ISettingsManager
     {
+        public SettingsManager()
+        {
+            LoadOrInitSettings();
+        }
+
         public string CurrentDirectoryName { get; set; }
 
         public CryptographySettings CryptographySettings { get; set; }
@@ -15,7 +20,7 @@ namespace VisualCrypt.Windows.Services
         public object FontSettings { get; set; }
 
 
-        public void LoadOrInitSettings()
+        void LoadOrInitSettings()
         {
             EditorSettings = new EditorSettings()
             {
@@ -25,7 +30,7 @@ namespace VisualCrypt.Windows.Services
                 IsToolAreaVisible = false,
             };
             FontSettings = new FontSettings();
-            CryptographySettings = new CryptographySettings { LogRounds = 11 };
+            CryptographySettings = new CryptographySettings { LogRounds = 13 };
         }
     }
 }

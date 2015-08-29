@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Collections.Generic;
 using Foundation;
 using UIKit;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 
 namespace VisualCrypt.iOS
 {
@@ -20,7 +22,13 @@ namespace VisualCrypt.iOS
                 ClearsSelectionOnViewWillAppear = false;
             }
 
-            // Custom initialization
+            // Basic configuration test
+            var api = Service.Get<IVisualCrypt2Service>();
+            var response = api.SuggestRandomPassword();
+            if (response.IsSuccess)
+                Title = "OK";
+            else
+                Title = "Error";
         }
 
         public DetailViewController DetailViewController

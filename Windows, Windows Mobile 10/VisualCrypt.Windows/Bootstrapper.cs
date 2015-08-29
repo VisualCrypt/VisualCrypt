@@ -25,7 +25,7 @@ namespace VisualCrypt.Windows
             {
                 StopWatch.Start();
                 ConfigureFactory();
-                Service.Get<ISettingsManager>().LoadOrInitSettings();
+                Service.Get<ISettingsManager>();
             }
             catch (Exception e)
             {

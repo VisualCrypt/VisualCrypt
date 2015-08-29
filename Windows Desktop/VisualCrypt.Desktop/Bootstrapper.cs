@@ -29,9 +29,8 @@ namespace VisualCrypt.Desktop
             try
             {
                 StopWatch.Start();
-                ConfigureFactory();
-                Service.Get<ISettingsManager>().LoadOrInitSettings();
 
+                ConfigureFactory();
 
                 var app = new App();
                 app.Startup += App_Startup;
@@ -49,7 +48,8 @@ namespace VisualCrypt.Desktop
         {
 
             Service.Register<ILog, ReplayLogger>(true);
-            Service.Get<ILog>().Debug("Registering Services");
+            Service.Get<ILog>().Debug("Registering Services.");
+            Service.Register<ISettingsManager, SettingsManager>(true);
 
             Service.Register<IEventAggregator, EventAggregator>(true);
             Service.Register<IParamsProvider, ParamsProvider>(false);
@@ -57,7 +57,7 @@ namespace VisualCrypt.Desktop
             Service.Register<IEncryptionService, PortableEncryptionService>(true);
             Service.Register<INavigationService, NavigationService>(true);
             Service.Register<IPasswordDialogDispatcher, PasswordDialogDispatcher>(true);
-            Service.Register<ISettingsManager, SettingsManager>(true);
+          
             Service.Register<IFileService, FileService>(true);
             Service.Register<IBrowserService, BrowserService>(false);
             Service.Register<IAssemblyInfoProvider, AssemblyInfoProvider>(false);

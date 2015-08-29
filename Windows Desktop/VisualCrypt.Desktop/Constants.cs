@@ -21,7 +21,7 @@ namespace VisualCrypt.Desktop
 
 		
 
-		public static readonly string DefaultDirectoryName;
+		
 
 		// Open/Save VisualCrypt
 		public static string VisualCryptDialogFilter_DefaultExt = ".visualcrypt";
@@ -35,9 +35,6 @@ namespace VisualCrypt.Desktop
 	    
 
 
-	    static Constants()
-		{
-			DefaultDirectoryName = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-		}
+	
 	}
 }

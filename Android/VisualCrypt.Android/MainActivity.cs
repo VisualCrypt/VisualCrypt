@@ -19,6 +19,7 @@ namespace VisualCrypt.Android
 
             // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+            Register();
 
             // Get our button from the layout resource,
             // and attach an event to it
@@ -26,8 +27,22 @@ namespace VisualCrypt.Android
 
             button.Click += delegate { button.Text = string.Format("{0} clicks!", count++); };
 
+            // Basic configuration test
             var api = Service.Get<IVisualCrypt2Service>();
-            button.Text = api.SuggestRandomPassword().Result;
+            var response = api.SuggestRandomPassword();
+            if (response.IsSuccess)
+                button.Text = "OK";
+            else
+                button.Text = "Error";
+
+        }
+
+        void Register()
+        {
+            // Bootstrap the VisualCrypt API
+            Service.Register<IPlatform, Platform_Net4>(true);
+            Service.Register<IVisualCrypt2Service, VisualCrypt2Service>(true);
+            Service.Get<IVisualCrypt2Service>().Platform = Service.Get<IPlatform>();
         }
     }
 }

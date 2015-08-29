@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Desktop.Services;
 using VisualCrypt.Desktop.Settings;
 using VisualCrypt.Desktop.Views.Fonts;
 
@@ -50,17 +51,21 @@ namespace VisualCrypt.Desktop.Views.Fonts
 			80.0, 88.0, 96.0, 104.0, 112.0, 120.0, 128.0, 136.0, 144.0
 		};
 
-		#endregion
+        #endregion
 
-		#region Construction and initialization
+        #region Construction and initialization
 
-		
+
+        readonly SettingsManager _settingsManager;
+
 		public Font()
 		{
+            _settingsManager = (SettingsManager)Service.Get<ISettingsManager>();
 		    var paramsProvider = Service.Get<IParamsProvider>();
             string sampleText = paramsProvider.GetParams<Font, string>();
-			_selectedFontSettings = new FontSettings();
-			Map.Copy(Service.Get<ISettingsManager>().FontSettings, _selectedFontSettings);
+
+            _selectedFontSettings = _settingsManager.FontSettings.Clone();
+			
 
 			_sampleText = string.IsNullOrWhiteSpace(sampleText)
 				? DefaultSampleText
@@ -123,8 +128,8 @@ namespace VisualCrypt.Desktop.Views.Fonts
 
 		void OnOkButtonClicked(object sender, RoutedEventArgs e)
 		{
-			Map.Copy(_selectedFontSettings, Service.Get<ISettingsManager>().FontSettings);
-
+            _settingsManager.FontSettings.UpdateFrom(_selectedFontSettings);
+			
 			DialogResult = true;
 			Close();
 		}
@@ -523,7 +528,7 @@ namespace VisualCrypt.Desktop.Views.Fonts
 
 		void InitializePreview()
 		{
-			Map.Copy(_selectedFontSettings, PreviewTextBox);
+            _selectedFontSettings.ApplyToTextBox(PreviewTextBox);
 		}
 
 		#endregion

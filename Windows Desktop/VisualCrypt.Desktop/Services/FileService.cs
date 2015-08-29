@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Win32;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
@@ -13,11 +12,13 @@ namespace VisualCrypt.Desktop.Services
 {
     public class FileService : IFileService
     {
+        readonly ILog _log;
         readonly ISettingsManager _settingsManager;
 
         public FileService()
         {
             _settingsManager = Service.Get<ISettingsManager>();
+            _log = Service.Get<ILog>();
         }
         public bool CheckFilenameForQuickSave(string filename)
         {
@@ -97,5 +98,7 @@ namespace VisualCrypt.Desktop.Services
         {
             return Path.GetFileName(filename);
         }
+
+
     }
 }

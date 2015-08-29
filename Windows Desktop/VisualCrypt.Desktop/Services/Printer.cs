@@ -3,19 +3,17 @@ using System.Printing;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Xps;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
-using VisualCrypt.Desktop.Settings;
 
 namespace VisualCrypt.Desktop.Services
 {
     class Printer : IPrinter
     {
-        readonly ISettingsManager _settingsManager;
+        readonly SettingsManager _settingsManager;
 
         public Printer()
         {
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<ISettingsManager>();
         }
 
         public void PrintEditorText(string editorText)
@@ -24,12 +22,12 @@ namespace VisualCrypt.Desktop.Services
             PrintFlowDocument(doc, _settingsManager.EditorSettings.PagePadding);
         }
 
-        static FlowDocument ConvertToFlowDocument(string text)
+        FlowDocument ConvertToFlowDocument(string text)
         {
             var flowDocument = new FlowDocument { LineHeight = double.NaN };
-            Map.Copy(Service.Get<ISettingsManager>().FontSettings, flowDocument);
 
-
+            _settingsManager.FontSettings.ApplyToFlowDocument(flowDocument);
+           
             string[] lines;
             if (text.Contains("\n"))
                 lines = text.Split('\n');
