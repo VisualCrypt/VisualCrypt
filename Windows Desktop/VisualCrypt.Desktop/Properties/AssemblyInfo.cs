@@ -9,11 +9,11 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("VisualCrypt Pro")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("VisualCrypt")]
+[assembly: AssemblyDescription("VisualCrypt Pro for Windows Desktop")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VisualCrypt AG")]
-[assembly: AssemblyProduct("VisualCrypt Pro")]
+[assembly: AssemblyProduct("VisualCrypt")]
 [assembly: AssemblyCopyright("Copyright © 2014 - 2015 VisualCrypt AG")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

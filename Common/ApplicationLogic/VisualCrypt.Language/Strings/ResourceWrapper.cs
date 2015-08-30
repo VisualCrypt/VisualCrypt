@@ -833,5 +833,16 @@ namespace VisualCrypt.Language.Strings
 
 
         #endregion
+
+        /// <summary>
+        ///   Looks up a localized string similar to Discard Changes?.
+        /// </summary>
+        public  string msgDiscardChanges
+        {
+            get
+            {
+                return Resources.msgDiscardChanges;
+            }
+        }
     }
 }

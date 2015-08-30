@@ -336,4 +336,7 @@
   <data name="uriSpecUrl" xml:space="preserve">
     <value>https://visualcrypt.com</value>
   </data>
+  <data name="msgDiscardChanges" xml:space="preserve">
+    <value>Discard Changes?</value>
+  </data>
 </root>

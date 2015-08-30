@@ -54,6 +54,10 @@
           <source>https://visualcrypt.com</source>
           <target state="new">https://visualcrypt.com</target>
         </trans-unit>
+        <trans-unit id="Resx/msgDiscardChanges" translate="yes" xml:space="preserve">
+          <source>Discard Changes?</source>
+          <target state="new">Discard Changes?</target>
+        </trans-unit>
         <trans-unit id="Resx/uriSourceUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com</source>
           <target state="new">https://visualcrypt.com</target>

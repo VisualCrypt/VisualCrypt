@@ -557,6 +557,15 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Discard Changes?.
+        /// </summary>
+        public static string msgDiscardChanges {
+            get {
+                return ResourceManager.GetString("msgDiscardChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect password or corrupted/forged message..
         /// </summary>
         public static string msgPasswordError {

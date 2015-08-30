@@ -1,4 +1,6 @@
-﻿namespace VisualCrypt.Applications.Services.Interfaces
+﻿using System.Reflection;
+
+namespace VisualCrypt.Applications.Services.Interfaces
 {
 	public interface IAssemblyInfoProvider
 	{
@@ -6,5 +8,6 @@
 		string AssemblyVersion { get; }
 		string AssemblyCompany { get; }
 		string AssemblyCopyright { get; }
-	}
+        Assembly Assembly { set; }
+    }
 }

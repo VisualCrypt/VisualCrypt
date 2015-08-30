@@ -7,16 +7,12 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
 {
 	public class AssemblyInfoProvider : IAssemblyInfoProvider
 	{
-		readonly Assembly _assembly;
+		Assembly _assembly;
 		string _product;
 		string _version;
 		string _company;
 		string _copyright;
 
-		public AssemblyInfoProvider()
-		{
-			_assembly = typeof(AssemblyInfoProvider).GetTypeInfo().Assembly;
-		}
 	
 		public string AssemblyProduct
 		{
@@ -63,9 +59,23 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
 			}
 		}
 
-		T GetAttribute<T>() where T : Attribute
+        public Assembly Assembly
+        {
+            get
+            {
+                if(_assembly == null)
+                    _assembly = typeof(AssemblyInfoProvider).GetTypeInfo().Assembly;
+                return _assembly;
+            }
+            set
+            {
+                _assembly = value;
+            }
+        }
+
+        T GetAttribute<T>() where T : Attribute
 		{
-			return (T)(_assembly.GetCustomAttributes(typeof(T))).Single();
+			return (T)(Assembly.GetCustomAttributes(typeof(T))).Single();
 		}
 	}
 }

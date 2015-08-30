@@ -18,6 +18,7 @@ using VisualCrypt.Desktop.Views;
 using VisualCrypt.Applications.Models.Settings;
 using VisualCrypt.Desktop.Settings;
 using VisualCrypt.Language.Strings;
+using System.Reflection;
 
 namespace VisualCrypt.Desktop
 {
@@ -34,6 +35,7 @@ namespace VisualCrypt.Desktop
                 StopWatch.Start();
 
                 ConfigureFactory();
+                Service.Get<ResourceWrapper>().Info.SwitchCulture("de");
 
                 var app = new App();
                 app.Startup += App_Startup;
@@ -65,7 +67,11 @@ namespace VisualCrypt.Desktop
           
             Service.Register<IFileService, FileService>(true);
             Service.Register<IBrowserService, BrowserService>(false);
-            Service.Register<IAssemblyInfoProvider, AssemblyInfoProvider>(false);
+
+            Service.Register<IAssemblyInfoProvider, AssemblyInfoProvider>(true);
+            Service.Get<IAssemblyInfoProvider>().Assembly = typeof(Bootstrapper).Assembly;
+
+
             Service.Register<ILifeTimeService, LifeTimeService>(true);
             Service.Register<IClipBoardService, ClipBoardService>(true);
             Service.Register<IWindowManager, WindowManager>(true);
