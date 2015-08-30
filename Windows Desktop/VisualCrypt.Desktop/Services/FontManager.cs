@@ -16,7 +16,7 @@ namespace VisualCrypt.Desktop.Services
         readonly TextBoxController _textBoxController;
         readonly IMessageBoxService _messageBoxService;
         readonly IParamsProvider _paramsProvider;
-        readonly ResourceWrapper _res;
+        readonly ResourceWrapper _resourceWrapper;
 
         public FontManager()
         {
@@ -24,10 +24,10 @@ namespace VisualCrypt.Desktop.Services
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _textBoxController = Service.Get<ITextBoxController>(TextBoxName.TextBox1) as TextBoxController;
             _messageBoxService = Service.Get<IMessageBoxService>();
-            _res = Service.Get<ResourceWrapper>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
             _paramsProvider = Service.Get<IParamsProvider>();
 
-            _res.Info.CultureChanged += delegate
+            _resourceWrapper.Info.CultureChanged += delegate
             {
                 UpdateZoomLevelMenuText();
             };
@@ -57,7 +57,7 @@ namespace VisualCrypt.Desktop.Services
 
             var fontSettings = (FontSettings)_settingsManager.FontSettings;
             var zoomLevel = (int)((_textBoxController.FontSize / fontSettings.FontSize) * 100);
-            var zoomLevelMenuText = string.Format(Language.Strings.Resources.miViewZoomLevelText, zoomLevel);
+            var zoomLevelMenuText = string.Format(_resourceWrapper.miViewZoomLevelText, zoomLevel);
             _settingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
             _settingsManager.EditorSettings.IsZoom100Checked =

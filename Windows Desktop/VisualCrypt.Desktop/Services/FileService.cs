@@ -6,8 +6,8 @@ using Microsoft.Win32;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
-using VisualCrypt.Language;
 using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Services
 {
@@ -15,17 +15,19 @@ namespace VisualCrypt.Desktop.Services
     {
         readonly ILog _log;
         readonly SettingsManager _settingsManager;
+        readonly ResourceWrapper _resourceWrapper;
 
         public FileService()
         {
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _log = Service.Get<ILog>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
         }
         public bool CheckFilenameForQuickSave(string filename)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(filename) || filename == Language.Strings.Resources.constUntitledDotVisualCrypt)
+                if (string.IsNullOrWhiteSpace(filename) || filename == _resourceWrapper.constUntitledDotVisualCrypt)
                     return false;
                 if (!filename.EndsWith(PortableConstants.DotVisualCrypt, StringComparison.Ordinal))
                     return false;

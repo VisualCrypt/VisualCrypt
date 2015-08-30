@@ -6,12 +6,10 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using Prism.Commands;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
-using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
-using VisualCrypt.Language;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Views
 {
@@ -20,10 +18,12 @@ namespace VisualCrypt.Desktop.Views
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
+        readonly ResourceWrapper _resourceWrapper;
         readonly IPrinter _printer;
         readonly IParamsProvider _paramsProvider;
 	    readonly Action<bool> _setIsPasswordSet;
 	    readonly bool _isPasswordSet;
+        public ResourceWrapper ResourceWrapper { get { return _resourceWrapper; } }
 
         public SetPasswordDialog()
         {
@@ -31,6 +31,7 @@ namespace VisualCrypt.Desktop.Views
             _encryptionService = Service.Get<IEncryptionService>();
             _printer = Service.Get<IPrinter>();
             _paramsProvider = Service.Get<IParamsProvider>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
 
             InitializeComponent();
             DataContext = this;
@@ -57,7 +58,7 @@ namespace VisualCrypt.Desktop.Views
                 if (response.IsSuccess)
                 {
                     var sigCount = response.Result.Length;
-                    SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"),
+                    SignificantCharCountText = string.Format(_resourceWrapper.spd_msgXofYUnicodeChars, sigCount.ToString("N0"),
                         NormalizedPassword.MaxSanitizedPasswordLength.ToString("N0"));
                 }
                 else
@@ -77,32 +78,32 @@ namespace VisualCrypt.Desktop.Views
             switch (setPasswordDialogMode)
             {
                 case SetPasswordDialogMode.Set:
-                    Title = "Set Password";
-                    ButtonOk.Content = "Set Password";
+                    Title = _resourceWrapper.spdm_Set_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_Set_OK;
                     break;
                 case SetPasswordDialogMode.Change:
-                    Title = "Change Password";
-                    ButtonOk.Content = "Change Password";
+                    Title = _resourceWrapper.spdm_Change_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_Change_OK;
                     break;
                 case SetPasswordDialogMode.SetAndEncrypt:
-                    Title = "Set Password & Encrypt";
-                    ButtonOk.Content = "Encrypt";
+                    Title = _resourceWrapper.spdm_SetAndEncrypt_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_SetAndEncrypt_OK;
                     break;
                 case SetPasswordDialogMode.SetAndDecrypt:
-                    Title = "Set Password & Decrypt";
-                    ButtonOk.Content = "Decrypt";
+                    Title = _resourceWrapper.spdm_SetAndDecrypt_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_SetAndDecrypt_OK;
                     break;
                 case SetPasswordDialogMode.SetAndEncryptAndSave:
-                    Title = "Set Password, Encrypt and Save";
-                    ButtonOk.Content = "Encrypt and Save";
+                    Title = _resourceWrapper.spdm_SetAndEncryptAndSave_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_SetAndEncryptAndSave_OK;
                     break;
                 case SetPasswordDialogMode.SetAndDecryptLoadedFile:
-                    Title = "Enter password to decrypt loaded file";
-                    ButtonOk.Content = "Decrypt loaded file";
+                    Title = _resourceWrapper.spdm_SetAndDecryptLoadedFile_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_SetAndDecryptLoadedFile_OK;
                     break;
                 case SetPasswordDialogMode.CorrectPassword:
-                    Title = "The current password is not correct";
-                    ButtonOk.Content = "Change Password and decrypt";
+                    Title = _resourceWrapper.spdm_CorrectPassword_Title;
+                    ButtonOk.Content = _resourceWrapper.spdm_CorrectPassword_OK;
                     break;
             }
         }
@@ -142,9 +143,9 @@ namespace VisualCrypt.Desktop.Views
                 if (sigCount == 0)
                 {
                     string warningMessage = PwBox.Text.Length == sigCount
-                        ? "Use empty password?"
-                        : "The password is effectively empty - are you sure?";
-                    var okClicked = await _messageBoxService.Show(warningMessage, "Use empty password?",
+                        ? _resourceWrapper.spd_msgUseEmptyPassword
+                        : _resourceWrapper.spd_msgPasswordEffectivelyEmpty;
+                    var okClicked = await _messageBoxService.Show(warningMessage, _resourceWrapper.spd_msgUseEmptyPassword,
                         RequestButton.OKCancel,
                         RequestImage.Warning) == RequestResult.OK;
                     if (!okClicked)
@@ -267,7 +268,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = VisualCrypt.Language.Strings.Resources.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl}
                     })
                     process.Start();
             }

@@ -5,11 +5,11 @@ namespace VisualCrypt.Applications.Models
 {
     public class PasswordInfo : ViewModelBase
     {
-        ResourceWrapper _res;
+        ResourceWrapper _resourceWrapper;
         public PasswordInfo()
         {
-            _res = Service.Get<ResourceWrapper>();
-            _res.Info.CultureChanged += (sender, args) => RaiseAllChanged();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
+            _resourceWrapper.Info.CultureChanged += (sender, args) => RaiseAllChanged();
         }
 
         void RaiseAllChanged()
@@ -43,19 +43,22 @@ namespace VisualCrypt.Applications.Models
             get
             {
                 return _isPasswordSet
-                    ? Language.Strings.Resources.termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5)
-                    : Language.Strings.Resources.termSetPassword + "...";
+                    ? Service.Get<ResourceWrapper>().termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5)
+                    : Service.Get<ResourceWrapper>().miVCSetPassword;
             }
         }
 
         public string HyperlinkPasswordText
         {
-            get { return _isPasswordSet ? "Change Password" : "Set Password"; }
+            get { return _isPasswordSet 
+                    ? Service.Get<ResourceWrapper>().termChangePassword
+                    : Service.Get<ResourceWrapper>().termSetPassword;
+            }
         }
 
         public string MenuPasswordText
         {
-            get { return _isPasswordSet ? Language.Strings.Resources.miVCChangePassword : Language.Strings.Resources.miVCSetPassword; }
+            get { return _isPasswordSet ? Service.Get<ResourceWrapper>().miVCChangePassword : Service.Get<ResourceWrapper>().miVCSetPassword; }
         }
 
         public void SetIsPasswordSet(bool isPasswordSet)

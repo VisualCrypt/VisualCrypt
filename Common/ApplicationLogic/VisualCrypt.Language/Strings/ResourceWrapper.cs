@@ -844,5 +844,516 @@ namespace VisualCrypt.Language.Strings
                 return Resources.msgDiscardChanges;
             }
         }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Import with encoding: {0}.
+        /// </summary>
+        public  string titleImportWithEncoding
+        {
+            get
+            {
+                return  Resources.titleImportWithEncoding;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public  string termChangePassword
+        {
+            get
+            {
+                return Resources.termChangePassword;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; could not be found..
+        /// </summary>
+        public  string msgFindCouldNotBeFound
+        {
+            get
+            {
+                return Resources.msgFindCouldNotBeFound;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to No match for &apos;{0}&apos; could be found..
+        /// </summary>
+        public  string msgFindRegExNoMatch
+        {
+            get
+            {
+                return Resources.msgFindRegExNoMatch;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Regular Expression Syntax.
+        /// </summary>
+        public string msgReplaceInvalidRegEx
+        {
+            get
+            {
+                return Resources.msgReplaceInvalidRegEx;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} occurrences were replaced..
+        /// </summary>
+        public string msgReplaceOccucancesReplaced
+        {
+            get
+            {
+                return Resources.msgReplaceOccucancesReplaced;
+            }
+        }
+
+
+        /// <summary>
+        ///   Looks up a localized string similar to Replace All.
+        /// </summary>
+        public string termReplaceAll
+        {
+            get
+            {
+                return Resources.termReplaceAll;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing found - Search again from the top of the document?.
+        /// </summary>
+       public string msgNothingFoundSearchFromStart
+        {
+            get
+            {
+                return Resources.msgNothingFoundSearchFromStart;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Binary File.
+        /// </summary>
+        public string termBinary
+        {
+            get
+            {
+                return Resources.termBinary;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive..
+        /// </summary>
+        public string msgFileIsBinary
+        {
+            get
+            {
+                return Resources.msgFileIsBinary;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Export Clear Text (Encoding: {0}).
+        /// </summary>
+        public string titleExportCleartext
+        {
+            get
+            {
+                return Resources.titleExportCleartext;
+            }
+        }
+
+        public string spdm_Change_OK
+        {
+            get
+            {
+                return Resources.spdm_Change_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        public string spdm_Change_Title
+        {
+            get
+            {
+                return Resources.spdm_Change_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password and decrypt.
+        /// </summary>
+        public string spdm_CorrectPassword_OK
+        {
+            get
+            {
+                return Resources.spdm_CorrectPassword_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The current password is not correct.
+        /// </summary>
+        public string spdm_CorrectPassword_Title
+        {
+            get
+            {
+                return Resources.spdm_CorrectPassword_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        public string spdm_Set_OK
+        {
+            get
+            {
+                return Resources.spdm_Set_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        public string spdm_Set_Title
+        {
+            get
+            {
+                return Resources.spdm_Set_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Decrypt.
+        /// </summary>
+        public string spdm_SetAndDecrypt_OK
+        {
+            get
+            {
+                return Resources.spdm_SetAndDecrypt_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password &amp; Decrypt.
+        /// </summary>
+        public string spdm_SetAndDecrypt_Title
+        {
+            get
+            {
+                return Resources.spdm_SetAndDecrypt_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Decrypt loaded file.
+        /// </summary>
+        public string spdm_SetAndDecryptLoadedFile_OK
+        {
+            get
+            {
+                return Resources.spdm_SetAndDecryptLoadedFile_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Enter password to decrypt loaded file.
+        /// </summary>
+        public string spdm_SetAndDecryptLoadedFile_Title
+        {
+            get
+            {
+                return Resources.spdm_SetAndDecryptLoadedFile_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Encrypt.
+        /// </summary>
+        public string spdm_SetAndEncrypt_OK
+        {
+            get
+            {
+                return Resources.spdm_SetAndEncrypt_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password &amp; Encrypt.
+        /// </summary>
+        public string spdm_SetAndEncrypt_Title
+        {
+            get
+            {
+                return Resources.spdm_SetAndEncrypt_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Encrypt and Save.
+        /// </summary>
+        public string spdm_SetAndEncryptAndSave_OK
+        {
+            get
+            {
+                return Resources.spdm_SetAndEncryptAndSave_OK;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password, Encrypt and Save.
+        /// </summary>
+        public string spdm_SetAndEncryptAndSave_Title
+        {
+            get
+            {
+                return Resources.spdm_SetAndEncryptAndSave_Title;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The password is effectively empty - are you sure?.
+        /// </summary>
+        public string spd_msgPasswordEffectivelyEmpty
+        {
+            get
+            {
+                return Resources.spd_msgPasswordEffectivelyEmpty;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Use empty password?.
+        /// </summary>
+        public string spd_msgUseEmptyPassword
+        {
+            get
+            {
+                return Resources.spd_msgUseEmptyPassword;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to {0} of {1} Unicode Characters.
+        /// </summary>
+        public string spd_msgXofYUnicodeChars
+        {
+            get
+            {
+                return Resources.spd_msgXofYUnicodeChars;
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to Password/-phrase:.
+        /// </summary>
+        public string spd_lbl_PasswordOrPhrase
+        {
+            get
+            {
+                return Resources.spd_lbl_PasswordOrPhrase;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Password.
+        /// </summary>
+        public string spd_linktext_GeneratePassword
+        {
+            get
+            {
+                return Resources.spd_linktext_GeneratePassword;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Print Password.
+        /// </summary>
+        public string spd_linktext_PrintPassword
+        {
+            get
+            {
+                return Resources.spd_linktext_PrintPassword;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to from 256 Bit Random Data.
+        /// </summary>
+        public string spd_text_from256BitRD
+        {
+            get
+            {
+                return Resources.spd_text_from256BitRD;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Read more about.
+        /// </summary>
+        public string spd_text_ReadMoreAbout
+        {
+            get
+            {
+                return Resources.spd_text_ReadMoreAbout;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public string termClear
+        {
+            get
+            {
+                return Resources.termClear;
+            }
+        }
+
+        public string spd_linktext_VisualCryptPasswords
+        {
+            get
+            {
+                return Resources.spd_linktext_VisualCryptPasswords;
+            }
+        }
+        /// <summary>
+        ///   Looks up a localized string similar to VisualCrypt 2 (AES 256 Bit, BCrypt - Multi).
+        /// </summary>
+        public string sett_combo_VisualCrypt2
+        {
+            get
+            {
+                return Resources.sett_combo_VisualCrypt2;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to source code.
+        /// </summary>
+        public string sett_linktext_Source
+        {
+            get
+            {
+                return Resources.sett_linktext_Source;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Spec.
+        /// </summary>
+        public string sett_linktext_Spec
+        {
+            get
+            {
+                return Resources.sett_linktext_Spec;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to BCrypt/AES Rounds:.
+        /// </summary>
+        public string sett_text_BCryptAESRounds
+        {
+            get
+            {
+                return Resources.sett_text_BCryptAESRounds;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Default: 2.
+        /// </summary>
+        public string sett_text_default_2_power
+        {
+            get
+            {
+                return Resources.sett_text_default_2_power;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to or view the.
+        /// </summary>
+        public string sett_text_orViewThe
+        {
+            get
+            {
+                return Resources.sett_text_orViewThe;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Read the.
+        /// </summary>
+        public string sett_text_ReadThe
+        {
+            get
+            {
+                return Resources.sett_text_ReadThe;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: A high value will turn encryption and decryption into a very time consuming operation..
+        /// </summary>
+        public string sett_warn_high
+        {
+            get
+            {
+                return Resources.sett_warn_high;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: A low value faciliates brute force and dictionary attacks..
+        /// </summary>
+        public string sett_warn_low
+        {
+            get
+            {
+                return Resources.sett_warn_low;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to The setting influences the required computational work to create the BCrypt hash. A higher value means more work..
+        /// </summary>
+        public string sett_warn_neutral
+        {
+            get
+            {
+                return Resources.sett_warn_neutral;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Defaults.
+        /// </summary>
+        public string termDefaults
+        {
+            get
+            {
+                return Resources.termDefaults;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Defaults.
+        /// </summary>
+        public string sett_text_EncrpytionMethod
+        {
+            get
+            {
+                return Resources.sett_text_EncrpytionMethod;
+            }
+        }
+
     }
 }

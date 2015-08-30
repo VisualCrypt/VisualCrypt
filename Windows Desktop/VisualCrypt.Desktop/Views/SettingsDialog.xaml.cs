@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Prism.Commands;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
-using VisualCrypt.Language;
 using VisualCrypt.Desktop.Services;
 using VisualCrypt.Applications.Services.PortableImplementations;
 using VisualCrypt.Language.Strings;
@@ -20,20 +19,22 @@ namespace VisualCrypt.Desktop.Views
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
         readonly SettingsManager _settingsManager;
-
+        readonly ResourceWrapper _resourceWrapper;
+        public ResourceWrapper ResourceWrapper { get { return _resourceWrapper; } }
        
         public SettingsDialog()
         {
             _messageBoxService =Service.Get<IMessageBoxService>();
             _encryptionService = Service.Get<IEncryptionService>();
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
             InitializeComponent();
             DataContext = this;
 
             LogRounds = _settingsManager.CryptographySettings.LogRounds;
 
-
             PreviewKeyDown += CloseWithEscape;
+            Title = _resourceWrapper.miVCSettings.NoDots();
         }
 
 
@@ -109,7 +110,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = VisualCrypt.Language.Strings.Resources.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl}
                     })
                     process.Start();
             }
@@ -126,7 +127,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = VisualCrypt.Language.Strings.Resources.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl}
                     })
                     process.Start();
             }
@@ -155,13 +156,12 @@ namespace VisualCrypt.Desktop.Views
         {
             if (logRounds == BCrypt.DefaultBCryptRoundsLog2)
             {
-                TextBlockWarning.Text =
-                    "The setting influences the required computational work to create the BCrypt hash. A higher value means more work.";
+                TextBlockWarning.Text = _resourceWrapper.sett_warn_neutral;
                 return;
             }
             TextBlockWarning.Text = logRounds > BCrypt.DefaultBCryptRoundsLog2
-                ? "Warning: A high value will turn encryption and decryption into a very time consuming operation."
-                : "Warning: A low value faciliates brute force and dictionary attacks.";
+                ? _resourceWrapper.sett_warn_high
+                : _resourceWrapper.sett_warn_low;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

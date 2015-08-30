@@ -243,7 +243,7 @@ namespace VisualCrypt.Applications.ViewModels
 
                     var selectedEncoding = importEncodingDialogResult.Item2;
 
-                    string title = string.Format(CultureInfo.InvariantCulture, "Import With Encoding: {0})",
+                    string title = string.Format(CultureInfo.InvariantCulture, _resourceWrapper.titleImportWithEncoding,
                         selectedEncoding);
 
                     var pickFileResult = await _fileService.PickFileAsync(null, DialogFilter.Text, DialogDirection.Open, title);
@@ -279,7 +279,7 @@ namespace VisualCrypt.Applications.ViewModels
         {
             try
             {
-                _browserService.LaunchUrl(Language.Strings.Resources.uriHelpUrl);
+                _browserService.LaunchUrl(_resourceWrapper.uriHelpUrl);
 
             }
             catch (Exception e)
@@ -352,7 +352,7 @@ namespace VisualCrypt.Applications.ViewModels
             if (!await ConfirmToDiscardText())
                 return;
 
-            var pickFileResult = await _fileService.PickFileAsync(null, DialogFilter.VisualCrypt, DialogDirection.Open);
+            var pickFileResult = await _fileService.PickFileAsync(null, DialogFilter.VisualCrypt, DialogDirection.Open,_resourceWrapper.miFileOpen.NoDots());
             if (pickFileResult.Item1)
             {
                 await OpenFileCommon(pickFileResult.Item2);
@@ -376,8 +376,8 @@ namespace VisualCrypt.Applications.ViewModels
                 if (openFileResponse.Result.SaveEncoding == null)
                 {
                     if (await _messageBoxService.Show(
-                        "This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\n" +
-                        "If file is very large the editor may become less responsive.", "Binary File",
+                        _resourceWrapper.msgFileIsBinary,
+                        _resourceWrapper.termBinary,
                         RequestButton.OKCancel, RequestImage.Warning) == RequestResult.Cancel)
                         return;
                 }
@@ -406,7 +406,7 @@ namespace VisualCrypt.Applications.ViewModels
                 tryDecryptLoadFileWithCurrentPassword:
 
                 // We have a password, but we don't know if it's the right one. We must try!
-                using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationDecryptOpenedFile))
+                using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.operationDecryptOpenedFile))
                 {
                     var decryptForDisplayResult =
                         await Task.Run(() => _encryptionService.DecryptForDisplay(FileModel,
@@ -479,7 +479,7 @@ namespace VisualCrypt.Applications.ViewModels
 
                 string textBufferContents = await EditorSendsTextAsync();
 
-                using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationEncryption))
+                using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.operationEncryption))
                 {
                     var createEncryptedFileResponse =
                         await
@@ -539,7 +539,7 @@ namespace VisualCrypt.Applications.ViewModels
 
                 string textBufferContents = await EditorSendsTextAsync();
 
-                using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationDecryption))
+                using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.operationDecryption))
                 {
                     var decryptForDisplayResult =
                         await
@@ -626,7 +626,7 @@ namespace VisualCrypt.Applications.ViewModels
                         suggestedFilename = FileModel.Filename;
 
                     var pickFileResult =
-                        await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save);
+                        await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save,_resourceWrapper.miFileSaveAs);
                     if (pickFileResult.Item1)
                     {
                         FileModel.Filename = pickFileResult.Item2;
@@ -670,7 +670,7 @@ namespace VisualCrypt.Applications.ViewModels
                     suggestedFilename = FileModel.Filename;
 
                 var pickFileResult =
-                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save);
+                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save,_resourceWrapper.miFileSaveAs);
                 if (!pickFileResult.Item1)
                     return;
                 FileModel.Filename = pickFileResult.Item2;
@@ -679,7 +679,7 @@ namespace VisualCrypt.Applications.ViewModels
             // We will not replace FileModel because we continue editing the same cleartext.
             string editorClearText = await EditorSendsTextAsync();
 
-            using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationEncryptAndSave))
+            using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.operationEncryptAndSave))
             {
                 var encryptAndSaveFileResponse =
                     await
@@ -759,7 +759,7 @@ namespace VisualCrypt.Applications.ViewModels
                 if (editorClearText == null)
                     throw new InvalidOperationException("The text received from the editor was null.");
 
-                string title = string.Format(CultureInfo.InvariantCulture, "Export Clear Text (Encoding: {0})",
+                string title = string.Format(CultureInfo.InvariantCulture, _resourceWrapper.titleExportCleartext,
                     FileModel.SaveEncodingName);
 
                 string suggestedFilename =

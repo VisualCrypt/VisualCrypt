@@ -31,7 +31,7 @@ namespace VisualCrypt.Applications.ViewModels
         readonly ITextBoxController _textBoxFind;
         readonly ITextBoxController _textBoxFindReplace;
         readonly ITextBoxController _textBoxGoTo;
-        readonly ResourceWrapper _res;
+        readonly ResourceWrapper _resourceWrapper;
 
 
         public PortableEditorViewModel()
@@ -48,7 +48,7 @@ namespace VisualCrypt.Applications.ViewModels
             _textBoxFindReplace = Service.Get<ITextBoxController>(TextBoxName.TextBoxFindReplace);
             _textBoxGoTo = Service.Get<ITextBoxController>(TextBoxName.TextBoxGoTo);
 
-            _res = Service.Get<ResourceWrapper>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
         }
 
         public void OnViewLoaded()
@@ -58,7 +58,7 @@ namespace VisualCrypt.Applications.ViewModels
             SearchOptions = new SearchOptions();
             _fontManager.ExecuteZoom100();
          
-            _res.Info.CultureChanged += OnCultureChanged;
+            _resourceWrapper.Info.CultureChanged += OnCultureChanged;
 
 
             _textBox1.TextChanged += OnTextChanged;
@@ -389,10 +389,10 @@ namespace VisualCrypt.Applications.ViewModels
             }
 
             if (!found && SearchOptions.UseRegEx == false)
-                await _messageBoxService.Show(string.Format("'{0}' could not be found.", FindString), "Replace",
+                await _messageBoxService.Show(string.Format(_resourceWrapper.msgFindCouldNotBeFound, FindString), _resourceWrapper.miEditReplace.NoDots(),
                     RequestButton.OK, RequestImage.Exclamation);
             if (!found && SearchOptions.UseRegEx)
-                await _messageBoxService.Show(string.Format("No match for '{0}' could be found.", FindString), "Replace",
+                await _messageBoxService.Show(string.Format(_resourceWrapper.msgFindRegExNoMatch, FindString), _resourceWrapper.miEditReplace.NoDots(),
                     RequestButton.OK, RequestImage.Exclamation);
         }
 
@@ -433,11 +433,11 @@ namespace VisualCrypt.Applications.ViewModels
             var image = (count > 0) ? RequestImage.Information : RequestImage.Exclamation;
 
 
-            await _messageBoxService.Show(string.Format("{0} occurrences were replaced.", count), "Replace All",
+            await _messageBoxService.Show(string.Format(_resourceWrapper.msgReplaceOccucancesReplaced, count), _resourceWrapper.termReplaceAll,
                 RequestButton.OK, image);
         }
 
-        async System.Threading.Tasks.Task<SearchResult?> SearchRecoursive(bool wrapSearchPos, bool isReplace)
+        async Task<SearchResult?> SearchRecoursive(bool wrapSearchPos, bool isReplace)
         {
             SearchResult? searchResult;
             try
@@ -448,7 +448,7 @@ namespace VisualCrypt.Applications.ViewModels
             {
                 if (SearchOptions.UseRegEx)
                 {
-                    await _messageBoxService.Show(ae.Message, "Invalid Regular Expression Syntax", RequestButton.OK,
+                    await _messageBoxService.Show(ae.Message,_resourceWrapper.msgReplaceInvalidRegEx, RequestButton.OK,
                         RequestImage.Error);
                     return null;
                 }
@@ -470,7 +470,7 @@ namespace VisualCrypt.Applications.ViewModels
                     if (isReplace && Pos != 0)
                     {
                         var result = await _messageBoxService.Show(
-                            "Nothing found - Search again from the top of the document?", "Replace",
+                           _resourceWrapper.msgNothingFoundSearchFromStart, _resourceWrapper.miEditReplace.NoDots(),
                             RequestButton.OKCancel, RequestImage.Question);
                         if (result == RequestResult.Cancel || result == RequestResult.None)
                             return null;
@@ -482,8 +482,8 @@ namespace VisualCrypt.Applications.ViewModels
                     if (isReplace && Pos != _textBox1.Text.Length)
                     {
                         var result = await
-                            _messageBoxService.Show("Nothing found - Search again from the bottom of the document?",
-                                "Replace",
+                            _messageBoxService.Show(_resourceWrapper.msgNothingFoundSearchFromStart,
+                                _resourceWrapper.miEditReplace.NoDots(),
                                 RequestButton.OKCancel, RequestImage.Question);
                         if (result == RequestResult.Cancel || result == RequestResult.None)
                             return null;
@@ -699,7 +699,7 @@ namespace VisualCrypt.Applications.ViewModels
             var pos = GetPositionString();
             var enc = GetEncodingString();
 
-            var statusBarText = string.Format(CultureInfo.InvariantCulture, Language.Strings.Resources.plaintextStatusbarText, pos, enc);
+            var statusBarText = string.Format(CultureInfo.InvariantCulture, _resourceWrapper.plaintextStatusbarText, pos, enc);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
         }
 
@@ -707,7 +707,7 @@ namespace VisualCrypt.Applications.ViewModels
         {
             return _editorContext.FileModel.SaveEncoding != null ?
                 _editorContext.FileModel.SaveEncoding.ToString()  // This was SaveEncoding.EncodingName
-                : "Hex View";
+                : "HEX";
         }
 
         string GetPositionString()
@@ -716,7 +716,7 @@ namespace VisualCrypt.Applications.ViewModels
             var lineIndex = GetCurrentLineIndex();
             var colIndex = GetColIndex(lineIndex);
 
-            return string.Format(CultureInfo.InvariantCulture, Language.Strings.Resources.plaintextStatusbarPositionInfo, lineIndex + 1, colIndex + 1, rawPos,
+            return string.Format(CultureInfo.InvariantCulture, _resourceWrapper.plaintextStatusbarPositionInfo, lineIndex + 1, colIndex + 1, rawPos,
                 _textBox1.Text.Length);
         }
 
@@ -757,7 +757,7 @@ namespace VisualCrypt.Applications.ViewModels
             _eventAggregator.GetEvent<EditorReceivesText>().Unsubscribe(OnTextReceived);
             _eventAggregator.GetEvent<EditorShouldSendText>().Unsubscribe(OnTextRequested);
             _eventAggregator.GetEvent<EditorShouldCleanup>().Unsubscribe(Cleanup);
-            _res.Info.CultureChanged -= OnCultureChanged;
+            _resourceWrapper.Info.CultureChanged -= OnCultureChanged;
             _textBox1.TextChanged -= OnTextChanged;
             _textBox1.SelectionChanged -= OnSelectionChanged;
         }

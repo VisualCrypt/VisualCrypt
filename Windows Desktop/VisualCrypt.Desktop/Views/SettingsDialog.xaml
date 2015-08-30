@@ -5,10 +5,9 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     xmlns:implementations="clr-namespace:VisualCrypt.Cryptography.VisualCrypt2.Implementations;assembly=VisualCrypt.Cryptography"
-                    
                     xmlns:controls1="clr-namespace:VisualCrypt.Desktop.Controls"
                     mc:Ignorable="d"
-                    Title="Settings" Height="300" Width="500" WindowStartupLocation="CenterOwner"
+                    Height="300" Width="500" WindowStartupLocation="CenterOwner"
                     d:DataContext="{d:DesignInstance views:SettingsDialog}"
                     Background="{DynamicResource BarColorBrush}">
     <Window.Resources>
@@ -29,22 +28,22 @@
                 </Grid.RowDefinitions>
                 <Grid x:Name="ContentRow" Grid.Row="0">
                     <StackPanel HorizontalAlignment="Stretch">
-                        <TextBlock Style="{StaticResource DialogH1Style}" Text="Encryption Method" />
+                        <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding ResourceWrapper.sett_text_EncrpytionMethod, Mode=OneTime}" />
                         <ComboBox>
-                            <ComboBoxItem IsSelected="True">VisualCrypt 2 (AES 256 Bit, BCrypt)</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True" Content="{Binding ResourceWrapper.sett_combo_VisualCrypt2, Mode=OneTime}"></ComboBoxItem>
                         </ComboBox>
                         <TextBlock>
-                            Read the
+                            <Run Text="{Binding ResourceWrapper.sett_text_ReadThe, Mode=OneTime}"></Run>
                             <Hyperlink
-                                ToolTip="{Binding ResourceWrapper.uriPWSpecUrl, Mode=OneWay}"
+                                ToolTip="{Binding ResourceWrapper.uriPWSpecUrl, Mode=OneTime}"
                                 Click="Hyperlink_Spec_OnClick">
-                                Spec
+                                <Run Text="{Binding ResourceWrapper.sett_linktext_Spec, Mode=OneTime}"></Run>
                             </Hyperlink>
-                            or view the
+                           <Run Text="{Binding ResourceWrapper.sett_text_orViewThe, Mode=OneTime}"></Run>
                             <Hyperlink
-                                ToolTip="{Binding ResourceWrapper.uriSourceUrl, Mode=OneWay}"
+                                ToolTip="{Binding ResourceWrapper.uriSourceUrl, Mode=OneTime}"
                                 Click="Hyperlink_Source_OnClick">
-                                Source Code
+                                <Run Text="{Binding ResourceWrapper.sett_linktext_Source, Mode=OneTime}"></Run>
                             </Hyperlink>
                             .
                         </TextBlock>
@@ -52,7 +51,7 @@
                         <StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
                                 <TextBlock>
-                                    <TextBlock Margin="0">BCrypt Rounds:</TextBlock>
+                                    <TextBlock Margin="0"><Run Text="{Binding ResourceWrapper.sett_text_BCryptAESRounds, Mode=OneTime}"></Run></TextBlock>
 
                                 </TextBlock>
                             </StackPanel>
@@ -70,7 +69,7 @@
 
 
                                 <TextBlock>
-                                    Default:  2
+                                    <Run Text="{Binding ResourceWrapper.sett_text_default_2_power, Mode=OneTime}"></Run>
                                     <Run BaselineAlignment="Superscript" FontSize="10"
                                          Text="{Binding Source={x:Static implementations:BCrypt.DefaultBCryptRoundsLog2},Mode=OneWay}" />
                                 </TextBlock>
@@ -83,11 +82,11 @@
                 </Grid>
                 <Grid x:Name="ButtonRow" Grid.Row="1">
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
-                        <Button Content="Defaults" Command="{Binding DefaultsCommand}" />
+                        <Button Content="{Binding ResourceWrapper.termDefaults, Mode=OneTime}" Command="{Binding DefaultsCommand}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Content="Cancel" Click="Button_Click" />
-                        <Button HorizontalAlignment="Right" Content="Save" x:Name="ButtonOk" IsDefault="True"
+                        <Button Content="{Binding ResourceWrapper.termCancel, Mode=OneTime}" Click="Button_Click" />
+                        <Button HorizontalAlignment="Right" Content="{Binding ResourceWrapper.termSave, Mode=OneTime}" x:Name="ButtonOk" IsDefault="True"
                                 Command="{Binding SaveCommand}" />
 
                     </StackPanel>

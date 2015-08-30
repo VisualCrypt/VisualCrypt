@@ -340,4 +340,148 @@
   <data name="miEdit" xml:space="preserve">
     <value>Bearbeiten</value>
   </data>
+  <data name="msgDiscardChanges" xml:space="preserve">
+    <value>Verwerfen?</value>
+  </data>
+  <data name="msgFindRegExNoMatch" xml:space="preserve">
+    <value>Keine Übereinstimmung für '{0}' gefunden.</value>
+  </data>
+  <data name="msgNothingFoundSearchFromStart" xml:space="preserve">
+    <value>Nichts gefunden - Suche erneut vom Anfang des Dokuments?</value>
+  </data>
+  <data name="msgReplaceOccucancesReplaced" xml:space="preserve">
+    <value>{0} wurden ersetzt.</value>
+  </data>
+  <data name="msgReplaceInvalidRegEx" xml:space="preserve">
+    <value>Ungültiger regulärer Ausdruck-Syntax</value>
+  </data>
+  <data name="msgFindCouldNotBeFound" xml:space="preserve">
+    <value>{0}' wurde nicht gefunden.</value>
+  </data>
+  <data name="termChangePassword" xml:space="preserve">
+    <value>Kennwort ändern</value>
+  </data>
+  <data name="termReplaceAll" xml:space="preserve">
+    <value>Alle ersetzen</value>
+  </data>
+  <data name="titleImportWithEncoding" xml:space="preserve">
+    <value>Import mit Codierung: {0}</value>
+  </data>
+  <data name="msgFileIsBinary" xml:space="preserve">
+    <value>Diese Datei ist weder Text noch VisualCrypt - Hex-Ansicht anzeigen? \r\n\r\nIf Editor möglicherweise weniger sehr groß ist.</value>
+  </data>
+  <data name="spdm_Set_Title" xml:space="preserve">
+    <value>Kennwort festlegen</value>
+  </data>
+  <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
+    <value>{0} von {1} Unicode-Zeichen</value>
+  </data>
+  <data name="spd_msgUseEmptyPassword" xml:space="preserve">
+    <value>Leeres Kennwort verwenden?</value>
+  </data>
+  <data name="spd_msgPasswordEffectivelyEmpty" xml:space="preserve">
+    <value>Ist das Kennwort effektiv leer - sind Sie sicher?</value>
+  </data>
+  <data name="spdm_Set_OK" xml:space="preserve">
+    <value>Kennwort festlegen</value>
+  </data>
+  <data name="spdm_SetAndEncrypt_Title" xml:space="preserve">
+    <value>&amp;Das Kennwort verschlüsseln</value>
+  </data>
+  <data name="spdm_SetAndEncrypt_OK" xml:space="preserve">
+    <value>Verschlüsseln</value>
+  </data>
+  <data name="spdm_SetAndEncryptAndSave_Title" xml:space="preserve">
+    <value>Legen Sie ein Kennwort verschlüsseln und speichern</value>
+  </data>
+  <data name="spdm_SetAndEncryptAndSave_OK" xml:space="preserve">
+    <value>Verschlüsseln und speichern</value>
+  </data>
+  <data name="spdm_SetAndDecrypt_Title" xml:space="preserve">
+    <value>Kennwort &amp;entschlüsseln</value>
+  </data>
+  <data name="spdm_SetAndDecrypt_OK" xml:space="preserve">
+    <value>Entschlüsseln</value>
+  </data>
+  <data name="spdm_SetAndDecryptLoadedFile_Title" xml:space="preserve">
+    <value>Kennwort zum Entschlüsseln der Datei</value>
+  </data>
+  <data name="spdm_SetAndDecryptLoadedFile_OK" xml:space="preserve">
+    <value>Geladene Datei entschlüsseln</value>
+  </data>
+  <data name="spdm_CorrectPassword_Title" xml:space="preserve">
+    <value>Das aktuelle Kennwort ist nicht korrekt</value>
+  </data>
+  <data name="spdm_CorrectPassword_OK" xml:space="preserve">
+    <value>Ändern und Entschlüsseln</value>
+  </data>
+  <data name="spdm_Change_Title" xml:space="preserve">
+    <value>Kennwort ändern</value>
+  </data>
+  <data name="spdm_Change_OK" xml:space="preserve">
+    <value>Kennwort ändern</value>
+  </data>
+  <data name="termBinary" xml:space="preserve">
+    <value>Binärdatei</value>
+  </data>
+  <data name="titleExportCleartext" xml:space="preserve">
+    <value>Exportieren von Klartext (Codierung: {0})</value>
+  </data>
+  <data name="spd_linktext_PrintPassword" xml:space="preserve">
+    <value>Kennwort drucken</value>
+  </data>
+  <data name="spd_linktext_GeneratePassword" xml:space="preserve">
+    <value>Kennwort erstellen</value>
+  </data>
+  <data name="spd_lbl_PasswordOrPhrase" xml:space="preserve">
+    <value>Kennwort /-Satz:</value>
+  </data>
+  <data name="spd_text_ReadMoreAbout" xml:space="preserve">
+    <value>Weitere Informationen über</value>
+  </data>
+  <data name="spd_text_from256BitRD" xml:space="preserve">
+    <value>Zufällige 256-Bit-Daten</value>
+  </data>
+  <data name="termClear" xml:space="preserve">
+    <value>Löschen</value>
+  </data>
+  <data name="spd_linktext_VisualCryptPasswords" xml:space="preserve">
+    <value>VisualCrypt Kennwörter</value>
+  </data>
+  <data name="termDefaults" xml:space="preserve">
+    <value>Standardeinstellungen</value>
+  </data>
+  <data name="sett_warn_neutral" xml:space="preserve">
+    <value>Die Einstellung wirkt sich auf die rechnerische arbeiten BCrypt-Hash zu erstellen. Ein hoher Wert bedeutet mehr Arbeit.</value>
+  </data>
+  <data name="sett_warn_low" xml:space="preserve">
+    <value>Warnung: Eine geringwertige ausfallsichere Brute-Force- und Wörterbuchangriffe Angriffe.</value>
+  </data>
+  <data name="sett_warn_high" xml:space="preserve">
+    <value>Warnung: Wert wird Ver- und Entschlüsselung sehr zeitaufwändig Betrieb aktiviert.</value>
+  </data>
+  <data name="sett_text_ReadThe" xml:space="preserve">
+    <value>Lesen Sie die</value>
+  </data>
+  <data name="sett_text_orViewThe" xml:space="preserve">
+    <value>oder die</value>
+  </data>
+  <data name="sett_text_default_2_power" xml:space="preserve">
+    <value>Standard: 2</value>
+  </data>
+  <data name="sett_text_EncrpytionMethod" xml:space="preserve">
+    <value>Verschlüsselung</value>
+  </data>
+  <data name="sett_text_BCryptAESRounds" xml:space="preserve">
+    <value>BCrypt-AES runden:</value>
+  </data>
+  <data name="sett_linktext_Spec" xml:space="preserve">
+    <value>Spezifikationen</value>
+  </data>
+  <data name="sett_linktext_Source" xml:space="preserve">
+    <value>Quellcode</value>
+  </data>
+  <data name="sett_combo_VisualCrypt2" xml:space="preserve">
+    <value>VisualCrypt 2 (AES 256 Bit BCrypt - Multi)</value>
+  </data>
 </root>

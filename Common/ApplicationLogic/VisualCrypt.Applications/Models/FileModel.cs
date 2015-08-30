@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Language.Strings;
 
@@ -9,11 +10,11 @@ namespace VisualCrypt.Applications.Models
     {
         static readonly Encoding VisualCryptTextSaveEncoding = new UTF8Encoding(false, true);
         static readonly Encoding DefaultClearTextSaveEncoding = VisualCryptTextSaveEncoding;
-
         public Action<FileModel> OnFileModelUpdated;
 
         FileModel()
         {
+           
         }
 
 
@@ -130,8 +131,8 @@ namespace VisualCrypt.Applications.Models
         {
             return new FileModel
             {
-                Filename = Resources.constUntitledDotVisualCrypt,
-                ShortFilename = Resources.constUntitledDotVisualCrypt,
+                Filename = Service.Get<ResourceWrapper>().constUntitledDotVisualCrypt,
+                ShortFilename = Service.Get<ResourceWrapper>().constUntitledDotVisualCrypt,
                 ClearTextContents = string.Empty,
                 IsEncrypted = false,
                 SaveEncoding = DefaultClearTextSaveEncoding,

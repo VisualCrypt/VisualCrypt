@@ -1,10 +1,18 @@
-﻿using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
-using VisualCrypt.Language;
+﻿using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Applications.Models
 {
     public class StatusBarModel : ViewModelBase
     {
+        ResourceWrapper _resourceWrapper;
+
+        public StatusBarModel()
+        {
+            _resourceWrapper = Service.Get<ResourceWrapper>();
+        }
+
         public bool IsPlaintextBarVisible
         {
             get { return _isPlaintextBarVisible; }
@@ -102,7 +110,7 @@ namespace VisualCrypt.Applications.Models
 
         public void UpdateEncryptedBarText(FileModel filemodel)
         {
-            string text = string.Format(Language.Strings.Resources.encrpytedStatusbarText, CipherV2.Version,
+            string text = string.Format(_resourceWrapper.encrpytedStatusbarText, CipherV2.Version,
                 filemodel.CipherV2.RoundsExponent.Value, filemodel.VisualCryptText.Length);
             EncrytedBarText = text;
         }

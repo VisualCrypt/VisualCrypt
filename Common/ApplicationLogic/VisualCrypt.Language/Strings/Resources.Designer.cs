@@ -23,7 +23,7 @@ namespace VisualCrypt.Language.Strings {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -37,7 +37,7 @@ namespace VisualCrypt.Language.Strings {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VisualCrypt.Language.Strings.Resources", typeof(Resources).GetTypeInfo().Assembly);
@@ -52,7 +52,7 @@ namespace VisualCrypt.Language.Strings {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,7 +64,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Untitled.visualcrypt.
         /// </summary>
-        public static string constUntitledDotVisualCrypt {
+        internal static string constUntitledDotVisualCrypt {
             get {
                 return ResourceManager.GetString("constUntitledDotVisualCrypt", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Calculating MAC....
         /// </summary>
-        public static string encProgr_CalculatingMAC {
+        internal static string encProgr_CalculatingMAC {
             get {
                 return ResourceManager.GetString("encProgr_CalculatingMAC", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Decrypting MAC....
         /// </summary>
-        public static string encProgr_DecryptingMAC {
+        internal static string encProgr_DecryptingMAC {
             get {
                 return ResourceManager.GetString("encProgr_DecryptingMAC", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Decrypting Message....
         /// </summary>
-        public static string encProgr_DecryptingMessage {
+        internal static string encProgr_DecryptingMessage {
             get {
                 return ResourceManager.GetString("encProgr_DecryptingMessage", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Decrypting Random Key....
         /// </summary>
-        public static string encProgr_DecryptingRandomKey {
+        internal static string encProgr_DecryptingRandomKey {
             get {
                 return ResourceManager.GetString("encProgr_DecryptingRandomKey", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Encrypting MAC....
         /// </summary>
-        public static string encProgr_EncryptingMAC {
+        internal static string encProgr_EncryptingMAC {
             get {
                 return ResourceManager.GetString("encProgr_EncryptingMAC", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Encrypting Message....
         /// </summary>
-        public static string encProgr_EncryptingMessage {
+        internal static string encProgr_EncryptingMessage {
             get {
                 return ResourceManager.GetString("encProgr_EncryptingMessage", resourceCulture);
             }
@@ -127,7 +127,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Encrypting Random Key....
         /// </summary>
-        public static string encProgr_EncryptingRandomKey {
+        internal static string encProgr_EncryptingRandomKey {
             get {
                 return ResourceManager.GetString("encProgr_EncryptingRandomKey", resourceCulture);
             }
@@ -136,7 +136,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Processing Key....
         /// </summary>
-        public static string encProgr_ProcessingKey {
+        internal static string encProgr_ProcessingKey {
             get {
                 return ResourceManager.GetString("encProgr_ProcessingKey", resourceCulture);
             }
@@ -145,7 +145,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch..
         /// </summary>
-        public static string encrpytedStatusbarText {
+        internal static string encrpytedStatusbarText {
             get {
                 return ResourceManager.GetString("encrpytedStatusbarText", resourceCulture);
             }
@@ -154,7 +154,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Hello World!.
         /// </summary>
-        public static string Hello_World {
+        internal static string Hello_World {
             get {
                 return ResourceManager.GetString("Hello_World", resourceCulture);
             }
@@ -163,7 +163,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        public static string miEdit {
+        internal static string miEdit {
             get {
                 return ResourceManager.GetString("miEdit", resourceCulture);
             }
@@ -172,7 +172,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
-        public static string miEditCopy {
+        internal static string miEditCopy {
             get {
                 return ResourceManager.GetString("miEditCopy", resourceCulture);
             }
@@ -181,7 +181,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
-        public static string miEditCut {
+        internal static string miEditCut {
             get {
                 return ResourceManager.GetString("miEditCut", resourceCulture);
             }
@@ -190,7 +190,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Delete Line.
         /// </summary>
-        public static string miEditDeleteLine {
+        internal static string miEditDeleteLine {
             get {
                 return ResourceManager.GetString("miEditDeleteLine", resourceCulture);
             }
@@ -199,7 +199,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Find....
         /// </summary>
-        public static string miEditFind {
+        internal static string miEditFind {
             get {
                 return ResourceManager.GetString("miEditFind", resourceCulture);
             }
@@ -208,7 +208,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Find Next.
         /// </summary>
-        public static string miEditFindNext {
+        internal static string miEditFindNext {
             get {
                 return ResourceManager.GetString("miEditFindNext", resourceCulture);
             }
@@ -217,7 +217,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Find Previous.
         /// </summary>
-        public static string miEditFindPrevious {
+        internal static string miEditFindPrevious {
             get {
                 return ResourceManager.GetString("miEditFindPrevious", resourceCulture);
             }
@@ -226,7 +226,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Go To....
         /// </summary>
-        public static string miEditGoTo {
+        internal static string miEditGoTo {
             get {
                 return ResourceManager.GetString("miEditGoTo", resourceCulture);
             }
@@ -235,7 +235,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Insert Date, Time.
         /// </summary>
-        public static string miEditInsertDateTime {
+        internal static string miEditInsertDateTime {
             get {
                 return ResourceManager.GetString("miEditInsertDateTime", resourceCulture);
             }
@@ -244,7 +244,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
-        public static string miEditPaste {
+        internal static string miEditPaste {
             get {
                 return ResourceManager.GetString("miEditPaste", resourceCulture);
             }
@@ -253,7 +253,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Redo.
         /// </summary>
-        public static string miEditRedo {
+        internal static string miEditRedo {
             get {
                 return ResourceManager.GetString("miEditRedo", resourceCulture);
             }
@@ -262,7 +262,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Replace....
         /// </summary>
-        public static string miEditReplace {
+        internal static string miEditReplace {
             get {
                 return ResourceManager.GetString("miEditReplace", resourceCulture);
             }
@@ -271,7 +271,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Select All.
         /// </summary>
-        public static string miEditSelectAll {
+        internal static string miEditSelectAll {
             get {
                 return ResourceManager.GetString("miEditSelectAll", resourceCulture);
             }
@@ -280,7 +280,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Undo.
         /// </summary>
-        public static string miEditUndo {
+        internal static string miEditUndo {
             get {
                 return ResourceManager.GetString("miEditUndo", resourceCulture);
             }
@@ -289,7 +289,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
-        public static string miFile {
+        internal static string miFile {
             get {
                 return ResourceManager.GetString("miFile", resourceCulture);
             }
@@ -298,7 +298,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Exit.
         /// </summary>
-        public static string miFileExit {
+        internal static string miFileExit {
             get {
                 return ResourceManager.GetString("miFileExit", resourceCulture);
             }
@@ -307,7 +307,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Export Cleartext....
         /// </summary>
-        public static string miFileExportClearText {
+        internal static string miFileExportClearText {
             get {
                 return ResourceManager.GetString("miFileExportClearText", resourceCulture);
             }
@@ -316,7 +316,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Import With Encoding....
         /// </summary>
-        public static string miFileImportWithEnconding {
+        internal static string miFileImportWithEnconding {
             get {
                 return ResourceManager.GetString("miFileImportWithEnconding", resourceCulture);
             }
@@ -325,7 +325,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        public static string miFileNew {
+        internal static string miFileNew {
             get {
                 return ResourceManager.GetString("miFileNew", resourceCulture);
             }
@@ -334,7 +334,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Open....
         /// </summary>
-        public static string miFileOpen {
+        internal static string miFileOpen {
             get {
                 return ResourceManager.GetString("miFileOpen", resourceCulture);
             }
@@ -343,7 +343,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Print....
         /// </summary>
-        public static string miFilePrint {
+        internal static string miFilePrint {
             get {
                 return ResourceManager.GetString("miFilePrint", resourceCulture);
             }
@@ -352,7 +352,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string miFileSave {
+        internal static string miFileSave {
             get {
                 return ResourceManager.GetString("miFileSave", resourceCulture);
             }
@@ -361,7 +361,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Save As....
         /// </summary>
-        public static string miFileSaveAs {
+        internal static string miFileSaveAs {
             get {
                 return ResourceManager.GetString("miFileSaveAs", resourceCulture);
             }
@@ -370,7 +370,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Format.
         /// </summary>
-        public static string miFormat {
+        internal static string miFormat {
             get {
                 return ResourceManager.GetString("miFormat", resourceCulture);
             }
@@ -379,7 +379,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Spellchecking.
         /// </summary>
-        public static string miFormatCheckSpelling {
+        internal static string miFormatCheckSpelling {
             get {
                 return ResourceManager.GetString("miFormatCheckSpelling", resourceCulture);
             }
@@ -388,7 +388,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Font....
         /// </summary>
-        public static string miFormatFont {
+        internal static string miFormatFont {
             get {
                 return ResourceManager.GetString("miFormatFont", resourceCulture);
             }
@@ -397,7 +397,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Word Wrap.
         /// </summary>
-        public static string miFormatWordWrap {
+        internal static string miFormatWordWrap {
             get {
                 return ResourceManager.GetString("miFormatWordWrap", resourceCulture);
             }
@@ -406,7 +406,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Help.
         /// </summary>
-        public static string miHelp {
+        internal static string miHelp {
             get {
                 return ResourceManager.GetString("miHelp", resourceCulture);
             }
@@ -415,7 +415,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to About VisualCrypt....
         /// </summary>
-        public static string miHelpAbout {
+        internal static string miHelpAbout {
             get {
                 return ResourceManager.GetString("miHelpAbout", resourceCulture);
             }
@@ -424,7 +424,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Log....
         /// </summary>
-        public static string miHelpLog {
+        internal static string miHelpLog {
             get {
                 return ResourceManager.GetString("miHelpLog", resourceCulture);
             }
@@ -433,7 +433,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to View Help Online.
         /// </summary>
-        public static string miHelpViewOnline {
+        internal static string miHelpViewOnline {
             get {
                 return ResourceManager.GetString("miHelpViewOnline", resourceCulture);
             }
@@ -442,7 +442,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to VisualCrypt.
         /// </summary>
-        public static string miVC {
+        internal static string miVC {
             get {
                 return ResourceManager.GetString("miVC", resourceCulture);
             }
@@ -451,7 +451,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Change Password....
         /// </summary>
-        public static string miVCChangePassword {
+        internal static string miVCChangePassword {
             get {
                 return ResourceManager.GetString("miVCChangePassword", resourceCulture);
             }
@@ -460,7 +460,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Decrypt.
         /// </summary>
-        public static string miVCDecrypt {
+        internal static string miVCDecrypt {
             get {
                 return ResourceManager.GetString("miVCDecrypt", resourceCulture);
             }
@@ -469,7 +469,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Encrypt.
         /// </summary>
-        public static string miVCEncrypt {
+        internal static string miVCEncrypt {
             get {
                 return ResourceManager.GetString("miVCEncrypt", resourceCulture);
             }
@@ -478,7 +478,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Set Password....
         /// </summary>
-        public static string miVCSetPassword {
+        internal static string miVCSetPassword {
             get {
                 return ResourceManager.GetString("miVCSetPassword", resourceCulture);
             }
@@ -487,7 +487,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Settings....
         /// </summary>
-        public static string miVCSettings {
+        internal static string miVCSettings {
             get {
                 return ResourceManager.GetString("miVCSettings", resourceCulture);
             }
@@ -496,7 +496,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
-        public static string miView {
+        internal static string miView {
             get {
                 return ResourceManager.GetString("miView", resourceCulture);
             }
@@ -505,7 +505,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
-        public static string miViewLanguage {
+        internal static string miViewLanguage {
             get {
                 return ResourceManager.GetString("miViewLanguage", resourceCulture);
             }
@@ -514,7 +514,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Status Bar.
         /// </summary>
-        public static string miViewStatusBar {
+        internal static string miViewStatusBar {
             get {
                 return ResourceManager.GetString("miViewStatusBar", resourceCulture);
             }
@@ -523,7 +523,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Tool Area.
         /// </summary>
-        public static string miViewToolArea {
+        internal static string miViewToolArea {
             get {
                 return ResourceManager.GetString("miViewToolArea", resourceCulture);
             }
@@ -532,7 +532,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Zoom In.
         /// </summary>
-        public static string miViewZoomIn {
+        internal static string miViewZoomIn {
             get {
                 return ResourceManager.GetString("miViewZoomIn", resourceCulture);
             }
@@ -541,7 +541,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Zoom ({0}%).
         /// </summary>
-        public static string miViewZoomLevelText {
+        internal static string miViewZoomLevelText {
             get {
                 return ResourceManager.GetString("miViewZoomLevelText", resourceCulture);
             }
@@ -550,7 +550,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Zoom Out.
         /// </summary>
-        public static string miViewZoomOut {
+        internal static string miViewZoomOut {
             get {
                 return ResourceManager.GetString("miViewZoomOut", resourceCulture);
             }
@@ -559,25 +559,79 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Discard Changes?.
         /// </summary>
-        public static string msgDiscardChanges {
+        internal static string msgDiscardChanges {
             get {
                 return ResourceManager.GetString("msgDiscardChanges", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive..
+        /// </summary>
+        internal static string msgFileIsBinary {
+            get {
+                return ResourceManager.GetString("msgFileIsBinary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &apos;{0}&apos; could not be found..
+        /// </summary>
+        internal static string msgFindCouldNotBeFound {
+            get {
+                return ResourceManager.GetString("msgFindCouldNotBeFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No match for &apos;{0}&apos; could be found..
+        /// </summary>
+        internal static string msgFindRegExNoMatch {
+            get {
+                return ResourceManager.GetString("msgFindRegExNoMatch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Nothing found - Search again from the top of the document?.
+        /// </summary>
+        internal static string msgNothingFoundSearchFromStart {
+            get {
+                return ResourceManager.GetString("msgNothingFoundSearchFromStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Incorrect password or corrupted/forged message..
         /// </summary>
-        public static string msgPasswordError {
+        internal static string msgPasswordError {
             get {
                 return ResourceManager.GetString("msgPasswordError", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Regular Expression Syntax.
+        /// </summary>
+        internal static string msgReplaceInvalidRegEx {
+            get {
+                return ResourceManager.GetString("msgReplaceInvalidRegEx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} occurrences were replaced..
+        /// </summary>
+        internal static string msgReplaceOccucancesReplaced {
+            get {
+                return ResourceManager.GetString("msgReplaceOccucancesReplaced", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Decrypting:.
         /// </summary>
-        public static string operationDecryption {
+        internal static string operationDecryption {
             get {
                 return ResourceManager.GetString("operationDecryption", resourceCulture);
             }
@@ -586,7 +640,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Decrypting the file being opened:.
         /// </summary>
-        public static string operationDecryptOpenedFile {
+        internal static string operationDecryptOpenedFile {
             get {
                 return ResourceManager.GetString("operationDecryptOpenedFile", resourceCulture);
             }
@@ -595,7 +649,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Encrypting and saving:.
         /// </summary>
-        public static string operationEncryptAndSave {
+        internal static string operationEncryptAndSave {
             get {
                 return ResourceManager.GetString("operationEncryptAndSave", resourceCulture);
             }
@@ -604,7 +658,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Encrypting:.
         /// </summary>
-        public static string operationEncryption {
+        internal static string operationEncryption {
             get {
                 return ResourceManager.GetString("operationEncryption", resourceCulture);
             }
@@ -613,7 +667,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Ln {0}, Col {1} | Pos {2}/{3}.
         /// </summary>
-        public static string plaintextStatusbarPositionInfo {
+        internal static string plaintextStatusbarPositionInfo {
             get {
                 return ResourceManager.GetString("plaintextStatusbarPositionInfo", resourceCulture);
             }
@@ -622,25 +676,358 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Plaintext | {0} | {1}.
         /// </summary>
-        public static string plaintextStatusbarText {
+        internal static string plaintextStatusbarText {
             get {
                 return ResourceManager.GetString("plaintextStatusbarText", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to VisualCrypt 2 (AES 256 Bit, BCrypt - Multi).
+        /// </summary>
+        internal static string sett_combo_VisualCrypt2 {
+            get {
+                return ResourceManager.GetString("sett_combo_VisualCrypt2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to source code.
+        /// </summary>
+        internal static string sett_linktext_Source {
+            get {
+                return ResourceManager.GetString("sett_linktext_Source", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Spec.
+        /// </summary>
+        internal static string sett_linktext_Spec {
+            get {
+                return ResourceManager.GetString("sett_linktext_Spec", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to BCrypt/AES Rounds:.
+        /// </summary>
+        internal static string sett_text_BCryptAESRounds {
+            get {
+                return ResourceManager.GetString("sett_text_BCryptAESRounds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default: 2.
+        /// </summary>
+        internal static string sett_text_default_2_power {
+            get {
+                return ResourceManager.GetString("sett_text_default_2_power", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encryption Method.
+        /// </summary>
+        internal static string sett_text_EncrpytionMethod {
+            get {
+                return ResourceManager.GetString("sett_text_EncrpytionMethod", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to or view the.
+        /// </summary>
+        internal static string sett_text_orViewThe {
+            get {
+                return ResourceManager.GetString("sett_text_orViewThe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read the.
+        /// </summary>
+        internal static string sett_text_ReadThe {
+            get {
+                return ResourceManager.GetString("sett_text_ReadThe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: A high value will turn encryption and decryption into a very time consuming operation..
+        /// </summary>
+        internal static string sett_warn_high {
+            get {
+                return ResourceManager.GetString("sett_warn_high", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning: A low value faciliates brute force and dictionary attacks..
+        /// </summary>
+        internal static string sett_warn_low {
+            get {
+                return ResourceManager.GetString("sett_warn_low", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The setting influences the required computational work to create the BCrypt hash. A higher value means more work..
+        /// </summary>
+        internal static string sett_warn_neutral {
+            get {
+                return ResourceManager.GetString("sett_warn_neutral", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Password/-phrase:.
+        /// </summary>
+        internal static string spd_lbl_PasswordOrPhrase {
+            get {
+                return ResourceManager.GetString("spd_lbl_PasswordOrPhrase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Password.
+        /// </summary>
+        internal static string spd_linktext_GeneratePassword {
+            get {
+                return ResourceManager.GetString("spd_linktext_GeneratePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print Password.
+        /// </summary>
+        internal static string spd_linktext_PrintPassword {
+            get {
+                return ResourceManager.GetString("spd_linktext_PrintPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to VisualCrypt Passwords.
+        /// </summary>
+        internal static string spd_linktext_VisualCryptPasswords {
+            get {
+                return ResourceManager.GetString("spd_linktext_VisualCryptPasswords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The password is effectively empty - are you sure?.
+        /// </summary>
+        internal static string spd_msgPasswordEffectivelyEmpty {
+            get {
+                return ResourceManager.GetString("spd_msgPasswordEffectivelyEmpty", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use empty password?.
+        /// </summary>
+        internal static string spd_msgUseEmptyPassword {
+            get {
+                return ResourceManager.GetString("spd_msgUseEmptyPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} of {1} Unicode Characters.
+        /// </summary>
+        internal static string spd_msgXofYUnicodeChars {
+            get {
+                return ResourceManager.GetString("spd_msgXofYUnicodeChars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to from 256 Bit Random Data.
+        /// </summary>
+        internal static string spd_text_from256BitRD {
+            get {
+                return ResourceManager.GetString("spd_text_from256BitRD", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Read more about.
+        /// </summary>
+        internal static string spd_text_ReadMoreAbout {
+            get {
+                return ResourceManager.GetString("spd_text_ReadMoreAbout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        internal static string spdm_Change_OK {
+            get {
+                return ResourceManager.GetString("spdm_Change_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        internal static string spdm_Change_Title {
+            get {
+                return ResourceManager.GetString("spdm_Change_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Password and decrypt.
+        /// </summary>
+        internal static string spdm_CorrectPassword_OK {
+            get {
+                return ResourceManager.GetString("spdm_CorrectPassword_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The current password is not correct.
+        /// </summary>
+        internal static string spdm_CorrectPassword_Title {
+            get {
+                return ResourceManager.GetString("spdm_CorrectPassword_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        internal static string spdm_Set_OK {
+            get {
+                return ResourceManager.GetString("spdm_Set_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password.
+        /// </summary>
+        internal static string spdm_Set_Title {
+            get {
+                return ResourceManager.GetString("spdm_Set_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decrypt.
+        /// </summary>
+        internal static string spdm_SetAndDecrypt_OK {
+            get {
+                return ResourceManager.GetString("spdm_SetAndDecrypt_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password &amp; Decrypt.
+        /// </summary>
+        internal static string spdm_SetAndDecrypt_Title {
+            get {
+                return ResourceManager.GetString("spdm_SetAndDecrypt_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decrypt loaded file.
+        /// </summary>
+        internal static string spdm_SetAndDecryptLoadedFile_OK {
+            get {
+                return ResourceManager.GetString("spdm_SetAndDecryptLoadedFile_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter password to decrypt loaded file.
+        /// </summary>
+        internal static string spdm_SetAndDecryptLoadedFile_Title {
+            get {
+                return ResourceManager.GetString("spdm_SetAndDecryptLoadedFile_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encrypt.
+        /// </summary>
+        internal static string spdm_SetAndEncrypt_OK {
+            get {
+                return ResourceManager.GetString("spdm_SetAndEncrypt_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password &amp; Encrypt.
+        /// </summary>
+        internal static string spdm_SetAndEncrypt_Title {
+            get {
+                return ResourceManager.GetString("spdm_SetAndEncrypt_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encrypt and Save.
+        /// </summary>
+        internal static string spdm_SetAndEncryptAndSave_OK {
+            get {
+                return ResourceManager.GetString("spdm_SetAndEncryptAndSave_OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Set Password, Encrypt and Save.
+        /// </summary>
+        internal static string spdm_SetAndEncryptAndSave_Title {
+            get {
+                return ResourceManager.GetString("spdm_SetAndEncryptAndSave_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Binary File.
+        /// </summary>
+        internal static string termBinary {
+            get {
+                return ResourceManager.GetString("termBinary", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string termCancel {
+        internal static string termCancel {
             get {
                 return ResourceManager.GetString("termCancel", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change Password.
+        /// </summary>
+        internal static string termChangePassword {
+            get {
+                return ResourceManager.GetString("termChangePassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear.
+        /// </summary>
+        internal static string termClear {
+            get {
+                return ResourceManager.GetString("termClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Copy to Clipboard.
         /// </summary>
-        public static string termCopyToClipboard {
+        internal static string termCopyToClipboard {
             get {
                 return ResourceManager.GetString("termCopyToClipboard", resourceCulture);
             }
@@ -649,16 +1036,25 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Decrypt.
         /// </summary>
-        public static string termDecrypt {
+        internal static string termDecrypt {
             get {
                 return ResourceManager.GetString("termDecrypt", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Defaults.
+        /// </summary>
+        internal static string termDefaults {
+            get {
+                return ResourceManager.GetString("termDefaults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Encrypt!.
         /// </summary>
-        public static string termEncrypt {
+        internal static string termEncrypt {
             get {
                 return ResourceManager.GetString("termEncrypt", resourceCulture);
             }
@@ -667,16 +1063,25 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
-        public static string termPassword {
+        internal static string termPassword {
             get {
                 return ResourceManager.GetString("termPassword", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace All.
+        /// </summary>
+        internal static string termReplaceAll {
+            get {
+                return ResourceManager.GetString("termReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string termSave {
+        internal static string termSave {
             get {
                 return ResourceManager.GetString("termSave", resourceCulture);
             }
@@ -685,16 +1090,34 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to Set Password.
         /// </summary>
-        public static string termSetPassword {
+        internal static string termSetPassword {
             get {
                 return ResourceManager.GetString("termSetPassword", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Export Clear Text (Encoding: {0}).
+        /// </summary>
+        internal static string titleExportCleartext {
+            get {
+                return ResourceManager.GetString("titleExportCleartext", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Import with encoding: {0}.
+        /// </summary>
+        internal static string titleImportWithEncoding {
+            get {
+                return ResourceManager.GetString("titleImportWithEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to https://visualcrypt.com.
         /// </summary>
-        public static string uriHelpUrl {
+        internal static string uriHelpUrl {
             get {
                 return ResourceManager.GetString("uriHelpUrl", resourceCulture);
             }
@@ -703,7 +1126,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to https://visualcrypt.com.
         /// </summary>
-        public static string uriPWSpecUrl {
+        internal static string uriPWSpecUrl {
             get {
                 return ResourceManager.GetString("uriPWSpecUrl", resourceCulture);
             }
@@ -712,7 +1135,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to https://visualcrypt.com.
         /// </summary>
-        public static string uriSourceUrl {
+        internal static string uriSourceUrl {
             get {
                 return ResourceManager.GetString("uriSourceUrl", resourceCulture);
             }
@@ -721,7 +1144,7 @@ namespace VisualCrypt.Language.Strings {
         /// <summary>
         ///   Looks up a localized string similar to https://visualcrypt.com.
         /// </summary>
-        public static string uriSpecUrl {
+        internal static string uriSpecUrl {
             get {
                 return ResourceManager.GetString("uriSpecUrl", resourceCulture);
             }

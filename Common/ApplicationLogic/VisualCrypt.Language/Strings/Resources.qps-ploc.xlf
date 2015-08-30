@@ -58,6 +58,194 @@
           <source>Discard Changes?</source>
           <target state="new">Discard Changes?</target>
         </trans-unit>
+        <trans-unit id="Resx/msgFileIsBinary" translate="yes" xml:space="preserve">
+          <source>This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</source>
+          <target state="new">This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgFindRegExNoMatch" translate="yes" xml:space="preserve">
+          <source>No match for '{0}' could be found.</source>
+          <target state="new">No match for '{0}' could be found.</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgNothingFoundSearchFromStart" translate="yes" xml:space="preserve">
+          <source>Nothing found - Search again from the top of the document?</source>
+          <target state="new">Nothing found - Search again from the top of the document?</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgReplaceOccucancesReplaced" translate="yes" xml:space="preserve">
+          <source>{0} occurrences were replaced.</source>
+          <target state="new">{0} occurrences were replaced.</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_Set_Title" translate="yes" xml:space="preserve">
+          <source>Set Password</source>
+          <target state="new">Set Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_linktext_PrintPassword" translate="yes" xml:space="preserve">
+          <source>Print Password</source>
+          <target state="new">Print Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_linktext_VisualCryptPasswords" translate="yes" xml:space="preserve">
+          <source>VisualCrypt Passwords</source>
+          <target state="new">VisualCrypt Passwords</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_linktext_GeneratePassword" translate="yes" xml:space="preserve">
+          <source>Generate Password</source>
+          <target state="new">Generate Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_lbl_PasswordOrPhrase" translate="yes" xml:space="preserve">
+          <source>Password/-phrase:</source>
+          <target state="new">Password/-phrase:</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_msgXofYUnicodeChars" translate="yes" xml:space="preserve">
+          <source>{0} of {1} Unicode Characters</source>
+          <target state="new">{0} of {1} Unicode Characters</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_text_ReadMoreAbout" translate="yes" xml:space="preserve">
+          <source>Read more about</source>
+          <target state="new">Read more about</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_text_from256BitRD" translate="yes" xml:space="preserve">
+          <source>from 256 Bit Random Data</source>
+          <target state="new">from 256 Bit Random Data</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_msgUseEmptyPassword" translate="yes" xml:space="preserve">
+          <source>Use empty password?</source>
+          <target state="new">Use empty password?</target>
+        </trans-unit>
+        <trans-unit id="Resx/spd_msgPasswordEffectivelyEmpty" translate="yes" xml:space="preserve">
+          <source>The password is effectively empty - are you sure?</source>
+          <target state="new">The password is effectively empty - are you sure?</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_Set_OK" translate="yes" xml:space="preserve">
+          <source>Set Password</source>
+          <target state="new">Set Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndEncrypt_Title" translate="yes" xml:space="preserve">
+          <source>Set Password %%amp; Encrypt</source>
+          <target state="new">Set Password %%amp; Encrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndEncrypt_OK" translate="yes" xml:space="preserve">
+          <source>Encrypt</source>
+          <target state="new">Encrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndEncryptAndSave_Title" translate="yes" xml:space="preserve">
+          <source>Set Password, Encrypt and Save</source>
+          <target state="new">Set Password, Encrypt and Save</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndEncryptAndSave_OK" translate="yes" xml:space="preserve">
+          <source>Encrypt and Save</source>
+          <target state="new">Encrypt and Save</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndDecrypt_Title" translate="yes" xml:space="preserve">
+          <source>Set Password %%amp; Decrypt</source>
+          <target state="new">Set Password %%amp; Decrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndDecrypt_OK" translate="yes" xml:space="preserve">
+          <source>Decrypt</source>
+          <target state="new">Decrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndDecryptLoadedFile_Title" translate="yes" xml:space="preserve">
+          <source>Enter password to decrypt loaded file</source>
+          <target state="new">Enter password to decrypt loaded file</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_SetAndDecryptLoadedFile_OK" translate="yes" xml:space="preserve">
+          <source>Decrypt loaded file</source>
+          <target state="new">Decrypt loaded file</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_CorrectPassword_Title" translate="yes" xml:space="preserve">
+          <source>The current password is not correct</source>
+          <target state="new">The current password is not correct</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_CorrectPassword_OK" translate="yes" xml:space="preserve">
+          <source>Change Password and decrypt</source>
+          <target state="new">Change Password and decrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_Change_Title" translate="yes" xml:space="preserve">
+          <source>Change Password</source>
+          <target state="new">Change Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/spdm_Change_OK" translate="yes" xml:space="preserve">
+          <source>Change Password</source>
+          <target state="new">Change Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/termBinary" translate="yes" xml:space="preserve">
+          <source>Binary File</source>
+          <target state="new">Binary File</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgReplaceInvalidRegEx" translate="yes" xml:space="preserve">
+          <source>Invalid Regular Expression Syntax</source>
+          <target state="new">Invalid Regular Expression Syntax</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgFindCouldNotBeFound" translate="yes" xml:space="preserve">
+          <source>'{0}' could not be found.</source>
+          <target state="new">'{0}' could not be found.</target>
+        </trans-unit>
+        <trans-unit id="Resx/termChangePassword" translate="yes" xml:space="preserve">
+          <source>Change Password</source>
+          <target state="new">Change Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/termClear" translate="yes" xml:space="preserve">
+          <source>Clear</source>
+          <target state="new">Clear</target>
+        </trans-unit>
+        <trans-unit id="Resx/termReplaceAll" translate="yes" xml:space="preserve">
+          <source>Replace All</source>
+          <target state="new">Replace All</target>
+        </trans-unit>
+        <trans-unit id="Resx/titleExportCleartext" translate="yes" xml:space="preserve">
+          <source>Export Clear Text (Encoding: {0})</source>
+          <target state="new">Export Clear Text (Encoding: {0})</target>
+        </trans-unit>
+        <trans-unit id="Resx/titleImportWithEncoding" translate="yes" xml:space="preserve">
+          <source>Import with encoding: {0}</source>
+          <target state="new">Import with encoding: {0}</target>
+        </trans-unit>
+        <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
+          <source>Defaults</source>
+          <target state="new">Defaults</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
+          <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
+          <target state="new">The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_warn_low" translate="yes" xml:space="preserve">
+          <source>Warning: A low value faciliates brute force and dictionary attacks.</source>
+          <target state="new">Warning: A low value faciliates brute force and dictionary attacks.</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_warn_high" translate="yes" xml:space="preserve">
+          <source>Warning: A high value will turn encryption and decryption into a very time consuming operation.</source>
+          <target state="new">Warning: A high value will turn encryption and decryption into a very time consuming operation.</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_text_ReadThe" translate="yes" xml:space="preserve">
+          <source>Read the</source>
+          <target state="new">Read the</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_text_orViewThe" translate="yes" xml:space="preserve">
+          <source>or view the</source>
+          <target state="new">or view the</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_text_default_2_power" translate="yes" xml:space="preserve">
+          <source>Default: 2</source>
+          <target state="new">Default: 2</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
+          <source>Encryption Method</source>
+          <target state="new">Encryption Method</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
+          <source>BCrypt/AES Rounds:</source>
+          <target state="new">BCrypt/AES Rounds:</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_linktext_Spec" translate="yes" xml:space="preserve">
+          <source>Spec</source>
+          <target state="new">Spec</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_linktext_Source" translate="yes" xml:space="preserve">
+          <source>source code</source>
+          <target state="new">source code</target>
+        </trans-unit>
+        <trans-unit id="Resx/sett_combo_VisualCrypt2" translate="yes" xml:space="preserve">
+          <source>VisualCrypt 2 (AES 256 Bit, BCrypt - Multi)</source>
+          <target state="new">VisualCrypt 2 (AES 256 Bit, BCrypt - Multi)</target>
+        </trans-unit>
         <trans-unit id="Resx/uriSourceUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com</source>
           <target state="new">https://visualcrypt.com</target>
