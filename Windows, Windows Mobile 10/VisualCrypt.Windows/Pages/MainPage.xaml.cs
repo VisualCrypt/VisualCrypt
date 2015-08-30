@@ -6,19 +6,20 @@ using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Windows.Services;
 using Windows.UI.Xaml.Controls;
+using VisualCrypt.Applications.Services.PortableImplementations;
 
 namespace VisualCrypt.Windows.Pages
 {
     public sealed partial class MainPage
     {
         readonly PortableMainViewModel _viewModel;
-        readonly ISettingsManager _settingsManager;
+        readonly SettingsManager _settingsManager;
 
         public MainPage()
         {
             InitializeComponent();
             _viewModel = Service.Get<PortableMainViewModel>();
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             TopBar.Opening += TopBarOpened;
             TopBar.Closing += TopBarClosed;
             TopBar.ClosedDisplayMode = AppBarClosedDisplayMode.Compact;

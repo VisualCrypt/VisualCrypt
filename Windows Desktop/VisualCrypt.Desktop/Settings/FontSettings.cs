@@ -6,11 +6,12 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using VisualCrypt.Applications.Models.Settings;
 
 namespace VisualCrypt.Desktop.Settings
 {
     [DataContract]
-    public class FontSettings : INotifyPropertyChanged
+    public class FontSettings : IFontSettings, INotifyPropertyChanged
     {
         public FontFamily FontFamily { get; set; }
 
@@ -39,8 +40,6 @@ namespace VisualCrypt.Desktop.Settings
             set { FontStretch = FontStretch.FromOpenTypeStretch(value); }
         }
 
-
-
         [DataMember]
         public string SerializableFontStyle
         {
@@ -54,7 +53,6 @@ namespace VisualCrypt.Desktop.Settings
             get { return FontWeight.ToOpenTypeWeight(); }
             set { FontWeight = FontWeight.FromOpenTypeWeight(value); }
         }
-
 
         FontStyle GetFontStyleFromString(string fonstStyleString)
         {
@@ -73,7 +71,6 @@ namespace VisualCrypt.Desktop.Settings
                     throw new ArgumentException("Invalid FontStyle descriptor.");
             }
         }
-
 
         public void ApplyToTextBox(TextBox textBox)
         {

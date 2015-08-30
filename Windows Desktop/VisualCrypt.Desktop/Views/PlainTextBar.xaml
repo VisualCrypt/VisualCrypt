@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+             
              xmlns:viewModels="clr-namespace:VisualCrypt.Applications.ViewModels;assembly=VisualCrypt.Applications"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300" d:DataContext="{d:DesignInstance viewModels:PortableMainViewModel}">
@@ -35,16 +35,16 @@
         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock>
                 <Hyperlink Click="Hyperlink_Encrypt_Click">
-                    <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termEncrypt,Mode=OneWay}" />
+                    <Run Text="{Binding ResourceWrapper.termEncrypt,Mode=OneWay}" />
                 </Hyperlink>
                 <Run xml:space="preserve" />
                 <Hyperlink Click="Hyperlink_Decrypt_Click">
-                    <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termDecrypt,Mode=OneWay}" />
+                    <Run Text="{Binding ResourceWrapper.termDecrypt,Mode=OneWay}" />
                 </Hyperlink>
                 <Run xml:space="preserve" />
                 <Hyperlink Click="Hyperlink_Save_Click"
                            IsEnabled="{Binding Path=FileModel.IsDirty}">
-                    <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termSave,Mode=OneWay}" />
+                    <Run Text="{Binding ResourceWrapper.termSave,Mode=OneWay}" />
                 </Hyperlink>
                 <Run xml:space="preserve" />
             </TextBlock>

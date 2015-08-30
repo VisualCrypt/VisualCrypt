@@ -1,11 +1,11 @@
 ﻿using System;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.Services.PortableImplementations;
 using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Desktop.Settings;
 using VisualCrypt.Desktop.Views.Fonts;
-using VisualCrypt.Language;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Services
 {
@@ -16,16 +16,18 @@ namespace VisualCrypt.Desktop.Services
         readonly TextBoxController _textBoxController;
         readonly IMessageBoxService _messageBoxService;
         readonly IParamsProvider _paramsProvider;
+        readonly ResourceWrapper _res;
 
         public FontManager()
         {
             _windowManager = Service.Get<IWindowManager>();
-            _settingsManager = (SettingsManager)Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _textBoxController = Service.Get<ITextBoxController>(TextBoxName.TextBox1) as TextBoxController;
             _messageBoxService = Service.Get<IMessageBoxService>();
+            _res = Service.Get<ResourceWrapper>();
             _paramsProvider = Service.Get<IParamsProvider>();
 
-            Loc.LocaleChanged += delegate
+            _res.Info.CultureChanged += delegate
             {
                 UpdateZoomLevelMenuText();
             };
@@ -33,7 +35,7 @@ namespace VisualCrypt.Desktop.Services
 
         public void ApplyFontsFromSettingsToEditor()
         {
-            var fontSettings = _settingsManager.FontSettings;
+            var fontSettings = (FontSettings)_settingsManager.FontSettings;
             _textBoxController.ApplyFontSettings(fontSettings);
         }
 
@@ -52,14 +54,14 @@ namespace VisualCrypt.Desktop.Services
 
         void UpdateZoomLevelMenuText()
         {
-            
 
-            var zoomLevel = (int)((_textBoxController.FontSize / (_settingsManager.FontSettings).FontSize) * 100);
-            var zoomLevelMenuText = string.Format(Loc.Strings.miViewZoomLevelText, zoomLevel);
+            var fontSettings = (FontSettings)_settingsManager.FontSettings;
+            var zoomLevel = (int)((_textBoxController.FontSize / fontSettings.FontSize) * 100);
+            var zoomLevelMenuText = string.Format(Language.Strings.Resources.miViewZoomLevelText, zoomLevel);
             _settingsManager.EditorSettings.ZoomLevelMenuText = zoomLevelMenuText;
 
             _settingsManager.EditorSettings.IsZoom100Checked =
-                Math.Abs(((_textBoxController.FontSize / (_settingsManager.FontSettings).FontSize) * 100) - 100) < 0.1;
+                Math.Abs(((_textBoxController.FontSize / fontSettings.FontSize) * 100) - 100) < 0.1;
         }
 
         public bool CanExecuteChooseFont()

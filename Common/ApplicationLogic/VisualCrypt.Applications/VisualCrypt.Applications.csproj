@@ -49,6 +49,9 @@
     <Compile Include="Models\FilesPageCommand.cs" />
     <Compile Include="Models\IFileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Models\Settings\IFontSettings.cs" />
+    <Compile Include="Models\Settings\SerializableVisualCryptSettings.cs" />
+    <Compile Include="Services\PortableImplementations\AbstractSettingsManager.cs" />
     <Compile Include="Services\Interfaces\ILocale.cs" />
     <Compile Include="Services\Interfaces\IParamsProvider.cs" />
     <Compile Include="Services\Interfaces\RequestButton.cs" />
@@ -89,14 +92,12 @@
     <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
     <Compile Include="Services\Interfaces\INavigationService.cs" />
     <Compile Include="Services\Interfaces\IPasswordDialogDispatcher.cs" />
-    <Compile Include="Services\Interfaces\ISettingsManager.cs" />
     <Compile Include="ViewModels\PortableMainViewModel.cs" />
     <Compile Include="Models\FileReference.cs" />
     <Compile Include="Models\PasswordInfo.cs" />
     <Compile Include="Models\ViewModelBase.cs" />
     <Compile Include="Services\PortableImplementations\PortableEncryptionService.cs" />
     <Compile Include="Services\Interfaces\IEncryptionService.cs" />
-    <Compile Include="Models\Settings\Serializer.cs" />
     <Compile Include="Models\DialogDirection.cs" />
     <Compile Include="Models\DialogFilter.cs" />
     <Compile Include="Constants\PortableConstants.cs" />

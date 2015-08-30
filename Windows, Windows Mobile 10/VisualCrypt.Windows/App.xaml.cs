@@ -8,6 +8,8 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Language.Strings;
+using System.Resources;
 
 namespace VisualCrypt.Windows
 {
@@ -42,7 +44,7 @@ namespace VisualCrypt.Windows
                 this.DebugSettings.EnableFrameRateCounter = false;
             }
 #endif
-
+            Service.Get<ResourceWrapper>().Info.SwitchCulture("de");
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -61,6 +63,8 @@ namespace VisualCrypt.Windows
 
                 // Place the frame in the current Window
                 Window.Current.Content = rootFrame;
+                Service.Get<ResourceWrapper>().Info.SwitchCulture("de");
+               
             }
 
             if (rootFrame.Content == null)

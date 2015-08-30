@@ -7,24 +7,25 @@ using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Language;
+using VisualCrypt.Applications.Services.PortableImplementations;
 
 namespace VisualCrypt.Desktop.Services
 {
     public class FileService : IFileService
     {
         readonly ILog _log;
-        readonly ISettingsManager _settingsManager;
+        readonly SettingsManager _settingsManager;
 
         public FileService()
         {
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _log = Service.Get<ILog>();
         }
         public bool CheckFilenameForQuickSave(string filename)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(filename) || filename == Loc.Strings.constUntitledDotVisualCrypt)
+                if (string.IsNullOrWhiteSpace(filename) || filename == Language.Strings.Resources.constUntitledDotVisualCrypt)
                     return false;
                 if (!filename.EndsWith(PortableConstants.DotVisualCrypt, StringComparison.Ordinal))
                     return false;

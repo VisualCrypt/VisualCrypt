@@ -14,6 +14,8 @@ using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 using VisualCrypt.Language;
+using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Applications.ViewModels
 {
@@ -43,28 +45,29 @@ namespace VisualCrypt.Applications.ViewModels
 			get { return FileModel; }
 		}
 
-        #region Bound Properties
-
-        public ISettingsManager SettingsManager
+        public AbstractSettingsManager SettingsManager
         {
             get { return _settingsManager; }
         }
 
-        #endregion
-
+        public ResourceWrapper ResourceWrapper
+        {
+            get { return _resourceWrapper; }
+        }
         readonly ILog _log;
         readonly IEventAggregator _eventAggregator;
 		readonly IMessageBoxService _messageBoxService;
 		readonly IEncryptionService _encryptionService;
 		public readonly INavigationService NavigationService;
 		readonly IPasswordDialogDispatcher _passwordDialogDispatcher;
-		readonly ISettingsManager _settingsManager;
+		readonly AbstractSettingsManager _settingsManager;
 		readonly IFileService _fileService;
 		readonly IBrowserService _browserService;
 		readonly IAssemblyInfoProvider _assemblyInfoProvider;
 		readonly ILifeTimeService _lifeTimeService;
 		readonly IClipBoardService _clipBoardService;
 		readonly IWindowManager _windowManager;
+        readonly ResourceWrapper _resourceWrapper;
 
 		LongRunningOperation _longRunningOperation;
 
@@ -81,7 +84,7 @@ namespace VisualCrypt.Applications.ViewModels
             _passwordDialogDispatcher = Service.Get<IPasswordDialogDispatcher>();
 
 
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = Service.Get<AbstractSettingsManager>();
             _fileService = Service.Get<IFileService>();
 
             _browserService = Service.Get<IBrowserService>();
@@ -91,6 +94,7 @@ namespace VisualCrypt.Applications.ViewModels
             _clipBoardService = Service.Get<IClipBoardService>();
 
             _windowManager = Service.Get<IWindowManager>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
 
             _fileModel = FileModel.EmptyCleartext();
 			_fileModel.OnFileModelUpdated = (fileModel) =>
@@ -275,7 +279,7 @@ namespace VisualCrypt.Applications.ViewModels
 		{
 			try
 			{
-				_browserService.LaunchUrl(Loc.Strings.uriHelpUrl);
+				_browserService.LaunchUrl(Language.Strings.Resources.uriHelpUrl);
 
 			}
 			catch (Exception e)
@@ -402,7 +406,7 @@ namespace VisualCrypt.Applications.ViewModels
 			tryDecryptLoadFileWithCurrentPassword:
 
 				// We have a password, but we don't know if it's the right one. We must try!
-				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryptOpenedFile))
+				using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationDecryptOpenedFile))
 				{
 					var decryptForDisplayResult =
 						await Task.Run(() => _encryptionService.DecryptForDisplay(FileModel,
@@ -475,7 +479,7 @@ namespace VisualCrypt.Applications.ViewModels
 
 				string textBufferContents = await EditorSendsTextAsync();
 
-				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryption))
+				using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationEncryption))
 				{
 					var createEncryptedFileResponse =
 						await
@@ -535,7 +539,7 @@ namespace VisualCrypt.Applications.ViewModels
 
 				string textBufferContents = await EditorSendsTextAsync();
 
-				using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationDecryption))
+				using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationDecryption))
 				{
 					var decryptForDisplayResult =
 						await
@@ -675,7 +679,7 @@ namespace VisualCrypt.Applications.ViewModels
 			// We will not replace FileModel because we continue editing the same cleartext.
 			string editorClearText = await EditorSendsTextAsync();
 
-			using (_longRunningOperation = StartLongRunnungOperation(Loc.Strings.operationEncryptAndSave))
+			using (_longRunningOperation = StartLongRunnungOperation(Language.Strings.Resources.operationEncryptAndSave))
 			{
 				var encryptAndSaveFileResponse =
 					await
@@ -911,11 +915,11 @@ namespace VisualCrypt.Applications.ViewModels
 
 		DelegateCommand<string> _switchLanguageCommand;
 
-		async void ExecuteSwitchLanguageCommand(string loc)
+		async void ExecuteSwitchLanguageCommand(string culture)
 		{
 			try
 			{
-				Loc.SetLanguage(loc);
+				_resourceWrapper.Info.SwitchCulture(culture);
 			}
 			catch (Exception e)
 			{

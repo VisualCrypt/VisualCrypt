@@ -15,6 +15,9 @@ using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Desktop.Services;
 using VisualCrypt.Desktop.Views;
+using VisualCrypt.Applications.Models.Settings;
+using VisualCrypt.Desktop.Settings;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop
 {
@@ -49,7 +52,9 @@ namespace VisualCrypt.Desktop
 
             Service.Register<ILog, ReplayLogger>(true);
             Service.Get<ILog>().Debug("Registering Services.");
-            Service.Register<ISettingsManager, SettingsManager>(true);
+
+            Service.Register<AbstractSettingsManager, SettingsManager>(true);
+            Service.Register<IFontSettings, FontSettings>(false);
 
             Service.Register<IEventAggregator, EventAggregator>(true);
             Service.Register<IParamsProvider, ParamsProvider>(false);
@@ -80,6 +85,7 @@ namespace VisualCrypt.Desktop
             Service.Register<ITextBoxController, TextBoxController>(true, TextBoxName.TextBoxFindReplace);
             Service.Register<ITextBoxController, TextBoxController>(true, TextBoxName.TextBoxGoTo);
 
+            Service.Register<ResourceWrapper, ResourceWrapper>(true);
 
             Service.Get<IVisualCrypt2Service>().Platform = Service.Get<IPlatform>();
             Service.Get<IEncodingDetection>().PlatformDefaultEncoding = Encoding.Default;

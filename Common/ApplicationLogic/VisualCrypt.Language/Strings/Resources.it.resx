@@ -1,0 +1,341 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Hello_World" xml:space="preserve">
+    <value>Ciao, mondo!</value>
+    <comment></comment>
+  </data>
+  <data name="constUntitledDotVisualCrypt" xml:space="preserve">
+    <value>Untitled.visualcrypt</value>
+  </data>
+  <data name="encrpytedStatusbarText" xml:space="preserve">
+    <value>VisualCrypt: {0}, AES 256 Bit, 2 ^ {1} arrotondamenti, capitolo {2}</value>
+  </data>
+  <data name="encProgr_ProcessingKey" xml:space="preserve">
+    <value>Elaborazione della chiave...</value>
+  </data>
+  <data name="encProgr_EncryptingRandomKey" xml:space="preserve">
+    <value>Chiave di crittografia casuale...</value>
+  </data>
+  <data name="encProgr_EncryptingMessage" xml:space="preserve">
+    <value>La crittografia dei messaggi...</value>
+  </data>
+  <data name="encProgr_EncryptingMAC" xml:space="preserve">
+    <value>La crittografia di Mac...</value>
+  </data>
+  <data name="encProgr_DecryptingRandomKey" xml:space="preserve">
+    <value>Decrittografare una chiave casuale...</value>
+  </data>
+  <data name="encProgr_DecryptingMessage" xml:space="preserve">
+    <value>La decrittografia del messaggio...</value>
+  </data>
+  <data name="encProgr_DecryptingMAC" xml:space="preserve">
+    <value>Decrittografia di Mac...</value>
+  </data>
+  <data name="encProgr_CalculatingMAC" xml:space="preserve">
+    <value>Il calcolo del Mac...</value>
+  </data>
+  <data name="uriSpecUrl" xml:space="preserve">
+    <value>https://visualcrypt.com</value>
+  </data>
+  <data name="uriSourceUrl" xml:space="preserve">
+    <value>https://visualcrypt.com</value>
+  </data>
+  <data name="uriPWSpecUrl" xml:space="preserve">
+    <value>https://visualcrypt.com</value>
+  </data>
+  <data name="uriHelpUrl" xml:space="preserve">
+    <value>https://visualcrypt.com</value>
+  </data>
+  <data name="termSetPassword" xml:space="preserve">
+    <value>Impostare la Password</value>
+  </data>
+  <data name="termSave" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="termPassword" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="termEncrypt" xml:space="preserve">
+    <value>Crittografare</value>
+    <comment></comment>
+  </data>
+  <data name="termDecrypt" xml:space="preserve">
+    <value>Decrittografare</value>
+  </data>
+  <data name="termCopyToClipboard" xml:space="preserve">
+    <value>Copia negli Appunti</value>
+  </data>
+  <data name="termCancel" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="plaintextStatusbarText" xml:space="preserve">
+    <value>Testo normale | {0} | {1}</value>
+  </data>
+  <data name="plaintextStatusbarPositionInfo" xml:space="preserve">
+    <value>Ln {0}, {1} Col | POS {2} / {3}</value>
+  </data>
+  <data name="operationEncryption" xml:space="preserve">
+    <value>Crittografia:</value>
+  </data>
+  <data name="operationEncryptAndSave" xml:space="preserve">
+    <value>La crittografia e il salvataggio:</value>
+  </data>
+  <data name="operationDecryptOpenedFile" xml:space="preserve">
+    <value>Decrittografare il file aperto:</value>
+  </data>
+  <data name="operationDecryption" xml:space="preserve">
+    <value>La decrittografia:</value>
+  </data>
+  <data name="msgPasswordError" xml:space="preserve">
+    <value>Password errata o messaggio danneggiato contraffatti.</value>
+  </data>
+  <data name="miViewZoomOut" xml:space="preserve">
+    <value>Zoom indietro</value>
+  </data>
+  <data name="miViewZoomLevelText" xml:space="preserve">
+    <value>Zoom (%{0})</value>
+  </data>
+  <data name="miViewZoomIn" xml:space="preserve">
+    <value>Eseguire lo zoom avanti</value>
+  </data>
+  <data name="miViewToolArea" xml:space="preserve">
+    <value>Strumento Area</value>
+  </data>
+  <data name="miViewStatusBar" xml:space="preserve">
+    <value>Barra di stato</value>
+  </data>
+  <data name="miViewLanguage" xml:space="preserve">
+    <value>Lingua</value>
+  </data>
+  <data name="miView" xml:space="preserve">
+    <value>Visualizzazione</value>
+  </data>
+  <data name="miVCSettings" xml:space="preserve">
+    <value>Impostazioni...</value>
+  </data>
+  <data name="miVCSetPassword" xml:space="preserve">
+    <value>Impostare la Password...</value>
+  </data>
+  <data name="miVCEncrypt" xml:space="preserve">
+    <value>Crittografare</value>
+  </data>
+  <data name="miVCDecrypt" xml:space="preserve">
+    <value>Decrittografare</value>
+  </data>
+  <data name="miVCChangePassword" xml:space="preserve">
+    <value>Cambia Password...</value>
+  </data>
+  <data name="miVC" xml:space="preserve">
+    <value>VisualCrypt</value>
+  </data>
+  <data name="miHelpViewOnline" xml:space="preserve">
+    <value>Visualizzare la Guida in linea</value>
+  </data>
+  <data name="miHelpLog" xml:space="preserve">
+    <value>Registro...</value>
+  </data>
+  <data name="miHelpAbout" xml:space="preserve">
+    <value>Informazioni su VisualCrypt...</value>
+  </data>
+  <data name="miHelp" xml:space="preserve">
+    <value>Guida in linea</value>
+  </data>
+  <data name="miFormatWordWrap" xml:space="preserve">
+    <value>Ritorno a capo automatico</value>
+  </data>
+  <data name="miFormatFont" xml:space="preserve">
+    <value>Tipo di carattere...</value>
+  </data>
+  <data name="miFormatCheckSpelling" xml:space="preserve">
+    <value>Controllo ortografico</value>
+  </data>
+  <data name="miFormat" xml:space="preserve">
+    <value>Formato</value>
+  </data>
+  <data name="miFileSaveAs" xml:space="preserve">
+    <value>Salva come...</value>
+  </data>
+  <data name="miFileSave" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="miFilePrint" xml:space="preserve">
+    <value>Stampa...</value>
+  </data>
+  <data name="miFileOpen" xml:space="preserve">
+    <value>Apri...</value>
+  </data>
+  <data name="miFileNew" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
+  <data name="miFileImportWithEnconding" xml:space="preserve">
+    <value>Importazione con la codifica...</value>
+  </data>
+  <data name="miFileExportClearText" xml:space="preserve">
+    <value>Esporta in chiaro...</value>
+  </data>
+  <data name="miFileExit" xml:space="preserve">
+    <value>Uscita</value>
+  </data>
+  <data name="miFile" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="miEditUndo" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="miEditSelectAll" xml:space="preserve">
+    <value>Seleziona tutto</value>
+  </data>
+  <data name="miEditReplace" xml:space="preserve">
+    <value>Sostituire...</value>
+  </data>
+  <data name="miEditRedo" xml:space="preserve">
+    <value>Ripeti</value>
+  </data>
+  <data name="miEditPaste" xml:space="preserve">
+    <value>Incolla</value>
+  </data>
+  <data name="miEditInsertDateTime" xml:space="preserve">
+    <value>Inserisci data, ora</value>
+  </data>
+  <data name="miEditGoTo" xml:space="preserve">
+    <value>Vai a...</value>
+  </data>
+  <data name="miEditFindPrevious" xml:space="preserve">
+    <value>Trova precedente</value>
+  </data>
+  <data name="miEditFindNext" xml:space="preserve">
+    <value>Trova successivo</value>
+  </data>
+  <data name="miEditFind" xml:space="preserve">
+    <value>Trova...</value>
+  </data>
+  <data name="miEditDeleteLine" xml:space="preserve">
+    <value>Elimina riga</value>
+  </data>
+  <data name="miEditCut" xml:space="preserve">
+    <value>Taglio</value>
+  </data>
+  <data name="miEditCopy" xml:space="preserve">
+    <value>Copia</value>
+  </data>
+  <data name="miEdit" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+</root>

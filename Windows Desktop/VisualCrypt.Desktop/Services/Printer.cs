@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Xps;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Desktop.Settings;
 
 namespace VisualCrypt.Desktop.Services
 {
@@ -13,7 +15,7 @@ namespace VisualCrypt.Desktop.Services
 
         public Printer()
         {
-            _settingsManager = (SettingsManager)Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
         }
 
         public void PrintEditorText(string editorText)
@@ -26,7 +28,8 @@ namespace VisualCrypt.Desktop.Services
         {
             var flowDocument = new FlowDocument { LineHeight = double.NaN };
 
-            _settingsManager.FontSettings.ApplyToFlowDocument(flowDocument);
+            var fontSettings = (FontSettings)_settingsManager.FontSettings;
+            fontSettings.ApplyToFlowDocument(flowDocument);
            
             string[] lines;
             if (text.Contains("\n"))

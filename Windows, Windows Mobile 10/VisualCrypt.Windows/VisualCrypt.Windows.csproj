@@ -108,6 +108,7 @@
     <Compile Include="Controls\EncryptedBar.xaml.cs">
       <DependentUpon>EncryptedBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\FontSettings.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="Controls\PasswordDialog.xaml.cs">
       <DependentUpon>PasswordDialog.xaml</DependentUpon>
@@ -120,7 +121,6 @@
       <DependentUpon>WorkingBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignTime.cs" />
-    <Compile Include="FontSettings.cs" />
     <Compile Include="Pages\FilesPage.xaml.cs">
       <DependentUpon>FilesPage.xaml</DependentUpon>
     </Compile>
@@ -137,7 +137,6 @@
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Services\BrowserService.cs" />
     <Compile Include="Services\ClipBoardService.cs" />
-    <Compile Include="Controls\EditorSupport\FontSettings.cs" />
     <Compile Include="Services\LifeTimeService.cs" />
     <Compile Include="Services\Printer.cs" />
     <Compile Include="Services\TextBoxController.cs" />

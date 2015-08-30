@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 
-             xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+             
              xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
              xmlns:viewModels="clr-namespace:VisualCrypt.Applications.ViewModels;assembly=VisualCrypt.Applications"
              mc:Ignorable="d"
@@ -17,7 +17,7 @@
         <StackPanel Orientation="Horizontal" Grid.Column="0">
             <TextBlock>
                 <Hyperlink Click="WorkingBar_Cancel_Click">
-                    <Run Text="{Binding Source={x:Static language:Loc.Strings},Path=termCancel,Mode=OneWay}" />
+                    <Run Text="{Binding ResourceWrapper.termCancel,Mode=OneWay}" />
                 </Hyperlink>
             </TextBlock>
 

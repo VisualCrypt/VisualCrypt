@@ -12,6 +12,9 @@ using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Windows.Pages;
 using VisualCrypt.Windows.Services;
+using VisualCrypt.Windows.Models;
+using VisualCrypt.Applications.Models.Settings;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Windows
 {
@@ -24,8 +27,9 @@ namespace VisualCrypt.Windows
             try
             {
                 StopWatch.Start();
-                ConfigureFactory();
-                Service.Get<ISettingsManager>();
+                Register();
+                Service.Get<AbstractSettingsManager>();
+             
             }
             catch (Exception e)
             {
@@ -34,11 +38,13 @@ namespace VisualCrypt.Windows
             }
         }
 
-        public static void ConfigureFactory()
+        public static void Register()
         {
 
             Service.Register<ILog, ReplayLogger>(true);
             Service.Get<ILog>().Debug("Registering Services");
+
+            Service.Register<ResourceWrapper, ResourceWrapper>(true);
 
             Service.Register<IEventAggregator, EventAggregator>(true);
             Service.Register<IParamsProvider, ParamsProvider>(false);
@@ -46,7 +52,10 @@ namespace VisualCrypt.Windows
             Service.Register<IEncryptionService, PortableEncryptionService>(true);
             Service.Register<INavigationService, NavigationService>(true);
             Service.Register<IPasswordDialogDispatcher, PasswordDialogDispatcher>(true);
-            Service.Register<ISettingsManager, SettingsManager>(true);
+
+            Service.Register<AbstractSettingsManager, SettingsManager>(true);
+            Service.Register<IFontSettings, FontSettings>(true);
+
             Service.Register<IFileService, FileService>(true);
             Service.Register<IBrowserService, BrowserService>(false);
             Service.Register<IAssemblyInfoProvider, AssemblyInfoProvider>(false);
@@ -70,6 +79,7 @@ namespace VisualCrypt.Windows
             Service.Register<ITextBoxController, TextBoxController>(true, TextBoxName.TextBoxFindReplace);
             Service.Register<ITextBoxController, TextBoxController>(true, TextBoxName.TextBoxGoTo);
 
+           
 
             Service.Get<IVisualCrypt2Service>().Platform = Service.Get<IPlatform>();
             Service.Get<IEncodingDetection>().PlatformDefaultEncoding = null;

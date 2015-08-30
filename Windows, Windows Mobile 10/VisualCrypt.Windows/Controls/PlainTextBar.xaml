@@ -32,7 +32,7 @@
         </StackPanel>
         <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <TextBlock>
-                <Hyperlink Click="Hyperlink_Encrypt_Click"><Run x:Uid="termEncrypt" /> </Hyperlink>
+                <Hyperlink Click="Hyperlink_Encrypt_Click"><Run Text="{x:Bind _viewModel.ResourceWrapper.termEncrypt}" /> </Hyperlink>
                 
                 <Hyperlink Click="Hyperlink_Decrypt_Click"><Run x:Uid="termDecrypt" /> </Hyperlink>
                

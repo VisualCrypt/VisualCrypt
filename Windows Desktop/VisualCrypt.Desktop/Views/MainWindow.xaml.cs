@@ -1,22 +1,26 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 using System.Windows.Input;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.Services.PortableImplementations;
 using VisualCrypt.Applications.ViewModels;
+using VisualCrypt.Desktop.Services;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Views
 {
     public partial class MainWindow
     {
         readonly PortableMainViewModel _viewModel;
-        readonly ISettingsManager _settingsManager;
+        readonly SettingsManager _settingsManager;
 
         public MainWindow()
         {
             InitializeComponent();
             _viewModel = Service.Get<PortableMainViewModel>();
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
 
             DataContext = _viewModel;
 
@@ -29,8 +33,7 @@ namespace VisualCrypt.Desktop.Views
             PreviewDrop += MainWindow_PreviewDrop;
         }
 
-
-
+    
 
         async void MainWindow_Closing(object sender, CancelEventArgs e)
         {

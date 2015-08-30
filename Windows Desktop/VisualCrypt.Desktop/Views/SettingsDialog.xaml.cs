@@ -5,27 +5,28 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Prism.Commands;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
-using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Language;
+using VisualCrypt.Desktop.Services;
+using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Views
 {
-   
+
     public sealed partial class SettingsDialog : INotifyPropertyChanged
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
-        readonly ISettingsManager _settingsManager;
+        readonly SettingsManager _settingsManager;
 
        
         public SettingsDialog()
         {
             _messageBoxService =Service.Get<IMessageBoxService>();
             _encryptionService = Service.Get<IEncryptionService>();
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             InitializeComponent();
             DataContext = this;
 
@@ -108,7 +109,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = VisualCrypt.Language.Strings.Resources.uriPWSpecUrl}
                     })
                     process.Start();
             }
@@ -125,7 +126,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = VisualCrypt.Language.Strings.Resources.uriPWSpecUrl}
                     })
                     process.Start();
             }

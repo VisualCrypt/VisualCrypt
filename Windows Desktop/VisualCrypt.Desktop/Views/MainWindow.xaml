@@ -4,7 +4,6 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
-                    xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Controls"
                     xmlns:commands="clr-namespace:VisualCrypt.Desktop.Commands"
                     xmlns:viewModels="clr-namespace:VisualCrypt.Applications.ViewModels;assembly=VisualCrypt.Applications"
@@ -53,116 +52,116 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Height="27" Padding="0,4,0,0" IsMainMenu="True" KeyboardNavigation.TabNavigation="None">
-            <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFile,Mode=OneWay}"
+            <MenuItem x:Name="miFile" Header="{Binding  ResourceWrapper.miFile, Mode=OneWay}"
                       IsTabStop="True">
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileNew,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFileNew, Mode=OneWay}"
                           Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileOpen,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFileOpen, Mode=OneWay}"
                           Command="{Binding OpenCommand}" InputGestureText="Ctrl+O" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileSave,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFileSave, Mode=OneWay}"
                           Command="{Binding SaveCommand}" InputGestureText="Ctrl+S" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileSaveAs,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFileSaveAs, Mode=OneWay}"
                           Command="{Binding SaveAsCommand}" InputGestureText="Control+Alt+S" />
                 <Separator />
                 <MenuItem
-                    Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileExportClearText,Mode=OneWay}"
+                    Header="{Binding  ResourceWrapper.miFileExportClearText, Mode=OneWay}"
                     Command="{Binding ExportCommand}" InputGestureText="F2" />
                 <MenuItem
-                    Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileImportWithEnconding,Mode=OneWay}"
+                    Header="{Binding  ResourceWrapper.miFileImportWithEnconding, Mode=OneWay}"
                     Command="{Binding ImportWithEncodingCommand}"
                     InputGestureText="Shift+F2" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFilePrint,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFilePrint, Mode=OneWay}"
                           Command="commands:EditorCommands.Print" InputGestureText="Ctrl+Alt+P" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFileExit,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFileExit, Mode=OneWay}"
                           Command="{Binding ExitCommand}" InputGestureText="Alt+F4" />
             </MenuItem>
-            <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miVC,Mode=OneWay}">
+            <MenuItem Header="{Binding  ResourceWrapper.miVC, Mode=OneWay}">
                 <MenuItem
                     Header="{Binding PasswordInfo.MenuPasswordText}"
                     Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miVCEncrypt,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miVCEncrypt, Mode=OneWay}"
                           Command="{Binding EncryptEditorContentsCommand}"
                           InputGestureText="Ctrl+E" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miVCDecrypt,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miVCDecrypt, Mode=OneWay}"
                           Command="{Binding DecryptEditorContentsCommand}"
                           InputGestureText="Ctrl+D" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miVCSettings,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miVCSettings, Mode=OneWay}"
                           Command="{Binding ShowSettingsDialogCommand}"
                           InputGestureText="Ctrl+Shift+P" />
             </MenuItem>
-            <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEdit,Mode=OneWay}">
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditUndo,Mode=OneWay}"
+            <MenuItem Header="{Binding  ResourceWrapper.miEdit, Mode=OneWay}">
+                <MenuItem Header="{Binding  ResourceWrapper.miEditUndo, Mode=OneWay}"
                           Command="Undo" CommandTarget="{Binding ElementName=TextBox1}" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditRedo,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditRedo, Mode=OneWay}"
                           Command="Redo" CommandTarget="{Binding ElementName=TextBox1}" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditCut,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditCut, Mode=OneWay}"
                           Command="Cut" CommandTarget="{Binding ElementName=TextBox1}" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditCopy,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditCopy, Mode=OneWay}"
                           Command="Copy" CommandTarget="{Binding ElementName=TextBox1}" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditPaste,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditPaste, Mode=OneWay}"
                           Command="Paste" CommandTarget="{Binding ElementName=TextBox1}" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditFind,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditFind, Mode=OneWay}"
                           Command="commands:EditorCommands.Find" InputGestureText="Ctrl+F" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditFindNext,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditFindNext, Mode=OneWay}"
                           Command="commands:EditorCommands.FindNext" InputGestureText="F3" />
                 <MenuItem
-                    Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditFindPrevious,Mode=OneWay}"
+                    Header="{Binding  ResourceWrapper.miEditFindPrevious, Mode=OneWay}"
                     Command="commands:EditorCommands.FindPrevious"
                     InputGestureText="Shift+F3" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditReplace,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditReplace, Mode=OneWay}"
                           Command="commands:EditorCommands.Replace" InputGestureText="Ctrl+H" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditDeleteLine,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditDeleteLine, Mode=OneWay}"
                           Command="commands:EditorCommands.DeleteLine"
                           InputGestureText="Shift+Del" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditGoTo,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditGoTo, Mode=OneWay}"
                           Command="commands:EditorCommands.GoTo" InputGestureText="Ctrl+G" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditSelectAll,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miEditSelectAll, Mode=OneWay}"
                           Command="SelectAll" CommandTarget="{Binding ElementName=TextBox1}" />
                 <MenuItem
-                    Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miEditInsertDateTime,Mode=OneWay}"
+                    Header="{Binding  ResourceWrapper.miEditInsertDateTime, Mode=OneWay}"
                     Command="commands:EditorCommands.InsertDate"
                     InputGestureText="F5, F5" />
             </MenuItem>
-            <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormat,Mode=OneWay}">
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormatWordWrap,Mode=OneWay}"
+            <MenuItem Header="{Binding  ResourceWrapper.miFormat, Mode=OneWay}">
+                <MenuItem Header="{Binding  ResourceWrapper.miFormatWordWrap, Mode=OneWay}"
                           IsCheckable="True"
                           IsChecked="{Binding SettingsManager.EditorSettings.IsWordWrapChecked, Mode=TwoWay}"
                           InputGestureText="Ctrl+W" />
                 <MenuItem
-                    Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormatCheckSpelling,Mode=OneWay}"
+                    Header="{Binding  ResourceWrapper.miFormatCheckSpelling, Mode=OneWay}"
                     IsCheckable="True"
                     IsChecked="{Binding SettingsManager.EditorSettings.IsSpellCheckingChecked, Mode=TwoWay}"
                     InputGestureText="Ctrl+L" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miFormatFont,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miFormatFont, Mode=OneWay}"
                           Command="commands:EditorCommands.Font" InputGestureText="Ctrl+Alt+F" />
             </MenuItem>
-            <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miView,Mode=OneWay}">
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewStatusBar,Mode=OneWay}"
+            <MenuItem Header="{Binding  ResourceWrapper.miView, Mode=OneWay}">
+                <MenuItem Header="{Binding  ResourceWrapper.miViewStatusBar, Mode=OneWay}"
                           IsCheckable="True"
                           IsChecked="{Binding SettingsManager.EditorSettings.IsStatusBarVisible, Mode=TwoWay}"
                           InputGestureText="F12" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewToolArea,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miViewToolArea, Mode=OneWay}"
                           IsCheckable="True"
                           IsChecked="{Binding SettingsManager.EditorSettings.IsToolAreaVisible, Mode=TwoWay}"
                           InputGestureText="ESC" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewLanguage,Mode=OneWay}">
-                    <MenuItem Header="English" Command="{Binding SwitchLanguageCommand}" CommandParameter="EN"
-                              IsChecked="{Binding Source={x:Static language:Loc.Strings}, Path=IsEN, Mode=OneWay}" />
-                    <MenuItem Header="Deutsch" Command="{Binding SwitchLanguageCommand}" CommandParameter="DE"
-                              IsChecked="{Binding Source={x:Static language:Loc.Strings}, Path=IsDE,Mode=OneWay}" />
+                <MenuItem Header="{Binding  ResourceWrapper.miViewLanguage, Mode=OneWay}">
+                    <MenuItem Header="English" Command="{Binding SwitchLanguageCommand}" CommandParameter="en"
+                              IsChecked="{Binding ResourceWrapper.Info.IsEN, Mode=OneWay}" />
+                    <MenuItem Header="Deutsch" Command="{Binding SwitchLanguageCommand}" CommandParameter="de"
+                              IsChecked="{Binding ResourceWrapper.Info.IsDE, Mode=OneWay}" />
                 </MenuItem>
                 <MenuItem
                     Header="{Binding SettingsManager.EditorSettings.ZoomLevelMenuText}">
-                    <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewZoomIn,Mode=OneWay}"
+                    <MenuItem Header="{Binding  ResourceWrapper.miViewZoomIn, Mode=OneWay}"
                               InputGestureText="Ctrl +" Command="commands:EditorCommands.ZoomIn" />
                     <MenuItem
-                        Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miViewZoomOut,Mode=OneWay}"
+                        Header="{Binding  ResourceWrapper.miViewZoomOut, Mode=OneWay}"
                         InputGestureText="Ctrl -" Command="commands:EditorCommands.ZoomOut" />
                     <Separator />
                     <MenuItem Header="1_00%" InputGestureText="Ctrl+0" IsCheckable="false"
@@ -172,13 +171,13 @@
 
             </MenuItem>
 
-            <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miHelp,Mode=OneWay}">
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miHelpViewOnline,Mode=OneWay}"
+            <MenuItem Header="{Binding  ResourceWrapper.miHelp, Mode=OneWay}">
+                <MenuItem Header="{Binding  ResourceWrapper.miHelpViewOnline, Mode=OneWay}"
                           Command="{Binding HelpCommand}" InputGestureText="F1" />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miHelpLog,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miHelpLog, Mode=OneWay}"
                           Command="{Binding LogCommand}" InputGestureText="F9" />
                 <Separator />
-                <MenuItem Header="{Binding  Source={x:Static language:Loc.Strings}, Path=miHelpAbout,Mode=OneWay}"
+                <MenuItem Header="{Binding  ResourceWrapper.miHelpAbout, Mode=OneWay}"
                           Command="{Binding AboutCommand}"
                           InputGestureText="Shift+F1" />
             </MenuItem>

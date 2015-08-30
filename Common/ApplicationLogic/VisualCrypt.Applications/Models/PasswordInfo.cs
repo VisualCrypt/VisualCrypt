@@ -1,12 +1,15 @@
-﻿using VisualCrypt.Language;
+﻿using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Applications.Models
 {
     public class PasswordInfo : ViewModelBase
     {
+        ResourceWrapper _res;
         public PasswordInfo()
         {
-            Loc.LocaleChanged += (sender, args) => RaiseAllChanged();
+            _res = Service.Get<ResourceWrapper>();
+            _res.Info.CultureChanged += (sender, args) => RaiseAllChanged();
         }
 
         void RaiseAllChanged()
@@ -40,8 +43,8 @@ namespace VisualCrypt.Applications.Models
             get
             {
                 return _isPasswordSet
-                    ? Loc.Strings.termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5)
-                    : Loc.Strings.termSetPassword + "...";
+                    ? Language.Strings.Resources.termPassword + " " + new string('\u25CF' /* 'BLACK CIRCLE' */, 5)
+                    : Language.Strings.Resources.termSetPassword + "...";
             }
         }
 
@@ -52,7 +55,7 @@ namespace VisualCrypt.Applications.Models
 
         public string MenuPasswordText
         {
-            get { return _isPasswordSet ? Loc.Strings.miVCChangePassword : Loc.Strings.miVCSetPassword; }
+            get { return _isPasswordSet ? Language.Strings.Resources.miVCChangePassword : Language.Strings.Resources.miVCSetPassword; }
         }
 
         public void SetIsPasswordSet(bool isPasswordSet)

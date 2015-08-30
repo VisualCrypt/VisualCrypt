@@ -20,6 +20,7 @@ namespace VisualCrypt.Desktop.Views
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
+        readonly IPrinter _printer;
         readonly IParamsProvider _paramsProvider;
 	    readonly Action<bool> _setIsPasswordSet;
 	    readonly bool _isPasswordSet;
@@ -28,6 +29,7 @@ namespace VisualCrypt.Desktop.Views
         {
             _messageBoxService = Service.Get<IMessageBoxService>();
             _encryptionService = Service.Get<IEncryptionService>();
+            _printer = Service.Get<IPrinter>();
             _paramsProvider = Service.Get<IParamsProvider>();
 
             InitializeComponent();
@@ -265,7 +267,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = Loc.Strings.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = VisualCrypt.Language.Strings.Resources.uriPWSpecUrl}
                     })
                     process.Start();
             }
@@ -273,6 +275,30 @@ namespace VisualCrypt.Desktop.Views
             {
                 _messageBoxService.ShowError(ex);
             }
+        }
+
+        void Hyperlink_Print_Password_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var response = _encryptionService.SanitizePassword(PwBox.Text);
+                if (response.IsSuccess)
+                {
+                    string normalizedPassword = response.Result;
+                    _printer.PrintEditorText(normalizedPassword);
+
+                  
+                }
+                else
+                {
+                    _messageBoxService.ShowError(response.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _messageBoxService.ShowError(ex);
+            }
+           
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -283,5 +309,7 @@ namespace VisualCrypt.Desktop.Views
             if (handler != null)
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
+
+       
     }
 }

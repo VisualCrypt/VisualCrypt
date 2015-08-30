@@ -9,6 +9,8 @@ using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.ViewModels.FindReplace;
 using VisualCrypt.Language;
 using System.Threading.Tasks;
+using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Applications.ViewModels
 {
@@ -21,7 +23,7 @@ namespace VisualCrypt.Applications.ViewModels
         readonly IMessageBoxService _messageBoxService;
         readonly IEventAggregator _eventAggregator;
         readonly IWindowManager _windowManager;
-        readonly ISettingsManager _settingsManager;
+        readonly AbstractSettingsManager _settingsManager;
         readonly IEditorContext _editorContext;
         readonly IPrinter _printer;
         readonly IFontManager _fontManager;
@@ -29,6 +31,7 @@ namespace VisualCrypt.Applications.ViewModels
         readonly ITextBoxController _textBoxFind;
         readonly ITextBoxController _textBoxFindReplace;
         readonly ITextBoxController _textBoxGoTo;
+        readonly ResourceWrapper _res;
 
 
         public PortableEditorViewModel()
@@ -36,7 +39,7 @@ namespace VisualCrypt.Applications.ViewModels
             _eventAggregator = Service.Get<IEventAggregator>();
             _messageBoxService = Service.Get<IMessageBoxService>();
             _windowManager = Service.Get<IWindowManager>();
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = Service.Get<AbstractSettingsManager>();
             _editorContext = Service.Get<PortableMainViewModel>();
             _printer = Service.Get<IPrinter>();
             _fontManager = Service.Get<IFontManager>();
@@ -44,6 +47,8 @@ namespace VisualCrypt.Applications.ViewModels
             _textBoxFind = Service.Get<ITextBoxController>(TextBoxName.TextBoxFind);
             _textBoxFindReplace = Service.Get<ITextBoxController>(TextBoxName.TextBoxFindReplace);
             _textBoxGoTo = Service.Get<ITextBoxController>(TextBoxName.TextBoxGoTo);
+
+            _res = Service.Get<ResourceWrapper>();
         }
 
         public void OnViewLoaded()
@@ -52,7 +57,8 @@ namespace VisualCrypt.Applications.ViewModels
 
             SearchOptions = new SearchOptions();
             _fontManager.ExecuteZoom100();
-            Loc.LocaleChanged += OnLocaleChanged;
+         
+            _res.Info.CultureChanged += OnCultureChanged;
 
 
             _textBox1.TextChanged += OnTextChanged;
@@ -64,7 +70,7 @@ namespace VisualCrypt.Applications.ViewModels
             OnTextReceived(string.Empty);
         }
 
-        void OnLocaleChanged(object sender, EventArgs e)
+        void OnCultureChanged(object sender, EventArgs e)
         {
             UpdateStatusBar();
         }
@@ -73,7 +79,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         #region Bound Properties
 
-        public ISettingsManager SettingsManager
+        public AbstractSettingsManager SettingsManager
         {
             get { return _settingsManager; }
         }
@@ -693,7 +699,7 @@ namespace VisualCrypt.Applications.ViewModels
             var pos = GetPositionString();
             var enc = GetEncodingString();
 
-            var statusBarText = string.Format(CultureInfo.InvariantCulture, Loc.Strings.plaintextStatusbarText, pos, enc);
+            var statusBarText = string.Format(CultureInfo.InvariantCulture, Language.Strings.Resources.plaintextStatusbarText, pos, enc);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
         }
 
@@ -710,7 +716,7 @@ namespace VisualCrypt.Applications.ViewModels
             var lineIndex = GetCurrentLineIndex();
             var colIndex = GetColIndex(lineIndex);
 
-            return string.Format(CultureInfo.InvariantCulture, Loc.Strings.plaintextStatusbarPositionInfo, lineIndex + 1, colIndex + 1, rawPos,
+            return string.Format(CultureInfo.InvariantCulture, Language.Strings.Resources.plaintextStatusbarPositionInfo, lineIndex + 1, colIndex + 1, rawPos,
                 _textBox1.Text.Length);
         }
 
@@ -751,7 +757,7 @@ namespace VisualCrypt.Applications.ViewModels
             _eventAggregator.GetEvent<EditorReceivesText>().Unsubscribe(OnTextReceived);
             _eventAggregator.GetEvent<EditorShouldSendText>().Unsubscribe(OnTextRequested);
             _eventAggregator.GetEvent<EditorShouldCleanup>().Unsubscribe(Cleanup);
-            Loc.LocaleChanged -= OnLocaleChanged;
+            _res.Info.CultureChanged -= OnCultureChanged;
             _textBox1.TextChanged -= OnTextChanged;
             _textBox1.SelectionChanged -= OnSelectionChanged;
         }

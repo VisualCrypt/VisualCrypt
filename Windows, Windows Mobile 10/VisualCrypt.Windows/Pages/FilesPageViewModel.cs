@@ -10,6 +10,7 @@ using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Temp;
+using VisualCrypt.Applications.Services.PortableImplementations;
 
 namespace VisualCrypt.Windows.Pages
 {
@@ -19,7 +20,7 @@ namespace VisualCrypt.Windows.Pages
         public INavigationService NavigationService;
         IMessageBoxService _messageBoxService;
         IFileService _fileService;
-        ISettingsManager _settingsManager;
+        SettingsManager _settingsManager;
         IEventAggregator _eventAggregator;
 
         public FilesPageViewModel()
@@ -28,7 +29,7 @@ namespace VisualCrypt.Windows.Pages
             NavigationService = Service.Get<INavigationService>();
             _messageBoxService = Service.Get<IMessageBoxService>();
             _fileService = Service.Get<IFileService>();
-            _settingsManager = Service.Get<ISettingsManager>();
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _eventAggregator = Service.Get<IEventAggregator>();
         }
        

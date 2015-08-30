@@ -1,36 +1,64 @@
-﻿using VisualCrypt.Applications.Models.Settings;
-using VisualCrypt.Applications.Services.Interfaces;
-using VisualCrypt.Windows.Controls.EditorSupport;
+﻿using System;
+using System.IO;
+using System.Text;
+using VisualCrypt.Applications.Models.Settings;
+using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Windows.Models;
+using Windows.Storage;
+using Windows.UI.Text;
+using Windows.UI.Xaml.Media;
 
 namespace VisualCrypt.Windows.Services
 {
-    class SettingsManager : ISettingsManager
+    sealed class SettingsManager : AbstractSettingsManager
     {
-        public SettingsManager()
+
+        public override string CurrentDirectoryName
         {
-            LoadOrInitSettings();
+            get
+            {
+                if (string.IsNullOrWhiteSpace(_currentDirectoryName) || !Directory.Exists(_currentDirectoryName))
+                    _currentDirectoryName = ApplicationData.Current.LocalFolder.Path;
+                return _currentDirectoryName;
+            }
+            set { _currentDirectoryName = value; }
         }
 
-        public string CurrentDirectoryName { get; set; }
-
-        public CryptographySettings CryptographySettings { get; set; }
-
-        public EditorSettings EditorSettings { get; set; }
-
-        public object FontSettings { get; set; }
-
-
-        void LoadOrInitSettings()
+        protected override void FactorySettings()
         {
-            EditorSettings = new EditorSettings()
+            _log.Debug("Applying factory settings.");
+
+            EditorSettings = new EditorSettings
             {
-                IsSpellCheckingChecked = true,
                 IsStatusBarVisible = true,
                 IsWordWrapChecked = true,
-                IsToolAreaVisible = false,
+                IsSpellCheckingChecked = false,
+                PagePadding = 72,
+                IsToolAreaVisible = false
+
+
             };
-            FontSettings = new FontSettings();
+            FontSettings = new FontSettings
+            {
+                FontFamily = new FontFamily("Lucida Console"),
+                FontSize = 11,
+                FontStretch = FontStretch.Normal,
+                FontStyle = FontStyle.Normal,
+                FontWeight = FontWeights.Normal
+            }
+            ;
             CryptographySettings = new CryptographySettings { LogRounds = 13 };
+        }
+
+
+        protected override string ReadSettingsFile()
+        {
+            return File.ReadAllText(Path.Combine(ApplicationData.Current.LocalFolder.Path, SettingsFilename), Encoding.Unicode);
+        }
+
+        protected override void WriteSettingsFile(string settingsFile)
+        {
+            File.WriteAllText(Path.Combine(ApplicationData.Current.LocalFolder.Path, SettingsFilename), settingsFile, Encoding.Unicode);
         }
     }
 }

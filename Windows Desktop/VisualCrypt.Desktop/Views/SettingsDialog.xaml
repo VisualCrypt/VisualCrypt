@@ -5,7 +5,7 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     xmlns:implementations="clr-namespace:VisualCrypt.Cryptography.VisualCrypt2.Implementations;assembly=VisualCrypt.Cryptography"
-                    xmlns:language="clr-namespace:VisualCrypt.Language;assembly=VisualCrypt.Language"
+                    
                     xmlns:controls1="clr-namespace:VisualCrypt.Desktop.Controls"
                     mc:Ignorable="d"
                     Title="Settings" Height="300" Width="500" WindowStartupLocation="CenterOwner"
@@ -36,13 +36,13 @@
                         <TextBlock>
                             Read the
                             <Hyperlink
-                                ToolTip="{Binding Source={x:Static language:Loc.Strings},Path=uriPWSpecUrl, Mode=OneWay}"
+                                ToolTip="{Binding ResourceWrapper.uriPWSpecUrl, Mode=OneWay}"
                                 Click="Hyperlink_Spec_OnClick">
                                 Spec
                             </Hyperlink>
                             or view the
                             <Hyperlink
-                                ToolTip="{Binding Source={x:Static language:Loc.Strings}, Path=uriSourceUrl, Mode=OneWay}"
+                                ToolTip="{Binding ResourceWrapper.uriSourceUrl, Mode=OneWay}"
                                 Click="Hyperlink_Source_OnClick">
                                 Source Code
                             </Hyperlink>

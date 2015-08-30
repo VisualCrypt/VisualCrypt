@@ -102,7 +102,7 @@ namespace VisualCrypt.Applications.Models
 
         public void UpdateEncryptedBarText(FileModel filemodel)
         {
-            string text = string.Format(Loc.Strings.encrpytedStatusbarText, CipherV2.Version,
+            string text = string.Format(Language.Strings.Resources.encrpytedStatusbarText, CipherV2.Version,
                 filemodel.CipherV2.RoundsExponent.Value, filemodel.VisualCryptText.Length);
             EncrytedBarText = text;
         }

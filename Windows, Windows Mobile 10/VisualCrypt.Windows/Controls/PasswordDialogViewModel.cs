@@ -38,7 +38,7 @@ namespace VisualCrypt.Windows.Controls
 
         #region Bound Properties
 
-        public string PWSpecUrl => Loc.Strings.uriPWSpecUrl;
+        public string PWSpecUrl => Language.Strings.Resources.uriPWSpecUrl;
 
         public string PasswordBoxText
         {

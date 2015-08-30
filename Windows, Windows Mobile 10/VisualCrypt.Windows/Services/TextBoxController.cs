@@ -1,5 +1,6 @@
 ﻿using System;
 using VisualCrypt.Applications.ViewModels;
+using VisualCrypt.Windows.Models;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 

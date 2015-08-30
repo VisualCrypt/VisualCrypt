@@ -133,8 +133,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />
-    <Compile Include="Models\SerializableVisualCryptSettings.cs" />
     <Compile Include="Services\RegistryService.cs" />
+    <Compile Include="Services\Serializer.cs" />
     <Compile Include="Views\Fonts\FontFamilyListItem.cs" />
     <Compile Include="Views\Fonts\NameDictionaryHelper.cs" />
     <Compile Include="Views\Fonts\TypefaceListItem.cs" />
@@ -398,7 +398,9 @@
       <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>IF NOT EXIST "$(TargetDir)\DirectoryModules" mkdir "$(TargetDir)\DirectoryModules"</PostBuildEvent>

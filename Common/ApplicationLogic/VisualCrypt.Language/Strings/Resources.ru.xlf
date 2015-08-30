@@ -1,0 +1,303 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ru" original="Resources.resx" tool-id="MultilingualAppToolkit" product-name="VisualCrypt.Language" product-version="1.0.0.0" build-num="0">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="3.1.1250.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="Resx">
+        <trans-unit id="Resx/constUntitledDotVisualCrypt" translate="yes" xml:space="preserve">
+          <source>Untitled.visualcrypt</source>
+          <target state="new">Untitled.visualcrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/encrpytedStatusbarText" translate="yes" xml:space="preserve">
+          <source>VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.</source>
+          <target state="new">VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_ProcessingKey" translate="yes" xml:space="preserve">
+          <source>Processing Key...</source>
+          <target state="new">Processing Key...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_EncryptingRandomKey" translate="yes" xml:space="preserve">
+          <source>Encrypting Random Key...</source>
+          <target state="new">Encrypting Random Key...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_EncryptingMessage" translate="yes" xml:space="preserve">
+          <source>Encrypting Message...</source>
+          <target state="new">Encrypting Message...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_EncryptingMAC" translate="yes" xml:space="preserve">
+          <source>Encrypting MAC...</source>
+          <target state="new">Encrypting MAC...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_DecryptingRandomKey" translate="yes" xml:space="preserve">
+          <source>Decrypting Random Key...</source>
+          <target state="new">Decrypting Random Key...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_DecryptingMessage" translate="yes" xml:space="preserve">
+          <source>Decrypting Message...</source>
+          <target state="new">Decrypting Message...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_DecryptingMAC" translate="yes" xml:space="preserve">
+          <source>Decrypting MAC...</source>
+          <target state="new">Decrypting MAC...</target>
+        </trans-unit>
+        <trans-unit id="Resx/encProgr_CalculatingMAC" translate="yes" xml:space="preserve">
+          <source>Calculating MAC...</source>
+          <target state="new">Calculating MAC...</target>
+        </trans-unit>
+        <trans-unit id="Resx/Hello_World" translate="yes" xml:space="preserve">
+          <source>Hello World!</source>
+          <target state="translated">Привет, мир!</target></trans-unit>
+        <trans-unit id="Resx/uriSpecUrl" translate="yes" xml:space="preserve">
+          <source>https://visualcrypt.com</source>
+          <target state="new">https://visualcrypt.com</target>
+        </trans-unit>
+        <trans-unit id="Resx/uriSourceUrl" translate="yes" xml:space="preserve">
+          <source>https://visualcrypt.com</source>
+          <target state="new">https://visualcrypt.com</target>
+        </trans-unit>
+        <trans-unit id="Resx/uriPWSpecUrl" translate="yes" xml:space="preserve">
+          <source>https://visualcrypt.com</source>
+          <target state="new">https://visualcrypt.com</target>
+        </trans-unit>
+        <trans-unit id="Resx/uriHelpUrl" translate="yes" xml:space="preserve">
+          <source>https://visualcrypt.com</source>
+          <target state="new">https://visualcrypt.com</target>
+        </trans-unit>
+        <trans-unit id="Resx/termSetPassword" translate="yes" xml:space="preserve">
+          <source>Set Password</source>
+          <target state="new">Set Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/termSave" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="new">Save</target>
+        </trans-unit>
+        <trans-unit id="Resx/termPassword" translate="yes" xml:space="preserve">
+          <source>Password</source>
+          <target state="new">Password</target>
+        </trans-unit>
+        <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
+          <source>Encrypt!</source>
+          <target state="new">Encrypt!</target>
+        </trans-unit>
+        <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
+          <source>Decrypt</source>
+          <target state="new">Decrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/termCopyToClipboard" translate="yes" xml:space="preserve">
+          <source>Copy to Clipboard</source>
+          <target state="new">Copy to Clipboard</target>
+        </trans-unit>
+        <trans-unit id="Resx/termCancel" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="new">Cancel</target>
+        </trans-unit>
+        <trans-unit id="Resx/plaintextStatusbarText" translate="yes" xml:space="preserve">
+          <source>Plaintext | {0} | {1}</source>
+          <target state="new">Plaintext | {0} | {1}</target>
+        </trans-unit>
+        <trans-unit id="Resx/plaintextStatusbarPositionInfo" translate="yes" xml:space="preserve">
+          <source>Ln {0}, Col {1} | Pos {2}/{3}</source>
+          <target state="new">Ln {0}, Col {1} | Pos {2}/{3}</target>
+        </trans-unit>
+        <trans-unit id="Resx/operationEncryption" translate="yes" xml:space="preserve">
+          <source>Encrypting:</source>
+          <target state="new">Encrypting:</target>
+        </trans-unit>
+        <trans-unit id="Resx/operationEncryptAndSave" translate="yes" xml:space="preserve">
+          <source>Encrypting and saving:</source>
+          <target state="new">Encrypting and saving:</target>
+        </trans-unit>
+        <trans-unit id="Resx/operationDecryptOpenedFile" translate="yes" xml:space="preserve">
+          <source>Decrypting the file being opened:</source>
+          <target state="new">Decrypting the file being opened:</target>
+        </trans-unit>
+        <trans-unit id="Resx/operationDecryption" translate="yes" xml:space="preserve">
+          <source>Decrypting:</source>
+          <target state="new">Decrypting:</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgPasswordError" translate="yes" xml:space="preserve">
+          <source>Incorrect password or corrupted/forged message.</source>
+          <target state="new">Incorrect password or corrupted/forged message.</target>
+        </trans-unit>
+        <trans-unit id="Resx/miViewZoomOut" translate="yes" xml:space="preserve">
+          <source>Zoom Out</source>
+          <target state="new">Zoom Out</target>
+        </trans-unit>
+        <trans-unit id="Resx/miViewZoomLevelText" translate="yes" xml:space="preserve">
+          <source>Zoom ({0}%)</source>
+          <target state="new">Zoom ({0}%)</target>
+        </trans-unit>
+        <trans-unit id="Resx/miViewZoomIn" translate="yes" xml:space="preserve">
+          <source>Zoom In</source>
+          <target state="new">Zoom In</target>
+        </trans-unit>
+        <trans-unit id="Resx/miViewToolArea" translate="yes" xml:space="preserve">
+          <source>Tool Area</source>
+          <target state="new">Tool Area</target>
+        </trans-unit>
+        <trans-unit id="Resx/miViewStatusBar" translate="yes" xml:space="preserve">
+          <source>Status Bar</source>
+          <target state="new">Status Bar</target>
+        </trans-unit>
+        <trans-unit id="Resx/miViewLanguage" translate="yes" xml:space="preserve">
+          <source>Language</source>
+          <target state="new">Language</target>
+        </trans-unit>
+        <trans-unit id="Resx/miView" translate="yes" xml:space="preserve">
+          <source>View</source>
+          <target state="new">View</target>
+        </trans-unit>
+        <trans-unit id="Resx/miVCSettings" translate="yes" xml:space="preserve">
+          <source>Settings...</source>
+          <target state="new">Settings...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
+          <source>Set Password...</source>
+          <target state="new">Set Password...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miVCEncrypt" translate="yes" xml:space="preserve">
+          <source>Encrypt</source>
+          <target state="new">Encrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/miVCDecrypt" translate="yes" xml:space="preserve">
+          <source>Decrypt</source>
+          <target state="new">Decrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/miVCChangePassword" translate="yes" xml:space="preserve">
+          <source>Change Password...</source>
+          <target state="new">Change Password...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miVC" translate="yes" xml:space="preserve">
+          <source>VisualCrypt</source>
+          <target state="new">VisualCrypt</target>
+        </trans-unit>
+        <trans-unit id="Resx/miHelpViewOnline" translate="yes" xml:space="preserve">
+          <source>View Help Online</source>
+          <target state="new">View Help Online</target>
+        </trans-unit>
+        <trans-unit id="Resx/miHelpLog" translate="yes" xml:space="preserve">
+          <source>Log...</source>
+          <target state="new">Log...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miHelpAbout" translate="yes" xml:space="preserve">
+          <source>About VisualCrypt...</source>
+          <target state="new">About VisualCrypt...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miHelp" translate="yes" xml:space="preserve">
+          <source>Help</source>
+          <target state="new">Help</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFormatWordWrap" translate="yes" xml:space="preserve">
+          <source>Word Wrap</source>
+          <target state="new">Word Wrap</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFormatFont" translate="yes" xml:space="preserve">
+          <source>Font...</source>
+          <target state="new">Font...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFormatCheckSpelling" translate="yes" xml:space="preserve">
+          <source>Spellchecking</source>
+          <target state="new">Spellchecking</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFormat" translate="yes" xml:space="preserve">
+          <source>Format</source>
+          <target state="new">Format</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileSaveAs" translate="yes" xml:space="preserve">
+          <source>Save As...</source>
+          <target state="new">Save As...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileSave" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="new">Save</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFilePrint" translate="yes" xml:space="preserve">
+          <source>Print...</source>
+          <target state="new">Print...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileOpen" translate="yes" xml:space="preserve">
+          <source>Open...</source>
+          <target state="new">Open...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileNew" translate="yes" xml:space="preserve">
+          <source>New</source>
+          <target state="new">New</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileImportWithEnconding" translate="yes" xml:space="preserve">
+          <source>Import With Encoding...</source>
+          <target state="new">Import With Encoding...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileExportClearText" translate="yes" xml:space="preserve">
+          <source>Export Cleartext...</source>
+          <target state="new">Export Cleartext...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFileExit" translate="yes" xml:space="preserve">
+          <source>Exit</source>
+          <target state="new">Exit</target>
+        </trans-unit>
+        <trans-unit id="Resx/miFile" translate="yes" xml:space="preserve">
+          <source>File</source>
+          <target state="new">File</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditUndo" translate="yes" xml:space="preserve">
+          <source>Undo</source>
+          <target state="new">Undo</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditSelectAll" translate="yes" xml:space="preserve">
+          <source>Select All</source>
+          <target state="new">Select All</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditReplace" translate="yes" xml:space="preserve">
+          <source>Replace...</source>
+          <target state="new">Replace...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditRedo" translate="yes" xml:space="preserve">
+          <source>Redo</source>
+          <target state="new">Redo</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditPaste" translate="yes" xml:space="preserve">
+          <source>Paste</source>
+          <target state="new">Paste</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditInsertDateTime" translate="yes" xml:space="preserve">
+          <source>Insert Date, Time</source>
+          <target state="new">Insert Date, Time</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditGoTo" translate="yes" xml:space="preserve">
+          <source>Go To...</source>
+          <target state="new">Go To...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditFindPrevious" translate="yes" xml:space="preserve">
+          <source>Find Previous</source>
+          <target state="new">Find Previous</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditFindNext" translate="yes" xml:space="preserve">
+          <source>Find Next</source>
+          <target state="new">Find Next</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditFind" translate="yes" xml:space="preserve">
+          <source>Find...</source>
+          <target state="new">Find...</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditDeleteLine" translate="yes" xml:space="preserve">
+          <source>Delete Line</source>
+          <target state="new">Delete Line</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditCut" translate="yes" xml:space="preserve">
+          <source>Cut</source>
+          <target state="new">Cut</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEditCopy" translate="yes" xml:space="preserve">
+          <source>Copy</source>
+          <target state="new">Copy</target>
+        </trans-unit>
+        <trans-unit id="Resx/miEdit" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="new">Edit</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

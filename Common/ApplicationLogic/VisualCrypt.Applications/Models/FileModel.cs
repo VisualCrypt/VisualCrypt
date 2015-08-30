@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
-using VisualCrypt.Language;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Applications.Models
 {
@@ -130,8 +130,8 @@ namespace VisualCrypt.Applications.Models
         {
             return new FileModel
             {
-                Filename = Loc.Strings.constUntitledDotVisualCrypt,
-                ShortFilename = Loc.Strings.constUntitledDotVisualCrypt,
+                Filename = Resources.constUntitledDotVisualCrypt,
+                ShortFilename = Resources.constUntitledDotVisualCrypt,
                 ClearTextContents = string.Empty,
                 IsEncrypted = false,
                 SaveEncoding = DefaultClearTextSaveEncoding,
