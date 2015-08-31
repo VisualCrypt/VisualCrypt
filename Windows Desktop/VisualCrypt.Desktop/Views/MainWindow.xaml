@@ -155,6 +155,12 @@
                               IsChecked="{Binding ResourceWrapper.Info.IsEN, Mode=OneWay}" />
                     <MenuItem Header="Deutsch" Command="{Binding SwitchLanguageCommand}" CommandParameter="de"
                               IsChecked="{Binding ResourceWrapper.Info.IsDE, Mode=OneWay}" />
+                    <MenuItem Header="Français" Command="{Binding SwitchLanguageCommand}" CommandParameter="fr"
+                              IsChecked="{Binding ResourceWrapper.Info.IsFR, Mode=OneWay}" />
+                    <MenuItem Header="Italiano" Command="{Binding SwitchLanguageCommand}" CommandParameter="it"
+                              IsChecked="{Binding ResourceWrapper.Info.IsIT, Mode=OneWay}" />
+                    <MenuItem Header="Русский" Command="{Binding SwitchLanguageCommand}" CommandParameter="ru"
+                              IsChecked="{Binding ResourceWrapper.Info.IsRU, Mode=OneWay}" />
                 </MenuItem>
                 <MenuItem
                     Header="{Binding SettingsManager.EditorSettings.ZoomLevelMenuText}">

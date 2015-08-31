@@ -338,4 +338,148 @@
   <data name="miEdit" xml:space="preserve">
     <value>Modifier</value>
   </data>
+  <data name="msgDiscardChanges" xml:space="preserve">
+    <value>Ignorer les modifications ?</value>
+  </data>
+  <data name="msgFileIsBinary" xml:space="preserve">
+    <value>Ce fichier n'est ni texte, ni VisualCrypt - Afficher vue de Hex? \r\n\r\nIf fichier est très volumineux, l'éditeur peut devenir moins réactive.</value>
+  </data>
+  <data name="msgFindRegExNoMatch" xml:space="preserve">
+    <value>Aucune correspondance pour « {0} » n'a été trouvé.</value>
+  </data>
+  <data name="msgNothingFoundSearchFromStart" xml:space="preserve">
+    <value>Aucun élément détecté - recherche à partir du haut du document ?</value>
+  </data>
+  <data name="msgReplaceOccucancesReplaced" xml:space="preserve">
+    <value>{0} occurrences ont été remplacés.</value>
+  </data>
+  <data name="spdm_Set_Title" xml:space="preserve">
+    <value>Définir le mot de passe</value>
+  </data>
+  <data name="spd_linktext_PrintPassword" xml:space="preserve">
+    <value>Imprimer le mot de passe</value>
+  </data>
+  <data name="spd_linktext_VisualCryptPasswords" xml:space="preserve">
+    <value>Les mots de passe VisualCrypt</value>
+  </data>
+  <data name="spd_linktext_GeneratePassword" xml:space="preserve">
+    <value>Générer un mot de passe</value>
+  </data>
+  <data name="spd_lbl_PasswordOrPhrase" xml:space="preserve">
+    <value>/-Mot de passe :</value>
+  </data>
+  <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
+    <value>{0} de {1} de caractères Unicode</value>
+  </data>
+  <data name="spd_text_ReadMoreAbout" xml:space="preserve">
+    <value>En savoir plus sur</value>
+  </data>
+  <data name="spd_text_from256BitRD" xml:space="preserve">
+    <value>à partir des données aléatoires 256 bits</value>
+  </data>
+  <data name="spd_msgUseEmptyPassword" xml:space="preserve">
+    <value>Utiliser un mot de passe vide ?</value>
+  </data>
+  <data name="spd_msgPasswordEffectivelyEmpty" xml:space="preserve">
+    <value>Le mot de passe est effectivement vide - êtes vous sûr ?</value>
+  </data>
+  <data name="spdm_Set_OK" xml:space="preserve">
+    <value>Définir le mot de passe</value>
+  </data>
+  <data name="spdm_SetAndEncrypt_Title" xml:space="preserve">
+    <value>Cryptage de mot de passe de jeu de &amp;</value>
+  </data>
+  <data name="spdm_SetAndEncrypt_OK" xml:space="preserve">
+    <value>Crypter</value>
+  </data>
+  <data name="spdm_SetAndEncryptAndSave_Title" xml:space="preserve">
+    <value>Définir le mot de passe, crypter et enregistrer</value>
+  </data>
+  <data name="spdm_SetAndEncryptAndSave_OK" xml:space="preserve">
+    <value>Crypter et enregistrer</value>
+  </data>
+  <data name="spdm_SetAndDecrypt_Title" xml:space="preserve">
+    <value>Définir le mot de passe &amp;décrypter</value>
+  </data>
+  <data name="spdm_SetAndDecrypt_OK" xml:space="preserve">
+    <value>Décrypter</value>
+  </data>
+  <data name="spdm_SetAndDecryptLoadedFile_Title" xml:space="preserve">
+    <value>Entrez le mot de passe pour décrypter le fichier chargé</value>
+  </data>
+  <data name="spdm_SetAndDecryptLoadedFile_OK" xml:space="preserve">
+    <value>Décrypter le fichier chargé</value>
+  </data>
+  <data name="spdm_CorrectPassword_Title" xml:space="preserve">
+    <value>Le mot de passe actuel n'est pas correct</value>
+  </data>
+  <data name="spdm_CorrectPassword_OK" xml:space="preserve">
+    <value>Modifier le mot de passe et décrypter</value>
+  </data>
+  <data name="spdm_Change_Title" xml:space="preserve">
+    <value>Modifier le mot de passe</value>
+  </data>
+  <data name="spdm_Change_OK" xml:space="preserve">
+    <value>Modifier le mot de passe</value>
+  </data>
+  <data name="termBinary" xml:space="preserve">
+    <value>Fichier binaire</value>
+  </data>
+  <data name="msgReplaceInvalidRegEx" xml:space="preserve">
+    <value>Syntaxe d'Expression régulière non valide</value>
+  </data>
+  <data name="msgFindCouldNotBeFound" xml:space="preserve">
+    <value>« {0} » est introuvable.</value>
+  </data>
+  <data name="termChangePassword" xml:space="preserve">
+    <value>Modifier le mot de passe</value>
+  </data>
+  <data name="termClear" xml:space="preserve">
+    <value>Effacer</value>
+  </data>
+  <data name="termReplaceAll" xml:space="preserve">
+    <value>Remplacer tout</value>
+  </data>
+  <data name="titleExportCleartext" xml:space="preserve">
+    <value>Exporter le texte en clair (codage: {0})</value>
+  </data>
+  <data name="titleImportWithEncoding" xml:space="preserve">
+    <value>Importation avec codage : {0}</value>
+  </data>
+  <data name="termDefaults" xml:space="preserve">
+    <value>Valeurs par défaut</value>
+  </data>
+  <data name="sett_warn_neutral" xml:space="preserve">
+    <value>Le paramètre influence le travail de calcul requis pour créer le hachage BCrypt. Une valeur élevée signifie plus de travail.</value>
+  </data>
+  <data name="sett_warn_low" xml:space="preserve">
+    <value>Avertissement : Une valeur faible faciliates brute force et par dictionnaire.</value>
+  </data>
+  <data name="sett_warn_high" xml:space="preserve">
+    <value>Avertissement : Une valeur élevée se transforme de cryptage et décryptage dans une opération très longue.</value>
+  </data>
+  <data name="sett_text_ReadThe" xml:space="preserve">
+    <value>Lire la</value>
+  </data>
+  <data name="sett_text_orViewThe" xml:space="preserve">
+    <value>ou consulter la</value>
+  </data>
+  <data name="sett_text_default_2_power" xml:space="preserve">
+    <value>Par défaut: 2</value>
+  </data>
+  <data name="sett_text_EncrpytionMethod" xml:space="preserve">
+    <value>Méthode de chiffrement</value>
+  </data>
+  <data name="sett_text_BCryptAESRounds" xml:space="preserve">
+    <value>Arrondit de BCrypt/AES :</value>
+  </data>
+  <data name="sett_linktext_Spec" xml:space="preserve">
+    <value>Spécifications</value>
+  </data>
+  <data name="sett_linktext_Source" xml:space="preserve">
+    <value>code source</value>
+  </data>
+  <data name="sett_combo_VisualCrypt2" xml:space="preserve">
+    <value>VisualCrypt 2 (AES 256 bits, BCrypt - Multi)</value>
+  </data>
 </root>
