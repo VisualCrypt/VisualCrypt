@@ -289,7 +289,7 @@
     <value>Decrypting:</value>
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
-    <value>Decrypting the file being opened:</value>
+    <value>Decrypting loaded file:</value>
   </data>
   <data name="operationEncryptAndSave" xml:space="preserve">
     <value>Encrypting and saving:</value>
@@ -313,7 +313,7 @@
     <value>Decrypt</value>
   </data>
   <data name="termEncrypt" xml:space="preserve">
-    <value>Encrypt!</value>
+    <value>Encrypt</value>
   </data>
   <data name="termPassword" xml:space="preserve">
     <value>Password</value>
@@ -421,7 +421,7 @@
     <value>{0} of {1} Unicode Characters</value>
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
-    <value>from 256 Bit Random Data</value>
+    <value>(256 Bit Random Data)</value>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Read more about</value>
@@ -443,6 +443,21 @@
   </data>
   <data name="titleImportWithEncoding" xml:space="preserve">
     <value>Import with encoding: {0}</value>
+  </data>
+  <data name="fnt_labelFontFamilies" xml:space="preserve">
+    <value>_Font family:</value>
+  </data>
+  <data name="fnt_labelPreview" xml:space="preserve">
+    <value>Preview:</value>
+  </data>
+  <data name="fnt_labelSize" xml:space="preserve">
+    <value>_Size:</value>
+  </data>
+  <data name="fnt_label_typeFace" xml:space="preserve">
+    <value>_Typeface:</value>
+  </data>
+  <data name="fnt_theQuickBrownFox" xml:space="preserve">
+    <value>The quick brown fox jumps over the lazy dog</value>
   </data>
   <data name="sett_combo_VisualCrypt2" xml:space="preserve">
     <value>VisualCrypt 2 (AES 256 Bit, BCrypt - Multi)</value>
@@ -479,5 +494,8 @@
   </data>
   <data name="termDefaults" xml:space="preserve">
     <value>Defaults</value>
+  </data>
+  <data name="termOK" xml:space="preserve">
+    <value>OK</value>
   </data>
 </root>

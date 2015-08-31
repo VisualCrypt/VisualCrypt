@@ -119,7 +119,6 @@
   </resheader>
   <data name="Hello_World" xml:space="preserve">
     <value>Hallo Welt!</value>
-    <comment></comment>
   </data>
   <data name="constUntitledDotVisualCrypt" xml:space="preserve">
     <value>Unbenannt.visualcrypt</value>
@@ -164,7 +163,7 @@
     <value>https://visualcrypt.com</value>
   </data>
   <data name="termSetPassword" xml:space="preserve">
-    <value>Kennwort festlegen</value>
+    <value>Passwort setzen</value>
   </data>
   <data name="termSave" xml:space="preserve">
     <value>Speichern</value>
@@ -201,6 +200,7 @@
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
     <value>Entschlüsseln der ladenden Datei:</value>
+    <comment></comment>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>Entschlüsseln:</value>
@@ -233,7 +233,7 @@
     <value>Einstellungen</value>
   </data>
   <data name="miVCSetPassword" xml:space="preserve">
-    <value>Passwort festlegen...</value>
+    <value>Passwort setzen...</value>
   </data>
   <data name="miVCEncrypt" xml:space="preserve">
     <value>Verschlüsseln</value>
@@ -371,34 +371,35 @@
     <value>Diese Datei ist weder Text noch VisualCrypt - Hex-Ansicht anzeigen? \r\n\r\nIf Editor möglicherweise weniger sehr groß ist.</value>
   </data>
   <data name="spdm_Set_Title" xml:space="preserve">
-    <value>Kennwort festlegen</value>
+    <value>Passwort setzen</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
     <value>{0} von {1} Unicode-Zeichen</value>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
-    <value>Leeres Kennwort verwenden?</value>
+    <value>Leeres Passwort verwenden?</value>
   </data>
   <data name="spd_msgPasswordEffectivelyEmpty" xml:space="preserve">
-    <value>Ist das Kennwort effektiv leer - sind Sie sicher?</value>
+    <value>Das Passwort is effektiv leer - verwenden?</value>
   </data>
   <data name="spdm_Set_OK" xml:space="preserve">
-    <value>Kennwort festlegen</value>
+    <value>Passwort setzen</value>
   </data>
   <data name="spdm_SetAndEncrypt_Title" xml:space="preserve">
-    <value>&amp;Das Kennwort verschlüsseln</value>
+    <value>Passwort setzen &amp; verschlüsseln</value>
   </data>
   <data name="spdm_SetAndEncrypt_OK" xml:space="preserve">
     <value>Verschlüsseln</value>
   </data>
   <data name="spdm_SetAndEncryptAndSave_Title" xml:space="preserve">
-    <value>Legen Sie ein Kennwort verschlüsseln und speichern</value>
+    <value>Passwort setzen, verschlüsseln &amp; speichern
+</value>
   </data>
   <data name="spdm_SetAndEncryptAndSave_OK" xml:space="preserve">
     <value>Verschlüsseln und speichern</value>
   </data>
   <data name="spdm_SetAndDecrypt_Title" xml:space="preserve">
-    <value>Kennwort &amp;entschlüsseln</value>
+    <value>Passwort setzen &amp; entschlüsseln</value>
   </data>
   <data name="spdm_SetAndDecrypt_OK" xml:space="preserve">
     <value>Entschlüsseln</value>
@@ -428,19 +429,20 @@
     <value>Exportieren von Klartext (Codierung: {0})</value>
   </data>
   <data name="spd_linktext_PrintPassword" xml:space="preserve">
-    <value>Kennwort drucken</value>
+    <value>Passwort drucken</value>
   </data>
   <data name="spd_linktext_GeneratePassword" xml:space="preserve">
-    <value>Kennwort erstellen</value>
+    <value>Passwort vorschlagen</value>
   </data>
   <data name="spd_lbl_PasswordOrPhrase" xml:space="preserve">
-    <value>Kennwort /-Satz:</value>
+    <value>Passwort oder geheimer Merksatz:</value>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Weitere Informationen über</value>
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
-    <value>Zufällige 256-Bit-Daten</value>
+    <value>(256 Bit Zufallszahl)</value>
+    <comment></comment>
   </data>
   <data name="termClear" xml:space="preserve">
     <value>Löschen</value>
@@ -483,5 +485,20 @@
   </data>
   <data name="sett_combo_VisualCrypt2" xml:space="preserve">
     <value>VisualCrypt 2 (AES 256 Bit BCrypt - Multi)</value>
+  </data>
+  <data name="fnt_label_typeFace" xml:space="preserve">
+    <value>_Typeface:</value>
+  </data>
+  <data name="fnt_labelSize" xml:space="preserve">
+    <value>_Size:</value>
+  </data>
+  <data name="fnt_labelPreview" xml:space="preserve">
+    <value>Vorschau:</value>
+  </data>
+  <data name="fnt_labelFontFamilies" xml:space="preserve">
+    <value>_Font-Familie:</value>
+  </data>
+  <data name="fnt_theQuickBrownFox" xml:space="preserve">
+    <value>Der schnelle braune Fuchs springt über den trägen Hund</value>
   </data>
 </root>

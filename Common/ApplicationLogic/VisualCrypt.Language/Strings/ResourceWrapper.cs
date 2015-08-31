@@ -1354,6 +1354,68 @@ namespace VisualCrypt.Language.Strings
                 return Resources.sett_text_EncrpytionMethod;
             }
         }
+        /// <summary>
+        ///   Looks up a localized string similar to _Typeface:.
+        /// </summary>
+        public string fnt_label_typeFace
+        {
+            get
+            {
+                return Resources.fnt_label_typeFace;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to _Font family:.
+        /// </summary>
+        public string fnt_labelFontFamilies
+        {
+            get
+            {
+                return Resources.fnt_labelFontFamilies;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to Preview:.
+        /// </summary>
+        public string fnt_labelPreview
+        {
+            get
+            {
+                return Resources.fnt_labelPreview;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to _Size:.
+        /// </summary>
+        public string fnt_labelSize
+        {
+            get
+            {
+                return Resources.fnt_labelSize;
+            }
+        }
+
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        public string termOK
+        {
+            get
+            {
+                return Resources.termOK;
+            }
+        }
+
+        public string fnt_theQuickBrownFox
+        {
+            get
+            {
+                return Resources.fnt_theQuickBrownFox;
+            }
+        }
 
     }
 }

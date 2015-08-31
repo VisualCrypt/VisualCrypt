@@ -104,8 +104,8 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">En savoir plus sur</target>
         </trans-unit>
         <trans-unit id="Resx/spd_text_from256BitRD" translate="yes" xml:space="preserve">
-          <source>from 256 Bit Random Data</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">à partir des données aléatoires 256 bits</target>
+          <source>(256 Bit Random Data)</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">à partir des données aléatoires 256 bits</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/spd_msgUseEmptyPassword" translate="yes" xml:space="preserve">
           <source>Use empty password?</source>
@@ -199,9 +199,33 @@
           <source>Import with encoding: {0}</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Importation avec codage : {0}</target>
         </trans-unit>
+        <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
+          <source>_Typeface:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface :</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
+          <source>The quick brown fox jumps over the lazy dog</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rapide, le renard brun saute sur le chien paresseux</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
+          <source>_Size:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size :</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
+          <source>Preview:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Aperçu :</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
+          <source>_Font family:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Famille de _Font :</target>
+        </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Valeurs par défaut</target>
+        </trans-unit>
+        <trans-unit id="Resx/termOK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">OK</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
@@ -272,9 +296,10 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
-          <source>Encrypt!</source>
+          <source>Encrypt</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Crypter</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          </trans-unit>
         <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter</target>
@@ -304,8 +329,8 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Le cryptage et l'enregistrement :</target>
         </trans-unit>
         <trans-unit id="Resx/operationDecryptOpenedFile" translate="yes" xml:space="preserve">
-          <source>Decrypting the file being opened:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter le fichier à ouvrir :</target>
+          <source>Decrypting loaded file:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter le fichier à ouvrir :</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/operationDecryption" translate="yes" xml:space="preserve">
           <source>Decrypting:</source>

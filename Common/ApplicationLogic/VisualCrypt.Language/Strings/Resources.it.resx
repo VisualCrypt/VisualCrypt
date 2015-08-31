@@ -199,6 +199,7 @@
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
     <value>Decrittografare il file aperto:</value>
+    <comment></comment>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>La decrittografia:</value>
@@ -376,6 +377,7 @@
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
     <value>da 256 Bit di dati casuali</value>
+    <comment></comment>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Utilizzare password vuota?</value>
@@ -481,5 +483,23 @@
   </data>
   <data name="sett_combo_VisualCrypt2" xml:space="preserve">
     <value>VisualCrypt 2 (AES 256 Bit, BCrypt - multipla)</value>
+  </data>
+  <data name="fnt_label_typeFace" xml:space="preserve">
+    <value>_Typeface:</value>
+  </data>
+  <data name="fnt_labelSize" xml:space="preserve">
+    <value>_Size:</value>
+  </data>
+  <data name="fnt_labelPreview" xml:space="preserve">
+    <value>Anteprima:</value>
+  </data>
+  <data name="fnt_labelFontFamilies" xml:space="preserve">
+    <value>Famiglia _Font:</value>
+  </data>
+  <data name="termOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="fnt_theQuickBrownFox" xml:space="preserve">
+    <value>Salta Cantami o Diva del pelide Achille</value>
   </data>
 </root>

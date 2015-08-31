@@ -3,7 +3,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Controls"
                     Width="500" Height="500"
-                    Title="Font"
                     Background="{x:Static SystemColors.ControlBrush}">
     <controls:AppDialog.Resources>
         <ResourceDictionary
@@ -34,18 +33,18 @@
             </Grid.RowDefinitions>
 
             <!-- Families -->
-            <Label Grid.Column="0" Grid.Row="0" Content="_Font family:" />
+            <Label x:Name="labelFontFamilies" Grid.Column="0" Grid.Row="0"  />
             <DockPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
                 <TextBox DockPanel.Dock="Top" Name="FontFamilyTextBox" />
                 <ListBox Name="FontFamilyList" />
             </DockPanel>
 
             <!-- Family Typefaces (weight, style, stretch) -->
-            <Label Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3" Content="_Typeface:" />
+            <Label x:Name="labelTypeface" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3"  />
             <ListBox Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3" Name="TypefaceList" />
 
             <!-- Font sizes -->
-            <Label Grid.Column="2" Grid.Row="2" Margin="0,12,0,0" Content="_Size:" />
+            <Label x:Name="labelSize" Grid.Column="2" Grid.Row="2" Margin="0,12,0,0"  />
             <DockPanel Grid.Column="2" Grid.Row="3">
                 <TextBox DockPanel.Dock="Top" Name="SizeTextBox" />
                 <ListBox Height="60" Name="SizeList" />
@@ -57,7 +56,7 @@
 
         <!-- Row 2: Preview text -->
         <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,12,0,0">
-            <TextBlock DockPanel.Dock="Top">Preview:</TextBlock>
+            <Label x:Name="labelPreview" DockPanel.Dock="Top"></Label>
             <TextBox x:Name="PreviewTextBox"
                      FontSize="16" AcceptsReturn="True"
                      TextAlignment="Center"
@@ -67,8 +66,8 @@
 
         <!-- Row 3: OK and Cancel buttons -->
         <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
-            <Button Content="OK" IsDefault="True" Click="OnOkButtonClicked" />
-            <Button Content="Cancel" Click="OnCancelButtonClicked" />
+            <Button x:Name="btnOK"  IsDefault="True" Click="OnOkButtonClicked" />
+            <Button x:Name="btnCancel"  Click="OnCancelButtonClicked" />
         </StackPanel>
 
     </Grid>

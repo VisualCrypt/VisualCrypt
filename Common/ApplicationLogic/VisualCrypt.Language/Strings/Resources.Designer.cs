@@ -152,6 +152,51 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Typeface:.
+        /// </summary>
+        internal static string fnt_label_typeFace {
+            get {
+                return ResourceManager.GetString("fnt_label_typeFace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Font family:.
+        /// </summary>
+        internal static string fnt_labelFontFamilies {
+            get {
+                return ResourceManager.GetString("fnt_labelFontFamilies", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Preview:.
+        /// </summary>
+        internal static string fnt_labelPreview {
+            get {
+                return ResourceManager.GetString("fnt_labelPreview", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Size:.
+        /// </summary>
+        internal static string fnt_labelSize {
+            get {
+                return ResourceManager.GetString("fnt_labelSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The quick brown fox jumps over the lazy dog.
+        /// </summary>
+        internal static string fnt_theQuickBrownFox {
+            get {
+                return ResourceManager.GetString("fnt_theQuickBrownFox", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hello World!.
         /// </summary>
         internal static string Hello_World {
@@ -638,7 +683,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Decrypting the file being opened:.
+        ///   Looks up a localized string similar to Decrypting loaded file:.
         /// </summary>
         internal static string operationDecryptOpenedFile {
             get {
@@ -845,7 +890,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to from 256 Bit Random Data.
+        ///   Looks up a localized string similar to (256 Bit Random Data).
         /// </summary>
         internal static string spd_text_from256BitRD {
             get {
@@ -1052,11 +1097,20 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encrypt!.
+        ///   Looks up a localized string similar to Encrypt.
         /// </summary>
         internal static string termEncrypt {
             get {
                 return ResourceManager.GetString("termEncrypt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OK.
+        /// </summary>
+        internal static string termOK {
+            get {
+                return ResourceManager.GetString("termOK", resourceCulture);
             }
         }
         

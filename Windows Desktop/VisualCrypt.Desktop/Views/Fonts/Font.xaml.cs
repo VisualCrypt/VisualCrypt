@@ -6,12 +6,11 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.Services.PortableImplementations;
 using VisualCrypt.Desktop.Services;
 using VisualCrypt.Desktop.Settings;
-using VisualCrypt.Desktop.Views.Fonts;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Views.Fonts
 {
@@ -27,8 +26,7 @@ namespace VisualCrypt.Desktop.Views.Fonts
     {
         #region fields and types
 
-        const string DefaultSampleText = "The quick brown fox jumps over the lazy dog";
-        readonly string _sampleText;
+        string _sampleText;
         readonly FontSettings _selectedFontSettings;
 
         ICollection<FontFamily> _familyCollection; // see FamilyCollection property
@@ -58,27 +56,41 @@ namespace VisualCrypt.Desktop.Views.Fonts
 
 
         readonly SettingsManager _settingsManager;
+        readonly ResourceWrapper _resourceWrapper;
 
         public Font()
         {
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
             var paramsProvider = Service.Get<IParamsProvider>();
-            string sampleText = paramsProvider.GetParams<Font, string>();
 
             var fontSettings = (FontSettings)_settingsManager.FontSettings;
             _selectedFontSettings = fontSettings.Clone();
 
-
-            _sampleText = string.IsNullOrWhiteSpace(sampleText)
-                ? DefaultSampleText
-                : sampleText;
+            _sampleText = paramsProvider.GetParams<Font, string>();
+           
 
             InitializeComponent();
 
             PreviewKeyDown += CloseWithEscape;
+            SetTexts();
         }
 
-        void CloseWithEscape(object sender, System.Windows.Input.KeyEventArgs e)
+        void SetTexts()
+        {
+            Title = _resourceWrapper.miFormatFont.NoDots();
+            labelFontFamilies.Content = _resourceWrapper.fnt_labelFontFamilies;
+            labelTypeface.Content = _resourceWrapper.fnt_label_typeFace;
+            labelSize.Content = _resourceWrapper.fnt_labelSize;
+            labelPreview.Content = _resourceWrapper.fnt_labelPreview;
+            btnCancel.Content = _resourceWrapper.termCancel;
+            btnOK.Content = _resourceWrapper.termOK;
+
+            if (string.IsNullOrWhiteSpace(_sampleText))
+                PreviewTextBox.Text = _resourceWrapper.fnt_theQuickBrownFox;
+        }
+
+        void CloseWithEscape(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
                 Close();
@@ -87,8 +99,6 @@ namespace VisualCrypt.Desktop.Views.Fonts
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-
-            PreviewTextBox.Text = _sampleText;
 
             // Hook up events for the font family list and associated text box.
             FontFamilyTextBox.SelectionChanged += fontFamilyTextBox_SelectionChanged;

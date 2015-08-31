@@ -191,6 +191,7 @@
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
     <value>с 256-битным случайных данных</value>
+    <comment></comment>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Использовать пустой пароль?</value>
@@ -317,6 +318,7 @@
   </data>
   <data name="termEncrypt" xml:space="preserve">
     <value>Шифрование!</value>
+    <comment></comment>
   </data>
   <data name="termDecrypt" xml:space="preserve">
     <value>Расшифровка</value>
@@ -341,6 +343,7 @@
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
     <value>Расшифровка открываемый файл:</value>
+    <comment></comment>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>Расшифровка:</value>
@@ -479,5 +482,23 @@
   </data>
   <data name="miEdit" xml:space="preserve">
     <value>Изменить</value>
+  </data>
+  <data name="fnt_label_typeFace" xml:space="preserve">
+    <value>_Typeface:</value>
+  </data>
+  <data name="fnt_labelSize" xml:space="preserve">
+    <value>Ра_змер:</value>
+  </data>
+  <data name="fnt_labelPreview" xml:space="preserve">
+    <value>Предварительный просмотр:</value>
+  </data>
+  <data name="fnt_labelFontFamilies" xml:space="preserve">
+    <value>Семейство _Font:</value>
+  </data>
+  <data name="termOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="fnt_theQuickBrownFox" xml:space="preserve">
+    <value>Выпей переходит через ленивый собака</value>
   </data>
 </root>

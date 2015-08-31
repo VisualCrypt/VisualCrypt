@@ -199,6 +199,7 @@
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
     <value>Décrypter le fichier à ouvrir :</value>
+    <comment></comment>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>Décryptage :</value>
@@ -376,6 +377,7 @@
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
     <value>à partir des données aléatoires 256 bits</value>
+    <comment></comment>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Utiliser un mot de passe vide ?</value>
@@ -481,5 +483,23 @@
   </data>
   <data name="sett_combo_VisualCrypt2" xml:space="preserve">
     <value>VisualCrypt 2 (AES 256 bits, BCrypt - Multi)</value>
+  </data>
+  <data name="fnt_label_typeFace" xml:space="preserve">
+    <value>_Typeface :</value>
+  </data>
+  <data name="fnt_labelSize" xml:space="preserve">
+    <value>_Size :</value>
+  </data>
+  <data name="fnt_labelPreview" xml:space="preserve">
+    <value>Aperçu :</value>
+  </data>
+  <data name="fnt_labelFontFamilies" xml:space="preserve">
+    <value>Famille de _Font :</value>
+  </data>
+  <data name="termOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="fnt_theQuickBrownFox" xml:space="preserve">
+    <value>Rapide, le renard brun saute sur le chien paresseux</value>
   </data>
 </root>

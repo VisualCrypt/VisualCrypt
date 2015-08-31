@@ -48,8 +48,7 @@
         </trans-unit>
         <trans-unit id="Resx/Hello_World" translate="yes" xml:space="preserve">
           <source>Hello World!</source>
-          <target state="needs-review-translation">Hallo Welt!</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="signed-off">Hallo Welt!</target>
           </trans-unit>
         <trans-unit id="Resx/uriSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com</source>
@@ -77,11 +76,11 @@
         </trans-unit>
         <trans-unit id="Resx/spdm_Set_Title" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort festlegen</target>
+          <target state="translated">Passwort setzen</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_PrintPassword" translate="yes" xml:space="preserve">
           <source>Print Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort drucken</target>
+          <target state="translated">Passwort drucken</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_VisualCryptPasswords" translate="yes" xml:space="preserve">
           <source>VisualCrypt Passwords</source>
@@ -89,11 +88,11 @@
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_GeneratePassword" translate="yes" xml:space="preserve">
           <source>Generate Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort erstellen</target>
+          <target state="translated">Passwort vorschlagen</target>
         </trans-unit>
         <trans-unit id="Resx/spd_lbl_PasswordOrPhrase" translate="yes" xml:space="preserve">
           <source>Password/-phrase:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort /-Satz:</target>
+          <target state="translated">Passwort oder geheimer Merksatz:</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgXofYUnicodeChars" translate="yes" xml:space="preserve">
           <source>{0} of {1} Unicode Characters</source>
@@ -104,24 +103,24 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Weitere Informationen über</target>
         </trans-unit>
         <trans-unit id="Resx/spd_text_from256BitRD" translate="yes" xml:space="preserve">
-          <source>from 256 Bit Random Data</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Zufällige 256-Bit-Daten</target>
+          <source>(256 Bit Random Data)</source>
+          <target state="needs-review-translation">(256 Bit Zufallszahl)</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/spd_msgUseEmptyPassword" translate="yes" xml:space="preserve">
           <source>Use empty password?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Leeres Kennwort verwenden?</target>
+          <target state="translated">Leeres Passwort verwenden?</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgPasswordEffectivelyEmpty" translate="yes" xml:space="preserve">
           <source>The password is effectively empty - are you sure?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ist das Kennwort effektiv leer - sind Sie sicher?</target>
+          <target state="translated">Das Passwort is effektiv leer - verwenden?</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Set_OK" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort festlegen</target>
+          <target state="translated">Passwort setzen</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncrypt_Title" translate="yes" xml:space="preserve">
           <source>Set Password %%amp; Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">%%amp;Das Kennwort verschlüsseln</target>
+          <target state="translated">Passwort setzen %%amp; verschlüsseln</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncrypt_OK" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
@@ -129,7 +128,8 @@
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncryptAndSave_Title" translate="yes" xml:space="preserve">
           <source>Set Password, Encrypt and Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Legen Sie ein Kennwort verschlüsseln und speichern</target>
+          <target state="translated">Passwort setzen, verschlüsseln %%amp; speichern
+</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncryptAndSave_OK" translate="yes" xml:space="preserve">
           <source>Encrypt and Save</source>
@@ -137,7 +137,7 @@
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecrypt_Title" translate="yes" xml:space="preserve">
           <source>Set Password %%amp; Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort %%amp;entschlüsseln</target>
+          <target state="translated">Passwort setzen %%amp; entschlüsseln</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecrypt_OK" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
@@ -199,9 +199,33 @@
           <source>Import with encoding: {0}</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Import mit Codierung: {0}</target>
         </trans-unit>
+        <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
+          <source>_Typeface:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface:</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
+          <source>The quick brown fox jumps over the lazy dog</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Der schnelle braune Fuchs springt über den trägen Hund</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
+          <source>_Size:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size:</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
+          <source>Preview:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Vorschau:</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
+          <source>_Font family:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Font-Familie:</target>
+        </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Standardeinstellungen</target>
+        </trans-unit>
+        <trans-unit id="Resx/termOK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="new">OK</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
@@ -261,7 +285,7 @@
         </trans-unit>
         <trans-unit id="Resx/termSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Kennwort festlegen</target>
+          <target state="translated">Passwort setzen</target>
         </trans-unit>
         <trans-unit id="Resx/termSave" translate="yes" xml:space="preserve">
           <source>Save</source>
@@ -272,9 +296,8 @@
           <target state="translated">Passwort</target>
         </trans-unit>
         <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
-          <source>Encrypt!</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Verschlüsseln</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <source>Encrypt</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Verschlüsseln</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
@@ -307,8 +330,8 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Verschlüsseln und speichern:</target>
         </trans-unit>
         <trans-unit id="Resx/operationDecryptOpenedFile" translate="yes" xml:space="preserve">
-          <source>Decrypting the file being opened:</source>
-          <target state="translated">Entschlüsseln der ladenden Datei:</target>
+          <source>Decrypting loaded file:</source>
+          <target state="needs-review-translation">Entschlüsseln der ladenden Datei:</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/operationDecryption" translate="yes" xml:space="preserve">
           <source>Decrypting:</source>
@@ -352,7 +375,7 @@
         </trans-unit>
         <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password...</source>
-          <target state="translated">Passwort festlegen...</target>
+          <target state="translated">Passwort setzen...</target>
         </trans-unit>
         <trans-unit id="Resx/miVCEncrypt" translate="yes" xml:space="preserve">
           <source>Encrypt</source>

@@ -103,8 +103,8 @@
           <target state="new">Read more about</target>
         </trans-unit>
         <trans-unit id="Resx/spd_text_from256BitRD" translate="yes" xml:space="preserve">
-          <source>from 256 Bit Random Data</source>
-          <target state="new">from 256 Bit Random Data</target>
+          <source>(256 Bit Random Data)</source>
+          <target state="new">(256 Bit Random Data)</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgUseEmptyPassword" translate="yes" xml:space="preserve">
           <source>Use empty password?</source>
@@ -198,9 +198,33 @@
           <source>Import with encoding: {0}</source>
           <target state="new">Import with encoding: {0}</target>
         </trans-unit>
+        <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
+          <source>_Typeface:</source>
+          <target state="new">_Typeface:</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
+          <source>The quick brown fox jumps over the lazy dog</source>
+          <target state="new">The quick brown fox jumps over the lazy dog</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
+          <source>_Size:</source>
+          <target state="new">_Size:</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
+          <source>Preview:</source>
+          <target state="new">Preview:</target>
+        </trans-unit>
+        <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
+          <source>_Font family:</source>
+          <target state="new">_Font family:</target>
+        </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
           <target state="new">Defaults</target>
+        </trans-unit>
+        <trans-unit id="Resx/termOK" translate="yes" xml:space="preserve">
+          <source>OK</source>
+          <target state="new">OK</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
@@ -271,8 +295,8 @@
           <target state="new">Password</target>
         </trans-unit>
         <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
-          <source>Encrypt!</source>
-          <target state="new">Encrypt!</target>
+          <source>Encrypt</source>
+          <target state="new">Encrypt</target>
         </trans-unit>
         <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
@@ -303,8 +327,8 @@
           <target state="new">Encrypting and saving:</target>
         </trans-unit>
         <trans-unit id="Resx/operationDecryptOpenedFile" translate="yes" xml:space="preserve">
-          <source>Decrypting the file being opened:</source>
-          <target state="new">Decrypting the file being opened:</target>
+          <source>Decrypting loaded file:</source>
+          <target state="new">Decrypting loaded file:</target>
         </trans-unit>
         <trans-unit id="Resx/operationDecryption" translate="yes" xml:space="preserve">
           <source>Decrypting:</source>
