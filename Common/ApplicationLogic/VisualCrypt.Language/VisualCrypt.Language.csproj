@@ -80,6 +80,8 @@
       <DependentUpon>Resources.ru.resx</DependentUpon>
     </Compile>
     <Compile Include="Strings\ResourceWrapper.cs" />
+    <Compile Include="Strings\ResourceWrapper.generated.cs" />
+    <Compile Include="Strings\ResourceWrapper.generated.template.cs" />
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="Strings\Resources.de.xlf">
@@ -151,6 +153,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" />
+  <PropertyGroup>
+    <PreBuildEvent>$(SolutionDir)\misc\VisualCrypt.BuildTools\bin\Debug\VisualCrypt.BuildTools.exe -generateresourcewrapper $(ProjectDir)Strings</PreBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
