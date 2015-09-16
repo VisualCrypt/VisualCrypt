@@ -5,7 +5,6 @@ using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 using Prism.Events;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.Services.PortableImplementations;
@@ -18,7 +17,7 @@ using VisualCrypt.Desktop.Views;
 using VisualCrypt.Applications.Models.Settings;
 using VisualCrypt.Desktop.Settings;
 using VisualCrypt.Language.Strings;
-using System.Reflection;
+using System.Threading;
 
 namespace VisualCrypt.Desktop
 {
@@ -35,7 +34,11 @@ namespace VisualCrypt.Desktop
                 StopWatch.Start();
 
                 ConfigureFactory();
-                Service.Get<ResourceWrapper>().Info.SwitchCulture("de");
+                var systemCulture = Thread.CurrentThread.CurrentUICulture;
+                var resourceWrapper = Service.Get<ResourceWrapper>();
+                if (resourceWrapper.Info.AvailableCultures.Contains(systemCulture.TwoLetterISOLanguageName.ToLowerInvariant()))
+                    resourceWrapper.Info.SwitchCulture(systemCulture.TwoLetterISOLanguageName.ToLowerInvariant());
+                else resourceWrapper.Info.SwitchCulture("en");
 
                 var app = new App();
                 app.Startup += App_Startup;
