@@ -3,6 +3,7 @@
 	public enum DialogFilter
 	{
 		Text,
-		VisualCrypt
+		VisualCrypt,
+        VisualCryptAndText
 	}
 }

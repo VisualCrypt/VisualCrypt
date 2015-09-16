@@ -15,19 +15,18 @@ namespace VisualCrypt.Desktop
 
         public const string ProductName = "VisualCrypt Editor";
 
-		
 
-		
 
-		
 
-		
 
-		// Open/Save VisualCrypt
-		public static string VisualCryptDialogFilter_DefaultExt = ".visualcrypt";
 
-		public static string VisualCryptDialogFilter =
-			"VisualCrypt (*.visualcrypt; *.txt)|*.visualcrypt;*.txt|All Files(*.*)|*.*";
+        // Open VisualCrypt
+        public static string VisualCryptAndTextDialogFilter_DefaultExt = ".visualcrypt";
+        public static string VisualCryptAndTextDialogFilter = "VisualCrypt (*.visualcrypt; *.txt)|*.visualcrypt;*.txt|All Files(*.*)|*.*";
+
+        // Save VisualCrypt
+        public static string VisualCryptDialogFilter_DefaultExt = ".visualcrypt";
+		public static string VisualCryptDialogFilter = "VisualCrypt (*.visualcrypt)|*.visualcrypt|All Files(*.*)|*.*";
 
 		// Import/Export Plaintext
 		public static string TextDialogFilter_DefaultExt = ".txt";

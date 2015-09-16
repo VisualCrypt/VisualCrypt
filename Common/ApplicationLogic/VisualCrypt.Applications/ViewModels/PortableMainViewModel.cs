@@ -352,7 +352,7 @@ namespace VisualCrypt.Applications.ViewModels
             if (!await ConfirmToDiscardText())
                 return;
 
-            var pickFileResult = await _fileService.PickFileAsync(null, DialogFilter.VisualCrypt, DialogDirection.Open,_resourceWrapper.miFileOpen.NoDots());
+            var pickFileResult = await _fileService.PickFileAsync(null, DialogFilter.VisualCryptAndText, DialogDirection.Open, _resourceWrapper.miFileOpen.NoDots());
             if (pickFileResult.Item1)
             {
                 await OpenFileCommon(pickFileResult.Item2);
@@ -626,7 +626,7 @@ namespace VisualCrypt.Applications.ViewModels
                         suggestedFilename = FileModel.Filename;
 
                     var pickFileResult =
-                        await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save,_resourceWrapper.miFileSaveAs);
+                        await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save, _resourceWrapper.miFileSaveAs);
                     if (pickFileResult.Item1)
                     {
                         FileModel.Filename = pickFileResult.Item2;
@@ -670,7 +670,7 @@ namespace VisualCrypt.Applications.ViewModels
                     suggestedFilename = FileModel.Filename;
 
                 var pickFileResult =
-                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save,_resourceWrapper.miFileSaveAs);
+                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, DialogDirection.Save, _resourceWrapper.miFileSaveAs);
                 if (!pickFileResult.Item1)
                     return;
                 FileModel.Filename = pickFileResult.Item2;
