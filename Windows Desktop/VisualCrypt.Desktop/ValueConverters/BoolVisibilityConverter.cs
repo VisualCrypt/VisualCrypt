@@ -9,7 +9,8 @@ namespace VisualCrypt.Desktop.ValueConverters
 	{
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
 		{
-			return (bool) value ? Visibility.Visible : Visibility.Collapsed;
+            var visibility = (bool)value ? Visibility.Visible : Visibility.Collapsed;
+            return visibility;
 		}
 
 		public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
