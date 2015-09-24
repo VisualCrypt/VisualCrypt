@@ -13,7 +13,7 @@ using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Views
 {
-  
+
     public sealed partial class SetPasswordDialog : INotifyPropertyChanged
     {
         readonly IMessageBoxService _messageBoxService;
@@ -21,8 +21,8 @@ namespace VisualCrypt.Desktop.Views
         readonly ResourceWrapper _resourceWrapper;
         readonly IPrinter _printer;
         readonly IParamsProvider _paramsProvider;
-	    readonly Action<bool> _setIsPasswordSet;
-	    readonly bool _isPasswordSet;
+        readonly Action<bool> _setIsPasswordSet;
+        bool _isSessionPasswordSet;
         public ResourceWrapper ResourceWrapper { get { return _resourceWrapper; } }
 
         public SetPasswordDialog()
@@ -44,16 +44,20 @@ namespace VisualCrypt.Desktop.Views
 
             PreviewKeyDown += CloseWithEscape;
 
-			var parameters = _paramsProvider.GetParams<SetPasswordDialog,Tuple<SetPasswordDialogMode,Action<bool>,bool>>();
+            var parameters = _paramsProvider.GetParams<SetPasswordDialog, Tuple<SetPasswordDialogMode, Action<bool>, bool>>();
             SetMode(parameters.Item1);
-	        _setIsPasswordSet = parameters.Item2;
-	        _isPasswordSet = parameters.Item3;
+            _setIsPasswordSet = parameters.Item2;
+            _isSessionPasswordSet = parameters.Item3;
         }
 
         void PwBox_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
+                SetPasswordCommand.RaiseCanExecuteChanged();
+
+                IsHyperlinkClearPWBoxEnabled = PwBox.Text.Length > 0 ? true : false;
+
                 var response = _encryptionService.SanitizePassword(PwBox.Text);
                 if (response.IsSuccess)
                 {
@@ -203,6 +207,17 @@ namespace VisualCrypt.Desktop.Views
 
         string _significantCharCountText;
 
+        public bool IsHyperlinkClearPWBoxEnabled
+        {
+            get { return _isHyperlinkClearPWBoxEnabled; }
+            set
+            {
+                _isHyperlinkClearPWBoxEnabled = value;
+                OnPropertyChanged();
+            }
+        }
+        bool _isHyperlinkClearPWBoxEnabled;
+
         void ExecuteClearPasswordCommand()
         {
             try
@@ -210,10 +225,9 @@ namespace VisualCrypt.Desktop.Views
                 var setPasswordResponse = _encryptionService.SetPassword(string.Empty);
                 if (setPasswordResponse.IsSuccess)
                 {
-					_setIsPasswordSet(false);
-                    PwBox.Text = string.Empty;
-                    DialogResult = true;
-                    Close();
+                    _isSessionPasswordSet = false;
+                    _setIsPasswordSet(false);
+                    ClearPasswordCommand.RaiseCanExecuteChanged();
                 }
             }
             catch (Exception e)
@@ -224,11 +238,15 @@ namespace VisualCrypt.Desktop.Views
 
         bool CanExecuteClearPasswordCommand()
         {
-            if (PwBox.Text.Length > 0 || _isPasswordSet)
+            if (_isSessionPasswordSet)
             {
                 return true;
             }
             return false;
+        }
+        void Hyperlink_ClearPWBox_Click(object sender, RoutedEventArgs e)
+        {
+            PwBox.Text = string.Empty;
         }
 
         void Button_Click(object sender, RoutedEventArgs e)
@@ -236,13 +254,6 @@ namespace VisualCrypt.Desktop.Views
             DialogResult = false;
             Close();
         }
-
-        void Password_Changed(object sender, RoutedEventArgs e)
-        {
-            SetPasswordCommand.RaiseCanExecuteChanged();
-            ClearPasswordCommand.RaiseCanExecuteChanged();
-        }
-
 
         void Hyperlink_CreatePassword_OnClick(object sender, RoutedEventArgs e)
         {
@@ -268,7 +279,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl}
+                        StartInfo = { UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl }
                     })
                     process.Start();
             }
@@ -288,7 +299,7 @@ namespace VisualCrypt.Desktop.Views
                     string normalizedPassword = response.Result;
                     _printer.PrintEditorText(normalizedPassword);
 
-                  
+
                 }
                 else
                 {
@@ -299,7 +310,7 @@ namespace VisualCrypt.Desktop.Views
             {
                 _messageBoxService.ShowError(ex);
             }
-           
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -311,6 +322,6 @@ namespace VisualCrypt.Desktop.Views
                 handler(this, new PropertyChangedEventArgs(propertyName));
         }
 
-       
+
     }
 }

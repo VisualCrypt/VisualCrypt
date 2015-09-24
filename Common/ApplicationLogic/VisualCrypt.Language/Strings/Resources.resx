@@ -498,4 +498,7 @@
   <data name="termOK" xml:space="preserve">
     <value>OK</value>
   </data>
+  <data name="spd_btntext_ClearPWFromMemory" xml:space="preserve">
+    <value>Clear Session Password</value>
+  </data>
 </root>

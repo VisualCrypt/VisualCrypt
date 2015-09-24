@@ -227,6 +227,10 @@
           <source>OK</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">OK</target>
         </trans-unit>
+        <trans-unit id="Resx/spd_btntext_ClearPWFromMemory" translate="yes" xml:space="preserve">
+          <source>Clear Session Password</source>
+          <target state="new">Clear Session Password</target>
+        </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Le paramètre influence le travail de calcul requis pour créer le hachage BCrypt. Une valeur élevée signifie plus de travail.</target>

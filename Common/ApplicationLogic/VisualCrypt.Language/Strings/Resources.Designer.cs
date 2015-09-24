@@ -827,6 +827,15 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Clear Session Password.
+        /// </summary>
+        internal static string spd_btntext_ClearPWFromMemory {
+            get {
+                return ResourceManager.GetString("spd_btntext_ClearPWFromMemory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Password/-phrase:.
         /// </summary>
         internal static string spd_lbl_PasswordOrPhrase {
