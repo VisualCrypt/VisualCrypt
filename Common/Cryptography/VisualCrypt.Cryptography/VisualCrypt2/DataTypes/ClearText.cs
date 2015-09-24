@@ -6,9 +6,8 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 	{
 		const int MaxClearTextLength = 1024 * 1024 * 10;
 
-		// we could techniocally encrypt an empty message, but it would be obvious for the attacker that the message is empty, 
-		// because the lenght of the cipher would be 0 blocks. Therefore encrpytion of empty messages is not allowed.
-		const int MinClearTextLength = 1;
+		// Empty messages are not secret, because the lenght of the cipher is always 0 blocks. Allow lenght of 0?
+		const int MinClearTextLength = 0;
 
 		/// <summary>
 		/// Guaranteed to be non-null.
@@ -28,7 +27,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 				throw new ArgumentOutOfRangeException("text", string.Format("Text too long. Maximum is {0} characters.", MaxClearTextLength));
 
 			if (text.Length < MinClearTextLength)
-				throw new NotSupportedException("Empty messages are not allowed. An attacker would know the message is empty because empty messages have a characteristic size.");
+				throw new NotSupportedException(string.Format("Text too short. Minimum is {0} characters.", MinClearTextLength));
 
 			_text = text;
 		}

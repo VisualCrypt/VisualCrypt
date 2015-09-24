@@ -43,11 +43,9 @@ namespace VisualCrypt.Desktop.Services
 
         public async Task ShowError(Exception e, [CallerMemberName] string callerMemberName = "")
         {
-            var messageBoxText = "SetError in {0}:\r\n\r\n{1}".FormatInvariant(callerMemberName, e.Message);
-
             var tcs = new TaskCompletionSource<RequestResult>();
             
-            ShowAsync(messageBoxText, "SetError (Press Ctrl + C to copy)", RequestButton.OK, RequestImage.Error, tcs.SetResult);
+            ShowAsync(e.Message, "VisualCrypt", RequestButton.OK, RequestImage.Error, tcs.SetResult);
 
             await tcs.Task;
         }
@@ -56,11 +54,11 @@ namespace VisualCrypt.Desktop.Services
         public async Task ShowError(string error)
         {
             if (string.IsNullOrWhiteSpace(error))
-                error = "There was an error but the error message is missing.";
+                error = "Unspecified Error";
 
             var tcs = new TaskCompletionSource<RequestResult>();
 
-            ShowAsync(error, "SetError (Press Ctrl + C to copy)", RequestButton.OK, RequestImage.Error,tcs.SetResult);
+            ShowAsync(error, "VisualCrypt", RequestButton.OK, RequestImage.Error,tcs.SetResult);
 
             await tcs.Task;
 
@@ -78,7 +76,7 @@ namespace VisualCrypt.Desktop.Services
         void ShowAsync(string messageBoxText, string title, RequestButton buttons, RequestImage image, Action<RequestResult> callback)
         {
             if (title == null)
-                title = "Untitled";
+                title = "VisualCrypt";
             if (messageBoxText == null)
                 messageBoxText = "No text available";
 
