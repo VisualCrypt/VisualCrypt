@@ -57,7 +57,7 @@ namespace VisualCrypt.Applications.ViewModels
 
             SearchOptions = new SearchOptions();
             _fontManager.ExecuteZoom100();
-         
+
             _resourceWrapper.Info.CultureChanged += OnCultureChanged;
 
 
@@ -137,8 +137,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         void OnSelectionChanged(object sender, object routedEventArgs)
         {
-            if ((_settingsManager.EditorSettings.IsStatusBarVisible))
-                UpdateStatusBar();
+            UpdateStatusBar();
         }
 
         #endregion
@@ -448,7 +447,7 @@ namespace VisualCrypt.Applications.ViewModels
             {
                 if (SearchOptions.UseRegEx)
                 {
-                    await _messageBoxService.Show(ae.Message,_resourceWrapper.msgReplaceInvalidRegEx, RequestButton.OK,
+                    await _messageBoxService.Show(ae.Message, _resourceWrapper.msgReplaceInvalidRegEx, RequestButton.OK,
                         RequestImage.Error);
                     return null;
                 }

@@ -10,18 +10,7 @@ namespace VisualCrypt.Applications.Models.Settings
 	[DataContract]
 	public sealed class EditorSettings : INotifyPropertyChanged
 	{
-		[DataMember]
-		public bool IsStatusBarVisible
-		{
-			get { return _isStatusBarVisible; }
-			set
-			{
-				_isStatusBarVisible = value;
-				OnPropertyChanged();
-			}
-		}
-
-		bool _isStatusBarVisible;
+		
 
 		[DataMember]
 		public bool IsToolAreaVisible

@@ -30,7 +30,6 @@ namespace VisualCrypt.Desktop.Services
 
             EditorSettings = new EditorSettings
             {
-                IsStatusBarVisible = true,
                 IsWordWrapChecked = true,
                 IsSpellCheckingChecked = false,
                 PagePadding = 72,

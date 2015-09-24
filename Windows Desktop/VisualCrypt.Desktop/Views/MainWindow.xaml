@@ -146,14 +146,10 @@
                           Command="commands:EditorCommands.Font" InputGestureText="Ctrl+Alt+F" />
             </MenuItem>
             <MenuItem Header="{Binding  ResourceWrapper.miView, Mode=OneWay}">
-                <MenuItem Header="{Binding  ResourceWrapper.miViewStatusBar, Mode=OneWay}"
-                          IsCheckable="True"
-                          IsChecked="{Binding SettingsManager.EditorSettings.IsStatusBarVisible, Mode=TwoWay}"
-                          InputGestureText="F12" />
                 <MenuItem Header="{Binding  ResourceWrapper.miViewToolArea, Mode=OneWay}"
                           IsCheckable="True"
                           IsChecked="{Binding SettingsManager.EditorSettings.IsToolAreaVisible, Mode=TwoWay}"
-                          InputGestureText="ESC" />
+                          InputGestureText="Ctrl+T" />
                 <MenuItem Header="{Binding  ResourceWrapper.miViewLanguage, Mode=OneWay}">
                     <MenuItem Header="English" Command="{Binding SwitchLanguageCommand}" CommandParameter="en"
                               IsChecked="{Binding ResourceWrapper.Info.IsEN, Mode=OneWay}" />
@@ -198,7 +194,7 @@
             <views:EditorUserControl />
         </ContentControl>
         <Border Grid.Row="2" Height="28" Background="{DynamicResource AccentColorBrush}"
-                Visibility="{Binding SettingsManager.EditorSettings.IsStatusBarVisible, Converter={StaticResource BoolVisibility}}">
+                >
             <StackPanel>
                 <views:PlainTextBar
                     Visibility="{Binding StatusBarModel.IsPlaintextBarVisible, Converter={StaticResource BoolVisibility}}" />

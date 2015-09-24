@@ -40,15 +40,8 @@ namespace VisualCrypt.Desktop.Views
             await _viewModel.ExitCommand.Execute(e);
         }
 
-        async void ShellWindow_PreviewKeyDown(object sender, KeyEventArgs e)
+        void ShellWindow_PreviewKeyDown(object sender, KeyEventArgs e)
         {
-            // This was in TextBox1_PreviewKeyDown, does this still work?
-            if ((e.Key == Key.R && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
-                && _viewModel.ClearPasswordCommand.CanExecute())
-                await _viewModel.ClearPasswordCommand.Execute();
-
-            if (e.Key == Key.F12)
-                _settingsManager.EditorSettings.IsStatusBarVisible = !_settingsManager.EditorSettings.IsStatusBarVisible;
             if (e.Key == Key.T && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 _settingsManager.EditorSettings.IsToolAreaVisible = !_settingsManager.EditorSettings.IsToolAreaVisible;
 
