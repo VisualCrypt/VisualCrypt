@@ -56,14 +56,11 @@ namespace VisualCrypt.Desktop.Views
             {
                 SetPasswordCommand.RaiseCanExecuteChanged();
 
-                IsHyperlinkClearPWBoxEnabled = PwBox.Text.Length > 0 ? true : false;
-
                 var response = _encryptionService.SanitizePassword(PwBox.Text);
                 if (response.IsSuccess)
                 {
                     var sigCount = response.Result.Length;
-                    SignificantCharCountText = string.Format(_resourceWrapper.spd_msgXofYUnicodeChars, sigCount.ToString("N0"),
-                        NormalizedPassword.MaxSanitizedPasswordLength.ToString("N0"));
+                    SignificantCharCountText = string.Format(_resourceWrapper.spd_msgXofYUnicodeChars, sigCount.ToString("N0"));
                 }
                 else
                 {
@@ -125,7 +122,7 @@ namespace VisualCrypt.Desktop.Views
             {
                 if (_setPasswordCommand != null)
                     return _setPasswordCommand;
-                _setPasswordCommand = new DelegateCommand(ExecuteSetPasswordCommand, CanExecuteSetPasswordCommand);
+                _setPasswordCommand = new DelegateCommand(ExecuteSetPasswordCommand, () => true);
                 return _setPasswordCommand;
             }
         }
@@ -177,23 +174,9 @@ namespace VisualCrypt.Desktop.Views
             }
         }
 
-        bool CanExecuteSetPasswordCommand()
-        {
-            return true;
-        }
 
-        DelegateCommand _clearPasswordCommand;
 
-        public DelegateCommand ClearPasswordCommand
-        {
-            get
-            {
-                if (_clearPasswordCommand != null)
-                    return _clearPasswordCommand;
-                _clearPasswordCommand = new DelegateCommand(ExecuteClearPasswordCommand, CanExecuteClearPasswordCommand);
-                return _clearPasswordCommand;
-            }
-        }
+       
 
         public string SignificantCharCountText
         {
@@ -207,47 +190,7 @@ namespace VisualCrypt.Desktop.Views
 
         string _significantCharCountText;
 
-        public bool IsHyperlinkClearPWBoxEnabled
-        {
-            get { return _isHyperlinkClearPWBoxEnabled; }
-            set
-            {
-                _isHyperlinkClearPWBoxEnabled = value;
-                OnPropertyChanged();
-            }
-        }
-        bool _isHyperlinkClearPWBoxEnabled;
-
-        void ExecuteClearPasswordCommand()
-        {
-            try
-            {
-                var setPasswordResponse = _encryptionService.SetPassword(string.Empty);
-                if (setPasswordResponse.IsSuccess)
-                {
-                    _isSessionPasswordSet = false;
-                    _setIsPasswordSet(false);
-                    ClearPasswordCommand.RaiseCanExecuteChanged();
-                }
-            }
-            catch (Exception e)
-            {
-                _messageBoxService.ShowError(e);
-            }
-        }
-
-        bool CanExecuteClearPasswordCommand()
-        {
-            if (_isSessionPasswordSet)
-            {
-                return true;
-            }
-            return false;
-        }
-        void Hyperlink_ClearPWBox_Click(object sender, RoutedEventArgs e)
-        {
-            PwBox.Text = string.Empty;
-        }
+      
 
         void Button_Click(object sender, RoutedEventArgs e)
         {

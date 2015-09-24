@@ -857,7 +857,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         public DelegateCommand ClearPasswordCommand
         {
-            get { return CreateCommand(ref _clearPasswordCommand, ExecuteClearPasswordCommand, () => true); }
+            get { return CreateCommand(ref _clearPasswordCommand, ExecuteClearPasswordCommand, () => PasswordInfo.IsPasswordSet); }
         }
 
         DelegateCommand _clearPasswordCommand;

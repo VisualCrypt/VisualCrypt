@@ -375,6 +375,7 @@
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
     <value>{0} von {1} Unicode-Zeichen</value>
+    <comment></comment>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Leeres Passwort verwenden?</value>

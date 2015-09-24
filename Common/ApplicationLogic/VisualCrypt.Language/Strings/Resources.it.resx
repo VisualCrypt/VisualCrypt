@@ -371,6 +371,7 @@
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
     <value>{0} di {1} caratteri Unicode</value>
+    <comment></comment>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Per ulteriori informazioni su</value>

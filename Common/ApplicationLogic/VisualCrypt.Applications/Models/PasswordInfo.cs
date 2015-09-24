@@ -1,4 +1,5 @@
 ﻿using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Applications.Models
@@ -18,6 +19,7 @@ namespace VisualCrypt.Applications.Models
             OnPropertyChanged(() => PasswordStatus);
             OnPropertyChanged(() => HyperlinkPasswordText);
             OnPropertyChanged(() => MenuPasswordText);
+            Service.Get<PortableMainViewModel>().ClearPasswordCommand.RaiseCanExecuteChanged();
         }
 
         public bool IsPasswordSet

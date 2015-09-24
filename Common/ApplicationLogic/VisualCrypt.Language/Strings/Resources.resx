@@ -418,7 +418,7 @@
     <value>Use empty password?</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
-    <value>{0} of {1} Unicode Characters</value>
+    <value>{0} significant Unicode Characters</value>
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
     <value>(256 Bit Random Data)</value>
@@ -498,7 +498,7 @@
   <data name="termOK" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="spd_btntext_ClearPWFromMemory" xml:space="preserve">
-    <value>Clear Session Password</value>
+  <data name="termClearPassword" xml:space="preserve">
+    <value>Clear Password</value>
   </data>
 </root>

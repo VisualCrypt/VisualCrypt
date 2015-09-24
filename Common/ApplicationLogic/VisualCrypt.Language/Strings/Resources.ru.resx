@@ -185,6 +185,7 @@
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
     <value>{0} из {1} знаков Юникода</value>
+    <comment></comment>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Дополнительные сведения о</value>

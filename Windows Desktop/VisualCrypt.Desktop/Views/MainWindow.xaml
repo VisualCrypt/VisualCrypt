@@ -30,6 +30,7 @@
         <KeyBinding Key="P" Modifiers="Control+Alt" Command="commands:EditorCommands.Print" />
         <!-- VisualCrypt -->
         <KeyBinding Key="P" Modifiers="Control" Command="{Binding ShowSetPasswordDialogCommand}" />
+        <KeyBinding Key="ESC" Command="{Binding ClearPasswordCommand}" />
         <KeyBinding Key="E" Modifiers="Control" Command="{Binding EncryptEditorContentsCommand}" />
         <KeyBinding Key="D" Modifiers="Control" Command="{Binding DecryptEditorContentsCommand}" />
         <KeyBinding Key="P" Modifiers="Control+Shift" Command="{Binding ShowSettingsDialogCommand}" />
@@ -81,6 +82,9 @@
                 <MenuItem
                     Header="{Binding PasswordInfo.MenuPasswordText}"
                     Command="{Binding ShowSetPasswordDialogCommand}" InputGestureText="Ctrl+P" />
+                <MenuItem
+                    Header="{Binding ResourceWrapper.termClearPassword}"
+                    Command="{Binding ClearPasswordCommand}" InputGestureText="ESC" />
                 <MenuItem Header="{Binding  ResourceWrapper.miVCEncrypt, Mode=OneWay}"
                           Command="{Binding EncryptEditorContentsCommand}"
                           InputGestureText="Ctrl+E" />

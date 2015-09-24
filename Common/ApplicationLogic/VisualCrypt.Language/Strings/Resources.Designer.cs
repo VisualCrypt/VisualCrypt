@@ -827,15 +827,6 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear Session Password.
-        /// </summary>
-        internal static string spd_btntext_ClearPWFromMemory {
-            get {
-                return ResourceManager.GetString("spd_btntext_ClearPWFromMemory", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Password/-phrase:.
         /// </summary>
         internal static string spd_lbl_PasswordOrPhrase {
@@ -890,7 +881,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} of {1} Unicode Characters.
+        ///   Looks up a localized string similar to {0} significant Unicode Characters.
         /// </summary>
         internal static string spd_msgXofYUnicodeChars {
             get {
@@ -1075,6 +1066,15 @@ namespace VisualCrypt.Language.Strings {
         internal static string termClear {
             get {
                 return ResourceManager.GetString("termClear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Clear Password.
+        /// </summary>
+        internal static string termClearPassword {
+            get {
+                return ResourceManager.GetString("termClearPassword", resourceCulture);
             }
         }
         

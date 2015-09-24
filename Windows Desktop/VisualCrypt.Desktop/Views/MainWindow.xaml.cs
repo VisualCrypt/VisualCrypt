@@ -49,7 +49,7 @@ namespace VisualCrypt.Desktop.Views
 
             if (e.Key == Key.F12)
                 _settingsManager.EditorSettings.IsStatusBarVisible = !_settingsManager.EditorSettings.IsStatusBarVisible;
-            if (e.Key == Key.Escape)
+            if (e.Key == Key.T && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
                 _settingsManager.EditorSettings.IsToolAreaVisible = !_settingsManager.EditorSettings.IsToolAreaVisible;
 
             if (e.Key == Key.W && (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl)))
