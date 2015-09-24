@@ -16,6 +16,7 @@ using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 using VisualCrypt.Language;
 using VisualCrypt.Applications.Services.PortableImplementations;
 using VisualCrypt.Language.Strings;
+using VisualCrypt.Cryptography.VisualCrypt2;
 
 namespace VisualCrypt.Applications.ViewModels
 {
@@ -405,11 +406,12 @@ namespace VisualCrypt.Applications.ViewModels
 
                 tryDecryptLoadFileWithCurrentPassword:
 
+
                 // We have a password, but we don't know if it's the right one. We must try!
+                Response<FileModel> decryptForDisplayResult;
                 using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.operationDecryptOpenedFile))
                 {
-                    var decryptForDisplayResult =
-                        await Task.Run(() => _encryptionService.DecryptForDisplay(FileModel,
+                    decryptForDisplayResult = await Task.Run(() => _encryptionService.DecryptForDisplay(FileModel,
                             FileModel.VisualCryptText, _longRunningOperation.Context));
                     if (decryptForDisplayResult.IsSuccess)
                     {
@@ -427,14 +429,22 @@ namespace VisualCrypt.Applications.ViewModels
                                 // the password entry, as below, in case of error, which we interpret as wrong password).
                     }
                     StatusBarModel.ShowEncryptedBar(); // Error, i.e. wrong password, show EncryptedBar
+
                 }
 
-                // As we tested that it's valid VisualCrypt in the open routine, we can assume we are here because
-                // the password was wrong. So we ask the user again..:
-                bool result2 = await SetPasswordAsync(SetPasswordDialogMode.CorrectPassword);
-                if (result2 == false)
-                    return; // The user prefers to look at the cipher!
-                            // We have another password, from the user, we try again!
+                // As we tested that it's valid VisualCrypt in the open routine, we are here because of an error.
+                // If it's a wrong password, ask the user again..:
+                if (decryptForDisplayResult.Error == LocalizableStrings.MsgPasswordError)
+                {
+                    await _messageBoxService.ShowError(_resourceWrapper.msgPasswordError);
+                    bool result2 = await SetPasswordAsync(SetPasswordDialogMode.CorrectPassword);
+                    if (result2 == false)
+                        return; // The user prefers to look at the cipher!
+                                // We have another password, from the user, we try again!
+                }
+                else  // technical error!
+                    throw new Exception(decryptForDisplayResult.Error);
+
                 goto tryDecryptLoadFileWithCurrentPassword;
             }
             catch (Exception e)
@@ -539,6 +549,8 @@ namespace VisualCrypt.Applications.ViewModels
 
                 string textBufferContents = await EditorSendsTextAsync();
 
+                tryDecrpyt:
+
                 using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.operationDecryption))
                 {
                     var decryptForDisplayResult =
@@ -560,7 +572,20 @@ namespace VisualCrypt.Applications.ViewModels
                         return;
                     // other error, switch back to EncryptedBar
                     StatusBarModel.ShowEncryptedBar();
-                    await _messageBoxService.ShowError(decryptForDisplayResult.Error);
+
+
+                    // If it's a wrong password, ask the user again..:
+                    if (decryptForDisplayResult.Error == LocalizableStrings.MsgPasswordError)
+                    {
+                        await _messageBoxService.ShowError(_resourceWrapper.msgPasswordError);
+                        bool result2 = await SetPasswordAsync(SetPasswordDialogMode.CorrectPassword);
+                        if (result2 == false)
+                            return; // The user prefers to look at the cipher!
+                                    // We have another password, from the user, we try again!
+                        goto tryDecrpyt;
+                    }
+                    else  // technical error!
+                        throw new Exception(decryptForDisplayResult.Error);
                 }
             }
             catch (Exception e)
