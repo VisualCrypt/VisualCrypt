@@ -121,7 +121,7 @@
     <value>Привет, мир!</value>
   </data>
   <data name="constUntitledDotVisualCrypt" xml:space="preserve">
-    <value>Untitled.visualcrypt</value>
+    <value>Без названия.visualcrypt</value>
   </data>
   <data name="encrpytedStatusbarText" xml:space="preserve">
     <value>VisualCrypt {0}, AES 256 бит 2 ^ циклов {1}, {2} Ch.</value>
@@ -184,15 +184,13 @@
     <value>Пароль/фраза:</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
-    <value>{0} из {1} знаков Юникода</value>
-    <comment></comment>
+    <value>{0} значащие символы Юникода</value>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Дополнительные сведения о</value>
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
-    <value>с 256-битным случайных данных</value>
-    <comment></comment>
+    <value>(256 бит случайных данных)</value>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Использовать пустой пароль?</value>
@@ -204,7 +202,7 @@
     <value>Установка пароля</value>
   </data>
   <data name="spdm_SetAndEncrypt_Title" xml:space="preserve">
-    <value>Зашифровать пароль набора &amp;</value>
+    <value>Установить пароль и зашифровать</value>
   </data>
   <data name="spdm_SetAndEncrypt_OK" xml:space="preserve">
     <value>Шифрование</value>
@@ -344,7 +342,6 @@
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
     <value>Расшифровка открываемый файл:</value>
-    <comment></comment>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>Расшифровка:</value>
@@ -501,5 +498,11 @@
   </data>
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
     <value>Выпей переходит через ленивый собака</value>
+  </data>
+  <data name="termClearPassword" xml:space="preserve">
+    <value>Снять пароль</value>
+  </data>
+  <data name="msgFormatError" xml:space="preserve">
+    <value>Недопустимый формат VisualCrypt 2 - не удается расшифровать это!</value>
   </data>
 </root>

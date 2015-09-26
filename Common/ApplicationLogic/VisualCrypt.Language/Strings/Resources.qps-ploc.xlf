@@ -230,6 +230,14 @@
           <source>Clear Password</source>
           <target state="new">Clear Password</target>
         </trans-unit>
+        <trans-unit id="Resx/msgFormatError" translate="yes" xml:space="preserve">
+          <source>Invalid VisualCrypt format - Cannot decrypt this.</source>
+          <target state="new">Invalid VisualCrypt format - Cannot decrypt this.</target>
+        </trans-unit>
+        <trans-unit id="Resx/msgInvalidFilename" translate="yes" xml:space="preserve">
+          <source>Invalid Filename.</source>
+          <target state="new">Invalid Filename.</target>
+        </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
           <target state="new">The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</target>

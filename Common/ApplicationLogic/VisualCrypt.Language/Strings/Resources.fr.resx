@@ -503,4 +503,11 @@
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
     <value>Rapide, le renard brun saute sur le chien paresseux</value>
   </data>
+  <data name="termClearPassword" xml:space="preserve">
+    <value>Effacer le mot de passe</value>
+  </data>
+  <data name="msgFormatError" xml:space="preserve">
+    <value>Valide le format de VisualCrypt 2 - Impossible de décrypter ce !</value>
+    <comment></comment>
+  </data>
 </root>

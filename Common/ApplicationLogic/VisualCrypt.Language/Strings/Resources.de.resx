@@ -173,7 +173,6 @@
   </data>
   <data name="termEncrypt" xml:space="preserve">
     <value>Verschlüsseln</value>
-    <comment></comment>
   </data>
   <data name="termDecrypt" xml:space="preserve">
     <value>Entschlüsseln</value>
@@ -186,11 +185,9 @@
   </data>
   <data name="plaintextStatusbarText" xml:space="preserve">
     <value>Klartext | {0} | {1}</value>
-    <comment></comment>
   </data>
   <data name="plaintextStatusbarPositionInfo" xml:space="preserve">
     <value>Zeile {0}, Sp {1} | Pos {2}/{3}</value>
-    <comment></comment>
   </data>
   <data name="operationEncryption" xml:space="preserve">
     <value>Verschlüsseln:</value>
@@ -200,7 +197,6 @@
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
     <value>Entschlüsseln der ladenden Datei:</value>
-    <comment></comment>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>Entschlüsseln:</value>
@@ -359,7 +355,7 @@
     <value>{0}' wurde nicht gefunden.</value>
   </data>
   <data name="termChangePassword" xml:space="preserve">
-    <value>Kennwort ändern</value>
+    <value>Passwort ändern</value>
   </data>
   <data name="termReplaceAll" xml:space="preserve">
     <value>Alle ersetzen</value>
@@ -374,8 +370,7 @@
     <value>Passwort setzen</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
-    <value>{0} von {1} Unicode-Zeichen</value>
-    <comment></comment>
+    <value>{0} signifikante Unicode-Zeichen</value>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Leeres Passwort verwenden?</value>
@@ -406,22 +401,22 @@
     <value>Entschlüsseln</value>
   </data>
   <data name="spdm_SetAndDecryptLoadedFile_Title" xml:space="preserve">
-    <value>Kennwort zum Entschlüsseln der Datei</value>
+    <value>Passwort zum Entschlüsseln der Datei</value>
   </data>
   <data name="spdm_SetAndDecryptLoadedFile_OK" xml:space="preserve">
     <value>Geladene Datei entschlüsseln</value>
   </data>
   <data name="spdm_CorrectPassword_Title" xml:space="preserve">
-    <value>Das aktuelle Kennwort ist nicht korrekt</value>
+    <value>Das aktuelle Passwort ist nicht korrekt</value>
   </data>
   <data name="spdm_CorrectPassword_OK" xml:space="preserve">
     <value>Ändern und Entschlüsseln</value>
   </data>
   <data name="spdm_Change_Title" xml:space="preserve">
-    <value>Kennwort ändern</value>
+    <value>Passwort ändern</value>
   </data>
   <data name="spdm_Change_OK" xml:space="preserve">
-    <value>Kennwort ändern</value>
+    <value>Passwort ändern</value>
   </data>
   <data name="termBinary" xml:space="preserve">
     <value>Binärdatei</value>
@@ -443,7 +438,6 @@
   </data>
   <data name="spd_text_from256BitRD" xml:space="preserve">
     <value>(256 Bit Zufallszahl)</value>
-    <comment></comment>
   </data>
   <data name="termClear" xml:space="preserve">
     <value>Löschen</value>
@@ -501,5 +495,18 @@
   </data>
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
     <value>Der schnelle braune Fuchs springt über den trägen Hund</value>
+  </data>
+  <data name="termOK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="termClearPassword" xml:space="preserve">
+    <value>Passwort löschen</value>
+  </data>
+  <data name="msgFormatError" xml:space="preserve">
+    <value>Ungültiges VisualCrypt-Format - nicht entschlüsselbar.</value>
+    <comment></comment>
+  </data>
+  <data name="msgInvalidFilename" xml:space="preserve">
+    <value>Ungültiger Dateiname.</value>
   </data>
 </root>

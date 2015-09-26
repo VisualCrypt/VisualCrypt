@@ -1,4 +1,6 @@
-﻿using VisualCrypt.Applications.Services.Interfaces;
+﻿using System;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Cryptography.VisualCrypt2;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Language.Strings;
 
@@ -64,7 +66,40 @@ namespace VisualCrypt.Applications.Models
             get { return _progressMessage; }
             set
             {
-                _progressMessage = value;
+                switch(value)
+                {
+                    case "":
+                        _progressMessage = string.Empty;
+                        break;
+                    case LocalizableStrings.MsgCalculatingMAC:
+                        _progressMessage = _resourceWrapper.encProgr_CalculatingMAC;
+                        break;
+                    case LocalizableStrings.MsgDecryptingMAC:
+                        _progressMessage = _resourceWrapper.encProgr_DecryptingMAC;
+                        break;
+                    case LocalizableStrings.MsgDecryptingMessage:
+                        _progressMessage = _resourceWrapper.encProgr_DecryptingMessage;
+                        break;
+
+                    case LocalizableStrings.MsgDecryptingRandomKey:
+                        _progressMessage = _resourceWrapper.encProgr_DecryptingRandomKey;
+                        break;
+                    case LocalizableStrings.MsgEncryptingMAC:
+                        _progressMessage = _resourceWrapper.encProgr_EncryptingMAC;
+                        break;
+                    case LocalizableStrings.MsgEncryptingMessage:
+                        _progressMessage = _resourceWrapper.encProgr_EncryptingMessage;
+                        break;
+                    case LocalizableStrings.MsgEncryptingRandomKey:
+                        _progressMessage = _resourceWrapper.encProgr_EncryptingRandomKey;
+                        break;
+                    case LocalizableStrings.MsgProcessingKey:
+                        _progressMessage = _resourceWrapper.encProgr_ProcessingKey;
+                        break;
+                    default:
+                        throw new Exception("Unexpected Progress Message");
+
+                }
                 OnPropertyChanged();
             }
         }

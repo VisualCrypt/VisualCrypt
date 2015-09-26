@@ -132,8 +132,9 @@ namespace VisualCrypt.Applications.ViewModels
             if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
             {
                 var fileName = args[1];
-                _log.Debug(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}", fileName));
 
+                _log.Debug(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}", fileName));
+              
                 await OpenFileCommon(fileName);
             }
             else
@@ -363,8 +364,13 @@ namespace VisualCrypt.Applications.ViewModels
 
         async Task OpenFileCommon(string filename)
         {
+            FileModel.UpdateFrom(FileModel.EmptyCleartext());  // moves UI to the 'New' state
+
             if (string.IsNullOrWhiteSpace(filename) || !_fileService.Exists(filename))
+            {
+                await _messageBoxService.ShowError(_resourceWrapper.msgInvalidFilename);
                 return;
+            }
 
             try
             {
@@ -583,6 +589,10 @@ namespace VisualCrypt.Applications.ViewModels
                             return; // The user prefers to look at the cipher!
                                     // We have another password, from the user, we try again!
                         goto tryDecrpyt;
+                    }
+                    else if (decryptForDisplayResult.Error.StartsWith(LocalizableStrings.MsgFormatError))
+                    {
+                        await _messageBoxService.ShowError(decryptForDisplayResult.Error.Replace(LocalizableStrings.MsgFormatError, _resourceWrapper.msgFormatError));
                     }
                     else  // technical error!
                         throw new Exception(decryptForDisplayResult.Error);

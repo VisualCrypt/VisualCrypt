@@ -638,6 +638,24 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid VisualCrypt format - Cannot decrypt this..
+        /// </summary>
+        internal static string msgFormatError {
+            get {
+                return ResourceManager.GetString("msgFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid Filename..
+        /// </summary>
+        internal static string msgInvalidFilename {
+            get {
+                return ResourceManager.GetString("msgInvalidFilename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nothing found - Search again from the top of the document?.
         /// </summary>
         internal static string msgNothingFoundSearchFromStart {

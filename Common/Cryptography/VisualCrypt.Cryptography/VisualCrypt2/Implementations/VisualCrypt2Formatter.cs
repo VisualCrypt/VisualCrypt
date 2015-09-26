@@ -86,10 +86,10 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 					throw CommonFormatException("Expected a version byte at index 0 of value '2'.");
 
 				if (exponent > 31 || exponent < 4)
-                    CommonFormatException("The value for the rounds exponent at index 1 is invalid.");
+                    throw CommonFormatException("The value for the rounds exponent at index 1 is invalid.");
 
 				if (padding > 15)
-                    CommonFormatException("The value at the padding byte at index 1 is invalid.");
+                    throw CommonFormatException("The value at the padding byte at index 1 is invalid.");
 
 
 				var cipher = new CipherV2 { Padding = new PlaintextPadding(padding), RoundsExponent = new RoundsExponent(exponent) };
@@ -113,9 +113,9 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
 				return cipher;
 			}
-			catch (Exception e)
+			catch (Exception)
 			{
-                throw CommonFormatException(e.Message);
+                throw;
 			}
 		}
 
@@ -132,7 +132,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
         static FormatException CommonFormatException(string errorDetails)
 	    {
-	        return new FormatException(LocalizableStrings.MsgFormatError + " - " + errorDetails);
+	        return new FormatException(LocalizableStrings.MsgFormatError + "\r\n\r\n" + errorDetails);
 	    }
 	}
 }

@@ -110,6 +110,13 @@ namespace VisualCrypt.Desktop
             StopWatch.Start();
 
             var args = Environment.GetCommandLineArgs();
+            if (args.Length == 2 && args[1] == "/oninstall")
+            {
+                var noargs = new string[1];
+                noargs[0] = args[0];
+                args = noargs;
+                // Action when started from installer goes here
+            }
             ((PortableMainViewModel)Application.Current.MainWindow.DataContext).OpenFromCommandLineOrNew(args);
         }
 

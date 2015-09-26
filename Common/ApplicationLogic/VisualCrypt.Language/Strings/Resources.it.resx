@@ -503,4 +503,11 @@
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
     <value>Salta Cantami o Diva del pelide Achille</value>
   </data>
+  <data name="termClearPassword" xml:space="preserve">
+    <value>Cancella Password</value>
+  </data>
+  <data name="msgFormatError" xml:space="preserve">
+    <value>Non valido formato 2 VisualCrypt: Impossibile decrittografare questo!</value>
+    <comment></comment>
+  </data>
 </root>

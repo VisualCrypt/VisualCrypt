@@ -501,4 +501,10 @@
   <data name="termClearPassword" xml:space="preserve">
     <value>Clear Password</value>
   </data>
+  <data name="msgFormatError" xml:space="preserve">
+    <value>Invalid VisualCrypt format - Cannot decrypt this.</value>
+  </data>
+  <data name="msgInvalidFilename" xml:space="preserve">
+    <value>Invalid Filename.</value>
+  </data>
 </root>
