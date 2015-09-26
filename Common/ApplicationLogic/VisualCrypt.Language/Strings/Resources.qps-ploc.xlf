@@ -199,24 +199,24 @@
           <target state="new">Import with encoding: {0}</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
-          <source>_Typeface:</source>
-          <target state="new">_Typeface:</target>
+          <source>Typeface:</source>
+          <target state="new">Typeface:</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
           <source>The quick brown fox jumps over the lazy dog</source>
           <target state="new">The quick brown fox jumps over the lazy dog</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
-          <source>_Size:</source>
-          <target state="new">_Size:</target>
+          <source>Size:</source>
+          <target state="new">Size:</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
           <source>Preview:</source>
           <target state="new">Preview:</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
-          <source>_Font family:</source>
-          <target state="new">_Font family:</target>
+          <source>Font family:</source>
+          <target state="new">Font family:</target>
         </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>

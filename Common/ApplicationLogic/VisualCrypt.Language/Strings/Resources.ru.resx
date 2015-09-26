@@ -483,15 +483,18 @@
   </data>
   <data name="fnt_label_typeFace" xml:space="preserve">
     <value>_Typeface:</value>
+    <comment></comment>
   </data>
   <data name="fnt_labelSize" xml:space="preserve">
     <value>Ра_змер:</value>
+    <comment></comment>
   </data>
   <data name="fnt_labelPreview" xml:space="preserve">
     <value>Предварительный просмотр:</value>
   </data>
   <data name="fnt_labelFontFamilies" xml:space="preserve">
     <value>Семейство _Font:</value>
+    <comment></comment>
   </data>
   <data name="termOK" xml:space="preserve">
     <value>OK</value>

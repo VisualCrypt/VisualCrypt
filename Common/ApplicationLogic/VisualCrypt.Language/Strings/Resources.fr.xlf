@@ -200,24 +200,24 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Importation avec codage : {0}</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
-          <source>_Typeface:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface :</target>
+          <source>Typeface:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface :</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
           <source>The quick brown fox jumps over the lazy dog</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Rapide, le renard brun saute sur le chien paresseux</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
-          <source>_Size:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size :</target>
+          <source>Size:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size :</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
           <source>Preview:</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Aperçu :</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
-          <source>_Font family:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Famille de _Font :</target>
+          <source>Font family:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Famille de _Font :</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>

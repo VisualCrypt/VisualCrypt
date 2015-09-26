@@ -445,16 +445,16 @@
     <value>Import with encoding: {0}</value>
   </data>
   <data name="fnt_labelFontFamilies" xml:space="preserve">
-    <value>_Font family:</value>
+    <value>Font family:</value>
   </data>
   <data name="fnt_labelPreview" xml:space="preserve">
     <value>Preview:</value>
   </data>
   <data name="fnt_labelSize" xml:space="preserve">
-    <value>_Size:</value>
+    <value>Size:</value>
   </data>
   <data name="fnt_label_typeFace" xml:space="preserve">
-    <value>_Typeface:</value>
+    <value>Typeface:</value>
   </data>
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
     <value>The quick brown fox jumps over the lazy dog</value>

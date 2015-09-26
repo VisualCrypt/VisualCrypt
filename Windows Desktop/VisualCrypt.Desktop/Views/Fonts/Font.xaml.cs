@@ -79,15 +79,15 @@ namespace VisualCrypt.Desktop.Views.Fonts
         void SetTexts()
         {
             Title = _resourceWrapper.miFormatFont.NoDots();
-            labelFontFamilies.Content = _resourceWrapper.fnt_labelFontFamilies;
-            labelTypeface.Content = _resourceWrapper.fnt_label_typeFace;
-            labelSize.Content = _resourceWrapper.fnt_labelSize;
-            labelPreview.Content = _resourceWrapper.fnt_labelPreview;
+            H1.Text = _resourceWrapper.miFormatFont.NoDots();
+            labelFontFamilies.Text = _resourceWrapper.fnt_labelFontFamilies;
+            labelTypeface.Text = _resourceWrapper.fnt_label_typeFace;
+            labelSize.Text = _resourceWrapper.fnt_labelSize;
+            labelPreview.Text = _resourceWrapper.fnt_labelPreview;
             btnCancel.Content = _resourceWrapper.termCancel;
             btnOK.Content = _resourceWrapper.termOK;
 
-            if (string.IsNullOrWhiteSpace(_sampleText))
-                PreviewTextBox.Text = _resourceWrapper.fnt_theQuickBrownFox;
+           
         }
 
         void CloseWithEscape(object sender, KeyEventArgs e)
@@ -541,6 +541,10 @@ namespace VisualCrypt.Desktop.Views.Fonts
 
         void InitializePreview()
         {
+            if (string.IsNullOrWhiteSpace(_sampleText))
+                PreviewTextBox.Text = _resourceWrapper.fnt_theQuickBrownFox;
+            else
+                PreviewTextBox.Text = _sampleText.Trim();
             _selectedFontSettings.ApplyToTextBox(PreviewTextBox);
         }
 

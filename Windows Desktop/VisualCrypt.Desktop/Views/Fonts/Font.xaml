@@ -8,10 +8,13 @@
         <ResourceDictionary
             Source="/Styles/InUse/DialogStyles.xaml" />
     </controls:AppDialog.Resources>
-    <Grid Margin="12">
+    <Border x:Name="DialogBorder" Padding="10">
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Top" x:Name="H1" Style="{StaticResource DialogH1Style}" />
+        
+    <Grid x:Name="MainCol" DockPanel.Dock="Bottom">
         <Grid.RowDefinitions>
-            <RowDefinition Height="4*" />
-
+            <RowDefinition Height="5*" />
             <RowDefinition Height="1*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
@@ -33,20 +36,20 @@
             </Grid.RowDefinitions>
 
             <!-- Families -->
-            <Label x:Name="labelFontFamilies" Grid.Column="0" Grid.Row="0"  />
+            <TextBlock x:Name="labelFontFamilies" Grid.Column="0" Grid.Row="0"  />
             <DockPanel Grid.Column="0" Grid.Row="1" Grid.RowSpan="3">
                 <TextBox DockPanel.Dock="Top" Name="FontFamilyTextBox" />
                 <ListBox Name="FontFamilyList" />
             </DockPanel>
 
             <!-- Family Typefaces (weight, style, stretch) -->
-            <Label x:Name="labelTypeface" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3"  />
+            <TextBlock x:Name="labelTypeface" Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="3"  />
             <ListBox Grid.Column="2" Grid.Row="1" Grid.ColumnSpan="3" Name="TypefaceList" />
 
             <!-- Font sizes -->
-            <Label x:Name="labelSize" Grid.Column="2" Grid.Row="2" Margin="0,12,0,0"  />
-            <DockPanel Grid.Column="2" Grid.Row="3">
-                <TextBox DockPanel.Dock="Top" Name="SizeTextBox" />
+                    <TextBlock x:Name="labelSize" Grid.Column="2" Grid.Row="2" Grid.ColumnSpan="3" />
+                    <DockPanel Grid.Column="2" Grid.Row="3" HorizontalAlignment="Stretch" Grid.ColumnSpan="3">
+                <TextBox DockPanel.Dock="Top" Name="SizeTextBox" HorizontalAlignment="Stretch" />
                 <ListBox Height="60" Name="SizeList" />
             </DockPanel>
 
@@ -55,20 +58,22 @@
 
 
         <!-- Row 2: Preview text -->
-        <DockPanel Grid.Column="0" Grid.Row="1" Margin="0,12,0,0">
-            <Label x:Name="labelPreview" DockPanel.Dock="Top"></Label>
+        <DockPanel Grid.Column="0" Grid.Row="1">
+                <TextBlock x:Name="labelPreview" DockPanel.Dock="Top"></TextBlock>
             <TextBox x:Name="PreviewTextBox"
-                     FontSize="16" AcceptsReturn="True"
+                     AcceptsReturn="True"
                      TextAlignment="Center"
                      TextWrapping="Wrap"
                      VerticalScrollBarVisibility="Auto" />
         </DockPanel>
 
         <!-- Row 3: OK and Cancel buttons -->
-        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+        <StackPanel Grid.Column="0" Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button x:Name="btnOK"  IsDefault="True" Click="OnOkButtonClicked" />
             <Button x:Name="btnCancel"  Click="OnCancelButtonClicked" />
         </StackPanel>
 
     </Grid>
+        </DockPanel>
+    </Border>
 </controls:AppDialog>

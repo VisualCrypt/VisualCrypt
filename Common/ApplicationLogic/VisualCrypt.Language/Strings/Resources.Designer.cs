@@ -152,7 +152,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Typeface:.
+        ///   Looks up a localized string similar to Typeface:.
         /// </summary>
         internal static string fnt_label_typeFace {
             get {
@@ -161,7 +161,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Font family:.
+        ///   Looks up a localized string similar to Font family:.
         /// </summary>
         internal static string fnt_labelFontFamilies {
             get {
@@ -179,7 +179,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to _Size:.
+        ///   Looks up a localized string similar to Size:.
         /// </summary>
         internal static string fnt_labelSize {
             get {

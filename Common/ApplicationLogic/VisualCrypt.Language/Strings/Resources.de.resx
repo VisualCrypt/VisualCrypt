@@ -482,16 +482,16 @@
     <value>VisualCrypt 2 (AES 256 Bit BCrypt - Multi)</value>
   </data>
   <data name="fnt_label_typeFace" xml:space="preserve">
-    <value>_Typeface:</value>
+    <value>Schnitt:</value>
   </data>
   <data name="fnt_labelSize" xml:space="preserve">
-    <value>_Size:</value>
+    <value>Größe:</value>
   </data>
   <data name="fnt_labelPreview" xml:space="preserve">
     <value>Vorschau:</value>
   </data>
   <data name="fnt_labelFontFamilies" xml:space="preserve">
-    <value>_Font-Familie:</value>
+    <value>Schriftfamilie:</value>
   </data>
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
     <value>Der schnelle braune Fuchs springt über den trägen Hund</value>

@@ -200,25 +200,22 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Import mit Codierung: {0}</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
-          <source>_Typeface:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface:</target>
-        </trans-unit>
+          <source>Typeface:</source>
+          <target state="translated">Schnitt:</target></trans-unit>
         <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
           <source>The quick brown fox jumps over the lazy dog</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Der schnelle braune Fuchs springt über den trägen Hund</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
-          <source>_Size:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size:</target>
-        </trans-unit>
+          <source>Size:</source>
+          <target state="translated">Größe:</target></trans-unit>
         <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
           <source>Preview:</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Vorschau:</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
-          <source>_Font family:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Font-Familie:</target>
-        </trans-unit>
+          <source>Font family:</source>
+          <target state="signed-off">Schriftfamilie:</target></trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Standardeinstellungen</target>
@@ -234,7 +231,8 @@
         <trans-unit id="Resx/msgFormatError" translate="yes" xml:space="preserve">
           <source>Invalid VisualCrypt format - Cannot decrypt this.</source>
           <target state="needs-review-translation">Ungültiges VisualCrypt-Format - nicht entschlüsselbar.</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          </trans-unit>
         <trans-unit id="Resx/msgInvalidFilename" translate="yes" xml:space="preserve">
           <source>Invalid Filename.</source>
           <target state="signed-off">Ungültiger Dateiname.</target>

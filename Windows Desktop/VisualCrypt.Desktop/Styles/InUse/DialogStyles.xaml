@@ -25,6 +25,10 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="15,0,15,10" />
     </Style>
+    <Style TargetType="ListBox">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Margin" Value="15,0,15,10" />
+    </Style>
     <Style TargetType="Slider">
         <Setter Property="FontSize" Value="14" />
         <Setter Property="Margin" Value="15,0,15,10" />
