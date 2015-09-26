@@ -513,4 +513,13 @@
     <value>Non valido formato 2 VisualCrypt: Impossibile decrittografare questo!</value>
     <comment></comment>
   </data>
+  <data name="msgInvalidFilename" xml:space="preserve">
+    <value>Nome file non valido.</value>
+  </data>
+  <data name="termClose" xml:space="preserve">
+    <value>Chiudere</value>
+  </data>
+  <data name="logWindowInfoText" xml:space="preserve">
+    <value>Queste informazioni di debug non verranno salvate in un file.</value>
+  </data>
 </root>

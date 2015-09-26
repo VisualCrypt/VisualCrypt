@@ -28,9 +28,9 @@
                 <Grid x:Name="ContentRow" Grid.Row="0">
                     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <StackPanel DockPanel.Dock="Top">
-                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Log" />
+                            <TextBlock x:Name="H1" Style="{StaticResource DialogH1Style}" />
 
-                            <TextBlock>This debug information will not be saved to a file.</TextBlock>
+                            <TextBlock x:Name="TextBlockInfo"></TextBlock>
                             <TextBlock />
                         </StackPanel>
                         <TextBox x:Name="TraceTextBox" TextWrapping="Wrap" VerticalAlignment="Stretch"
@@ -43,7 +43,7 @@
                 <Grid x:Name="ButtonRow" Grid.Row="1">
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button Click="ButtonClose_Click" IsDefault="True">Close</Button>
+                        <Button x:Name="ButtonClose" Click="ButtonClose_Click" IsDefault="True"></Button>
                     </StackPanel>
                 </Grid>
             </Grid>

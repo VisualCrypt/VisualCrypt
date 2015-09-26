@@ -238,6 +238,14 @@
           <source>Invalid Filename.</source>
           <target state="new">Invalid Filename.</target>
         </trans-unit>
+        <trans-unit id="Resx/termClose" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="new">Close</target>
+        </trans-unit>
+        <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
+          <source>This debug information will not be saved to a file.</source>
+          <target state="new">This debug information will not be saved to a file.</target>
+        </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
           <target state="new">The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</target>

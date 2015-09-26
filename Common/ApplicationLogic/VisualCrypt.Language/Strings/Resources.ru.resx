@@ -508,4 +508,13 @@
   <data name="msgFormatError" xml:space="preserve">
     <value>Недопустимый формат VisualCrypt 2 - не удается расшифровать это!</value>
   </data>
+  <data name="msgInvalidFilename" xml:space="preserve">
+    <value>Недопустимое имя файла.</value>
+  </data>
+  <data name="termClose" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="logWindowInfoText" xml:space="preserve">
+    <value>Это отладочная информация не будут сохранены в файл.</value>
+  </data>
 </root>

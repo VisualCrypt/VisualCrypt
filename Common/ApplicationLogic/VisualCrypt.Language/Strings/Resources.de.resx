@@ -504,9 +504,14 @@
   </data>
   <data name="msgFormatError" xml:space="preserve">
     <value>Ungültiges VisualCrypt-Format - nicht entschlüsselbar.</value>
-    <comment></comment>
   </data>
   <data name="msgInvalidFilename" xml:space="preserve">
     <value>Ungültiger Dateiname.</value>
+  </data>
+  <data name="termClose" xml:space="preserve">
+    <value>Schließen</value>
+  </data>
+  <data name="logWindowInfoText" xml:space="preserve">
+    <value>Diese Informationen werden nicht gespeichert.</value>
   </data>
 </root>

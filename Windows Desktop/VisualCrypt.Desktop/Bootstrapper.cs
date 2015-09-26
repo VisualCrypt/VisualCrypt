@@ -105,9 +105,8 @@ namespace VisualCrypt.Desktop
             MainWindow window = new MainWindow();
             window.Show();
 
-            Service.Get<ILog>().Debug(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",
-                    StopWatch.ElapsedMilliseconds));
-            StopWatch.Start();
+            Service.Get<ILog>().Debug(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.", StopWatch.ElapsedMilliseconds));
+            StopWatch.Stop();
 
             var args = Environment.GetCommandLineArgs();
             if (args.Length == 2 && args[1] == "/oninstall")

@@ -507,4 +507,10 @@
   <data name="msgInvalidFilename" xml:space="preserve">
     <value>Invalid Filename.</value>
   </data>
+  <data name="logWindowInfoText" xml:space="preserve">
+    <value>This debug information will not be saved to a file.</value>
+  </data>
+  <data name="termClose" xml:space="preserve">
+    <value>Close</value>
+  </data>
 </root>

@@ -245,7 +245,7 @@ namespace VisualCrypt.Desktop.Controls
 				case WindowState.Normal:
 				{
 					// Maximize
-					_restoreButton.Content = 2;
+					_restoreButton.Content = "2";
 					WindowState = WindowState.Maximized;
 					SetCanResize(false);
 					break;
@@ -253,7 +253,7 @@ namespace VisualCrypt.Desktop.Controls
 				case WindowState.Maximized:
 				{
 					// Restore to normal size.
-					_restoreButton.Content = 1;
+					_restoreButton.Content = "1";
 					WindowState = WindowState.Normal;
 					SetCanResize(false);
 					break;

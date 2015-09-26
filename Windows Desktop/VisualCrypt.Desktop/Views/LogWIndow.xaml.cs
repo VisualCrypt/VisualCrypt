@@ -3,17 +3,23 @@ using System.Globalization;
 using System.Windows;
 using Prism.Logging;
 using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Views
 {
-    
+
     public partial class LogWindow
     {
-       ReplayLogger _logger;
+        ResourceWrapper ResourceWrapper;
+        ReplayLogger _logger;
 
         public LogWindow()
         {
-            _logger = new ReplayLogger();
+            ResourceWrapper = Service.Get<ResourceWrapper>();
+            // DataBinding would work perfectly, but the NoDots() extension requires working with a method.
+            ResourceWrapper.Info.CultureChanged += (s, e) => { SetTexts(); }; 
+            _logger = Service.Get<ILog>() as ReplayLogger;
             InitializeComponent();
             Loaded += LogWindow_Loaded;
             Closed += LogWindow_Closed;
@@ -28,25 +34,37 @@ namespace VisualCrypt.Desktop.Views
         {
             _logger.Callback = Log;
             _logger.ReplaySavedLogs(Log);
+            SetTexts();
         }
 
         void Log(string message, Category category, Priority priority)
         {
-            TraceTextBox.AppendText(
-                string.Format(
-                    CultureInfo.CurrentUICulture,
-                    "[{0}][{1}] {2}\r\n",
-                    category,
-                    priority,
-                    message));
+            Dispatcher.Invoke((Action)(() =>
+            {
+                TraceTextBox.AppendText(
+                       string.Format(
+                           CultureInfo.CurrentUICulture,
+                           "[{0}][{1}] {2}\r\n",
+                           category,
+                           priority,
+                           message));
 
-            TraceTextBox.ScrollToEnd();
+                TraceTextBox.ScrollToEnd();
+            }));
+
         }
 
 
         void ButtonClose_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        void SetTexts()
+        {
+            ButtonClose.Content = ResourceWrapper.termClose;
+            TextBlockInfo.Text = ResourceWrapper.logWindowInfoText;
+            H1.Text = ResourceWrapper.miHelpLog.NoDots();
         }
     }
 }

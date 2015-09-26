@@ -230,12 +230,19 @@
         </trans-unit>
         <trans-unit id="Resx/msgFormatError" translate="yes" xml:space="preserve">
           <source>Invalid VisualCrypt format - Cannot decrypt this.</source>
-          <target state="needs-review-translation">Ungültiges VisualCrypt-Format - nicht entschlüsselbar.</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="signed-off">Ungültiges VisualCrypt-Format - nicht entschlüsselbar.</target>
           </trans-unit>
         <trans-unit id="Resx/msgInvalidFilename" translate="yes" xml:space="preserve">
           <source>Invalid Filename.</source>
           <target state="signed-off">Ungültiger Dateiname.</target>
+        </trans-unit>
+        <trans-unit id="Resx/termClose" translate="yes" xml:space="preserve">
+          <source>Close</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Schließen</target>
+        </trans-unit>
+        <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
+          <source>This debug information will not be saved to a file.</source>
+          <target state="signed-off">Diese Informationen werden nicht gespeichert.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>

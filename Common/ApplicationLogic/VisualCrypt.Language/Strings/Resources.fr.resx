@@ -513,4 +513,13 @@
     <value>Valide le format de VisualCrypt 2 - Impossible de décrypter ce !</value>
     <comment></comment>
   </data>
+  <data name="msgInvalidFilename" xml:space="preserve">
+    <value>Nom de fichier non valide.</value>
+  </data>
+  <data name="termClose" xml:space="preserve">
+    <value>Fermer</value>
+  </data>
+  <data name="logWindowInfoText" xml:space="preserve">
+    <value>Ces informations de débogage ne seront pas enregistrées dans un fichier.</value>
+  </data>
 </root>

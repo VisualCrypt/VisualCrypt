@@ -206,6 +206,15 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This debug information will not be saved to a file..
+        /// </summary>
+        internal static string logWindowInfoText {
+            get {
+                return ResourceManager.GetString("logWindowInfoText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         internal static string miEdit {
@@ -1093,6 +1102,15 @@ namespace VisualCrypt.Language.Strings {
         internal static string termClearPassword {
             get {
                 return ResourceManager.GetString("termClearPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        internal static string termClose {
+            get {
+                return ResourceManager.GetString("termClose", resourceCulture);
             }
         }
         
