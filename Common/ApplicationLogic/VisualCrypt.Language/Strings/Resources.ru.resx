@@ -316,8 +316,7 @@
     <value>Пароль</value>
   </data>
   <data name="termEncrypt" xml:space="preserve">
-    <value>Шифрование!</value>
-    <comment></comment>
+    <value>Шифрование</value>
   </data>
   <data name="termDecrypt" xml:space="preserve">
     <value>Расшифровка</value>
@@ -371,7 +370,7 @@
     <value>Просмотр</value>
   </data>
   <data name="miVCSettings" xml:space="preserve">
-    <value>Параметры...</value>
+    <value>Параметры криптографии...</value>
   </data>
   <data name="miVCSetPassword" xml:space="preserve">
     <value>Установить пароль...</value>
@@ -482,19 +481,16 @@
     <value>Изменить</value>
   </data>
   <data name="fnt_label_typeFace" xml:space="preserve">
-    <value>_Typeface:</value>
-    <comment></comment>
+    <value>Шрифт:</value>
   </data>
   <data name="fnt_labelSize" xml:space="preserve">
-    <value>Ра_змер:</value>
-    <comment></comment>
+    <value>Размер:</value>
   </data>
   <data name="fnt_labelPreview" xml:space="preserve">
     <value>Предварительный просмотр:</value>
   </data>
   <data name="fnt_labelFontFamilies" xml:space="preserve">
-    <value>Семейство _Font:</value>
-    <comment></comment>
+    <value>Семейство шрифтов:</value>
   </data>
   <data name="termOK" xml:space="preserve">
     <value>OK</value>

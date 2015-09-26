@@ -387,8 +387,8 @@
           <target state="new">View</target>
         </trans-unit>
         <trans-unit id="Resx/miVCSettings" translate="yes" xml:space="preserve">
-          <source>Settings...</source>
-          <target state="new">Settings...</target>
+          <source>Cryptography Settings...</source>
+          <target state="new">Cryptography Settings...</target>
         </trans-unit>
         <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password...</source>

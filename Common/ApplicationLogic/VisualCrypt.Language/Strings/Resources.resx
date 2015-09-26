@@ -259,7 +259,7 @@
     <value>Set Password...</value>
   </data>
   <data name="miVCSettings" xml:space="preserve">
-    <value>Settings...</value>
+    <value>Cryptography Settings...</value>
   </data>
   <data name="miView" xml:space="preserve">
     <value>View</value>

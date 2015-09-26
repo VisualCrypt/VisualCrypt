@@ -539,7 +539,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Settings....
+        ///   Looks up a localized string similar to Cryptography Settings....
         /// </summary>
         internal static string miVCSettings {
             get {

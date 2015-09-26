@@ -226,7 +226,7 @@
     <value>Ansicht</value>
   </data>
   <data name="miVCSettings" xml:space="preserve">
-    <value>Einstellungen</value>
+    <value>Verschlüsselungseinstellungen...</value>
   </data>
   <data name="miVCSetPassword" xml:space="preserve">
     <value>Passwort setzen...</value>

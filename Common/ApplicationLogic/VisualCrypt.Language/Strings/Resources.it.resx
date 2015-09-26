@@ -229,7 +229,7 @@
     <value>Visualizzazione</value>
   </data>
   <data name="miVCSettings" xml:space="preserve">
-    <value>Impostazioni...</value>
+    <value>Impostazioni di crittografia...</value>
   </data>
   <data name="miVCSetPassword" xml:space="preserve">
     <value>Impostare la Password...</value>
@@ -370,8 +370,7 @@
     <value>Password/frase:</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
-    <value>{0} di {1} caratteri Unicode</value>
-    <comment></comment>
+    <value>{0} caratteri Unicode</value>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Per ulteriori informazioni su</value>

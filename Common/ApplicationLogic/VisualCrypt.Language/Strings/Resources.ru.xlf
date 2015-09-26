@@ -199,24 +199,24 @@
         </trans-unit>
         <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
           <source>Typeface:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface:</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
+          <target state="translated">Шрифт:</target>
+          </trans-unit>
         <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
           <source>The quick brown fox jumps over the lazy dog</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Выпей переходит через ленивый собака</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
           <source>Size:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ра_змер:</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
+          <target state="translated">Размер:</target>
+          </trans-unit>
         <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
           <source>Preview:</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Предварительный просмотр:</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
           <source>Font family:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Семейство _Font:</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
+          <target state="translated">Семейство шрифтов:</target>
+          </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Значения по умолчанию</target>
@@ -314,8 +314,7 @@
         </trans-unit>
         <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шифрование!</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="translated">Шифрование</target>
           </trans-unit>
         <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
@@ -386,9 +385,8 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Просмотр</target>
         </trans-unit>
         <trans-unit id="Resx/miVCSettings" translate="yes" xml:space="preserve">
-          <source>Settings...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Параметры...</target>
-        </trans-unit>
+          <source>Cryptography Settings...</source>
+          <target state="translated">Параметры криптографии...</target></trans-unit>
         <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password...</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Установить пароль...</target>

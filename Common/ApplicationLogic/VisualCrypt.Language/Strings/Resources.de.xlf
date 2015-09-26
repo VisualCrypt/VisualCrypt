@@ -385,9 +385,8 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Ansicht</target>
         </trans-unit>
         <trans-unit id="Resx/miVCSettings" translate="yes" xml:space="preserve">
-          <source>Settings...</source>
-          <target state="translated">Einstellungen</target>
-        </trans-unit>
+          <source>Cryptography Settings...</source>
+          <target state="translated">Verschlüsselungseinstellungen...</target></trans-unit>
         <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password...</source>
           <target state="translated">Passwort setzen...</target>
