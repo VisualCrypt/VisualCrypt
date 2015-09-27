@@ -4,6 +4,10 @@
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:desktop="clr-namespace:VisualCrypt.Desktop"
                     mc:Ignorable="options">
+    <Style TargetType="Border">
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="BorderBrush" Value="#DADADA" />
+    </Style>
     <Style TargetType="TextBlock">
         <Setter Property="Margin" Value="15,0" />
         <Setter Property="FontSize" Value="13" />
