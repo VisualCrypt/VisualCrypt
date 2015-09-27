@@ -57,7 +57,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 		{
 			try
 			{
-			    var visualCrypt = FilterWhitespaceAndControlCharacters(visualCryptText);
+			    var visualCrypt = WhiteListVisualCryptCharacters(visualCryptText);
 
 				if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
 					throw CommonFormatException("The prefix '{0}' is missing.".FormatInvariant(VisualCryptSlashText));
@@ -118,6 +118,19 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
                 throw;
 			}
 		}
+
+
+	    static string WhiteListVisualCryptCharacters(string visualCryptBase64)
+	    {
+            var sb = new StringBuilder();
+	        var chars = new char[] { 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '+', '/', '$', '=' };
+	        foreach (var c in visualCryptBase64)
+	        {
+	            if (chars.Contains(c))
+	                sb.Append(c);
+	        }
+	        return sb.ToString();
+	    }
 
        static string FilterWhitespaceAndControlCharacters(string visualCryptBase64)
         {
