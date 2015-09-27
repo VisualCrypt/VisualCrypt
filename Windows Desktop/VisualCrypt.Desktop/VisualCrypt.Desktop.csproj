@@ -143,8 +143,6 @@
     <Compile Include="Constants.cs" />
     <Compile Include="Controls\AppDialog.cs" />
     <Compile Include="Controls\AppWindow.cs" />
-    <Compile Include="Services\RegistryService.cs" />
-    <Compile Include="Services\Serializer.cs" />
     <Compile Include="Views\Fonts\FontFamilyListItem.cs" />
     <Compile Include="Views\Fonts\NameDictionaryHelper.cs" />
     <Compile Include="Views\Fonts\TypefaceListItem.cs" />
