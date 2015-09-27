@@ -795,7 +795,7 @@ namespace VisualCrypt.Applications.ViewModels
                     throw new InvalidOperationException("The text received from the editor was null.");
 
                 string title = string.Format(CultureInfo.InvariantCulture, _resourceWrapper.titleExportCleartext,
-                    FileModel.SaveEncodingName);
+                    _fileService.GetEncodingDisplayString(FileModel.SaveEncoding));
 
                 string suggestedFilename =
                     FileModel.Filename.ReplaceCaseInsensitive(PortableConstants.DotVisualCrypt,

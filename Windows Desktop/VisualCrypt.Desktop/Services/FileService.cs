@@ -35,8 +35,9 @@ namespace VisualCrypt.Desktop.Services
                     return true;
                 return false;
             }
-            catch (Exception)
+            catch (Exception e)
             {
+                _log.Exception(e);
                 return false;
             }
         }
@@ -77,7 +78,7 @@ namespace VisualCrypt.Desktop.Services
                 fileDialog.DefaultExt = Constants.VisualCryptDialogFilter_DefaultExt;
                 fileDialog.Filter = Constants.VisualCryptDialogFilter;
             }
-            else if(diaglogFilter == DialogFilter.VisualCryptAndText)
+            else if (diaglogFilter == DialogFilter.VisualCryptAndText)
             {
                 fileDialog.DefaultExt = Constants.VisualCryptAndTextDialogFilter_DefaultExt;
                 fileDialog.Filter = Constants.VisualCryptAndTextDialogFilter;
@@ -107,6 +108,12 @@ namespace VisualCrypt.Desktop.Services
             return Path.GetFileName(filename);
         }
 
+        public string GetEncodingDisplayString(Encoding saveEncoding)
+        {
 
+            return saveEncoding != null ?
+                saveEncoding.EncodingName
+                : "HEX";
+        }
     }
 }

@@ -22,7 +22,6 @@ namespace VisualCrypt.Applications.ViewModels
 
         readonly IMessageBoxService _messageBoxService;
         readonly IEventAggregator _eventAggregator;
-        readonly IWindowManager _windowManager;
         readonly AbstractSettingsManager _settingsManager;
         readonly IEditorContext _editorContext;
         readonly IPrinter _printer;
@@ -31,6 +30,7 @@ namespace VisualCrypt.Applications.ViewModels
         readonly ITextBoxController _textBoxFind;
         readonly ITextBoxController _textBoxFindReplace;
         readonly ITextBoxController _textBoxGoTo;
+        readonly IFileService _fileService;
         readonly ResourceWrapper _resourceWrapper;
 
 
@@ -38,7 +38,6 @@ namespace VisualCrypt.Applications.ViewModels
         {
             _eventAggregator = Service.Get<IEventAggregator>();
             _messageBoxService = Service.Get<IMessageBoxService>();
-            _windowManager = Service.Get<IWindowManager>();
             _settingsManager = Service.Get<AbstractSettingsManager>();
             _editorContext = Service.Get<PortableMainViewModel>();
             _printer = Service.Get<IPrinter>();
@@ -47,6 +46,7 @@ namespace VisualCrypt.Applications.ViewModels
             _textBoxFind = Service.Get<ITextBoxController>(TextBoxName.TextBoxFind);
             _textBoxFindReplace = Service.Get<ITextBoxController>(TextBoxName.TextBoxFindReplace);
             _textBoxGoTo = Service.Get<ITextBoxController>(TextBoxName.TextBoxGoTo);
+            _fileService = Service.Get<IFileService>();
 
             _resourceWrapper = Service.Get<ResourceWrapper>();
         }
@@ -696,18 +696,12 @@ namespace VisualCrypt.Applications.ViewModels
             OnPropertyChanged(() => LineCount);
 
             var pos = GetPositionString();
-            var enc = GetEncodingString();
+            var enc = _fileService.GetEncodingDisplayString(_editorContext.FileModel.SaveEncoding);
 
             var statusBarText = string.Format(CultureInfo.InvariantCulture, _resourceWrapper.plaintextStatusbarText, pos, enc);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Publish(statusBarText);
         }
 
-        string GetEncodingString()
-        {
-            return _editorContext.FileModel.SaveEncoding != null ?
-                _editorContext.FileModel.SaveEncoding.ToString()  // This was SaveEncoding.EncodingName
-                : "HEX";
-        }
 
         string GetPositionString()
         {

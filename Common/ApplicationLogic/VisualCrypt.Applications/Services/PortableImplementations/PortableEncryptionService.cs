@@ -29,7 +29,6 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             _stopWatch = new Stopwatch();
         }
 
-
         public Response<FileModel> OpenFile(string filename)
         {
             var response = new Response<FileModel>();
@@ -231,7 +230,6 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             StopMeasure();
             return response;
         }
-
 
         public Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent, LongRunningOperationContext context)
         {

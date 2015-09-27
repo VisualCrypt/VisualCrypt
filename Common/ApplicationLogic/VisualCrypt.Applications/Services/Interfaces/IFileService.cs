@@ -14,5 +14,6 @@ namespace VisualCrypt.Applications.Services.Interfaces
         byte[] ReadAllBytes(string filename);
         string ReadAllText(string filename, Encoding selectedEncoding);
         void WriteAllBytes(string filename, byte[] encodedTextBytes);
+        string GetEncodingDisplayString(Encoding saveEncoding);
     }
 }

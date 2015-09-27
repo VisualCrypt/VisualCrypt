@@ -107,20 +107,6 @@ namespace VisualCrypt.Applications.Models
         }
         string _visualCryptText;
 
-        public string SaveEncodingName
-        {
-            get { return _saveEncodingName; }
-            private set
-            {
-                if (_saveEncodingName != value)
-                {
-                    _saveEncodingName = value;
-                    OnPropertyChanged();
-                }
-            }
-        }
-        string _saveEncodingName = "ToDoEcoding";
-
 
         public Encoding SaveEncoding { get; private set; }
 
