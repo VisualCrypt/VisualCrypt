@@ -110,7 +110,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriSpecUrl}
                     })
                     process.Start();
             }
@@ -127,7 +127,7 @@ namespace VisualCrypt.Desktop.Views
                 using (
                     var process = new Process
                     {
-                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriPWSpecUrl}
+                        StartInfo = {UseShellExecute = true, FileName = _resourceWrapper.uriSourceUrl}
                     })
                     process.Start();
             }

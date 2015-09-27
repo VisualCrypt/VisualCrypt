@@ -153,15 +153,19 @@
   </data>
   <data name="uriSpecUrl" xml:space="preserve">
     <value>https://visualcrypt.com</value>
+    <comment></comment>
   </data>
   <data name="uriSourceUrl" xml:space="preserve">
     <value>https://visualcrypt.com</value>
+    <comment></comment>
   </data>
   <data name="uriPWSpecUrl" xml:space="preserve">
     <value>https://visualcrypt.com</value>
+    <comment></comment>
   </data>
   <data name="uriHelpUrl" xml:space="preserve">
     <value>https://visualcrypt.com</value>
+    <comment></comment>
   </data>
   <data name="termSetPassword" xml:space="preserve">
     <value>Impostare la Password</value>

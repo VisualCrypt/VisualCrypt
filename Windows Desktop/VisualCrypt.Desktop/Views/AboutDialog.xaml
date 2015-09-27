@@ -29,12 +29,10 @@
                     <StackPanel HorizontalAlignment="Stretch">
                         <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding Title}" />
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock xml:space="preserve">Version:</TextBlock>
-                            <TextBlock Text="{Binding AIP.AssemblyVersion}" />
+                            <TextBlock xml:space="preserve">Version: <Run Text="{Binding AIP.AssemblyVersion, Mode=OneWay}" /></TextBlock>
                         </StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock xml:space="preserve">SKU:</TextBlock>
-                            <TextBlock Text="{Binding AIP.AssemblyProduct}" />
+                            <TextBlock xml:space="preserve">SKU: <Run Text="{Binding AIP.AssemblyProduct, Mode=OneWay}" /></TextBlock>
                         </StackPanel>
                         <TextBlock />
                         <TextBlock TextWrapping="Wrap">

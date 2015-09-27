@@ -1214,7 +1214,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://visualcrypt.com.
+        ///   Looks up a localized string similar to https://visualcrypt.com/category/faq.
         /// </summary>
         internal static string uriHelpUrl {
             get {
@@ -1223,7 +1223,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://visualcrypt.com.
+        ///   Looks up a localized string similar to https://visualcrypt.com/post/password-quality.
         /// </summary>
         internal static string uriPWSpecUrl {
             get {
@@ -1232,7 +1232,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://visualcrypt.com.
+        ///   Looks up a localized string similar to https://github.com/VisualCrypt/VisualCrypt.
         /// </summary>
         internal static string uriSourceUrl {
             get {
@@ -1241,7 +1241,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to https://visualcrypt.com.
+        ///   Looks up a localized string similar to https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification.
         /// </summary>
         internal static string uriSpecUrl {
             get {
