@@ -46,9 +46,11 @@
   <ItemGroup>
     <Compile Include="Constants\TextBoxName.cs" />
     <Compile Include="Extensions\StringFormatInvariant.cs" />
+    <Compile Include="Extensions\TaskFireAndForget.cs" />
     <Compile Include="Models\FilesPageCommand.cs" />
     <Compile Include="Models\IFileModel.cs" />
     <Compile Include="Models\FileModel.cs" />
+    <Compile Include="Models\Settings\UpdateSettings.cs" />
     <Compile Include="Models\Settings\IFontSettings.cs" />
     <Compile Include="Models\Settings\SerializableVisualCryptSettings.cs" />
     <Compile Include="Services\PortableImplementations\AbstractSettingsManager.cs" />

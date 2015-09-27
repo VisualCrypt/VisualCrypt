@@ -4,9 +4,11 @@
                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                     xmlns:controls="clr-namespace:VisualCrypt.Desktop.Controls"
+                    xmlns:views="clr-namespace:VisualCrypt.Desktop.Views"
                     mc:Ignorable="d"
                     Background="{DynamicResource BarColorBrush}"
-                    Title="About VisualCrypt portableEditorView" Height="300" Width="500" WindowStartupLocation="CenterOwner">
+                    Height="300" Width="500" WindowStartupLocation="CenterOwner"
+                    d:DataContext="{d:DesignInstance views:AboutDialog}">
     <controls:AppDialog.Resources>
         <ResourceDictionary
             Source="/Styles/InUse/DialogStyles.xaml" />
@@ -28,24 +30,32 @@
                         <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding Title}" />
                         <StackPanel Orientation="Horizontal">
                             <TextBlock xml:space="preserve">Version:</TextBlock>
-                            <TextBlock Text="{Binding Path=NotepadVersion}" />
+                            <TextBlock Text="{Binding AIP.AssemblyVersion}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock xml:space="preserve">SKU:</TextBlock>
+                            <TextBlock Text="{Binding AIP.AssemblyProduct}" />
                         </StackPanel>
                         <TextBlock />
                         <TextBlock TextWrapping="Wrap">
-                            This version of VisualCrypt portableEditorView is Open Source and free for private use. Please use only the offical download from
-                            <Hyperlink>https://visualcrypt.com</Hyperlink> for your security!
+                            This version of VisualCrypt is open source and free for use, provided you accept and comply with the <Hyperlink 
+                                RequestNavigate="Hyperlink_License_OnRequestNavigate" 
+                                ToolTip="https://visualcrypt.com/post/privacy-and-terms"
+                                NavigateUri="https://visualcrypt.com/post/privacy-and-terms">license</Hyperlink>. 
+                          
                         </TextBlock>
                         <TextBlock />
-                        <TextBlock TextWrapping="Wrap" FontSize="12">
-                            However, this computer program is protected by copyright law
-                            and international treaties. Unauthorized reproduction or distribution of this program, or any portion of it, may result in severe civil and criminal penalties, and will be prosecuted.
+                        <TextBlock TextWrapping="Wrap">
+                            The latest version can be downloaded from <Hyperlink RequestNavigate="Hyperlink_OnRequestNavigate" 
+                                                                          NavigateUri="https://visualcrypt.com/post/download-visualcrypt-pro-for-windows"
+                                                                          ToolTip="https://visualcrypt.com/post/download-visualcrypt-pro-for-windows"
+                                                                          >https://visualcrypt.com</Hyperlink>. Please contact us for questions or suggestions at corporate@visualcrypt.com.
                         </TextBlock>
-
                     </StackPanel>
                 </Grid>
                 <Grid x:Name="ButtonRow" Grid.Row="1">
                     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
-                        <TextBlock Text="Copyright © 2014-2015, VisualCrypt AG, Germany" />
+                        <TextBlock Text="{Binding AIP.AssemblyCopyright}" />
                     </StackPanel>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button Click="Button_Click" IsDefault="True">Ok</Button>

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
@@ -12,11 +11,13 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
     {
         protected const string SettingsFilename = "VisualCryptSettings.txt";
         protected readonly ILog _log;
+        protected readonly IAssemblyInfoProvider _aip;
         protected string _currentDirectoryName;
 
         public AbstractSettingsManager()
         {
             _log = Service.Get<ILog>();
+            _aip = Service.Get<IAssemblyInfoProvider>();
             InitForBinding();
         }
 
@@ -25,6 +26,8 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
         public IFontSettings FontSettings { get; protected set; }
 
         public CryptographySettings CryptographySettings { get; protected set; }
+
+        public UpdateSettings UpdateSettings { get; protected set; }
 
         public abstract string CurrentDirectoryName { get; set; }
 
@@ -46,6 +49,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             EditorSettings.PropertyChanged += (s, e) => SaveSettings();
             CryptographySettings.PropertyChanged += (s, e) => SaveSettings();
             FontSettings.PropertyChanged += (s, e) => SaveSettings();
+            UpdateSettings.PropertyChanged += (s, e) => SaveSettings();
         }
 
         void SaveSettings()
@@ -87,6 +91,10 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 EditorSettings = settings.EditorSettings;
                 CryptographySettings = settings.CryptographySettings;
                 FontSettings = settings.FontSettings;
+                UpdateSettings = settings.UpdateSettings;
+                if (EditorSettings == null || CryptographySettings == null || FontSettings == null ||
+                    UpdateSettings == null)
+                    return false;
                 _log.Debug("Settings loaded.");
                 return true;
             }

@@ -25,19 +25,31 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
 			}
 		}
 
-		public string AssemblyVersion
-		{
-			get
-			{
-				if (_version != null)
-					return _version;
-				_version = GetAttribute<AssemblyVersionAttribute>().Version;
-				return _version;
+        public string AssemblyDescription
+        {
+            get
+            {
+                if (_product != null)
+                    return _product;
+                _product = GetAttribute<AssemblyDescriptionAttribute>().Description;
+                return _product;
+            }
+        }
 
-			}
-		}
+        public string AssemblyVersion
+        {
+            get
+            {
+                if (_version != null)
+                    return _version;
+                var ver = Assembly.GetName().Version;
 
-		public string AssemblyCompany
+                _version = string.Format("{0}.{1}.{2}", ver.Major, ver.Minor, ver.Build);
+                return _version;
+            }
+        }
+
+        public string AssemblyCompany
 		{
 			get
 			{

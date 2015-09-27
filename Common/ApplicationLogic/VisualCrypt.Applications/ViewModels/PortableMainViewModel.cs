@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Events;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Events;
+using VisualCrypt.Applications.Extensions;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
@@ -68,6 +71,7 @@ namespace VisualCrypt.Applications.ViewModels
         readonly IClipBoardService _clipBoardService;
         readonly IWindowManager _windowManager;
         readonly ResourceWrapper _resourceWrapper;
+        readonly IAssemblyInfoProvider _aip;
 
         LongRunningOperation _longRunningOperation;
 
@@ -95,6 +99,7 @@ namespace VisualCrypt.Applications.ViewModels
 
             _windowManager = Service.Get<IWindowManager>();
             _resourceWrapper = Service.Get<ResourceWrapper>();
+            _aip = Service.Get<IAssemblyInfoProvider>();
 
             _fileModel = FileModel.EmptyCleartext();
             _fileModel.OnFileModelUpdated = fileModel =>
@@ -128,18 +133,28 @@ namespace VisualCrypt.Applications.ViewModels
 
         public async void OpenFromCommandLineOrNew(string[] args)
         {
-            if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
+            try
             {
-                var fileName = args[1];
+                if (args.Length == 2 && !string.IsNullOrWhiteSpace(args[1]))
+                {
+                    var fileName = args[1];
 
-                _log.Debug(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}", fileName));
-              
-                await OpenFileCommon(fileName);
+                    _log.Debug(string.Format(CultureInfo.InvariantCulture, "Loading file from Commandline: {0}",
+                        fileName));
+
+                    await OpenFileCommon(fileName);
+                }
+                else
+                {
+                    ExecuteNewCommand();
+                    _log.Debug("Started with new file - Ready.");
+                }
+
+                RunCheckForUpdates();
             }
-            else
+            catch (Exception e)
             {
-                ExecuteNewCommand();
-                _log.Debug("Started with new file - Ready.");
+                await _messageBoxService.ShowError(e);
             }
         }
 
@@ -971,7 +986,7 @@ namespace VisualCrypt.Applications.ViewModels
             _exportCommand.RaiseCanExecuteChanged();
             _encryptEditorContentsCommand.RaiseCanExecuteChanged();
             _decryptEditorContentsCommand.RaiseCanExecuteChanged();
-            
+
         }
 
         async Task<bool> ConfirmToDiscardText()
@@ -993,6 +1008,47 @@ namespace VisualCrypt.Applications.ViewModels
             return true;
         }
 
+        async void RunCheckForUpdates()
+        {
+            try
+            {
+                string result = await Task.Run(async () =>
+                {
+                    string updateInfo;
+                    try
+                    {
+                        using (var client = new HttpClient())
+                        {
+                            var values = new Dictionary<string, string>
+                            {
+                                {"SKU", _aip.AssemblyProduct},
+                                {"Version", _aip.AssemblyVersion},
+                                {"Date", _settingsManager.UpdateSettings.Date.ToString("s")},
+                                {"Lang", CultureInfo.CurrentUICulture.ToString()}
+                            };
+
+                            var content = new FormUrlEncodedContent(values);
+
+                            var response = await client.PostAsync("https://visualcrypt.com/updatehandler", content);
+
+                            updateInfo = await response.Content.ReadAsStringAsync();
+                        }
+                    }
+                    catch (Exception e)
+                    {
+                        updateInfo = string.Format("Error checking for updates: {0}",e.Message);
+                    }
+                    return updateInfo;
+                });
+
+                if (_settingsManager.UpdateSettings.Notify && !result.StartsWith("Error") && result.StartsWith("Update"))
+                    await _messageBoxService.Show(result, "Update Available", RequestButton.OK, RequestImage.Information);
+            }
+            catch (Exception e)
+            {
+                _log.Exception(e);
+            }
+        }
 
 
         #endregion

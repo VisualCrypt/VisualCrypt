@@ -13,9 +13,9 @@ using System.Windows;
 [assembly: AssemblyDescription("This Release: VisualCrypt 2 Preview 4")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VisualCrypt AG")]
-[assembly: AssemblyProduct("VisualCrypt")]
+[assembly: AssemblyProduct("VisualCrypt Pro")]
 [assembly: AssemblyCopyright("Copyright © 2014 - 2015 VisualCrypt AG")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyTrademark("VisualCrypt")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -55,5 +55,5 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 
 [assembly: AssemblyVersion("2.0.4.*")]
-[assembly: AssemblyFileVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.4.0")]
 [assembly: CLSCompliant(false)]

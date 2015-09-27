@@ -13,5 +13,8 @@ namespace VisualCrypt.Applications.Models.Settings
 
         [DataMember]
         public IFontSettings FontSettings { get; set; }
+
+        [DataMember]
+        public UpdateSettings UpdateSettings { get; set; }
     }
 }
