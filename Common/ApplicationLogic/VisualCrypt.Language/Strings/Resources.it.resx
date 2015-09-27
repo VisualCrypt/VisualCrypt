@@ -122,7 +122,7 @@
     <comment></comment>
   </data>
   <data name="constUntitledDotVisualCrypt" xml:space="preserve">
-    <value>Untitled.visualcrypt</value>
+    <value>Senza titolo.visualcrypt</value>
   </data>
   <data name="encrpytedStatusbarText" xml:space="preserve">
     <value>VisualCrypt: {0}, AES 256 Bit, 2 ^ {1} arrotondamenti, capitolo {2}</value>

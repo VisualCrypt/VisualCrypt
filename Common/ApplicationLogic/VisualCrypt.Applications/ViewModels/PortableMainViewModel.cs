@@ -13,7 +13,6 @@ using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
-using VisualCrypt.Language;
 using VisualCrypt.Applications.Services.PortableImplementations;
 using VisualCrypt.Language.Strings;
 using VisualCrypt.Cryptography.VisualCrypt2;
@@ -59,7 +58,7 @@ namespace VisualCrypt.Applications.ViewModels
         readonly IEventAggregator _eventAggregator;
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
-        public readonly INavigationService NavigationService;
+        readonly INavigationService _navigationService;
         readonly IPasswordDialogDispatcher _passwordDialogDispatcher;
         readonly AbstractSettingsManager _settingsManager;
         readonly IFileService _fileService;
@@ -81,7 +80,7 @@ namespace VisualCrypt.Applications.ViewModels
             _messageBoxService = Service.Get<IMessageBoxService>();
             _encryptionService = Service.Get<IEncryptionService>();
 
-            NavigationService = Service.Get<INavigationService>();
+            _navigationService = Service.Get<INavigationService>();
             _passwordDialogDispatcher = Service.Get<IPasswordDialogDispatcher>();
 
 
@@ -98,7 +97,7 @@ namespace VisualCrypt.Applications.ViewModels
             _resourceWrapper = Service.Get<ResourceWrapper>();
 
             _fileModel = FileModel.EmptyCleartext();
-            _fileModel.OnFileModelUpdated = (fileModel) =>
+            _fileModel.OnFileModelUpdated = fileModel =>
             {
                 StatusBarModel.OnFileModelChanged(fileModel);
                 _eventAggregator.GetEvent<FileModelChanged>().Publish(fileModel);
@@ -195,7 +194,7 @@ namespace VisualCrypt.Applications.ViewModels
             if (!await ConfirmToDiscardText())
                 return;
 
-            NavigationService.NavigateToFilesPage();
+            _navigationService.NavigateToFilesPage();
             Cleanup();
         }
 
@@ -979,7 +978,6 @@ namespace VisualCrypt.Applications.ViewModels
 
             if (FileModel.IsDirty)
             {
-                var discardChanges = _resourceWrapper.msgDiscardChanges;
                 var result = await _messageBoxService.Show(
                     _resourceWrapper.msgDiscardChanges,
                     _assemblyInfoProvider.AssemblyProduct,

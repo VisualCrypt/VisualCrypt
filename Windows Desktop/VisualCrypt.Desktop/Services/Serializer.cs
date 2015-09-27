@@ -4,7 +4,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace VisualCrypt.Applications.Models.Settings
+namespace VisualCrypt.Desktop.Services
 {
 	public static class Serializer<T>
 	{

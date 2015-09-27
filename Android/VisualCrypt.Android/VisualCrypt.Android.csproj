@@ -47,10 +47,6 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Xml" />
-    <Reference Include="VisualCrypt.Language, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Common\ApplicationLogic\VisualCrypt.Language\bin\Debug\VisualCrypt.Language.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\Common\Cryptography\VisualCrypt.Cryptography.Net\Platform_Net4.cs">

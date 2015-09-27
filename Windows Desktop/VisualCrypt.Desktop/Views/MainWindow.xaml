@@ -30,7 +30,7 @@
         <KeyBinding Key="P" Modifiers="Control+Alt" Command="commands:EditorCommands.Print" />
         <!-- VisualCrypt -->
         <KeyBinding Key="P" Modifiers="Control" Command="{Binding ShowSetPasswordDialogCommand}" />
-        <KeyBinding Key="ESC" Command="{Binding ClearPasswordCommand}" />
+        <KeyBinding Key="Escape" Command="{Binding ClearPasswordCommand}" />
         <KeyBinding Key="E" Modifiers="Control" Command="{Binding EncryptEditorContentsCommand}" />
         <KeyBinding Key="D" Modifiers="Control" Command="{Binding DecryptEditorContentsCommand}" />
         <KeyBinding Key="P" Modifiers="Control+Shift" Command="{Binding ShowSettingsDialogCommand}" />
@@ -53,7 +53,7 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.Row="0" Height="27" Padding="0,4,0,0" IsMainMenu="True" KeyboardNavigation.TabNavigation="None">
-            <MenuItem x:Name="miFile" Header="{Binding  ResourceWrapper.miFile, Mode=OneWay}"
+            <MenuItem Header="{Binding  ResourceWrapper.miFile, Mode=OneWay}"
                       IsTabStop="True">
                 <MenuItem Header="{Binding  ResourceWrapper.miFileNew, Mode=OneWay}"
                           Command="{Binding NewCommand}" InputGestureText="Ctrl+N" />

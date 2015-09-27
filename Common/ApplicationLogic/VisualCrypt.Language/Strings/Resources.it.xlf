@@ -8,7 +8,7 @@
       <group id="Resx">
         <trans-unit id="Resx/constUntitledDotVisualCrypt" translate="yes" xml:space="preserve">
           <source>Untitled.visualcrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Untitled.visualcrypt</target>
+          <target state="translated">Senza titolo.visualcrypt</target>
         </trans-unit>
         <trans-unit id="Resx/encrpytedStatusbarText" translate="yes" xml:space="preserve">
           <source>VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.</source>

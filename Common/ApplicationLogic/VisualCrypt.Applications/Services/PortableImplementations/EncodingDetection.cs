@@ -64,7 +64,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             // If the file is empty, just return string.Empty and set ContentKind to PlainText.
             if (byteCount == 0)
             {
-                appliedEncoding = null;
+                appliedEncoding = Encoding.UTF8;
                 return string.Empty;
             }
 

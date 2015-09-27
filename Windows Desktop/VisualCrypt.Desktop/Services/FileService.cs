@@ -69,10 +69,22 @@ namespace VisualCrypt.Desktop.Services
             if (title != null)
                 fileDialog.Title = title;
 
-            if (!string.IsNullOrEmpty(suggestedFilename))
-                fileDialog.FileName = suggestedFilename;
 
-            fileDialog.InitialDirectory = _settingsManager.CurrentDirectoryName;
+            if (!string.IsNullOrEmpty(suggestedFilename))
+            {
+                fileDialog.FileName = Path.GetFileName(suggestedFilename);
+                if (fileDialog.FileName == suggestedFilename)  //equal if suggestedfilename did not include a path
+                {
+                    fileDialog.InitialDirectory = _settingsManager.CurrentDirectoryName;
+                }
+                else
+                {
+                    fileDialog.InitialDirectory = Path.GetDirectoryName(suggestedFilename);
+                }
+                
+                
+            }
+
             if (diaglogFilter == DialogFilter.VisualCrypt)
             {
                 fileDialog.DefaultExt = Constants.VisualCryptDialogFilter_DefaultExt;
