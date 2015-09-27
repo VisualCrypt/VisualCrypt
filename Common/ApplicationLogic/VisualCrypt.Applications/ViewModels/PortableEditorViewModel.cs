@@ -127,6 +127,9 @@ namespace VisualCrypt.Applications.ViewModels
 
             }
             UpdateStatusBar();
+            _replaceAllCommand.RaiseCanExecuteChanged();
+            _replaceCommand.RaiseCanExecuteChanged();
+            
         }
 
         void OnTextChanged(object sender, object textChangedEventArgs)
@@ -258,7 +261,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         public bool CanExecuteReplaceMenuCommand()
         {
-            return _textBox1.Text.Length > 0 && _editorContext.FileModel.SaveEncoding != null;
+            return _textBox1.Text.Length > 0 && _editorContext.FileModel.SaveEncoding != null && _editorContext.FileModel.IsEncrypted == false;
         }
 
         public void ExecuteReplaceMenuCommand()
@@ -365,7 +368,11 @@ namespace VisualCrypt.Applications.ViewModels
 
         public DelegateCommand ReplaceCommand
         {
-            get { return CreateCommand(ref _replaceCommand, ExecuteReplaceCommand, () => !string.IsNullOrEmpty(FindString)); }
+            get
+            {
+                return CreateCommand(ref _replaceCommand, ExecuteReplaceCommand,
+                    () => (!string.IsNullOrEmpty(FindString)) && !_editorContext.FileModel.IsEncrypted);
+            }
         }
 
         DelegateCommand _replaceCommand;
@@ -404,7 +411,7 @@ namespace VisualCrypt.Applications.ViewModels
             get
             {
                 return CreateCommand(ref _replaceAllCommand, ExecuteReplaceAllCommand,
-                    () => !string.IsNullOrEmpty(FindString));
+                    () => ReplaceCommand.CanExecute());
             }
         }
 
@@ -502,7 +509,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         public bool CanExecuteDeleteLine()
         {
-            return true;
+            return !_editorContext.FileModel.IsEncrypted;
         }
 
         public void ExecuteDeleteLine()
@@ -661,7 +668,7 @@ namespace VisualCrypt.Applications.ViewModels
 
         public bool CanExecuteInsertDateTime()
         {
-            return _editorContext.FileModel.SaveEncoding != null;
+            return _editorContext.FileModel.SaveEncoding != null && !_editorContext.FileModel.IsEncrypted;
         }
 
         public void ExecuteInsertDateTime()

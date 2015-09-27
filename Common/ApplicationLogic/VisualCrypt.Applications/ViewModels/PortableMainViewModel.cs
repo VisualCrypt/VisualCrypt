@@ -971,6 +971,7 @@ namespace VisualCrypt.Applications.ViewModels
             _exportCommand.RaiseCanExecuteChanged();
             _encryptEditorContentsCommand.RaiseCanExecuteChanged();
             _decryptEditorContentsCommand.RaiseCanExecuteChanged();
+            
         }
 
         async Task<bool> ConfirmToDiscardText()
