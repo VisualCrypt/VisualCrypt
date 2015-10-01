@@ -54,7 +54,7 @@
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RandomKeyCipher32.cs" />
-    <Compile Include="VisualCrypt2\DataTypes\PlainTextPadding.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\PlaintextPadding.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RoundsExponent.cs" />
     <Compile Include="VisualCrypt2\DataTypes\RandomKey32.cs" />
     <Compile Include="VisualCrypt2\DataTypes\SecureBytes.cs" />
@@ -78,7 +78,7 @@
     <Compile Include="VisualCrypt2\Implementations\VisualCrypt2Formatter.cs" />
     <Compile Include="VisualCrypt2\Interfaces\IPlatform.cs" />
     <Compile Include="VisualCrypt2\DataTypes\CipherV2.cs" />
-    <Compile Include="VisualCrypt2\DataTypes\ClearText.cs" />
+    <Compile Include="VisualCrypt2\DataTypes\Cleartext.cs" />
     <Compile Include="VisualCrypt2\DataTypes\VisualCryptText.cs" />
     <Compile Include="VisualCrypt2\DataTypes\SHA512PW64.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\Response.cs" />

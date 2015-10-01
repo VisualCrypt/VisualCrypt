@@ -96,7 +96,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
 
             // Create the MAC only for items that, while decrypting, have not been used up to this point but do include the version.
-            var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.Padding.ByteValue },
+            var securables = ByteArrays.Concatenate(cipherV2.MessageCipher.GetBytes(), new[] { cipherV2.PlaintextPadding.Value },
                 new[] { CipherV2.Version });
 
             context.EncryptionProgress.Message = LocalizableStrings.MsgCalculatingMAC;
@@ -128,7 +128,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
             // Wait for the left side result
             task.Wait(context.CancellationToken);
-
+            
             // Use the results
             var combinedHashes = ByteArrays.Concatenate(sha512PW64.GetBytes(), task.Result.GetBytes(), rightBCrypt.GetBytes());
             Debug.Assert(combinedHashes.Length == 64 + 24 + 24);
@@ -200,7 +200,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
                     response.SetError(LocalizableStrings.MsgPasswordError);
                     return response;
                 }
-
 
                 PaddedData paddedData = _internal.AESDecryptMessage(cipherV2, cipherV2.IV16, randomKey, context);
 

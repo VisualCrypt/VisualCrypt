@@ -21,6 +21,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
@@ -356,7 +357,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 		/// <param name="data">The string to extract the data from.</param>
 		/// <param name="offset"> [in,out] The current offset.</param>
 		/// <returns>The next word of material from data.</returns>
-		static uint StreamToWord(byte[] data, ref int offset)
+        static uint StreamToWord(byte[] data, ref int offset)
 		{
 			int i;
 			uint word = 0;
@@ -392,7 +393,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 		/// <summary>Blowfish encipher a single 64-bit block encoded as two 32-bit halves.</summary>
 		/// <param name="blockArray">An array containing the two 32-bit half blocks.</param>
 		/// <param name="offset">    The position in the array of the blocks.</param>
-		void Encipher(uint[] blockArray, int offset)
+        void Encipher(uint[] blockArray, int offset)
 		{
 			uint round,
 				n,
@@ -434,7 +435,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
 		/// <summary>Key the Blowfish cipher.</summary>
 		/// <param name="keyBytes">The key byte array.</param>
-		void Key(byte[] keyBytes)
+        void Key(byte[] keyBytes)
 		{
 			int i;
 			int koffp = 0;
@@ -459,13 +460,13 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 			}
 		}
 
-		/// <summary>
-		///  Perform the "enhanced key schedule" step described by Provos and Mazieres in "A Future-
-		///  Adaptable Password Scheme" http://www.openbsd.org/papers/bcrypt-paper.ps.
-		/// </summary>
-		/// <param name="saltBytes"> Salt byte array.</param>
-		/// <param name="inputBytes">Input byte array.</param>
-		void EksKey(byte[] saltBytes, byte[] inputBytes)
+        /// <summary>
+        ///  Perform the "enhanced key schedule" step described by Provos and Mazieres in "A Future-
+        ///  Adaptable Password Scheme" http://www.openbsd.org/papers/bcrypt-paper.ps.
+        /// </summary>
+        /// <param name="saltBytes"> Salt byte array.</param>
+        /// <param name="inputBytes">Input byte array.</param>
+        void EksKey(byte[] saltBytes, byte[] inputBytes)
 		{
 			int i;
 			int passwordOffset = 0,
@@ -495,14 +496,14 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 			}
 		}
 
-		/// <summary>Perform the central hashing step in the bcrypt scheme.</summary>
-		/// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or
-		///                                     illegal values.</exception>
-		/// <param name="inputBytes">The input byte array to hash.</param>
-		/// <param name="saltBytes"> The salt byte array to hash with.</param>
-		/// <param name="logRounds"> The binary logarithm of the number of rounds of hashing to apply.</param>
-		/// <returns>A byte array containing the hashed result.</returns>
-		byte[] CryptRaw(byte[] inputBytes, byte[] saltBytes, int logRounds)
+        /// <summary>Perform the central hashing step in the bcrypt scheme.</summary>
+        /// <exception cref="ArgumentException">Thrown when one or more arguments have unsupported or
+        ///                                     illegal values.</exception>
+        /// <param name="inputBytes">The input byte array to hash.</param>
+        /// <param name="saltBytes"> The salt byte array to hash with.</param>
+        /// <param name="logRounds"> The binary logarithm of the number of rounds of hashing to apply.</param>
+        /// <returns>A byte array containing the hashed result.</returns>
+        byte[] CryptRaw(byte[] inputBytes, byte[] saltBytes, int logRounds)
 		{
 			uint[] cdata = new uint[BfCryptCiphertext.Length];
 			Array.Copy(BfCryptCiphertext, cdata, BfCryptCiphertext.Length);

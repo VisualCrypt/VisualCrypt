@@ -7,12 +7,14 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.DataTypes
 	public class SecureBytes
 	{
 		/// <summary>
-		/// Guaranteed to be non-null.
+		/// Returns a non-null clone of the array stored in the data type. 
 		/// </summary>
 		public byte[] GetBytes()
 		{
-			return _data;
-		}
+            var cloned = new byte[_data.Length];
+            Buffer.BlockCopy(_data, 0, cloned, 0, _data.Length);
+            return cloned;
+        }
 
 		readonly byte[] _data;
 		readonly GCHandle _gcHandle;

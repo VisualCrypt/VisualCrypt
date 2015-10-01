@@ -982,10 +982,9 @@ namespace VisualCrypt.Applications.ViewModels
 
         void UpdateCanExecuteChanged()
         {
-            // TODO: many more Commands, like Replace must be updated
-            _exportCommand.RaiseCanExecuteChanged();
-            _encryptEditorContentsCommand.RaiseCanExecuteChanged();
-            _decryptEditorContentsCommand.RaiseCanExecuteChanged();
+            ExportCommand.RaiseCanExecuteChanged();
+            EncryptEditorContentsCommand.RaiseCanExecuteChanged();
+            DecryptEditorContentsCommand.RaiseCanExecuteChanged();
 
         }
 

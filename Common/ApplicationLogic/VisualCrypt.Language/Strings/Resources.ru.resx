@@ -151,8 +151,7 @@
     <value>Расчет Макинтош...</value>
   </data>
   <data name="uriSpecUrl" xml:space="preserve">
-    <value>https://visualcrypt.com</value>
-    <comment></comment>
+    <value>https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</value>
   </data>
   <data name="msgDiscardChanges" xml:space="preserve">
     <value>Отменить изменения?</value>
@@ -299,16 +298,13 @@
     <value>VisualCrypt 2 (AES 256 бит, BCrypt - Multi)</value>
   </data>
   <data name="uriSourceUrl" xml:space="preserve">
-    <value>https://visualcrypt.com</value>
-    <comment></comment>
+    <value>https://github.com/VisualCrypt/VisualCrypt</value>
   </data>
   <data name="uriPWSpecUrl" xml:space="preserve">
-    <value>https://visualcrypt.com</value>
-    <comment></comment>
+    <value>https://visualcrypt.com/post/password-quality</value>
   </data>
   <data name="uriHelpUrl" xml:space="preserve">
-    <value>https://visualcrypt.com</value>
-    <comment></comment>
+    <value>https://visualcrypt.com/category/faq</value>
   </data>
   <data name="termSetPassword" xml:space="preserve">
     <value>Установка пароля</value>

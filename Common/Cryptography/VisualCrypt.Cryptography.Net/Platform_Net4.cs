@@ -16,12 +16,12 @@ namespace VisualCrypt.Cryptography.Net
 
 			var randomBytes = new byte[length];
 
-			using (var rng = new RNGCryptoServiceProvider())
-			{
-				rng.GetBytes(randomBytes);
-				return randomBytes;
-			}
-		}
+            using (var rng = new RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomBytes);
+                return randomBytes;
+            }
+        }
 
 		public byte[] ComputeAESRound(AESDir aesDir, byte[] iv, byte[] input, byte[] keyBytes)
 		{

@@ -166,8 +166,9 @@ namespace VisualCrypt.Cryptography.Net.Tests
 
                 var decryptResponse = _service.Decrypt(decodeResponse.Result, hashPasswordResponse.Result, CreateContext());
 
-                Assert.IsTrue(decryptResponse.IsSuccess);
-                Assert.IsTrue(decryptResponse.Result.Text.Equals(message), "The decrypted message does not equal the original message");
+                var error = decryptResponse.IsSuccess ? "" : decryptResponse.Error;
+                Assert.IsTrue(decryptResponse.IsSuccess, string.Format("Error: {0}, Message: {1}, Password: {2}",error, message,password));
+                Assert.IsTrue(decryptResponse.Result.Text.Equals(message), "The decrypted message '{0}' does not equal the original message {1}", decryptResponse.Result.Text, message);
             }
         }
 
@@ -269,7 +270,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
         [TestMethod]
         public void Member_TryDecodeVisualCryptText_Doesnt_Accept_Non_VisualCryptText()
         {
-            var tests = new List<Response<CipherV2>>
+            var invalidVisualCrypt = new List<Response<CipherV2>>
             {
                 // empty string
                 _service.DecodeVisualCrypt(""),
@@ -279,17 +280,28 @@ namespace VisualCrypt.Cryptography.Net.Tests
                 _service.DecodeVisualCrypt("VisualCrypt/xyzoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
                 // truncated, too short
                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6Kqh"),
+        };
+
+            // with the intoduction of WhiteListing, this is now also valid VisualCrypt:
+            var validVisualCrypt = new List<Response<CipherV2>>
+            {
                 // invalid Base64 char 'ä' included
                  _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCedä775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
                  // Chinese inserted in in otherwise correct format
                  _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQs菲舍爾的弗里茨才對鮮魚rwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
-        };
+            };
 
 
-            foreach (var test in tests)
+            foreach (var test in invalidVisualCrypt)
             {
                 Assert.IsFalse(test.IsSuccess);
-                Assert.IsTrue(test.Error.StartsWith(LocalizableStrings.MsgFormatError));
+                Assert.IsTrue(test.Error.StartsWith(LocalizableStrings.MsgFormatError), test.Error);
+            }
+
+            foreach (var test in validVisualCrypt)
+            {
+                var error = test.IsSuccess ? "" : test.Error;
+                Assert.IsTrue(test.IsSuccess, error);
             }
         }
 
@@ -347,7 +359,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
         {
             var k = 1;   // sample size
             var a = 32;  // elements of X / lenght
-           
+
             var response = _service.TestRandomNumberGeneration(k, a);
             Assert.IsTrue(response.IsSuccess);
 
@@ -355,7 +367,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
 
             Assert.IsTrue(qr.a == 32);                                  // 32 = a
             Assert.IsTrue(qr.k == 1);                                   // 1 = k
-            Assert.IsTrue(qr.E_Xa == 256/2 * 32);                       // 32 = a
+            Assert.IsTrue(qr.E_Xa == 256 / 2 * 32);                       // 32 = a
             Assert.IsTrue(qr.X.Length == 32);                           // 32 = a
             Assert.IsTrue(qr.Xa >= 0 && qr.Xa <= 255 * 32);             // 32 * [0..255]
         }
@@ -468,7 +480,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
                     0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
                     16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31
                 }),
-                Padding = new PlaintextPadding(0),
+                PlaintextPadding = new PlaintextPadding(0),
                 RoundsExponent = new RoundsExponent(4)
             };
             return arbitraryCipherV2;
@@ -477,6 +489,8 @@ namespace VisualCrypt.Cryptography.Net.Tests
         List<string> CreateStringsOfVariousLenghts()
         {
             var strings = new List<string>();
+            //strings.Add("test");
+            //return strings;
             var s = "";
 
             for (var i = 0; i <= 300; i++)

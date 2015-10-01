@@ -23,13 +23,13 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
             var visualCryptTextV2Bytes = ByteArrays.Concatenate(
                 // len			Sum(len)		Start Index
-                new[] {CipherV2.Version}, // 1			1				0
-                new[] {cipherV2.RoundsExponent.Value}, // 1			2				1
-                new[] {cipherV2.Padding.ByteValue}, // 1			3				2
-                cipherV2.IV16.GetBytes(), // 16			19				3
-                cipherV2.MACCipher16.GetBytes(), // 16			35				19
-                cipherV2.RandomKeyCipher32.GetBytes(), // 32			67				35
-                cipherV2.MessageCipher.GetBytes() // len			67 + len		67
+                new[] { CipherV2.Version },               // 1			1				0
+                new[] { cipherV2.RoundsExponent.Value },  // 1			2				1
+                new[] { cipherV2.PlaintextPadding.Value },     // 1			3				2
+                cipherV2.IV16.GetBytes(),               // 16			19				3
+                cipherV2.MACCipher16.GetBytes(),        // 16			35				19
+                cipherV2.RandomKeyCipher32.GetBytes(),  // 32			67				35
+                cipherV2.MessageCipher.GetBytes()       // len			67 + len		67
                 );
 
 
@@ -44,7 +44,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
                 sb.Append(c);
                 if (++charsInLine != breakAfter)
                     continue;
-                sb.Append(new[] {'\r', '\n'});
+                sb.Append(new[] { '\r', '\n' });
                 charsInLine = 0;
             }
 
@@ -53,7 +53,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
                 sb.Append(c == '/' ? '$' : c);
                 if (++charsInLine != breakAfter)
                     continue;
-                sb.Append(new[] {'\r', '\n'});
+                sb.Append(new[] { '\r', '\n' });
                 charsInLine = 0;
             }
 
@@ -62,65 +62,63 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
         public static CipherV2 DissectVisualCryptText(string visualCryptText)
         {
-            var visualCrypt = WhiteListVisualCryptCharacters(visualCryptText);
-
-            if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
-                throw CommonFormatException("The prefix '{0}' is missing.".FormatInvariant(VisualCryptSlashText));
-
-            var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length).Replace('$', '/');
-
-            var visualCryptTextV2Bytes = Base64Encoder.DecodeBase64StringToBinary(visualCryptTextV2Base64);
-
-            //var visualCryptTextV2Bytes = ByteArrays.Concatenate(
-            //												// len			Sum(len)		Start Index
-            //new[] { CipherV2.Version },					// 1			1				0
-            //new[] { cipherV2.RoundsExponent.GetBytes },	// 1			2				1
-            //new[] { cipherV2.PlaintextPadding },			// 1			3				2
-            //cipherV2.IV16.GetBytes,						// 16			19				3
-            //cipherV2.MACCipher16,							// 16			35				19
-            //cipherV2.RandomKeyCipher32,					// 32			67				35
-            //cipherV2.MessageCipher						// len			67 + len		67
-            //);
-
-
-            var version = visualCryptTextV2Bytes[0];
-            var exponent = visualCryptTextV2Bytes[1];
-            var padding = visualCryptTextV2Bytes[2];
-
-            if (version != CipherV2.Version)
-                throw CommonFormatException("Expected a version byte at index 0 of value '2'.");
-
-            if (exponent > 31 || exponent < 4)
-                throw CommonFormatException("The value for the rounds exponent at index 1 is invalid.");
-
-            if (padding > 15)
-                throw CommonFormatException("The value at the padding byte at index 1 is invalid.");
-
-
-            var cipher = new CipherV2
+            try
             {
-                Padding = new PlaintextPadding(padding),
-                RoundsExponent = new RoundsExponent(exponent)
-            };
+                var visualCrypt = WhiteListVisualCryptCharacters(visualCryptText);
+
+                if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
+                    throw CommonFormatException("The prefix '{0}' is missing.".FormatInvariant(VisualCryptSlashText));
+
+                var visualCryptTextV2Base64 = visualCrypt.Remove(0, VisualCryptSlashText.Length).Replace('$', '/');
+
+                var visualCryptTextV2Bytes = Base64Encoder.DecodeBase64StringToBinary(visualCryptTextV2Base64);
+
+                var version = visualCryptTextV2Bytes[0];
+                var exponent = visualCryptTextV2Bytes[1];
+                var padding = visualCryptTextV2Bytes[2];
+
+                if (version != CipherV2.Version)
+                    throw CommonFormatException("Expected a version byte at index 0 of value '2'.");
+
+                if (exponent > 31 || exponent < 4)
+                    throw CommonFormatException("The value for the rounds exponent at index 1 is invalid.");
+
+                if (padding > 15)
+                    throw CommonFormatException("The value at the padding byte at index 1 is invalid.");
 
 
-            var iv16 = new byte[16];
-            Buffer.BlockCopy(visualCryptTextV2Bytes, 3, iv16, 0, 16);
-            cipher.IV16 = new IV16(iv16);
+                var cipher = new CipherV2
+                {
+                    PlaintextPadding = new PlaintextPadding(padding),
+                    RoundsExponent = new RoundsExponent(exponent)
+                };
 
-            var macCipher = new byte[16];
-            Buffer.BlockCopy(visualCryptTextV2Bytes, 19, macCipher, 0, 16);
-            cipher.MACCipher16 = new MACCipher16(macCipher);
 
-            var randomKeyCipher = new byte[32];
-            Buffer.BlockCopy(visualCryptTextV2Bytes, 35, randomKeyCipher, 0, 32);
-            cipher.RandomKeyCipher32 = new RandomKeyCipher32(randomKeyCipher);
+                var iv16 = new byte[16];
+                Buffer.BlockCopy(visualCryptTextV2Bytes, 3, iv16, 0, 16);
+                cipher.IV16 = new IV16(iv16);
 
-            var cipherBytes = new byte[visualCryptTextV2Bytes.Length - 67];
-            Buffer.BlockCopy(visualCryptTextV2Bytes, 67, cipherBytes, 0, cipherBytes.Length);
-            cipher.MessageCipher = new MessageCipher(cipherBytes);
+                var macCipher = new byte[16];
+                Buffer.BlockCopy(visualCryptTextV2Bytes, 19, macCipher, 0, 16);
+                cipher.MACCipher16 = new MACCipher16(macCipher);
 
-            return cipher;
+                var randomKeyCipher = new byte[32];
+                Buffer.BlockCopy(visualCryptTextV2Bytes, 35, randomKeyCipher, 0, 32);
+                cipher.RandomKeyCipher32 = new RandomKeyCipher32(randomKeyCipher);
+
+                var cipherBytes = new byte[visualCryptTextV2Bytes.Length - 67];
+                Buffer.BlockCopy(visualCryptTextV2Bytes, 67, cipherBytes, 0, cipherBytes.Length);
+                cipher.MessageCipher = new MessageCipher(cipherBytes);
+
+                return cipher;
+
+            }
+            catch (Exception e)
+            {
+                if (e.Message.StartsWith(LocalizableStrings.MsgFormatError))
+                    throw;
+                throw CommonFormatException(e.Message);
+            }
         }
 
 

@@ -90,10 +90,6 @@ namespace VisualCrypt.Desktop.Services
         {
             ApplyFontsFromSettingsToEditor();
             UpdateZoomLevelMenuText();
-
-            //Zoom100Command.RaiseCanExecuteChanged();
-            //ZoomInCommand.RaiseCanExecuteChanged();
-            //ZoomOutCommand.RaiseCanExecuteChanged();
         }
 
         public bool CanExecuteZoomIn()
@@ -105,10 +101,6 @@ namespace VisualCrypt.Desktop.Services
         {
             _textBoxController.FontSize *= 1.05;
             UpdateZoomLevelMenuText();
-
-            //Zoom100Command.RaiseCanExecuteChanged();
-            //ZoomInCommand.RaiseCanExecuteChanged();
-            //ZoomOutCommand.RaiseCanExecuteChanged();
         }
 
 
@@ -121,10 +113,6 @@ namespace VisualCrypt.Desktop.Services
         {
             _textBoxController.FontSize *= 1 / 1.05;
             UpdateZoomLevelMenuText();
-
-            //Zoom100Command.RaiseCanExecuteChanged();
-            //ZoomInCommand.RaiseCanExecuteChanged();
-            //ZoomOutCommand.RaiseCanExecuteChanged();
         }
     }
 }

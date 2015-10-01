@@ -50,7 +50,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-
         public void AESEncryptRandomKeyWithPasswordDerivedKey(PasswordDerivedKey32 passwordDerivedKey, RandomKey32 randomKey, CipherV2 cipherV2, LongRunningOperationContext context)
         {
             Guard.NotNull(new object[] { passwordDerivedKey, randomKey, cipherV2, context });
@@ -67,7 +66,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 
             context.EncryptionProgress.Message = LocalizableStrings.MsgEncryptingMessage;
 
-            cipherV2.Padding = paddedData.PlaintextPadding;
+            cipherV2.PlaintextPadding = paddedData.PlaintextPadding;
 
             cipherV2.MessageCipher = new MessageCipher(ComputeAES(AESDir.Encrypt, cipherV2.IV16, paddedData.GetBytes(), randomKey.GetBytes(), cipherV2.RoundsExponent.Value, context));
         }
@@ -138,11 +137,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-
-
-
-
-
         public MAC16 AESDecryptMAC(CipherV2 cipherV2, RandomKey32 randomKey, LongRunningOperationContext context)
         {
             Guard.NotNull(new object[] { cipherV2, randomKey, context });
@@ -172,14 +166,14 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             context.EncryptionProgress.Message = LocalizableStrings.MsgDecryptingMessage;
 
             var paddedData = ComputeAES(AESDir.Decrpyt, cipherV2.IV16, cipherV2.MessageCipher.GetBytes(), randomKey.GetBytes(), cipherV2.RoundsExponent.Value, context);
-            return new PaddedData(paddedData, cipherV2.Padding);
+            return new PaddedData(paddedData, cipherV2.PlaintextPadding);
         }
 
         public Compressed RemovePadding(PaddedData paddedData)
         {
             Guard.NotNull(paddedData);
 
-            var paddingRemoved = new byte[paddedData.GetBytes().Length - paddedData.PlaintextPadding.ByteValue];
+            var paddingRemoved = new byte[paddedData.GetBytes().Length - paddedData.PlaintextPadding.Value];
 
             Buffer.BlockCopy(paddedData.GetBytes(), 0, paddingRemoved, 0, paddingRemoved.Length);
 

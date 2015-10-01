@@ -52,8 +52,7 @@
           </trans-unit>
         <trans-unit id="Resx/uriSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">https://visualcrypt.com</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
-        </trans-unit>
+          <target state="signed-off">https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</target></trans-unit>
         <trans-unit id="Resx/msgDiscardChanges" translate="yes" xml:space="preserve">
           <source>Discard Changes?</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Verwerfen?</target>
@@ -290,16 +289,13 @@
         </trans-unit>
         <trans-unit id="Resx/uriSourceUrl" translate="yes" xml:space="preserve">
           <source>https://github.com/VisualCrypt/VisualCrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">https://visualcrypt.com</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
-        </trans-unit>
+          <target state="signed-off">https://github.com/VisualCrypt/VisualCrypt</target></trans-unit>
         <trans-unit id="Resx/uriPWSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/password-quality</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">https://visualcrypt.com</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
-        </trans-unit>
+          <target state="signed-off">https://visualcrypt.com/post/password-quality</target></trans-unit>
         <trans-unit id="Resx/uriHelpUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/category/faq</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">https://visualcrypt.com</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
-        </trans-unit>
+          <target state="signed-off">https://visualcrypt.com/category/faq</target></trans-unit>
         <trans-unit id="Resx/termSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password</source>
           <target state="translated">Passwort setzen</target>

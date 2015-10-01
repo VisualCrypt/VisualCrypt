@@ -87,7 +87,10 @@ namespace VisualCrypt.Desktop.Services
 
                     if (hasRunOnce == 0)
                     {
-                        var success = PinUnpinTaskBar(Assembly.GetEntryAssembly().Location, true);
+                        var assembly = Assembly.GetEntryAssembly();
+                        if (assembly == null)  // null: in a unit test
+                            return;
+                        var success = PinUnpinTaskBar(assembly.Location, true);
                         if (success)
                         {
                             _log.Debug("Pinned to Taskbar");

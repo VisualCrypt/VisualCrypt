@@ -127,8 +127,8 @@ namespace VisualCrypt.Applications.ViewModels
 
             }
             UpdateStatusBar();
-            _replaceAllCommand.RaiseCanExecuteChanged();
-            _replaceCommand.RaiseCanExecuteChanged();
+            ReplaceAllCommand.RaiseCanExecuteChanged();
+            ReplaceCommand.RaiseCanExecuteChanged();
             
         }
 
