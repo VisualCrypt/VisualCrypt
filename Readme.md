@@ -1,5 +1,8 @@
 # VisualCrypt
-
+###First Things First ;-)
+Please donate Bitcoins to '35qksQcmiJ8TyURsbm37Sesp34kparncEs' to support this project.
+We've put countless hours in this project in the past and we'll put countless hours for this project in the future. Let's restore privacy to make the world a better place! We are building the apps for it - for everyone, for every platform, world wide!
+### About VisualCrypt
 VisualCrypt is a password-based encryption protocol and cross-platform message format with implementations for Windows, Android and iOS. 
 
 The VisualCrypt Apps use the VisualCrypt protocol for the exchange of encrypted messages, notetaking and storage of precious secrets in simple .visualcrypt-files that can exist independedly of any app or service account.
