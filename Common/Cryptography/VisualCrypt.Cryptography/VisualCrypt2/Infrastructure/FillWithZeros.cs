@@ -6,8 +6,10 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 	{
 		public static void FillWithZeros(this byte[] byteArray)
 		{
-			if (byteArray == null)
-				throw new ArgumentNullException("byteArray");
+            // this check is important because this method may be called from within
+            // a finalizer where the supplied bytearray might already be garbage-collected.
+            if (byteArray == null)
+                return; 
 
 			for (var index = 0; index < byteArray.Length; index++)
 			{
