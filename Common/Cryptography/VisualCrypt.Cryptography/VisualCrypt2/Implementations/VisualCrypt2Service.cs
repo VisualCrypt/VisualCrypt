@@ -60,25 +60,49 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             {
                 Guard.NotNull(new object[] { cleartext, sha512PW64, roundsExponent, context });
                 EnsurePlatform();
+                Debug.WriteLine("SHA512PW64:");
+                Debug.WriteLine(sha512PW64.GetBytes().ToHexView(false));
 
                 Compressed compressed = _internal.Compress(cleartext);
+                Debug.WriteLine("Compressed:");
+                Debug.WriteLine(compressed.GetBytes().ToHexView(false));
+
 
                 PaddedData paddedData = _internal.ApplyRandomPadding(compressed);
+                Debug.WriteLine("PaddedData:");
+                Debug.WriteLine(paddedData.GetBytes().ToHexView(false));
+
+                Debug.WriteLine("PlainTextPadding:");
+                Debug.WriteLine(paddedData.PlaintextPadding);
 
                 IV16 iv = new IV16(_platform.GenerateRandomBytes(16));
+                Debug.WriteLine("IV16:");
+                Debug.WriteLine(iv.GetBytes().ToHexView(false));
 
                 PasswordDerivedKey32 passwordDerivedKey = CreatePasswordDerivedKey(iv, sha512PW64, roundsExponent, context);
+                Debug.WriteLine("PasswordDerivedKey32:");
+                Debug.WriteLine(passwordDerivedKey.GetBytes().ToHexView(false));
 
                 RandomKey32 randomKey = new RandomKey32(_platform.GenerateRandomBytes(32));
+                Debug.WriteLine("RandomKey32:");
+                Debug.WriteLine(randomKey.GetBytes().ToHexView(false));
 
                 var cipherV2 = new CipherV2 { RoundsExponent = roundsExponent, IV16 = iv };
                 _internal.AESEncryptRandomKeyWithPasswordDerivedKey(passwordDerivedKey, randomKey, cipherV2, context);
+                Debug.WriteLine("RandomKeyCipher32:");
+                Debug.WriteLine(cipherV2.RandomKeyCipher32.GetBytes().ToHexView(false));
 
                 _internal.AESEncryptMessageWithRandomKey(paddedData, randomKey, cipherV2, context);
+                Debug.WriteLine("MessageCipher:");
+                Debug.WriteLine(cipherV2.MessageCipher.GetBytes().ToHexView(false));
 
                 MAC16 mac = CreateMAC(cipherV2, context);
+                Debug.WriteLine("MAC16:");
+                Debug.WriteLine(mac.GetBytes().ToHexView(false));
 
                 _internal.AESEncryptMACWithRandomKey(cipherV2, mac, randomKey, context);
+                Debug.WriteLine("MACCipher16:");
+                Debug.WriteLine(cipherV2.MACCipher16.GetBytes().ToHexView(false));
 
                 response.Result = cipherV2;
                 response.SetSuccess();
@@ -157,7 +181,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             return response;
         }
 
-        public Response<CipherV2> DecodeVisualCrypt(string visualCryptText)
+        public Response<CipherV2> DecodeVisualCrypt(string visualCryptText)  // should the parameter type be VisualCryptText? 
         {
             var response = new Response<CipherV2>();
 

@@ -82,7 +82,6 @@
     <Compile Include="Events\EditorShouldCleanup.cs" />
     <Compile Include="Events\EditorShouldSendText.cs" />
     <Compile Include="Models\FilesPageCommandArgs.cs" />
-    <Compile Include="Extensions\ByteArrayToHexView.cs" />
     <Compile Include="ViewModels\FindReplace\SearchOptions.cs" />
     <Compile Include="ViewModels\FindReplace\SearchResult.cs" />
     <Compile Include="ViewModels\FindReplace\SearchStrategy.cs" />

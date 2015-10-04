@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="VisualCrypt2\DataTypes\QualifiedRandom.cs" />
     <Compile Include="VisualCrypt2\Implementations\SanitizationStringExtensions.cs" />
+    <Compile Include="VisualCrypt2\Infrastructure\ByteArrayToHexView.cs" />
     <Compile Include="VisualCrypt2\Infrastructure\FormatInvariant.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MACCipher16.cs" />
     <Compile Include="VisualCrypt2\DataTypes\MessageCipher.cs" />
