@@ -64,7 +64,8 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 {
                     EditorSettings = EditorSettings,
                     CryptographySettings = CryptographySettings,
-                    FontSettings = FontSettings
+                    FontSettings = FontSettings,
+                     UpdateSettings = UpdateSettings
                 };
 
                 // Serialize, save

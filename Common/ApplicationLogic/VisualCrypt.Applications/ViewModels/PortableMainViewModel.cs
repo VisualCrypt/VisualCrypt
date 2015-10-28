@@ -1007,7 +1007,7 @@ namespace VisualCrypt.Applications.ViewModels
             return true;
         }
 
-        async void RunCheckForUpdates()
+        async void RunCheckForUpdates() 
         {
             try
             {
@@ -1029,6 +1029,8 @@ namespace VisualCrypt.Applications.ViewModels
                             var content = new FormUrlEncodedContent(values);
 
                             var response = await client.PostAsync("https://visualcrypt.com/updatehandler", content);
+                            //var response = await client.PostAsync("http://localhost:81/updatehandler", content);
+
 
                             updateInfo = await response.Content.ReadAsStringAsync();
                         }
