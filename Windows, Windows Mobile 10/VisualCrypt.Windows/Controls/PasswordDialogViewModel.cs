@@ -11,6 +11,7 @@ using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
 using VisualCrypt.Language;
 using VisualCrypt.Windows.Services;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Windows.Controls
 {
@@ -18,6 +19,7 @@ namespace VisualCrypt.Windows.Controls
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
+        readonly ResourceWrapper _resourceWrapper;
         readonly Action<bool> _closePopup;
         readonly Action<bool> _setIsPasswordSet;
         readonly bool _isPasswordSetWhenDialogOpened;
@@ -27,6 +29,7 @@ namespace VisualCrypt.Windows.Controls
         {
             _encryptionService = Service.Get<IEncryptionService>();
             _messageBoxService = Service.Get<IMessageBoxService>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
 
             _closePopup = closePopup;
             _setIsPasswordSet = setIsPasswordSet;
@@ -38,7 +41,7 @@ namespace VisualCrypt.Windows.Controls
 
         #region Bound Properties
 
-        public string PWSpecUrl => Language.Strings.Resources.uriPWSpecUrl;
+        public string PWSpecUrl => _resourceWrapper.uriPWSpecUrl;
 
         public string PasswordBoxText
         {

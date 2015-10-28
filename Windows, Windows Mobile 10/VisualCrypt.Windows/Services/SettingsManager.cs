@@ -30,7 +30,6 @@ namespace VisualCrypt.Windows.Services
 
             EditorSettings = new EditorSettings
             {
-                IsStatusBarVisible = true,
                 IsWordWrapChecked = true,
                 IsSpellCheckingChecked = false,
                 PagePadding = 72,
@@ -48,6 +47,13 @@ namespace VisualCrypt.Windows.Services
             }
             ;
             CryptographySettings = new CryptographySettings { LogRounds = 13 };
+            UpdateSettings = new UpdateSettings
+            {
+                Version = _aip.AssemblyVersion,
+                SKU = _aip.AssemblyProduct,
+                Date = DateTime.UtcNow,
+                Notify = true
+            };
         }
 
 

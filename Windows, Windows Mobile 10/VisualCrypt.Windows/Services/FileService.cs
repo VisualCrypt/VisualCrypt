@@ -42,5 +42,10 @@ namespace VisualCrypt.Windows.Services
         {
             return System.IO.Path.GetFileName(filename);
         }
+
+        public string GetEncodingDisplayString(Encoding saveEncoding)
+        {
+            return saveEncoding.EncodingName;
+        }
     }
 }

@@ -33,8 +33,7 @@ namespace VisualCrypt.Windows
             }
             catch (Exception e)
             {
-                var md = new MessageDialog(e.Message);
-                 await md.ShowAsync();
+                Service.Get<ILog>().Exception(e);
             }
         }
 
@@ -43,6 +42,8 @@ namespace VisualCrypt.Windows
 
             Service.Register<ILog, ReplayLogger>(true);
             Service.Get<ILog>().Debug("Registering Services");
+
+            Service.Register<AbstractSettingsManager, SettingsManager>(true);
 
             Service.Register<ResourceWrapper, ResourceWrapper>(true);
 
@@ -53,7 +54,7 @@ namespace VisualCrypt.Windows
             Service.Register<INavigationService, NavigationService>(true);
             Service.Register<IPasswordDialogDispatcher, PasswordDialogDispatcher>(true);
 
-            Service.Register<AbstractSettingsManager, SettingsManager>(true);
+          
             Service.Register<IFontSettings, FontSettings>(true);
 
             Service.Register<IFileService, FileService>(true);

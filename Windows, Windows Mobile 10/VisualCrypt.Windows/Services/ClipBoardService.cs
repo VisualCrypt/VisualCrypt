@@ -1,4 +1,5 @@
 ﻿using VisualCrypt.Applications.Services.Interfaces;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace VisualCrypt.Windows.Services
 {
@@ -6,7 +7,15 @@ namespace VisualCrypt.Windows.Services
     {
         public void CopyText(string text)
         {
-            throw new System.NotImplementedException();
+            if (string.IsNullOrWhiteSpace(text))
+                return;
+
+            DataPackage dataPackage = new DataPackage {  RequestedOperation = DataPackageOperation.Copy};
+            dataPackage.SetText(text);
+            Clipboard.SetContent(dataPackage);
         }
+
+        // see https://msdn.microsoft.com/en-us/library/windows/apps/mt243291.aspx
+        // on how to monitor clipboard.
     }
 }

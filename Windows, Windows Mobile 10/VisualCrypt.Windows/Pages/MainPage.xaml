@@ -32,7 +32,7 @@
                                     VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
 
         <Border Grid.Row="3" Height="28" Background="{StaticResource AccentColorBrush}" 
-                Visibility="{x:Bind _settingsManager.EditorSettings.IsStatusBarVisible, Mode=OneWay, Converter={StaticResource BoolVisibility}}">
+               >
             <StackPanel>
                 <controls:PlainTextBar
                     Visibility="{x:Bind _viewModel.StatusBarModel.IsPlaintextBarVisible, Mode=OneWay, Converter={StaticResource BoolVisibility}}" />

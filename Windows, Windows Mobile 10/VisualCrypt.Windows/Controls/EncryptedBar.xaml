@@ -26,7 +26,7 @@
                         Text="{x:Bind _viewModel.PasswordInfo.PasswordStatus, Mode=OneWay}" />
                 </Hyperlink>
                 <Hyperlink FontWeight="Normal" FontFamily="WebDings" Click="Hyperlink_ClearPassword_MouseDown"
-                               Foreground="{x:Bind _viewModel.PasswordInfo.IsTextBlockClearPasswordVisible, Mode=OneWay, Converter={StaticResource EnabledToBrush}}">
+                               Foreground="{x:Bind _viewModel.PasswordInfo.IsPasswordSet, Mode=OneWay, Converter={StaticResource EnabledToBrush}}">
                         r
                 </Hyperlink>
             </TextBlock>
