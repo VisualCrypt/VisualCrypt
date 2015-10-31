@@ -119,70 +119,64 @@
 
                     <TabItem IsTabStop="False">
                         <TabItem.Header>
-                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Find" />
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding ResourceWrapper.termFind, Mode=OneWay}" />
                         </TabItem.Header>
                         <StackPanel HorizontalAlignment="Stretch">
                             <TextBox Margin="5" x:Name="_textBoxFind" x:FieldModifier="private"
                                      Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       />
                             <StackPanel HorizontalAlignment="Right">
-                                <Button IsDefault="True" Command="{Binding FindNextButtonCommand}">
-                                    Find
+                                <Button IsDefault="True" Command="{Binding FindNextButtonCommand}" Content="{Binding ResourceWrapper.termFind, Mode=OneWay}">
                                 </Button>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="0">
-                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchCase, Mode=TwoWay}">Match case</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchCase, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaMatchCase, Mode=OneWay}"></CheckBox>
                                     <CheckBox Margin="5"
-                                              IsChecked="{Binding SearchOptions.MatchWholeWord, Mode=TwoWay}">
-                                        Match whole word
+                                              IsChecked="{Binding SearchOptions.MatchWholeWord, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaMatchWholeWord, Mode=OneWay}">
                                     </CheckBox>
                                 </StackPanel>
                                 <StackPanel Margin="0">
-                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.SearchUp, Mode=TwoWay}">Search up</CheckBox>
-                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.UseRegEx, Mode=TwoWay}">Use Regular Expressions</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.SearchUp, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaSearchUp, Mode=OneWay}"></CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.UseRegEx, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaRegularEx, Mode=OneWay}"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
                     </TabItem>
                     <TabItem IsTabStop="False">
                         <TabItem.Header>
-                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Replace" />
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding ResourceWrapper.termReplace, Mode=OneWay}" />
                         </TabItem.Header>
                         <StackPanel>
                             <TextBox x:Name="_textBoxFindReplace" x:FieldModifier="private" Margin="5"
                                      Text="{Binding FindString, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                      />
-                            <TextBlock Margin="5">Replace with:</TextBlock>
+                            <TextBlock Margin="5" Text="{Binding ResourceWrapper.toolAreaReplaceWith, Mode=OneWay}" ></TextBlock>
                             <TextBox  Margin="5"
                                      Text="{Binding ReplaceString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             <DockPanel>
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button Command="{Binding FindNextButtonCommand}" IsDefault="True">
-                                        Find
+                                    <Button Command="{Binding FindNextButtonCommand}" IsDefault="True"  Content="{Binding ResourceWrapper.termFind, Mode=OneWay}">
                                     </Button>
                                     <Button
-                                        Command="{Binding ReplaceCommand}">
-                                        Replace
+                                        Command="{Binding ReplaceCommand}" Content="{Binding ResourceWrapper.termReplace, Mode=OneWay}">
                                     </Button>
                                     <Button
-                                        Command="{Binding ReplaceAllCommand}">
-                                        Replace all
+                                        Command="{Binding ReplaceAllCommand}" Content="{Binding ResourceWrapper.termReplaceAll, Mode=OneWay}">
                                     </Button>
                                 </StackPanel>
                             </DockPanel>
 
                             <StackPanel Orientation="Horizontal">
                                 <StackPanel Margin="0">
-                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchCase, Mode=TwoWay}">Match case</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.MatchCase, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaMatchCase, Mode=OneWay}"></CheckBox>
                                     <CheckBox Margin="5"
-                                              IsChecked="{Binding SearchOptions.MatchWholeWord, Mode=TwoWay}">
-                                        Match whole word
+                                              IsChecked="{Binding SearchOptions.MatchWholeWord, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaMatchWholeWord, Mode=OneWay}">
                                     </CheckBox>
                                 </StackPanel>
                                 <StackPanel Margin="0">
-                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.SearchUp, Mode=TwoWay}">Search up</CheckBox>
-                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.UseRegEx, Mode=TwoWay}">Use Regular Expressions</CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.SearchUp, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaSearchUp, Mode=OneWay}"></CheckBox>
+                                    <CheckBox Margin="5" IsChecked="{Binding SearchOptions.UseRegEx, Mode=TwoWay}" Content="{Binding ResourceWrapper.toolAreaRegularEx, Mode=OneWay}"></CheckBox>
                                 </StackPanel>
                             </StackPanel>
 
@@ -190,20 +184,19 @@
                     </TabItem>
                     <TabItem IsTabStop="False">
                         <TabItem.Header>
-                            <TextBlock Style="{StaticResource DialogH1Style}" Text="Go" />
+                            <TextBlock Style="{StaticResource DialogH1Style}" Text="{Binding ResourceWrapper.termGo, Mode=OneWay}" />
                         </TabItem.Header>
                         <StackPanel>
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Margin="10,0,0,0">Line Number (1-</TextBlock>
+                                <TextBlock Margin="10,0,0,0" Text="{Binding ResourceWrapper.toolAreaGoLineNo, Mode=OneWay}"></TextBlock>
                                 <TextBlock Margin="0" Text="{Binding LineCount}" />
                                 <TextBlock Margin="0" Text="):" />
                             </StackPanel>
                             <TextBox Margin="5" x:Name="_textBoxGoTo" x:FieldModifier="private"
                                      Text="{Binding LineNo, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                       />
-                            <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" Width="65"
-                                    Command="{Binding GoButtonCommand}">
-                                Go
+                            <Button Margin="5" IsDefault="True" HorizontalAlignment="Right" 
+                                    Command="{Binding GoButtonCommand}" Content="{Binding ResourceWrapper.termGo, Mode=OneWay}">
                             </Button>
                         </StackPanel>
                     </TabItem>

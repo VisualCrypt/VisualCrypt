@@ -521,4 +521,31 @@
   <data name="logWindowInfoText" xml:space="preserve">
     <value>Queste informazioni di debug non verranno salvate in un file.</value>
   </data>
+  <data name="termFind" xml:space="preserve">
+    <value>Trova</value>
+  </data>
+  <data name="toolAreaGoLineNo" xml:space="preserve">
+    <value>Numero di riga (1-</value>
+  </data>
+  <data name="toolAreaRegularEx" xml:space="preserve">
+    <value>Utilizzare le espressioni regolari</value>
+  </data>
+  <data name="toolAreaMatchWholeWord" xml:space="preserve">
+    <value>Parola intera</value>
+  </data>
+  <data name="toolAreaMatchCase" xml:space="preserve">
+    <value>Maiuscole / minuscole</value>
+  </data>
+  <data name="toolAreaReplaceWith" xml:space="preserve">
+    <value>Sostituire con:</value>
+  </data>
+  <data name="toolAreaSearchUp" xml:space="preserve">
+    <value>Ricerca verso l'alto</value>
+  </data>
+  <data name="termGo" xml:space="preserve">
+    <value>Vai</value>
+  </data>
+  <data name="termReplace" xml:space="preserve">
+    <value>Sostituire</value>
+  </data>
 </root>

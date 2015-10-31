@@ -84,6 +84,11 @@ namespace VisualCrypt.Applications.ViewModels
             get { return _settingsManager; }
         }
 
+        public ResourceWrapper ResourceWrapper
+        {
+            get { return _resourceWrapper; }
+        }
+
         #endregion
 
         #region Events

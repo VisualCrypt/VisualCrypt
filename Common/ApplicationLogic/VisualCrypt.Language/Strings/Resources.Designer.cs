@@ -1151,6 +1151,24 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find.
+        /// </summary>
+        internal static string termFind {
+            get {
+                return ResourceManager.GetString("termFind", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Go.
+        /// </summary>
+        internal static string termGo {
+            get {
+                return ResourceManager.GetString("termGo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to OK.
         /// </summary>
         internal static string termOK {
@@ -1165,6 +1183,15 @@ namespace VisualCrypt.Language.Strings {
         internal static string termPassword {
             get {
                 return ResourceManager.GetString("termPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        internal static string termReplace {
+            get {
+                return ResourceManager.GetString("termReplace", resourceCulture);
             }
         }
         
@@ -1210,6 +1237,60 @@ namespace VisualCrypt.Language.Strings {
         internal static string titleImportWithEncoding {
             get {
                 return ResourceManager.GetString("titleImportWithEncoding", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Line Number (1-.
+        /// </summary>
+        internal static string toolAreaGoLineNo {
+            get {
+                return ResourceManager.GetString("toolAreaGoLineNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match case.
+        /// </summary>
+        internal static string toolAreaMatchCase {
+            get {
+                return ResourceManager.GetString("toolAreaMatchCase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Match whole word.
+        /// </summary>
+        internal static string toolAreaMatchWholeWord {
+            get {
+                return ResourceManager.GetString("toolAreaMatchWholeWord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use Regular Expressions.
+        /// </summary>
+        internal static string toolAreaRegularEx {
+            get {
+                return ResourceManager.GetString("toolAreaRegularEx", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace with:.
+        /// </summary>
+        internal static string toolAreaReplaceWith {
+            get {
+                return ResourceManager.GetString("toolAreaReplaceWith", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search up.
+        /// </summary>
+        internal static string toolAreaSearchUp {
+            get {
+                return ResourceManager.GetString("toolAreaSearchUp", resourceCulture);
             }
         }
         

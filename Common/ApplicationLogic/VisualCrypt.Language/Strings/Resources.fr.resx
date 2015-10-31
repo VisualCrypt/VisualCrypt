@@ -521,4 +521,31 @@
   <data name="logWindowInfoText" xml:space="preserve">
     <value>Ces informations de débogage ne seront pas enregistrées dans un fichier.</value>
   </data>
+  <data name="termFind" xml:space="preserve">
+    <value>Rechercher</value>
+  </data>
+  <data name="toolAreaGoLineNo" xml:space="preserve">
+    <value>Numéro de ligne (1-</value>
+  </data>
+  <data name="toolAreaRegularEx" xml:space="preserve">
+    <value>Utiliser des Expressions régulières</value>
+  </data>
+  <data name="toolAreaMatchWholeWord" xml:space="preserve">
+    <value>Mot entier</value>
+  </data>
+  <data name="toolAreaMatchCase" xml:space="preserve">
+    <value>Respecter la casse</value>
+  </data>
+  <data name="toolAreaReplaceWith" xml:space="preserve">
+    <value>Remplacer par :</value>
+  </data>
+  <data name="toolAreaSearchUp" xml:space="preserve">
+    <value>Rechercher vers le haut</value>
+  </data>
+  <data name="termGo" xml:space="preserve">
+    <value>Atteindre</value>
+  </data>
+  <data name="termReplace" xml:space="preserve">
+    <value>Remplacer</value>
+  </data>
 </root>

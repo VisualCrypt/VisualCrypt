@@ -513,4 +513,31 @@
   <data name="termClose" xml:space="preserve">
     <value>Close</value>
   </data>
+  <data name="termFind" xml:space="preserve">
+    <value>Find</value>
+  </data>
+  <data name="termGo" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="termReplace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="toolAreaGoLineNo" xml:space="preserve">
+    <value>Line Number (1-</value>
+  </data>
+  <data name="toolAreaMatchCase" xml:space="preserve">
+    <value>Match case</value>
+  </data>
+  <data name="toolAreaMatchWholeWord" xml:space="preserve">
+    <value>Match whole word</value>
+  </data>
+  <data name="toolAreaRegularEx" xml:space="preserve">
+    <value>Use Regular Expressions</value>
+  </data>
+  <data name="toolAreaReplaceWith" xml:space="preserve">
+    <value>Replace with:</value>
+  </data>
+  <data name="toolAreaSearchUp" xml:space="preserve">
+    <value>Search up</value>
+  </data>
 </root>

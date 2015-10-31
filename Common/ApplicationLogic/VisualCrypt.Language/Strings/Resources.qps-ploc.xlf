@@ -242,6 +242,42 @@
           <source>Close</source>
           <target state="new">Close</target>
         </trans-unit>
+        <trans-unit id="Resx/termFind" translate="yes" xml:space="preserve">
+          <source>Find</source>
+          <target state="new">Find</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaGoLineNo" translate="yes" xml:space="preserve">
+          <source>Line Number (1-</source>
+          <target state="new">Line Number (1-</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaRegularEx" translate="yes" xml:space="preserve">
+          <source>Use Regular Expressions</source>
+          <target state="new">Use Regular Expressions</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaMatchWholeWord" translate="yes" xml:space="preserve">
+          <source>Match whole word</source>
+          <target state="new">Match whole word</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaMatchCase" translate="yes" xml:space="preserve">
+          <source>Match case</source>
+          <target state="new">Match case</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaReplaceWith" translate="yes" xml:space="preserve">
+          <source>Replace with:</source>
+          <target state="new">Replace with:</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaSearchUp" translate="yes" xml:space="preserve">
+          <source>Search up</source>
+          <target state="new">Search up</target>
+        </trans-unit>
+        <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
+          <source>Go</source>
+          <target state="new">Go</target>
+        </trans-unit>
+        <trans-unit id="Resx/termReplace" translate="yes" xml:space="preserve">
+          <source>Replace</source>
+          <target state="new">Replace</target>
+        </trans-unit>
         <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
           <source>This debug information will not be saved to a file.</source>
           <target state="new">This debug information will not be saved to a file.</target>

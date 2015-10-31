@@ -514,4 +514,31 @@
   <data name="logWindowInfoText" xml:space="preserve">
     <value>Diese Informationen werden nicht gespeichert.</value>
   </data>
+  <data name="toolAreaGoLineNo" xml:space="preserve">
+    <value>Zeile (1-</value>
+  </data>
+  <data name="termGo" xml:space="preserve">
+    <value>Gehe zu</value>
+  </data>
+  <data name="termFind" xml:space="preserve">
+    <value>Suchen</value>
+  </data>
+  <data name="toolAreaRegularEx" xml:space="preserve">
+    <value>Reguläre Ausdrücke</value>
+  </data>
+  <data name="toolAreaMatchWholeWord" xml:space="preserve">
+    <value>Ganzes Wort</value>
+  </data>
+  <data name="toolAreaMatchCase" xml:space="preserve">
+    <value>Groß-/Kleinschreibung</value>
+  </data>
+  <data name="toolAreaReplaceWith" xml:space="preserve">
+    <value>Ersetzen mit:</value>
+  </data>
+  <data name="toolAreaSearchUp" xml:space="preserve">
+    <value>Rückwärts</value>
+  </data>
+  <data name="termReplace" xml:space="preserve">
+    <value>Ersetzen</value>
+  </data>
 </root>

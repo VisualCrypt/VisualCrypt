@@ -515,4 +515,31 @@
   <data name="logWindowInfoText" xml:space="preserve">
     <value>Отладочная информация не будет сохранена.</value>
   </data>
+  <data name="termFind" xml:space="preserve">
+    <value>Искать</value>
+  </data>
+  <data name="toolAreaGoLineNo" xml:space="preserve">
+    <value>Номер строки (1-</value>
+  </data>
+  <data name="toolAreaRegularEx" xml:space="preserve">
+    <value>Обычные выражения</value>
+  </data>
+  <data name="toolAreaMatchWholeWord" xml:space="preserve">
+    <value>Слово целиком</value>
+  </data>
+  <data name="toolAreaMatchCase" xml:space="preserve">
+    <value>Верхний / нижний регистр</value>
+  </data>
+  <data name="toolAreaReplaceWith" xml:space="preserve">
+    <value>Замените на:</value>
+  </data>
+  <data name="toolAreaSearchUp" xml:space="preserve">
+    <value>Поиск назад</value>
+  </data>
+  <data name="termGo" xml:space="preserve">
+    <value>Перейти</value>
+  </data>
+  <data name="termReplace" xml:space="preserve">
+    <value>Заменить</value>
+  </data>
 </root>

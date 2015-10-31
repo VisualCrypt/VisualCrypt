@@ -240,6 +240,42 @@
           <source>Close</source>
           <target state="signed-off" state-qualifier="mt-suggestion">Закрыть</target>
         </trans-unit>
+        <trans-unit id="Resx/termFind" translate="yes" xml:space="preserve">
+          <source>Find</source>
+          <target state="final">Искать</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaGoLineNo" translate="yes" xml:space="preserve">
+          <source>Line Number (1-</source>
+          <target state="signed-off" state-qualifier="mt-suggestion">Номер строки (1-</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaRegularEx" translate="yes" xml:space="preserve">
+          <source>Use Regular Expressions</source>
+          <target state="translated">Обычные выражения</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaMatchWholeWord" translate="yes" xml:space="preserve">
+          <source>Match whole word</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Слово целиком</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaMatchCase" translate="yes" xml:space="preserve">
+          <source>Match case</source>
+          <target state="translated">Верхний / нижний регистр</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaReplaceWith" translate="yes" xml:space="preserve">
+          <source>Replace with:</source>
+          <target state="signed-off" state-qualifier="mt-suggestion">Замените на:</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaSearchUp" translate="yes" xml:space="preserve">
+          <source>Search up</source>
+          <target state="signed-off" state-qualifier="mt-suggestion">Поиск назад</target>
+        </trans-unit>
+        <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
+          <source>Go</source>
+          <target state="signed-off" state-qualifier="mt-suggestion">Перейти</target>
+        </trans-unit>
+        <trans-unit id="Resx/termReplace" translate="yes" xml:space="preserve">
+          <source>Replace</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Заменить</target>
+        </trans-unit>
         <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
           <source>This debug information will not be saved to a file.</source>
           <target state="signed-off">Отладочная информация не будет сохранена.</target>

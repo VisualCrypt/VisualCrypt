@@ -247,6 +247,42 @@
           <source>Close</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Chiudere</target>
         </trans-unit>
+        <trans-unit id="Resx/termFind" translate="yes" xml:space="preserve">
+          <source>Find</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Trova</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaGoLineNo" translate="yes" xml:space="preserve">
+          <source>Line Number (1-</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Numero di riga (1-</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaRegularEx" translate="yes" xml:space="preserve">
+          <source>Use Regular Expressions</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Utilizzare le espressioni regolari</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaMatchWholeWord" translate="yes" xml:space="preserve">
+          <source>Match whole word</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Parola intera</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaMatchCase" translate="yes" xml:space="preserve">
+          <source>Match case</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Maiuscole / minuscole</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaReplaceWith" translate="yes" xml:space="preserve">
+          <source>Replace with:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sostituire con:</target>
+        </trans-unit>
+        <trans-unit id="Resx/toolAreaSearchUp" translate="yes" xml:space="preserve">
+          <source>Search up</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ricerca verso l'alto</target>
+        </trans-unit>
+        <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
+          <source>Go</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Vai</target>
+        </trans-unit>
+        <trans-unit id="Resx/termReplace" translate="yes" xml:space="preserve">
+          <source>Replace</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sostituire</target>
+        </trans-unit>
         <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
           <source>This debug information will not be saved to a file.</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Queste informazioni di debug non verranno salvate in un file.</target>
