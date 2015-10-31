@@ -8,524 +8,526 @@
       <group id="Resx">
         <trans-unit id="Resx/constUntitledDotVisualCrypt" translate="yes" xml:space="preserve">
           <source>Untitled.visualcrypt</source>
-          <target state="translated">Без названия.visualcrypt</target>
+          <target state="signed-off">Без названия.visualcrypt</target>
         </trans-unit>
         <trans-unit id="Resx/encrpytedStatusbarText" translate="yes" xml:space="preserve">
           <source>VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt {0}, AES 256 бит 2 ^ циклов {1}, {2} Ch.</target>
+          <target state="signed-off">VisualCrypt {0}, AES 256 бит 2 ^ {1} циклов, {2} символов</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_ProcessingKey" translate="yes" xml:space="preserve">
           <source>Processing Key...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ключ обработки...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Ключ обработки...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingRandomKey" translate="yes" xml:space="preserve">
           <source>Encrypting Random Key...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Случайный ключ шифрования...</target>
+          <target state="signed-off">Шифрование случайного ключа...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingMessage" translate="yes" xml:space="preserve">
           <source>Encrypting Message...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шифрование сообщения...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Шифрование сообщения...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingMAC" translate="yes" xml:space="preserve">
           <source>Encrypting MAC...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шифрование Макинтош...</target>
+          <target state="signed-off">Шифрование MAC...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingRandomKey" translate="yes" xml:space="preserve">
           <source>Decrypting Random Key...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровка случайный ключ...</target>
+          <target state="signed-off">Расшифровка случайного ключа...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingMessage" translate="yes" xml:space="preserve">
           <source>Decrypting Message...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">При расшифровке сообщения...</target>
+          <target state="signed-off">Расшифровка сообщения...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingMAC" translate="yes" xml:space="preserve">
           <source>Decrypting MAC...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровка Макинтош...</target>
+          <target state="signed-off">Расшифровка MAC...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_CalculatingMAC" translate="yes" xml:space="preserve">
           <source>Calculating MAC...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расчет Макинтош...</target>
+          <target state="signed-off">Расчет MAC...</target>
         </trans-unit>
         <trans-unit id="Resx/Hello_World" translate="yes" xml:space="preserve">
           <source>Hello World!</source>
           <target state="translated">Привет, мир!</target></trans-unit>
         <trans-unit id="Resx/uriSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</source>
-          <target state="translated">https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</target></trans-unit>
+          <target state="signed-off">https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</target></trans-unit>
         <trans-unit id="Resx/msgDiscardChanges" translate="yes" xml:space="preserve">
           <source>Discard Changes?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Отменить изменения?</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Отменить изменения?</target>
         </trans-unit>
         <trans-unit id="Resx/msgFileIsBinary" translate="yes" xml:space="preserve">
           <source>This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Этот файл не является ни текста, ни VisualCrypt - отображать с помощью шестнадцатеричного представления? \r\n\r\nIf файл имеет большой размер, редактор может стать меньше реагировать.</target>
+          <target state="signed-off">Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\Большой размер файла ведёт к замедлению работы компьютера.</target>
         </trans-unit>
         <trans-unit id="Resx/msgFindRegExNoMatch" translate="yes" xml:space="preserve">
           <source>No match for '{0}' could be found.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Не удается найти соответствие для «{0}».</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Не удается найти соответствие для «{0}».</target>
         </trans-unit>
         <trans-unit id="Resx/msgNothingFoundSearchFromStart" translate="yes" xml:space="preserve">
           <source>Nothing found - Search again from the top of the document?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ничего не найдено - поиск снова в верхней части документа?</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Ничего не найдено - поиск снова в верхней части документа?</target>
         </trans-unit>
         <trans-unit id="Resx/msgReplaceOccucancesReplaced" translate="yes" xml:space="preserve">
           <source>{0} occurrences were replaced.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">были заменены вхождения {0}.</target>
+          <target state="signed-off">{0} повторений были заменены.</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Set_Title" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Установка пароля</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Установка пароля</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_PrintPassword" translate="yes" xml:space="preserve">
           <source>Print Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Напечатать пароль</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Напечатать пароль</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_VisualCryptPasswords" translate="yes" xml:space="preserve">
           <source>VisualCrypt Passwords</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt паролей</target>
+          <target state="signed-off">Пароли VisualCrypt </target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_GeneratePassword" translate="yes" xml:space="preserve">
           <source>Generate Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Создать пароль</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Создать пароль</target>
         </trans-unit>
         <trans-unit id="Resx/spd_lbl_PasswordOrPhrase" translate="yes" xml:space="preserve">
           <source>Password/-phrase:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Пароль/фраза:</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Пароль/фраза:</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgXofYUnicodeChars" translate="yes" xml:space="preserve">
           <source>{0} significant Unicode Characters</source>
-          <target state="translated">{0} значащие символы Юникода</target>
+          <target state="signed-off">{0} значащих символа Юникода</target>
           </trans-unit>
         <trans-unit id="Resx/spd_text_ReadMoreAbout" translate="yes" xml:space="preserve">
           <source>Read more about</source>
-          <target state="translated" state-qualifier="mt-suggestion">Дополнительные сведения о</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Дополнительные сведения о</target>
         </trans-unit>
         <trans-unit id="Resx/spd_text_from256BitRD" translate="yes" xml:space="preserve">
           <source>(256 Bit Random Data)</source>
-          <target state="translated">(256 бит случайных данных)</target>
+          <target state="signed-off">(256 бит случайных данных)</target>
           </trans-unit>
         <trans-unit id="Resx/spd_msgUseEmptyPassword" translate="yes" xml:space="preserve">
           <source>Use empty password?</source>
-          <target state="translated" state-qualifier="mt-suggestion">Использовать пустой пароль?</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Использовать пустой пароль?</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgPasswordEffectivelyEmpty" translate="yes" xml:space="preserve">
           <source>The password is effectively empty - are you sure?</source>
-          <target state="translated" state-qualifier="mt-suggestion">Пароль пуст эффективно - вы уверены?</target>
+          <target state="signed-off">Использован действительно пустой пароль? </target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Set_OK" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="translated" state-qualifier="mt-suggestion">Установка пароля</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Установка пароля</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncrypt_Title" translate="yes" xml:space="preserve">
           <source>Set Password %%amp; Encrypt</source>
-          <target state="final">Установить пароль и зашифровать</target>
+          <target state="signed-off">Установить пароль и зашифровать</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncrypt_OK" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шифрование</target>
+          <target state="signed-off">Зашифровать </target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncryptAndSave_Title" translate="yes" xml:space="preserve">
           <source>Set Password, Encrypt and Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Установка пароля, шифрования и сохранить</target>
+          <target state="signed-off">Установка пароля, зашифровать и сохранить</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncryptAndSave_OK" translate="yes" xml:space="preserve">
           <source>Encrypt and Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Зашифровать и сохранить</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Зашифровать и сохранить</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecrypt_Title" translate="yes" xml:space="preserve">
           <source>Set Password %%amp; Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Установить %%amp;пароль расшифровки</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Установить %%amp;пароль расшифровки</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecrypt_OK" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровка</target>
+          <target state="signed-off">Расшифровать</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecryptLoadedFile_Title" translate="yes" xml:space="preserve">
           <source>Enter password to decrypt loaded file</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Введите пароль для расшифровки загруженного файла</target>
+          <target state="signed-off">Введите пароль для расшифровки загруженного файла
+</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecryptLoadedFile_OK" translate="yes" xml:space="preserve">
           <source>Decrypt loaded file</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровать файл загрузки</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Расшифровать файл загрузки</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_CorrectPassword_Title" translate="yes" xml:space="preserve">
           <source>The current password is not correct</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Текущий пароль неверны</target>
+          <target state="signed-off">Текущий пароль неверный</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_CorrectPassword_OK" translate="yes" xml:space="preserve">
           <source>Change Password and decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Изменение пароля и расшифровки</target>
+          <target state="signed-off">Изменить пароль и расшифровать</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Change_Title" translate="yes" xml:space="preserve">
           <source>Change Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Смена пароля</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Смена пароля</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Change_OK" translate="yes" xml:space="preserve">
           <source>Change Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Смена пароля</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Смена пароля</target>
         </trans-unit>
         <trans-unit id="Resx/termBinary" translate="yes" xml:space="preserve">
           <source>Binary File</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Двоичный файл</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Двоичный файл</target>
         </trans-unit>
         <trans-unit id="Resx/msgReplaceInvalidRegEx" translate="yes" xml:space="preserve">
           <source>Invalid Regular Expression Syntax</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Недопустимое регулярное выражение синтаксиса</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Недопустимое регулярное выражение синтаксиса</target>
         </trans-unit>
         <trans-unit id="Resx/msgFindCouldNotBeFound" translate="yes" xml:space="preserve">
           <source>'{0}' could not be found.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">«{0}» не удается найти.</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">«{0}» не удается найти.</target>
         </trans-unit>
         <trans-unit id="Resx/termChangePassword" translate="yes" xml:space="preserve">
           <source>Change Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Смена пароля</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Смена пароля</target>
         </trans-unit>
         <trans-unit id="Resx/termClear" translate="yes" xml:space="preserve">
           <source>Clear</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Очистить</target>
+          <target state="signed-off">Удалить</target>
         </trans-unit>
         <trans-unit id="Resx/termReplaceAll" translate="yes" xml:space="preserve">
           <source>Replace All</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Заменить все</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Заменить все</target>
         </trans-unit>
         <trans-unit id="Resx/titleExportCleartext" translate="yes" xml:space="preserve">
           <source>Export Clear Text (Encoding: {0})</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Экспорт открытого текста (кодировка: {0})</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Экспорт открытого текста (кодировка: {0})</target>
         </trans-unit>
         <trans-unit id="Resx/titleImportWithEncoding" translate="yes" xml:space="preserve">
           <source>Import with encoding: {0}</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Импорт с кодировкой: {0}</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Импорт с кодировкой: {0}</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
           <source>Typeface:</source>
-          <target state="translated">Шрифт:</target>
+          <target state="signed-off">Шрифты:</target>
           </trans-unit>
         <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
           <source>The quick brown fox jumps over the lazy dog</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Выпей переходит через ленивый собака</target>
+          <target state="signed-off">Тёмно-рыжая лиса прыг через лентяя-пса</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
           <source>Size:</source>
-          <target state="translated">Размер:</target>
+          <target state="signed-off">Размер:</target>
           </trans-unit>
         <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
           <source>Preview:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Предварительный просмотр:</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Предварительный просмотр:</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
           <source>Font family:</source>
-          <target state="translated">Семейство шрифтов:</target>
+          <target state="signed-off">Семейство шрифтов:</target>
           </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Значения по умолчанию</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Значения по умолчанию</target>
         </trans-unit>
         <trans-unit id="Resx/termOK" translate="yes" xml:space="preserve">
           <source>OK</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">OK</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">OK</target>
         </trans-unit>
         <trans-unit id="Resx/termClearPassword" translate="yes" xml:space="preserve">
           <source>Clear Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Снять пароль</target>
+          <target state="signed-off">Удалить пароль</target>
         </trans-unit>
         <trans-unit id="Resx/msgFormatError" translate="yes" xml:space="preserve">
           <source>Invalid VisualCrypt format - Cannot decrypt this.</source>
-          <target state="final" state-qualifier="mt-suggestion">Недопустимый формат VisualCrypt 2 - не удается расшифровать это!</target></trans-unit>
+          <target state="signed-off" state-qualifier="mt-suggestion">Недопустимый формат VisualCrypt 2 - не удается расшифровать это!</target></trans-unit>
         <trans-unit id="Resx/msgInvalidFilename" translate="yes" xml:space="preserve">
           <source>Invalid Filename.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Недопустимое имя файла.</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Недопустимое имя файла.</target>
         </trans-unit>
         <trans-unit id="Resx/termClose" translate="yes" xml:space="preserve">
           <source>Close</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Закрыть</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Закрыть</target>
         </trans-unit>
         <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
           <source>This debug information will not be saved to a file.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Это отладочная информация не будут сохранены в файл.</target>
+          <target state="signed-off">Отладочная информация не будет сохранена.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Этот параметр влияет на необходимые вычислительные операции для создания хэш-кода BCrypt. Большее значение означает больше работы.</target>
+          <target state="signed-off">Этот параметр влияет на необходимые вычислительные операции для создания хэш-кода BCrypt. Высокая степень требует дополнительных вычислительных работ.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_low" translate="yes" xml:space="preserve">
           <source>Warning: A low value faciliates brute force and dictionary attacks.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Предупреждение: Низкое значение faciliates грубой силы и словарных атак.</target>
+          <target state="signed-off">Предупреждение: : Низкая степень ведёт к полному перебору и перебору по словарюю.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_high" translate="yes" xml:space="preserve">
           <source>Warning: A high value will turn encryption and decryption into a very time consuming operation.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Предупреждение: Высокое значение станет шифрования и расшифровки в очень длительной операцией.</target>
+          <target state="signed-off">Предупреждение: Высокая степень ведёт к замедлению процесса расшифровки и зашифровки.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_ReadThe" translate="yes" xml:space="preserve">
           <source>Read the</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Чтение</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Чтение</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_orViewThe" translate="yes" xml:space="preserve">
           <source>or view the</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">или просмотр</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">или просмотр</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_default_2_power" translate="yes" xml:space="preserve">
           <source>Default: 2</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">По умолчанию: 2</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">По умолчанию: 2</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
           <source>Encryption Method</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Метод шифрования</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Метод шифрования</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Округляет число BCrypt/AES:</target>
+          <target state="signed-off">Кол-во BCrypt/AES:</target>
         </trans-unit>
         <trans-unit id="Resx/sett_linktext_Spec" translate="yes" xml:space="preserve">
           <source>Spec</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Спецификации</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Спецификации</target>
         </trans-unit>
         <trans-unit id="Resx/sett_linktext_Source" translate="yes" xml:space="preserve">
           <source>source code</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">исходный код</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">исходный код</target>
         </trans-unit>
         <trans-unit id="Resx/sett_combo_VisualCrypt2" translate="yes" xml:space="preserve">
           <source>VisualCrypt 2 (AES 256 Bit, BCrypt - Multi)</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt 2 (AES 256 бит, BCrypt - Multi)</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">VisualCrypt 2 (AES 256 бит, BCrypt - Multi)</target>
         </trans-unit>
         <trans-unit id="Resx/uriSourceUrl" translate="yes" xml:space="preserve">
           <source>https://github.com/VisualCrypt/VisualCrypt</source>
-          <target state="translated">https://github.com/VisualCrypt/VisualCrypt</target></trans-unit>
+          <target state="signed-off">https://github.com/VisualCrypt/VisualCrypt</target></trans-unit>
         <trans-unit id="Resx/uriPWSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/password-quality</source>
-          <target state="translated">https://visualcrypt.com/post/password-quality</target></trans-unit>
+          <target state="signed-off">https://visualcrypt.com/post/password-quality</target></trans-unit>
         <trans-unit id="Resx/uriHelpUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/category/faq</source>
-          <target state="translated">https://visualcrypt.com/category/faq</target></trans-unit>
+          <target state="signed-off">https://visualcrypt.com/category/faq</target></trans-unit>
         <trans-unit id="Resx/termSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Установка пароля</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Установка пароля</target>
         </trans-unit>
         <trans-unit id="Resx/termSave" translate="yes" xml:space="preserve">
           <source>Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Сохранить</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Сохранить</target>
         </trans-unit>
         <trans-unit id="Resx/termPassword" translate="yes" xml:space="preserve">
           <source>Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Пароль</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Пароль</target>
         </trans-unit>
         <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="translated">Шифрование</target>
+          <target state="signed-off">Зашифровать</target>
           </trans-unit>
         <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровка</target>
+          <target state="signed-off">Расшифровать</target>
         </trans-unit>
         <trans-unit id="Resx/termCopyToClipboard" translate="yes" xml:space="preserve">
           <source>Copy to Clipboard</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Копировать в буфер обмена</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Копировать в буфер обмена</target>
         </trans-unit>
         <trans-unit id="Resx/termCancel" translate="yes" xml:space="preserve">
           <source>Cancel</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Отмена</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Отмена</target>
         </trans-unit>
         <trans-unit id="Resx/plaintextStatusbarText" translate="yes" xml:space="preserve">
           <source>Plaintext | {0} | {1}</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Обычный текст | {0} | {1}</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Обычный текст | {0} | {1}</target>
         </trans-unit>
         <trans-unit id="Resx/plaintextStatusbarPositionInfo" translate="yes" xml:space="preserve">
           <source>Ln {0}, Col {1} | Pos {2}/{3}</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">LN {0}, {1} Col | POS {2} / {3}</target>
+          <target state="signed-off">Ст {0}, Кол {1} | Место {2} / {3}</target>
         </trans-unit>
         <trans-unit id="Resx/operationEncryption" translate="yes" xml:space="preserve">
           <source>Encrypting:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шифрование:</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Шифрование:</target>
         </trans-unit>
         <trans-unit id="Resx/operationEncryptAndSave" translate="yes" xml:space="preserve">
           <source>Encrypting and saving:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">При шифровании и сохранении:</target>
+          <target state="signed-off">Шифрование и сохранение:</target>
         </trans-unit>
         <trans-unit id="Resx/operationDecryptOpenedFile" translate="yes" xml:space="preserve">
           <source>Decrypting loaded file:</source>
-          <target state="final" state-qualifier="mt-suggestion">Расшифровка открываемый файл:</target>
+          <target state="signed-off">Расшифровка загружаемого файла:</target>
           </trans-unit>
         <trans-unit id="Resx/operationDecryption" translate="yes" xml:space="preserve">
           <source>Decrypting:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровка:</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Расшифровка:</target>
         </trans-unit>
         <trans-unit id="Resx/msgPasswordError" translate="yes" xml:space="preserve">
           <source>Incorrect password or corrupted/forged message.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Неверный пароль или сообщение повреждено подделан.</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Неверный пароль или сообщение повреждено подделан.</target>
         </trans-unit>
         <trans-unit id="Resx/miViewZoomOut" translate="yes" xml:space="preserve">
           <source>Zoom Out</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Уменьшение масштаба</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Уменьшение масштаба</target>
         </trans-unit>
         <trans-unit id="Resx/miViewZoomLevelText" translate="yes" xml:space="preserve">
           <source>Zoom ({0}%)</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Масштаб ({0} %)</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Масштаб ({0} %)</target>
         </trans-unit>
         <trans-unit id="Resx/miViewZoomIn" translate="yes" xml:space="preserve">
           <source>Zoom In</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Увеличение</target>
+          <target state="signed-off">Увеличение масштаба
+</target>
         </trans-unit>
         <trans-unit id="Resx/miViewToolArea" translate="yes" xml:space="preserve">
           <source>Tool Area</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Область инструментов</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Область инструментов</target>
         </trans-unit>
         <trans-unit id="Resx/miViewStatusBar" translate="yes" xml:space="preserve">
           <source>Status Bar</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Строка состояния</target>
+          <target state="final">Панель статуса</target>
         </trans-unit>
         <trans-unit id="Resx/miViewLanguage" translate="yes" xml:space="preserve">
           <source>Language</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Язык</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Язык</target>
         </trans-unit>
         <trans-unit id="Resx/miView" translate="yes" xml:space="preserve">
           <source>View</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Просмотр</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Просмотр</target>
         </trans-unit>
         <trans-unit id="Resx/miVCSettings" translate="yes" xml:space="preserve">
           <source>Cryptography Settings...</source>
-          <target state="translated">Параметры криптографии...</target></trans-unit>
+          <target state="signed-off">Параметры криптографии...</target></trans-unit>
         <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Установить пароль...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Установить пароль...</target>
         </trans-unit>
         <trans-unit id="Resx/miVCEncrypt" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шифрование</target>
+          <target state="signed-off">Зашифровать </target>
         </trans-unit>
         <trans-unit id="Resx/miVCDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Расшифровка</target>
+          <target state="signed-off">Расшифровать</target>
         </trans-unit>
         <trans-unit id="Resx/miVCChangePassword" translate="yes" xml:space="preserve">
           <source>Change Password...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Изменить пароль...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Изменить пароль...</target>
         </trans-unit>
         <trans-unit id="Resx/miVC" translate="yes" xml:space="preserve">
           <source>VisualCrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">VisualCrypt</target>
         </trans-unit>
         <trans-unit id="Resx/miHelpViewOnline" translate="yes" xml:space="preserve">
           <source>View Help Online</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Справка в Интернете</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Справка в Интернете</target>
         </trans-unit>
         <trans-unit id="Resx/miHelpLog" translate="yes" xml:space="preserve">
           <source>Log...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ведение журнала...</target>
+          <target state="signed-off">Лог...</target>
         </trans-unit>
         <trans-unit id="Resx/miHelpAbout" translate="yes" xml:space="preserve">
           <source>About VisualCrypt...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">О VisualCrypt...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">О VisualCrypt...</target>
         </trans-unit>
         <trans-unit id="Resx/miHelp" translate="yes" xml:space="preserve">
           <source>Help</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Справка</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Справка</target>
         </trans-unit>
         <trans-unit id="Resx/miFormatWordWrap" translate="yes" xml:space="preserve">
           <source>Word Wrap</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">По словам</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">По словам</target>
         </trans-unit>
         <trans-unit id="Resx/miFormatFont" translate="yes" xml:space="preserve">
           <source>Font...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Шрифт...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Шрифт...</target>
         </trans-unit>
         <trans-unit id="Resx/miFormatCheckSpelling" translate="yes" xml:space="preserve">
           <source>Spellchecking</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Проверка орфографии</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Проверка орфографии</target>
         </trans-unit>
         <trans-unit id="Resx/miFormat" translate="yes" xml:space="preserve">
           <source>Format</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Формат</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Формат</target>
         </trans-unit>
         <trans-unit id="Resx/miFileSaveAs" translate="yes" xml:space="preserve">
           <source>Save As...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Сохранить как...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Сохранить как...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileSave" translate="yes" xml:space="preserve">
           <source>Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Сохранить</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Сохранить</target>
         </trans-unit>
         <trans-unit id="Resx/miFilePrint" translate="yes" xml:space="preserve">
           <source>Print...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Печать...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Печать...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileOpen" translate="yes" xml:space="preserve">
           <source>Open...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Открыть...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Открыть...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileNew" translate="yes" xml:space="preserve">
           <source>New</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Новый</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Новый</target>
         </trans-unit>
         <trans-unit id="Resx/miFileImportWithEnconding" translate="yes" xml:space="preserve">
           <source>Import With Encoding...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Импорт с кодировкой...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Импорт с кодировкой...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileExportClearText" translate="yes" xml:space="preserve">
           <source>Export Cleartext...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Экспортируйте открытый текст...</target>
+          <target state="signed-off">Экспорт открытого текста...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileExit" translate="yes" xml:space="preserve">
           <source>Exit</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Выход</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Выход</target>
         </trans-unit>
         <trans-unit id="Resx/miFile" translate="yes" xml:space="preserve">
           <source>File</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Файл</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Файл</target>
         </trans-unit>
         <trans-unit id="Resx/miEditUndo" translate="yes" xml:space="preserve">
           <source>Undo</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Отменить</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Отменить</target>
         </trans-unit>
         <trans-unit id="Resx/miEditSelectAll" translate="yes" xml:space="preserve">
           <source>Select All</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Выбрать все</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Выбрать все</target>
         </trans-unit>
         <trans-unit id="Resx/miEditReplace" translate="yes" xml:space="preserve">
           <source>Replace...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Замените...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Замените...</target>
         </trans-unit>
         <trans-unit id="Resx/miEditRedo" translate="yes" xml:space="preserve">
           <source>Redo</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Повтор</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Повтор</target>
         </trans-unit>
         <trans-unit id="Resx/miEditPaste" translate="yes" xml:space="preserve">
           <source>Paste</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Вставить</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Вставить</target>
         </trans-unit>
         <trans-unit id="Resx/miEditInsertDateTime" translate="yes" xml:space="preserve">
           <source>Insert Date, Time</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Вставить дату, время</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Вставить дату, время</target>
         </trans-unit>
         <trans-unit id="Resx/miEditGoTo" translate="yes" xml:space="preserve">
           <source>Go To...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Перейти к...</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Перейти к...</target>
         </trans-unit>
         <trans-unit id="Resx/miEditFindPrevious" translate="yes" xml:space="preserve">
           <source>Find Previous</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Найти ранее</target>
+          <target state="signed-off">Искать назад</target>
         </trans-unit>
         <trans-unit id="Resx/miEditFindNext" translate="yes" xml:space="preserve">
           <source>Find Next</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Найти далее</target>
+          <target state="signed-off">Искать дальше</target>
         </trans-unit>
         <trans-unit id="Resx/miEditFind" translate="yes" xml:space="preserve">
           <source>Find...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Найти...</target>
+          <target state="signed-off">Искать...</target>
         </trans-unit>
         <trans-unit id="Resx/miEditDeleteLine" translate="yes" xml:space="preserve">
           <source>Delete Line</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Удалить строку</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Удалить строку</target>
         </trans-unit>
         <trans-unit id="Resx/miEditCut" translate="yes" xml:space="preserve">
           <source>Cut</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Вырезать</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Вырезать</target>
         </trans-unit>
         <trans-unit id="Resx/miEditCopy" translate="yes" xml:space="preserve">
           <source>Copy</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Копировать</target>
+          <target state="signed-off" state-qualifier="mt-suggestion">Копировать</target>
         </trans-unit>
         <trans-unit id="Resx/miEdit" translate="yes" xml:space="preserve">
           <source>Edit</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Изменить</target>
+          <target state="signed-off">Изменить</target>
         </trans-unit>
       </group>
     </body>

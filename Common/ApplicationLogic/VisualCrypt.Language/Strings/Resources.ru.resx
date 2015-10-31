@@ -124,31 +124,31 @@
     <value>Без названия.visualcrypt</value>
   </data>
   <data name="encrpytedStatusbarText" xml:space="preserve">
-    <value>VisualCrypt {0}, AES 256 бит 2 ^ циклов {1}, {2} Ch.</value>
+    <value>VisualCrypt {0}, AES 256 бит 2 ^ {1} циклов, {2} символов</value>
   </data>
   <data name="encProgr_ProcessingKey" xml:space="preserve">
     <value>Ключ обработки...</value>
   </data>
   <data name="encProgr_EncryptingRandomKey" xml:space="preserve">
-    <value>Случайный ключ шифрования...</value>
+    <value>Шифрование случайного ключа...</value>
   </data>
   <data name="encProgr_EncryptingMessage" xml:space="preserve">
     <value>Шифрование сообщения...</value>
   </data>
   <data name="encProgr_EncryptingMAC" xml:space="preserve">
-    <value>Шифрование Макинтош...</value>
+    <value>Шифрование MAC...</value>
   </data>
   <data name="encProgr_DecryptingRandomKey" xml:space="preserve">
-    <value>Расшифровка случайный ключ...</value>
+    <value>Расшифровка случайного ключа...</value>
   </data>
   <data name="encProgr_DecryptingMessage" xml:space="preserve">
-    <value>При расшифровке сообщения...</value>
+    <value>Расшифровка сообщения...</value>
   </data>
   <data name="encProgr_DecryptingMAC" xml:space="preserve">
-    <value>Расшифровка Макинтош...</value>
+    <value>Расшифровка MAC...</value>
   </data>
   <data name="encProgr_CalculatingMAC" xml:space="preserve">
-    <value>Расчет Макинтош...</value>
+    <value>Расчет MAC...</value>
   </data>
   <data name="uriSpecUrl" xml:space="preserve">
     <value>https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</value>
@@ -157,7 +157,7 @@
     <value>Отменить изменения?</value>
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
-    <value>Этот файл не является ни текста, ни VisualCrypt - отображать с помощью шестнадцатеричного представления? \r\n\r\nIf файл имеет большой размер, редактор может стать меньше реагировать.</value>
+    <value>Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\Большой размер файла ведёт к замедлению работы компьютера.</value>
   </data>
   <data name="msgFindRegExNoMatch" xml:space="preserve">
     <value>Не удается найти соответствие для «{0}».</value>
@@ -166,7 +166,7 @@
     <value>Ничего не найдено - поиск снова в верхней части документа?</value>
   </data>
   <data name="msgReplaceOccucancesReplaced" xml:space="preserve">
-    <value>были заменены вхождения {0}.</value>
+    <value>{0} повторений были заменены.</value>
   </data>
   <data name="spdm_Set_Title" xml:space="preserve">
     <value>Установка пароля</value>
@@ -175,7 +175,7 @@
     <value>Напечатать пароль</value>
   </data>
   <data name="spd_linktext_VisualCryptPasswords" xml:space="preserve">
-    <value>VisualCrypt паролей</value>
+    <value>Пароли VisualCrypt </value>
   </data>
   <data name="spd_linktext_GeneratePassword" xml:space="preserve">
     <value>Создать пароль</value>
@@ -184,7 +184,7 @@
     <value>Пароль/фраза:</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
-    <value>{0} значащие символы Юникода</value>
+    <value>{0} значащих символа Юникода</value>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Дополнительные сведения о</value>
@@ -196,7 +196,7 @@
     <value>Использовать пустой пароль?</value>
   </data>
   <data name="spd_msgPasswordEffectivelyEmpty" xml:space="preserve">
-    <value>Пароль пуст эффективно - вы уверены?</value>
+    <value>Использован действительно пустой пароль? </value>
   </data>
   <data name="spdm_Set_OK" xml:space="preserve">
     <value>Установка пароля</value>
@@ -205,10 +205,10 @@
     <value>Установить пароль и зашифровать</value>
   </data>
   <data name="spdm_SetAndEncrypt_OK" xml:space="preserve">
-    <value>Шифрование</value>
+    <value>Зашифровать </value>
   </data>
   <data name="spdm_SetAndEncryptAndSave_Title" xml:space="preserve">
-    <value>Установка пароля, шифрования и сохранить</value>
+    <value>Установка пароля, зашифровать и сохранить</value>
   </data>
   <data name="spdm_SetAndEncryptAndSave_OK" xml:space="preserve">
     <value>Зашифровать и сохранить</value>
@@ -217,19 +217,20 @@
     <value>Установить &amp;пароль расшифровки</value>
   </data>
   <data name="spdm_SetAndDecrypt_OK" xml:space="preserve">
-    <value>Расшифровка</value>
+    <value>Расшифровать</value>
   </data>
   <data name="spdm_SetAndDecryptLoadedFile_Title" xml:space="preserve">
-    <value>Введите пароль для расшифровки загруженного файла</value>
+    <value>Введите пароль для расшифровки загруженного файла
+</value>
   </data>
   <data name="spdm_SetAndDecryptLoadedFile_OK" xml:space="preserve">
     <value>Расшифровать файл загрузки</value>
   </data>
   <data name="spdm_CorrectPassword_Title" xml:space="preserve">
-    <value>Текущий пароль неверны</value>
+    <value>Текущий пароль неверный</value>
   </data>
   <data name="spdm_CorrectPassword_OK" xml:space="preserve">
-    <value>Изменение пароля и расшифровки</value>
+    <value>Изменить пароль и расшифровать</value>
   </data>
   <data name="spdm_Change_Title" xml:space="preserve">
     <value>Смена пароля</value>
@@ -250,7 +251,7 @@
     <value>Смена пароля</value>
   </data>
   <data name="termClear" xml:space="preserve">
-    <value>Очистить</value>
+    <value>Удалить</value>
   </data>
   <data name="termReplaceAll" xml:space="preserve">
     <value>Заменить все</value>
@@ -265,13 +266,13 @@
     <value>Значения по умолчанию</value>
   </data>
   <data name="sett_warn_neutral" xml:space="preserve">
-    <value>Этот параметр влияет на необходимые вычислительные операции для создания хэш-кода BCrypt. Большее значение означает больше работы.</value>
+    <value>Этот параметр влияет на необходимые вычислительные операции для создания хэш-кода BCrypt. Высокая степень требует дополнительных вычислительных работ.</value>
   </data>
   <data name="sett_warn_low" xml:space="preserve">
-    <value>Предупреждение: Низкое значение faciliates грубой силы и словарных атак.</value>
+    <value>Предупреждение: : Низкая степень ведёт к полному перебору и перебору по словарюю.</value>
   </data>
   <data name="sett_warn_high" xml:space="preserve">
-    <value>Предупреждение: Высокое значение станет шифрования и расшифровки в очень длительной операцией.</value>
+    <value>Предупреждение: Высокая степень ведёт к замедлению процесса расшифровки и зашифровки.</value>
   </data>
   <data name="sett_text_ReadThe" xml:space="preserve">
     <value>Чтение</value>
@@ -286,7 +287,7 @@
     <value>Метод шифрования</value>
   </data>
   <data name="sett_text_BCryptAESRounds" xml:space="preserve">
-    <value>Округляет число BCrypt/AES:</value>
+    <value>Кол-во BCrypt/AES:</value>
   </data>
   <data name="sett_linktext_Spec" xml:space="preserve">
     <value>Спецификации</value>
@@ -316,10 +317,10 @@
     <value>Пароль</value>
   </data>
   <data name="termEncrypt" xml:space="preserve">
-    <value>Шифрование</value>
+    <value>Зашифровать</value>
   </data>
   <data name="termDecrypt" xml:space="preserve">
-    <value>Расшифровка</value>
+    <value>Расшифровать</value>
   </data>
   <data name="termCopyToClipboard" xml:space="preserve">
     <value>Копировать в буфер обмена</value>
@@ -331,16 +332,16 @@
     <value>Обычный текст | {0} | {1}</value>
   </data>
   <data name="plaintextStatusbarPositionInfo" xml:space="preserve">
-    <value>LN {0}, {1} Col | POS {2} / {3}</value>
+    <value>Ст {0}, Кол {1} | Место {2} / {3}</value>
   </data>
   <data name="operationEncryption" xml:space="preserve">
     <value>Шифрование:</value>
   </data>
   <data name="operationEncryptAndSave" xml:space="preserve">
-    <value>При шифровании и сохранении:</value>
+    <value>Шифрование и сохранение:</value>
   </data>
   <data name="operationDecryptOpenedFile" xml:space="preserve">
-    <value>Расшифровка открываемый файл:</value>
+    <value>Расшифровка загружаемого файла:</value>
   </data>
   <data name="operationDecryption" xml:space="preserve">
     <value>Расшифровка:</value>
@@ -355,13 +356,14 @@
     <value>Масштаб ({0} %)</value>
   </data>
   <data name="miViewZoomIn" xml:space="preserve">
-    <value>Увеличение</value>
+    <value>Увеличение масштаба
+</value>
   </data>
   <data name="miViewToolArea" xml:space="preserve">
     <value>Область инструментов</value>
   </data>
   <data name="miViewStatusBar" xml:space="preserve">
-    <value>Строка состояния</value>
+    <value>Панель статуса</value>
   </data>
   <data name="miViewLanguage" xml:space="preserve">
     <value>Язык</value>
@@ -376,10 +378,10 @@
     <value>Установить пароль...</value>
   </data>
   <data name="miVCEncrypt" xml:space="preserve">
-    <value>Шифрование</value>
+    <value>Зашифровать </value>
   </data>
   <data name="miVCDecrypt" xml:space="preserve">
-    <value>Расшифровка</value>
+    <value>Расшифровать</value>
   </data>
   <data name="miVCChangePassword" xml:space="preserve">
     <value>Изменить пароль...</value>
@@ -391,7 +393,7 @@
     <value>Справка в Интернете</value>
   </data>
   <data name="miHelpLog" xml:space="preserve">
-    <value>Ведение журнала...</value>
+    <value>Лог...</value>
   </data>
   <data name="miHelpAbout" xml:space="preserve">
     <value>О VisualCrypt...</value>
@@ -430,7 +432,7 @@
     <value>Импорт с кодировкой...</value>
   </data>
   <data name="miFileExportClearText" xml:space="preserve">
-    <value>Экспортируйте открытый текст...</value>
+    <value>Экспорт открытого текста...</value>
   </data>
   <data name="miFileExit" xml:space="preserve">
     <value>Выход</value>
@@ -460,13 +462,13 @@
     <value>Перейти к...</value>
   </data>
   <data name="miEditFindPrevious" xml:space="preserve">
-    <value>Найти ранее</value>
+    <value>Искать назад</value>
   </data>
   <data name="miEditFindNext" xml:space="preserve">
-    <value>Найти далее</value>
+    <value>Искать дальше</value>
   </data>
   <data name="miEditFind" xml:space="preserve">
-    <value>Найти...</value>
+    <value>Искать...</value>
   </data>
   <data name="miEditDeleteLine" xml:space="preserve">
     <value>Удалить строку</value>
@@ -481,7 +483,7 @@
     <value>Изменить</value>
   </data>
   <data name="fnt_label_typeFace" xml:space="preserve">
-    <value>Шрифт:</value>
+    <value>Шрифты:</value>
   </data>
   <data name="fnt_labelSize" xml:space="preserve">
     <value>Размер:</value>
@@ -496,10 +498,10 @@
     <value>OK</value>
   </data>
   <data name="fnt_theQuickBrownFox" xml:space="preserve">
-    <value>Выпей переходит через ленивый собака</value>
+    <value>Тёмно-рыжая лиса прыг через лентяя-пса</value>
   </data>
   <data name="termClearPassword" xml:space="preserve">
-    <value>Снять пароль</value>
+    <value>Удалить пароль</value>
   </data>
   <data name="msgFormatError" xml:space="preserve">
     <value>Недопустимый формат VisualCrypt 2 - не удается расшифровать это!</value>
@@ -511,6 +513,6 @@
     <value>Закрыть</value>
   </data>
   <data name="logWindowInfoText" xml:space="preserve">
-    <value>Это отладочная информация не будут сохранены в файл.</value>
+    <value>Отладочная информация не будет сохранена.</value>
   </data>
 </root>
