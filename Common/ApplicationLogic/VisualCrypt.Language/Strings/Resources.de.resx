@@ -178,7 +178,7 @@
     <value>Entschlüsseln</value>
   </data>
   <data name="termCopyToClipboard" xml:space="preserve">
-    <value>In Zwischenablage kopieren</value>
+    <value>In die Zwischenablage kopieren</value>
   </data>
   <data name="termCancel" xml:space="preserve">
     <value>Abbrechen</value>
@@ -343,16 +343,16 @@
     <value>Keine Übereinstimmung für '{0}' gefunden.</value>
   </data>
   <data name="msgNothingFoundSearchFromStart" xml:space="preserve">
-    <value>Nichts gefunden - Suche erneut vom Anfang des Dokuments?</value>
+    <value>Nichts gefunden - Suche vom Anfang des Dokuments neu starten?</value>
   </data>
   <data name="msgReplaceOccucancesReplaced" xml:space="preserve">
-    <value>{0} wurden ersetzt.</value>
+    <value>{0} Stellen wurden ersetzt.</value>
   </data>
   <data name="msgReplaceInvalidRegEx" xml:space="preserve">
     <value>Ungültiger regulärer Ausdruck-Syntax</value>
   </data>
   <data name="msgFindCouldNotBeFound" xml:space="preserve">
-    <value>{0}' wurde nicht gefunden.</value>
+    <value>'{0}' wurde nicht gefunden.</value>
   </data>
   <data name="termChangePassword" xml:space="preserve">
     <value>Passwort ändern</value>
@@ -364,7 +364,7 @@
     <value>Import mit Codierung: {0}</value>
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
-    <value>Diese Datei ist weder Text noch VisualCrypt - Hex-Ansicht anzeigen? \r\n\r\nIf Editor möglicherweise weniger sehr groß ist.</value>
+    <value>Diese Datei ist weder Text noch VisualCrypt - Hex-Ansicht anzeigen? \r\n\r\nWenn die Datei zu groß ist kann das Programm sehr langsam werden.</value>
   </data>
   <data name="spdm_Set_Title" xml:space="preserve">
     <value>Passwort setzen</value>
@@ -376,7 +376,7 @@
     <value>Leeres Passwort verwenden?</value>
   </data>
   <data name="spd_msgPasswordEffectivelyEmpty" xml:space="preserve">
-    <value>Das Passwort is effektiv leer - verwenden?</value>
+    <value>Das Passwort ist effektiv leer - verwenden?</value>
   </data>
   <data name="spdm_Set_OK" xml:space="preserve">
     <value>Passwort setzen</value>
@@ -443,19 +443,19 @@
     <value>Löschen</value>
   </data>
   <data name="spd_linktext_VisualCryptPasswords" xml:space="preserve">
-    <value>VisualCrypt Kennwörter</value>
+    <value>VisualCrypt Passwörter</value>
   </data>
   <data name="termDefaults" xml:space="preserve">
     <value>Standardeinstellungen</value>
   </data>
   <data name="sett_warn_neutral" xml:space="preserve">
-    <value>Die Einstellung wirkt sich auf die rechnerische arbeiten BCrypt-Hash zu erstellen. Ein hoher Wert bedeutet mehr Arbeit.</value>
+    <value>Die Einstellung wirkt sich auf die erforderliche rechnerische Arbeit aus, einen BCrypt-Hash zu erstellen. Ein hoher Wert bedeutet mehr Arbeit.</value>
   </data>
   <data name="sett_warn_low" xml:space="preserve">
-    <value>Warnung: Eine geringwertige ausfallsichere Brute-Force- und Wörterbuchangriffe Angriffe.</value>
+    <value>Warnung: Ein niedriger Wert erleichtert Brute-Force- und Wörterbuchangriffe.</value>
   </data>
   <data name="sett_warn_high" xml:space="preserve">
-    <value>Warnung: Wert wird Ver- und Entschlüsselung sehr zeitaufwändig Betrieb aktiviert.</value>
+    <value>Warnung: Ein hoher Wert macht die Ver- und Entschlüsselung sehr langsam.</value>
   </data>
   <data name="sett_text_ReadThe" xml:space="preserve">
     <value>Lesen Sie die</value>
@@ -470,10 +470,10 @@
     <value>Verschlüsselung</value>
   </data>
   <data name="sett_text_BCryptAESRounds" xml:space="preserve">
-    <value>BCrypt-AES runden:</value>
+    <value>BCrypt/AES-Runden:</value>
   </data>
   <data name="sett_linktext_Spec" xml:space="preserve">
-    <value>Spezifikationen</value>
+    <value>technische Spezifikation</value>
   </data>
   <data name="sett_linktext_Source" xml:space="preserve">
     <value>Quellcode</value>
