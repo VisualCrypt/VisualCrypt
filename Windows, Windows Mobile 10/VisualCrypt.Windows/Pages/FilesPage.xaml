@@ -6,20 +6,14 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:VisualCrypt.Applications.Models"
     NavigationCacheMode="Disabled"
-      xmlns:local="using:VisualCrypt.Windows"
     mc:Ignorable="d">
-    <d:Page.Resources>
-        <ResourceDictionary>
-            <local:DesignTime x:Key="la" />
-        </ResourceDictionary>
-    </d:Page.Resources>
+  
     <Page.TopAppBar>
         <CommandBar>
             <AppBarButton Label="Add" Icon="Add" Command="{x:Bind _viewModel.NavigateToNewCommand}" />
         </CommandBar>
     </Page.TopAppBar>
     <Page.Resources>
-        <!-- When using x:Bind, you need to set x:DataType -->
         <DataTemplate x:Key="ContactListViewTemplate" x:DataType="models:FileReference">
             <Grid>
                 <Grid.RowDefinitions>
@@ -30,7 +24,7 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-              
+
                 <Ellipse x:Name="Ellipse"
                          Grid.RowSpan="2"
                          Width="32"
@@ -50,6 +44,10 @@
                            Margin="12,0,0,6" />
             </Grid>
         </DataTemplate>
+     
+            <ResourceDictionary x:Key="dummy"  Source="/Styles/InUse/BarStyles.xaml" />
+            <!-- When using x:Bind, you need to set x:DataType -->
+
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <ListView

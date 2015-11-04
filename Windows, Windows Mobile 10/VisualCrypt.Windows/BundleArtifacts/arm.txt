@@ -1,0 +1,1 @@
+MainPackage=C:\VisualCrypt\github\VisualCrypt\Windows, Windows Mobile 10\VisualCrypt.Windows\bin\ARM\Debug\VisualCrypt.Windows_1.0.1.0_ARM_Debug.appx

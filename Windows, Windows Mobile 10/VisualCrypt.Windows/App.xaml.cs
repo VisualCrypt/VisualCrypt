@@ -10,6 +10,10 @@ using VisualCrypt.Applications;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Language.Strings;
 using System.Resources;
+using Windows.ApplicationModel.Core;
+using Windows.UI.ViewManagement;
+using Windows.UI;
+using Windows.Foundation.Metadata;
 
 namespace VisualCrypt.Windows
 {
@@ -35,7 +39,7 @@ namespace VisualCrypt.Windows
         /// will be used such as when the application is launched to open a specific file.
         /// </summary>
         /// <param name="e">Details about the launch request and process.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
 #if DEBUG
@@ -76,6 +80,40 @@ namespace VisualCrypt.Windows
             }
             // Ensure the current window is active
             Window.Current.Activate();
+            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
+  
+            var applicationView = ApplicationView.GetForCurrentView();
+            var accentColor = Color.FromArgb(0xCC, 0xAF, 0x00, 0x07); // #CCAF0007 VisualCrypt Brand
+            var accentColor2 = Color.FromArgb(0x99, 0xAF, 0x00, 0x07);
+            var white = Color.FromArgb(0xff, 0xff, 0xff, 0xff);
+            if (IsPhone())
+            {
+                StatusBar statusBar = StatusBar.GetForCurrentView();
+                await statusBar.ShowAsync();
+                //applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
+                statusBar.BackgroundColor = accentColor;
+                statusBar.ForegroundColor = white;
+                statusBar.BackgroundOpacity = 1;
+                statusBar.ProgressIndicator.Text = "VisualCrypt";
+                statusBar.ProgressIndicator.ProgressValue = 0;
+                await statusBar.ProgressIndicator.ShowAsync();
+            }
+
+            var titleBar = applicationView.TitleBar;
+           
+            titleBar.BackgroundColor = accentColor;
+            titleBar.ForegroundColor = white;
+            titleBar.InactiveBackgroundColor = accentColor;
+            titleBar.InactiveForegroundColor = white;
+            titleBar.ButtonBackgroundColor = accentColor;
+            titleBar.ButtonHoverBackgroundColor = accentColor2;
+            titleBar.ButtonPressedBackgroundColor = accentColor2;
+            titleBar.ButtonInactiveBackgroundColor = accentColor;
+            titleBar.ButtonForegroundColor = white;
+            titleBar.ButtonHoverForegroundColor = white;
+            titleBar.ButtonPressedForegroundColor = white;
+            titleBar.ButtonInactiveForegroundColor = white;
+
             Service.Get<ILog>().Debug(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",
                   Bootstrapper.StopWatch.ElapsedMilliseconds));
             Bootstrapper.StopWatch.Stop();
@@ -103,6 +141,16 @@ namespace VisualCrypt.Windows
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        public static bool IsPhone()
+        {
+            return ApiInformation.IsTypePresent("Windows.Phone.UI.Input.HardwareButtons");
+        }
+
+        public static bool IsPhoneLayout()
+        {
+            return true;
         }
     }
 }

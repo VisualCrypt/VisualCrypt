@@ -10,7 +10,7 @@ using System.Windows;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("VisualCrypt")]
-[assembly: AssemblyDescription("This Release: Check for Update")]
+[assembly: AssemblyDescription("This Release: Manual Russian Translation")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VisualCrypt AG")]
 [assembly: AssemblyProduct("VisualCrypt Pro")]
@@ -54,6 +54,6 @@ using System.Windows;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 
-[assembly: AssemblyVersion("2.0.8.*")]
-[assembly: AssemblyFileVersion("2.0.8.0")]
+[assembly: AssemblyVersion("2.0.9.*")]
+[assembly: AssemblyFileVersion("2.0.9.0")]
 [assembly: CLSCompliant(false)]

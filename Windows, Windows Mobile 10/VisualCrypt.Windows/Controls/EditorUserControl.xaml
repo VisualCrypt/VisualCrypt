@@ -10,10 +10,10 @@
     d:DesignWidth="400">
     <d:UserControl.Resources>
         <ResourceDictionary>
-            <local:DesignTime x:Key="la" />
+            <ResourceDictionary Source="/Styles/InUse/BarStyles.xaml" />
         </ResourceDictionary>
     </d:UserControl.Resources>
     <Grid>
-        <TextBox Grid.Row="0" x:Name="_textBox1"  AcceptsReturn="True"></TextBox>
+        <TextBox Grid.Row="0" x:Name="_textBox1"  BorderThickness="0" IsSpellCheckEnabled="False" AcceptsReturn="True" TextWrapping="Wrap" Background="White"></TextBox>
     </Grid>
 </UserControl>

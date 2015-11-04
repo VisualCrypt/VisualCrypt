@@ -5,11 +5,11 @@ using VisualCrypt.Applications.ViewModels;
 
 namespace VisualCrypt.Windows.Controls
 {
-    public sealed partial class WorkingBar
+    public sealed partial class WorkingBarPhone
     {
         readonly PortableMainViewModel _viewModel;
 
-        public WorkingBar()
+        public WorkingBarPhone()
         {
             InitializeComponent();
             _viewModel = Service.Get<PortableMainViewModel>();

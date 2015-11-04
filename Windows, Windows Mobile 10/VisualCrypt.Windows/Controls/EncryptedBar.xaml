@@ -13,32 +13,27 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <TextBlock Grid.Column="0"
-                   Text="{x:Bind _viewModel.StatusBarModel.EncrytedBarText, Mode=OneWay}" />
-        <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-            <TextBlock>
-                <Hyperlink Click="Hyperlink_SetPassword_Click">
-                    <Run
-                        Text="{x:Bind _viewModel.PasswordInfo.PasswordStatus, Mode=OneWay}" />
-                </Hyperlink>
-                <Hyperlink FontWeight="Normal" FontFamily="WebDings" Click="Hyperlink_ClearPassword_MouseDown"
-                               Foreground="{x:Bind _viewModel.PasswordInfo.IsPasswordSet, Mode=OneWay, Converter={StaticResource EnabledToBrush}}">
-                        r
-                </Hyperlink>
-            </TextBlock>
+        <!-- StackPanel must have Height of 38 on all 3 Bars -->
+        <StackPanel Grid.Column="0" Orientation="Vertical" Margin="10,0" Height="38" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="{x:Bind _viewModel.FileModel.ShortFilename, Mode=OneWay}" FontSize="11" Foreground="White" />
+            <TextBlock Text="{x:Bind _viewModel.StatusBarModel.EncrytedBarText, Mode=OneWay}" Foreground="White" FontSize="11" />
         </StackPanel>
-        <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <TextBlock>
-                <Hyperlink Click="Hyperlink_CopyAll_Click"> <Run x:Uid="termCopyToClipboard" /> </Hyperlink>
-                 <Hyperlink Click="Hyperlink_Decrypt_Click"> <Run x:Uid="termDecrypt" /> </Hyperlink>
-                <Hyperlink Click="Hyperlink_Save_Click" Foreground="{x:Bind _viewModel.FileModel.IsDirty, Mode=OneWay, Converter={StaticResource EnabledToBrush}}">
-                    <Run x:Uid="termSave"  />
-                </Hyperlink>
-            </TextBlock>
+        <StackPanel Grid.Column="1"  Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,45,0" VerticalAlignment="Top">
+            <Button Style="{StaticResource myButton}" HorizontalAlignment="Right" Click="Hyperlink_SetPassword_Click" Foreground="White" Content="{x:Bind _viewModel.PasswordInfo.PasswordStatus, Mode=OneWay}" FontSize="15" BorderThickness="0" Background="Transparent"/>
+            <Button Style="{StaticResource myButton}" HorizontalAlignment="Right"  FontWeight="Normal" FontFamily="WebDings" Foreground="White" Click="Hyperlink_ClearPassword_MouseDown"
+                               Visibility="{x:Bind _viewModel.PasswordInfo.IsPasswordSet, Mode=OneWay, Converter={StaticResource BoolVisibility}}" Content="r" FontSize="15" BorderThickness="0" Background="Transparent"/>
+            <!--<Button Style="{StaticResource myButton}" Click="Hyperlink_CopyAll_Click" Content="{x:Bind _viewModel.ResourceWrapper.miEditCopy, Mode=OneWay}" FontSize="15" BorderThickness="0" Background="Transparent" Foreground="White"> 
+            </Button>-->
+            <Button Click="Hyperlink_CopyAll_Click" Foreground="White" Background="Transparent" BorderThickness="0" Style="{StaticResource myButton}">
+            <SymbolIcon Symbol="Copy" Height="Auto" Width="Auto"
+                  VerticalAlignment="Center"
+                  />
+            </Button>
         </StackPanel>
+       
+      
     </Grid>
 </UserControl>

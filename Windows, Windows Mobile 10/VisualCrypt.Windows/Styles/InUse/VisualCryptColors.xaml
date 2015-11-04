@@ -4,15 +4,15 @@
 
     <Color x:Key="HighlightColor">#FFAF0007</Color>
 
-    <Color x:Key="AccentColor">#CCAF0007</Color>
+    <Color x:Key="AccentColor">#FFAF0007</Color>
     <!--60%-->
-    <Color x:Key="AccentColor2">#99AF0007</Color>
+    <Color x:Key="AccentColor2">#FFAF0007</Color>
     <!--40%-->
     <Color x:Key="AccentColor3">#66AF0007</Color>
     <!--20%-->
     <Color x:Key="AccentColor4">#33AF0007</Color>
 
-    <Color x:Key="BarColor">#FFF0F0F0</Color>
+    <Color x:Key="BarColor">#CCF0F0F0</Color>
     <Color x:Key="ButtonColor">#FFDDDDDD</Color>
 
 

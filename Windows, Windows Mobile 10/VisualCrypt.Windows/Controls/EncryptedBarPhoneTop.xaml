@@ -1,0 +1,32 @@
+﻿<UserControl
+    x:Class="VisualCrypt.Windows.Controls.EncryptedBarPhoneTop"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary
+            Source="/Styles/InUse/BarStyles.xaml" />
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <!-- StackPanel must have Height of 38 on all 3 Bars -->
+        <!-- StackPanel must have Height of 38 on all 3 Bars -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,45,0" Height="38" >
+            <Button Style="{StaticResource myButton}" HorizontalAlignment="Right" Click="Hyperlink_SetPassword_Click" Foreground="White" Content="{x:Bind _viewModel.PasswordInfo.PasswordStatus, Mode=OneWay}" FontSize="15" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
+            <Button Style="{StaticResource myButton}" HorizontalAlignment="Right"  FontWeight="Normal" FontFamily="WebDings" Foreground="White" Click="Hyperlink_ClearPassword_MouseDown"
+                               Visibility="{x:Bind _viewModel.PasswordInfo.IsPasswordSet, Mode=OneWay, Converter={StaticResource BoolVisibility}}" Content="r" FontSize="15" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
+            <Button Click="Hyperlink_CopyAll_Click" Foreground="White" Background="Transparent" BorderThickness="0" Style="{StaticResource myButton}" VerticalAlignment="Center">
+                <SymbolIcon Symbol="Copy" Height="Auto" Width="Auto"
+                  VerticalAlignment="Center"
+                  />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

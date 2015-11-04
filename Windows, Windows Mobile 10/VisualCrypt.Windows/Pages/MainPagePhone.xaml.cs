@@ -10,12 +10,12 @@ using VisualCrypt.Applications.Services.PortableImplementations;
 
 namespace VisualCrypt.Windows.Pages
 {
-    public sealed partial class MainPage
+    public sealed partial class MainPagePhone
     {
         readonly PortableMainViewModel _viewModel;
         readonly SettingsManager _settingsManager;
 
-        public MainPage()
+        public MainPagePhone()
         {
             InitializeComponent();
             _viewModel = Service.Get<PortableMainViewModel>();

@@ -1,0 +1,19 @@
+﻿<UserControl
+    x:Class="VisualCrypt.Windows.Controls.PlainTextBarPhoneBottom"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    <UserControl.Resources>
+        <ResourceDictionary Source="/Styles/InUse/BarStyles.xaml" />
+    </UserControl.Resources>
+    <Grid>
+        <StackPanel  Orientation="Vertical" Margin="5,3,0,3" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <TextBlock Text="{x:Bind _viewModel.FileModel.ShortFilename, Mode=OneWay}" FontSize="11" Foreground="White" />
+            <TextBlock Text="{x:Bind _viewModel.StatusBarModel.StatusBarText, Mode=OneWay}" Foreground="White" FontSize="11" />
+        </StackPanel>
+    </Grid>
+</UserControl>

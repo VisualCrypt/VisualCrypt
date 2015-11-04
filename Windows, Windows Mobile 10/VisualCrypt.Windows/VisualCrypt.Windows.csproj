@@ -18,6 +18,12 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>VisualCrypt.Windows_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateThumbprint>B7855A9F4D5DABEF68692EAB9981554CF78D63CC</PackageCertificateThumbprint>
+    <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\VisualCrypt\</AppxPackageDir>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxBundle>Never</AppxBundle>
+    <AppxBundlePlatforms>arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -75,7 +81,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
     <OutputPath>bin\x86\Release\</OutputPath>
@@ -92,12 +98,15 @@
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="project.json" />
+    <None Include="VisualCrypt.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="Controls\AppBarButton2.cs" />
+    <Compile Include="Controls\CommandBar2.cs" />
     <Compile Include="Controls\EditorUserControl.xaml.cs">
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -105,10 +114,25 @@
     <Compile Include="Controls\EditorSupport\FindReplace\SearchOptions.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchResult.cs" />
     <Compile Include="Controls\EditorSupport\FindReplace\SearchStrategy.cs" />
+    <Compile Include="Controls\EncryptedBarPhoneBottom.xaml.cs">
+      <DependentUpon>EncryptedBarPhoneBottom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\EncryptedBarPhoneTop.xaml.cs">
+      <DependentUpon>EncryptedBarPhoneTop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\EncryptedBar.xaml.cs">
       <DependentUpon>EncryptedBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\PlainTextBarPhoneBottom.xaml.cs">
+      <DependentUpon>PlainTextBarPhoneBottom.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PlainTextBarPhoneTop.xaml.cs">
+      <DependentUpon>PlainTextBarPhoneTop.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\FontSettings.cs" />
+    <Compile Include="Pages\MainPagePhone.xaml.cs">
+      <DependentUpon>MainPagePhone.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="Controls\PasswordDialog.xaml.cs">
       <DependentUpon>PasswordDialog.xaml</DependentUpon>
@@ -117,8 +141,8 @@
     <Compile Include="Controls\PlainTextBar.xaml.cs">
       <DependentUpon>PlainTextBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\WorkingBar.xaml.cs">
-      <DependentUpon>WorkingBar.xaml</DependentUpon>
+    <Compile Include="Controls\WorkingBarPhone.xaml.cs">
+      <DependentUpon>WorkingBarPhone.xaml</DependentUpon>
     </Compile>
     <Compile Include="DesignTime.cs" />
     <Compile Include="Pages\FilesPage.xaml.cs">
@@ -152,9 +176,9 @@
       <SubType>Designer</SubType>
     </AppxManifest>
     <PRIResource Include="Strings\en-US\Resources.resw" />
-    <None Include="VisualCrypt.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="logo_rounded_1024.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -173,6 +197,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\EncryptedBarPhoneBottom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\EncryptedBarPhoneTop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\EncryptedBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -181,17 +213,29 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\PlainTextBarPhoneBottom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PlainTextBarPhoneTop.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\PlainTextBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\WorkingBar.xaml">
+    <Page Include="Controls\WorkingBarPhone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\FilesPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\MainPagePhone.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +275,11 @@
       <Project>{E6C50355-D01E-4CAA-884D-D7929861315C}</Project>
       <Name>Prism</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <SDKReference Include="WindowsMobile, Version=10.0.10240.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
