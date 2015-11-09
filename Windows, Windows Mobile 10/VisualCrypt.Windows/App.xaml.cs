@@ -71,15 +71,10 @@ namespace VisualCrypt.Windows
                
             }
 
-            if (rootFrame.Content == null)
-            {
-                // When the navigation stack isn't restored navigate to the first page,
-                // configuring the new page by passing required information as a navigation
-                // parameter
-                rootFrame.Navigate(typeof(FilesPage), e.Arguments);
-            }
+           
             // Ensure the current window is active
             Window.Current.Activate();
+           
             CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = false;
   
             var applicationView = ApplicationView.GetForCurrentView();
@@ -116,6 +111,13 @@ namespace VisualCrypt.Windows
 
             Service.Get<ILog>().Debug(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",
                   Bootstrapper.StopWatch.ElapsedMilliseconds));
+            if (rootFrame.Content == null)
+            {
+                // When the navigation stack isn't restored navigate to the first page,
+                // configuring the new page by passing required information as a navigation
+                // parameter
+                rootFrame.Navigate(typeof(FilesPage), e.Arguments);
+            }
             Bootstrapper.StopWatch.Stop();
         }
 

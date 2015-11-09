@@ -136,7 +136,7 @@
     <value>Nachricht verschlüsseln...</value>
   </data>
   <data name="encProgr_EncryptingMAC" xml:space="preserve">
-    <value>SIgnatur verschlüsseln...</value>
+    <value>Signatur verschlüsseln...</value>
   </data>
   <data name="encProgr_DecryptingRandomKey" xml:space="preserve">
     <value>Zufallsschlüssel entschlüsseln...</value>
@@ -370,7 +370,7 @@
     <value>Passwort setzen</value>
   </data>
   <data name="spd_msgXofYUnicodeChars" xml:space="preserve">
-    <value>{0} signifikante Unicode-Zeichen</value>
+    <value>{0} signifikante Zeichen</value>
   </data>
   <data name="spd_msgUseEmptyPassword" xml:space="preserve">
     <value>Leeres Passwort verwenden?</value>
@@ -431,7 +431,7 @@
     <value>Passwort vorschlagen</value>
   </data>
   <data name="spd_lbl_PasswordOrPhrase" xml:space="preserve">
-    <value>Passwort oder geheimer Merksatz:</value>
+    <value>Passwort/Merksatz:</value>
   </data>
   <data name="spd_text_ReadMoreAbout" xml:space="preserve">
     <value>Weitere Informationen über</value>

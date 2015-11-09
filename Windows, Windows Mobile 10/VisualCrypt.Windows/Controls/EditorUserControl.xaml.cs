@@ -11,7 +11,7 @@ namespace VisualCrypt.Windows.Controls
         public EditorUserControl()
         {
             InitializeComponent();
-            Service.Get<ITextBoxController>(TextBoxName.TextBox1).PlatformTextBox = _textBox1;
+            Service.Get<ITextBoxController>(TextBoxName.TextBox1).PlatformTextBox = TextBox1;
             _viewModel = Service.Get<PortableEditorViewModel>();
           
             Loaded += (s, e) => _viewModel.OnViewLoaded();

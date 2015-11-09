@@ -23,6 +23,12 @@ namespace VisualCrypt.Desktop.Services
             _log = Service.Get<ILog>();
             _resourceWrapper = Service.Get<ResourceWrapper>();
         }
+
+        /// <summary>
+        /// ATM this code is the same in WPF and UWP, consider sharing!
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public bool CheckFilenameForQuickSave(string filename)
         {
             try

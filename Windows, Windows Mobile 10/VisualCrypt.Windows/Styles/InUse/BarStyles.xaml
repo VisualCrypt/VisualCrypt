@@ -6,8 +6,14 @@
                     xmlns:local="using:VisualCrypt.Windows.Controls">
     <!--Default control styles and templates:
     https://msdn.microsoft.com/en-us/library/windows/apps/mt299122.aspx-->
-    <Style TargetType="local:CommandBar2" x:Key="myCommandBar">
-        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundChromeMediumBrush}" />
+    <Style TargetType="CommandBar" x:Key="CommandBarStyle">
+        <!-- These values do not belong to the template: Opacity="1" IsOpen="false" IsSticky="false"   -->
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="IsOpen" Value="false" />
+        <Setter Property="IsSticky" Value="false" />
+        <!-- End additional values -->
+        <Setter Property="Opacity" Value="1" />
+        <Setter Property="Background" Value="{StaticResource AccentColorBrush}" />
         <Setter Property="Foreground" Value="White"/>
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="VerticalAlignment" Value="Top"/>
@@ -802,8 +808,6 @@
         </Setter>
     </Style>
 
-   
-
     <!-- Ellipsis button style for use in Windows.UI.Xaml.Controls.AppBar 
      and Windows.UI.Xaml.Controls.CommandBar -->
     <Style x:Key="EllipsisButton" TargetType="Button">
@@ -869,9 +873,9 @@
         </Setter>
     </Style>
     <!-- Default style for Windows.UI.Xaml.Controls.AppBarButton -->
-    <Style TargetType="local:AppBarButton2" x:Key="myAppBarButton">
+    <Style TargetType="AppBarButton" x:Key="AppBarButtonStyle">
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Top"/>
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
@@ -1016,17 +1020,18 @@
     </Style>
 
     <!-- Default style for Windows.UI.Xaml.Controls.Button -->
-    <Style TargetType="Button" x:Key="myButton">
-        <Setter Property="Background" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
-        <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}"/>
+    <Style TargetType="Button" x:Key="ExtendedAppBarButtonStyle">
+        <!-- Foreground="White" Background="Transparent" BorderThickness="0"  VerticalAlignment="Center" -->
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Foreground" Value="White"/>
         <Setter Property="BorderBrush" Value="{ThemeResource SystemControlForegroundTransparentBrush}" />
-        <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+        <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="8,4,8,4" />
         <Setter Property="HorizontalAlignment" Value="Left" />
         <Setter Property="VerticalAlignment" Value="Center" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
         <Setter Property="FontWeight" Value="Normal" />
-        <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+        <Setter Property="FontSize" Value="15" />
         <Setter Property="UseSystemFocusVisuals" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
@@ -1102,6 +1107,21 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-   
+    <Style TargetType="StackPanel" x:Key="ExtendedAppBarStackPanelStyle">
+        <Setter Property="Orientation" Value="Horizontal" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="10,0,0,0" />
+        <Setter Property="Height" Value="38" />
+    </Style>
+    <Style TargetType="StackPanel" x:Key="BottomBarStackPanelStyle">
+        <Setter Property="Orientation" Value="Vertical" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="Margin" Value="5,3,0,3" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+    </Style>
+    <Style TargetType="TextBlock" x:Key="BottomBarTextBlockStyle">
+        <!-- also used for the progress messages in WorkingBarPhone.xaml -->
+        <Setter Property="FontSize" Value="11" />
+        <Setter Property="Foreground" Value="White" />
+    </Style>
 </ResourceDictionary>

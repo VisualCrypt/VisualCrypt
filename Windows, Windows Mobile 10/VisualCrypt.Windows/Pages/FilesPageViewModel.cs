@@ -11,12 +11,19 @@ using VisualCrypt.Applications.ViewModels;
 using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Temp;
 using VisualCrypt.Applications.Services.PortableImplementations;
+using System.Collections.Generic;
+using VisualCrypt.Windows.Controls;
+using Windows.UI.Xaml.Controls;
 
 namespace VisualCrypt.Windows.Pages
 {
     class FilesPageViewModel : ViewModelBase, IActiveCleanup
     {
         ObservableCollection<FileReference> _fileReferences;
+        public List<FileReference> MultiSelectedFileReferences;
+        public FileReference SingleSelectedFileReference;
+        public int SelectedItemsCount;
+
         public INavigationService NavigationService;
         IMessageBoxService _messageBoxService;
         IFileService _fileService;
@@ -32,23 +39,40 @@ namespace VisualCrypt.Windows.Pages
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _eventAggregator = Service.Get<IEventAggregator>();
         }
-       
+
 
         public ObservableCollection<FileReference> FileReferences => _fileReferences;
+
+
+        public bool IsEditMode
+        {
+            get { return _isEditMode; }
+            set
+            {
+                if (_isEditMode != value)
+                {
+                    _isEditMode = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        bool _isEditMode;
+
+
 
         public DelegateCommand NavigateToNewCommand => CreateCommand(ref _navigateToNewCommand, ExecuteNavigateToNewCommand, () => true);
         DelegateCommand _navigateToNewCommand;
 
         void ExecuteNavigateToNewCommand()
         {
-            NavigationService.NavigateToMainPage( new FilesPageCommandArgs { FilesPageCommand = FilesPageCommand.New });
+            NavigationService.NavigateToMainPage(new FilesPageCommandArgs { FilesPageCommand = FilesPageCommand.New });
             Cleanup();
         }
 
         public DelegateCommand<FileReference> NavigateToOpenCommand => CreateCommand(ref _navigateToOpenCommand, ExecuteNavigateToOpenCommand, arg => true);
         DelegateCommand<FileReference> _navigateToOpenCommand;
 
-      
+
 
 
         void ExecuteNavigateToOpenCommand(FileReference fileReference)
@@ -57,20 +81,88 @@ namespace VisualCrypt.Windows.Pages
             Cleanup();
         }
 
-        
+        public DelegateCommand SelectCommand => CreateCommand(ref _selectCommand, ExecuteSelectCommand, () => FileReferences.Count > 0);
+        DelegateCommand _selectCommand;
+
+        void ExecuteSelectCommand()
+        {
+            IsEditMode = true;
+        }
+
+        public DelegateCommand CancelSelectCommand => CreateCommand(ref _cancelSelectCommand, ExecuteCancelSelectCommand, () => true);
+        DelegateCommand _cancelSelectCommand;
+
+        void ExecuteCancelSelectCommand()
+        {
+            IsEditMode = false;
+        }
+
+        public DelegateCommand DeleteCommand => CreateCommand(ref _deleteCommand, ExecuteDeleteCommand, () => SelectedItemsCount > 0);
+        DelegateCommand _deleteCommand;
+        async void ExecuteDeleteCommand()
+        {
+            if (SelectedItemsCount == 1)
+            {
+                var result = await _messageBoxService.Show("Delete 1 File?", "Delete", RequestButton.OKCancel, RequestImage.Question);
+                var fileToDelete = (StorageFile)SingleSelectedFileReference.FileSystemObject;
+                await fileToDelete.DeleteAsync();
+            }
+            else
+            {
+                var result = await _messageBoxService.Show(string.Format("Delete {0} Files?", SelectedItemsCount), "Delete", RequestButton.OKCancel, RequestImage.Question);
+                var filesToDelete = MultiSelectedFileReferences;
+                foreach (var file in MultiSelectedFileReferences)
+                {
+                    var fileToDelete = (StorageFile)file.FileSystemObject;
+                    await fileToDelete.DeleteAsync();
+                }
+            }
+            await OnNavigatedToCompleteAndLoaded();
+            await CancelSelectCommand.Execute();
+        }
+
+        public DelegateCommand RenameCommand => CreateCommand(ref _renameCommand, ExecuteRenameCommand, () => SelectedItemsCount == 1);
+        DelegateCommand _renameCommand;
+        async void ExecuteRenameCommand()
+        {
+            var storageFile = (StorageFile)SingleSelectedFileReference.FileSystemObject;
+            var dialog = new RenameContentDialog();
+            dialog.Filename = storageFile.Name;
+            dialog.StorageFile = storageFile;
+
+            var result = await dialog.ShowAsync();
+            if (result != ContentDialogResult.Primary)
+                return;
+
+            var newFilename = dialog.Filename + ".visualcrypt";
+            if (storageFile.Name == newFilename)
+                return;
+
+            try
+            {
+                await storageFile.RenameAsync(newFilename, NameCollisionOption.FailIfExists);
+            }
+            catch (Exception e)
+            {
+                await _messageBoxService.ShowError(e.Message);
+            }
+            await OnNavigatedToCompleteAndLoaded();
+            await CancelSelectCommand.Execute();
+        }
 
         // Called From FilesPage.OnLoaded and when navigating back from MainPage
         internal async Task OnNavigatedToCompleteAndLoaded()
         {
-            await SampleFiles.CreateSampleFiles();
+            //await SampleFiles.CreateSampleFiles();
 
             FileReferences.Clear();
             var fileReferences = await GetFileReferences(ApplicationData.Current.LocalFolder);
-          
+
             foreach (var fileReference in fileReferences)
             {
                 FileReferences.Add(fileReference);
             }
+            SelectCommand.RaiseCanExecuteChanged();
         }
 
         async Task<ObservableCollection<FileReference>> GetFileReferences(StorageFolder folder)
@@ -81,8 +173,20 @@ namespace VisualCrypt.Windows.Pages
             var files = new ObservableCollection<FileReference>();
             foreach (var item in items)
             {
-                if (item is StorageFile)
-                    files.Add(new FileReference() { ShortFilename = item.Name, Filename = item.Path });
+                var storageFile = item as StorageFile;
+                if (storageFile == null)
+                    continue;
+                if (storageFile.FileType.ToLowerInvariant() != ".visualcrypt")
+                    continue;
+                var basicProperties = await storageFile.GetBasicPropertiesAsync();
+                var modifiedDate = basicProperties.DateModified.ToLocalTime().ToString();
+                files.Add(new FileReference()
+                {
+                    ShortFilename = storageFile.Name,
+                    PathAndFileName = storageFile.Path,
+                    ModifiedDate = modifiedDate,
+                    FileSystemObject = storageFile
+                });
             }
 
             return files;
@@ -91,7 +195,7 @@ namespace VisualCrypt.Windows.Pages
         public void Cleanup()
         {
             //_fileReferences = null;  // will also cease fireing SelectionChanged event
-           // NavigationService = null; // release connection to view
+            // NavigationService = null; // release connection to view
         }
     }
 }

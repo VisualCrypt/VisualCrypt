@@ -3,29 +3,64 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Language.Strings;
+using VisualCrypt.Windows.Controls;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using Windows.UI.ViewManagement;
+using Windows.UI.Xaml.Controls;
 
 namespace VisualCrypt.Windows.Services
 {
     class FileService : IFileService
     {
-        public async void WriteAllBytes(string pathAndFilename, byte[] encodedTextBytes)
-        {
-            var fileName = Path.GetFileName(pathAndFilename);
-            StorageFolder folder = ApplicationData.Current.LocalFolder;
+        readonly ILog _log;
+        readonly SettingsManager _settingsManager;
+        readonly ResourceWrapper _resourceWrapper;
+        readonly IMessageBoxService _messageBoxService;
 
-            var cleartextFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBytesAsync(cleartextFile, encodedTextBytes).AsTask();
+        public FileService()
+        {
+            _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
+            _log = Service.Get<ILog>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
+            _messageBoxService = Service.Get<IMessageBoxService>();
         }
 
+        public async void WriteAllBytes(string pathAndFilename, byte[] encodedTextBytes)
+        {
+            var storageFolder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(pathAndFilename));
+            var storageFile = await storageFolder.CreateFileAsync(Path.GetFileName(pathAndFilename), CreationCollisionOption.ReplaceExisting);
+            await FileIO.WriteBytesAsync(storageFile, encodedTextBytes).AsTask();
+        }
+
+        /// <summary>
+        /// ATM this code is the same in WPF and UWP, consider sharing!
+        /// </summary>
+        /// <param name="filename"></param>
+        /// <returns></returns>
         public bool CheckFilenameForQuickSave(string filename)
         {
-            return true;
+            try
+            {
+                if (string.IsNullOrWhiteSpace(filename) || filename == _resourceWrapper.constUntitledDotVisualCrypt)
+                    return false;
+                if (!filename.EndsWith(PortableConstants.DotVisualCrypt, StringComparison.Ordinal))
+                    return false;
+                if (File.Exists(filename))
+                    return true;
+                return false;
+            }
+            catch (Exception e)
+            {
+                _log.Exception(e);
+                return false;
+            }
         }
 
         public bool Exists(string filename)
@@ -40,8 +75,31 @@ namespace VisualCrypt.Windows.Services
 
         public async Task<Tuple<bool, string>> PickFileAsync(string suggestedFilename, DialogFilter diaglogFilter, DialogDirection dialogDirection, string title = null)
         {
-            return new Tuple<bool, string>(true,suggestedFilename);
-           
+            if (dialogDirection == DialogDirection.Open)
+                throw new NotSupportedException();
+
+            var canceledOrFailed = new Tuple<bool, string>(false, null);
+
+            try
+            {
+                var dialog = new RenameContentDialog() { Title = title };
+                dialog.Filename = string.Empty; // we do not suggest a filename when saving in ApplicationData.LocalFolder
+
+                var result = await dialog.ShowAsync();
+                if (result != ContentDialogResult.Primary)
+                    return canceledOrFailed;
+
+                var shortFilename = dialog.Filename + PortableConstants.DotVisualCrypt;
+                var pathAndFilename = Path.Combine(_settingsManager.CurrentDirectoryName, shortFilename);
+
+                return new Tuple<bool, string>(true, pathAndFilename);
+            }
+            catch (Exception e)
+            {
+                await _messageBoxService.ShowError(e.Message);
+                return canceledOrFailed;
+            }
+
         }
 
         public byte[] ReadAllBytes(string filename)

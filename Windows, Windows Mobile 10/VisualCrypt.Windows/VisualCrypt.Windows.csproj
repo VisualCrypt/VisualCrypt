@@ -105,8 +105,6 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="Controls\AppBarButton2.cs" />
-    <Compile Include="Controls\CommandBar2.cs" />
     <Compile Include="Controls\EditorUserControl.xaml.cs">
       <DependentUpon>EditorUserControl.xaml</DependentUpon>
     </Compile>
@@ -120,8 +118,8 @@
     <Compile Include="Controls\EncryptedBarPhoneTop.xaml.cs">
       <DependentUpon>EncryptedBarPhoneTop.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\EncryptedBar.xaml.cs">
-      <DependentUpon>EncryptedBar.xaml</DependentUpon>
+    <Compile Include="Controls\PasswordUserControl.xaml.cs">
+      <DependentUpon>PasswordUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\PlainTextBarPhoneBottom.xaml.cs">
       <DependentUpon>PlainTextBarPhoneBottom.xaml</DependentUpon>
@@ -129,18 +127,17 @@
     <Compile Include="Controls\PlainTextBarPhoneTop.xaml.cs">
       <DependentUpon>PlainTextBarPhoneTop.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RenameContentDialog.xaml.cs">
+      <DependentUpon>RenameContentDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\FontSettings.cs" />
+    <Compile Include="Pages\ContinuationPage.xaml.cs" />
     <Compile Include="Pages\MainPagePhone.xaml.cs">
       <DependentUpon>MainPagePhone.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\PageToPrint.xaml.cs" />
+    <Compile Include="ValueConverters\BoolVisibilityInverseConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
-    <Compile Include="Controls\PasswordDialog.xaml.cs">
-      <DependentUpon>PasswordDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\PasswordDialogViewModel.cs" />
-    <Compile Include="Controls\PlainTextBar.xaml.cs">
-      <DependentUpon>PlainTextBar.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\WorkingBarPhone.xaml.cs">
       <DependentUpon>WorkingBarPhone.xaml</DependentUpon>
     </Compile>
@@ -149,10 +146,7 @@
       <DependentUpon>FilesPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\FilesPageViewModel.cs" />
-    <Compile Include="Pages\LaunchPasswordDialog.cs" />
-    <Compile Include="Pages\MainPage.xaml.cs">
-      <DependentUpon>MainPage.xaml</DependentUpon>
-    </Compile>
+    <Compile Include="Services\PasswordDialogDispatcher.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\FileService.cs" />
@@ -178,6 +172,10 @@
     <PRIResource Include="Strings\en-US\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\logo_rounded_1024.scale-100.png" />
+    <Content Include="Assets\Splash_620_300.scale-100.png" />
+    <Content Include="Assets\Splash_620_300.scale-125.png" />
+    <Content Include="Assets\Splash_775_375.png" />
     <Content Include="logo_rounded_1024.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
@@ -205,11 +203,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\EncryptedBar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\PasswordDialog.xaml">
+    <Page Include="Controls\PasswordUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -221,13 +215,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Controls\PlainTextBar.xaml">
+    <Page Include="Controls\RenameContentDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\WorkingBarPhone.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\ContinuationPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\FilesPage.xaml">
       <SubType>Designer</SubType>
@@ -237,7 +235,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
+    <Page Include="Pages\PageToPrint.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InUse\ContentDialogStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

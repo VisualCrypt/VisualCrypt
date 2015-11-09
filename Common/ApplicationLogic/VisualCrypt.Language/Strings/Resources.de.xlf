@@ -28,7 +28,7 @@
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingMAC" translate="yes" xml:space="preserve">
           <source>Encrypting MAC...</source>
-          <target state="signed-off">SIgnatur verschlüsseln...</target>
+          <target state="translated">Signatur verschlüsseln...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingRandomKey" translate="yes" xml:space="preserve">
           <source>Decrypting Random Key...</source>
@@ -91,11 +91,11 @@
         </trans-unit>
         <trans-unit id="Resx/spd_lbl_PasswordOrPhrase" translate="yes" xml:space="preserve">
           <source>Password/-phrase:</source>
-          <target state="signed-off">Passwort oder geheimer Merksatz:</target>
+          <target state="translated">Passwort/Merksatz:</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgXofYUnicodeChars" translate="yes" xml:space="preserve">
           <source>{0} significant Unicode Characters</source>
-          <target state="signed-off">{0} signifikante Unicode-Zeichen</target>
+          <target state="translated">{0} signifikante Zeichen</target>
           </trans-unit>
         <trans-unit id="Resx/spd_text_ReadMoreAbout" translate="yes" xml:space="preserve">
           <source>Read more about</source>

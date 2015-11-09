@@ -11,41 +11,44 @@
     d:DesignWidth="480"
     mc:Ignorable="d">
     <Page.Resources>
-        <ResourceDictionary Source="/Styles/InUse/BarStyles.xaml" />
+        <!--<ResourceDictionary Source="/Styles/InUse/BarStyles.xaml" />-->
     </Page.Resources>
     <Page.TopAppBar>
-        <local:CommandBar2 Style="{StaticResource myCommandBar}" Opacity="1" IsOpen="false" IsSticky="false"  x:Name="TopBar" HorizontalAlignment="Left" HorizontalContentAlignment="Left" Background="{StaticResource AccentColorBrush}">
-            <local:AppBarButton2 Style="{StaticResource myAppBarButton}" HorizontalAlignment="Left" Label="Back" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" Foreground="White" Width="48" />
-            <local:AppBarButton2 Style="{StaticResource myAppBarButton}" Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="Save" Foreground="White" Width="48" />
-            <local:AppBarButton2 Style="{StaticResource myAppBarButton}" Label="Share" Command="{x:Bind _viewModel.SaveCommand}" Icon="Send" Foreground="White" Width="48" />
-            <local:AppBarButton2 Style="{StaticResource myAppBarButton}" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Foreground="White" Width="60"   >
+        <CommandBar x:Name="TopAppBar" Style="{StaticResource CommandBarStyle}">
+            <AppBarButton x:Name="abbBack" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Left" Label="Back" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" Width="48" />
+            <AppBarButton x:Name="abbSave" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="Save" Width="48" />
+            <AppBarButton x:Name="abbShare" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Label="Share" Icon="Send" Width="48" />
+            <AppBarButton x:Name="abbEncrypt" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Width="60"   >
                 <AppBarButton.Icon> 
                     <FontIcon Glyph="Encrypt" FontFamily="Segoe UI" FontSize="15"  />
                 </AppBarButton.Icon>
-            </local:AppBarButton2>
-            <local:AppBarButton2 Style="{StaticResource myAppBarButton}" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}"  Foreground="White" Width="60"  >
+            </AppBarButton>
+            <AppBarButton x:Name="abbDecrypt" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Width="60"  >
                 <AppBarButton.Icon>
                     <FontIcon  Glyph="Decrypt" FontFamily="Segoe UI" FontSize="15" />
                 </AppBarButton.Icon>
-            </local:AppBarButton2>
+            </AppBarButton>
             <CommandBar.SecondaryCommands>
-                <local:AppBarButton2 Style="{StaticResource myAppBarButton}" Label="Export" Command="{x:Bind _viewModel.ExportCommand}" Icon="View"  />
-                <local:AppBarButton2 Style="{StaticResource myAppBarButton}" Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc"  />
+                <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Export" Command="{x:Bind _viewModel.ExportCommand}" Icon="View"  />
+                <AppBarButton Style="{StaticResource AppBarButtonStyle}" Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc"  />
             </CommandBar.SecondaryCommands>
-            
-        </local:CommandBar2>
+            <CommandBar.Content>
+                <TextBlock x:Name="CommandBarContentTextBlock"/>
+            </CommandBar.Content>
+        </CommandBar>
     </Page.TopAppBar>
 
-    <Grid Background="White" VerticalAlignment="Stretch">
+    <Grid Background="Black" VerticalAlignment="Stretch">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" ScrollViewer.VerticalScrollMode="Disabled"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="0" Background="{StaticResource AccentColorBrush}">
+        <Border x:Name="ExtendedAppBar" Grid.Row="0" Background="{StaticResource AccentColorBrush}" Height="38" MinHeight="38">
             <StackPanel>
                 <controls:PlainTextBarPhoneTop
                     Visibility="{x:Bind _viewModel.StatusBarModel.IsPlaintextBarVisible, Mode=OneWay, Converter={StaticResource BoolVisibility}}" />
@@ -55,12 +58,14 @@
                     Visibility="{x:Bind _viewModel.StatusBarModel.IsEncryptedBarVisible, Mode=OneWay,Converter={StaticResource BoolVisibility}}" />
             </StackPanel>
         </Border>
+        <controls:PasswordUserControl x:Name="PasswordUserControl" x:FieldModifier="public" Grid.Row="1" Visibility="Collapsed"
+                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{StaticResource AccentColorBrush}" />
 
-       
-        <controls:EditorUserControl Grid.Row="1"
-                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
+        <controls:EditorUserControl x:Name="EditorUserControl" x:FieldModifier="public" Grid.Row="2"
+                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch"
                                     VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch"/>
-        <Border Grid.Row="2" Background="{StaticResource AccentColorBrush}">
+       
+        <Border x:Name="BottomBar" Grid.Row="3" Background="{StaticResource AccentColorBrush}">
             <StackPanel>
                 <controls:PlainTextBarPhoneBottom
                     Visibility="{x:Bind _viewModel.StatusBarModel.IsPlaintextBarVisible, Mode=OneWay, Converter={StaticResource BoolVisibility}}" />
@@ -68,7 +73,6 @@
                     Visibility="{x:Bind _viewModel.StatusBarModel.IsEncryptedBarVisible, Mode=OneWay,Converter={StaticResource BoolVisibility}}" />
             </StackPanel>
         </Border>
-
+        <Canvas x:Name="PrintCanvas" Opacity="0" />
     </Grid>
-   
 </Page>

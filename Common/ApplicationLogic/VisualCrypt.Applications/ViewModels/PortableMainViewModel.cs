@@ -107,6 +107,7 @@ namespace VisualCrypt.Applications.ViewModels
                 StatusBarModel.OnFileModelChanged(fileModel);
                 _eventAggregator.GetEvent<FileModelChanged>().Publish(fileModel);
             };
+
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(StatusBarModel.UpdateStatusBarText);
         }
@@ -117,14 +118,14 @@ namespace VisualCrypt.Applications.ViewModels
         public async Task OnNavigatedToCompletedAndLoaded(FilesPageCommandArgs command)
         {
             Debug.Assert(command != null);
-
+           
             switch (command.FilesPageCommand)
             {
                 case FilesPageCommand.New:
                     ExecuteNewCommand();
                     break;
                 case FilesPageCommand.Open:
-                    await OpenFileCommon(command.FileReference.Filename);
+                    await OpenFileCommon(command.FileReference.PathAndFileName);
                     break;
                 default:
                     throw new InvalidOperationException(string.Format("Unknwon command {0}", command.FilesPageCommand));
@@ -171,9 +172,6 @@ namespace VisualCrypt.Applications.ViewModels
                 .Publish(tcs.SetResult);
             return await tcs.Task;
         }
-
-
-
 
 
         #region ExitCommand
@@ -1066,8 +1064,9 @@ namespace VisualCrypt.Applications.ViewModels
             if (_longRunningOperation != null && _longRunningOperation.Context != null)
                 _longRunningOperation.Cancel();
             _eventAggregator.GetEvent<EditorShouldCleanup>().Publish(null);
-            _eventAggregator.GetEvent<EditorSendsText>().Unsubscribe(ExecuteEditorSendsTextCallback);
-            _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(StatusBarModel.UpdateStatusBarText);
+            // Caution: If we unsubscribe here, we must re-subscribe in OnNavigatedToCompletedAndLoaded.
+            //_eventAggregator.GetEvent<EditorSendsText>().Unsubscribe(ExecuteEditorSendsTextCallback);
+            //_eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Unsubscribe(StatusBarModel.UpdateStatusBarText);
             FileModel.UpdateFrom(FileModel.EmptyCleartext());
         }
 

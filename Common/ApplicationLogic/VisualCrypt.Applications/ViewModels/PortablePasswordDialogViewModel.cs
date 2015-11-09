@@ -1,41 +1,45 @@
-﻿using System;
+﻿using Prism.Commands;
+using System;
 using System.ComponentModel;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Documents;
-using Prism.Commands;
-using VisualCrypt.Applications;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
-using VisualCrypt.Applications.ViewModels;
-using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
-using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
-using VisualCrypt.Language;
-using VisualCrypt.Windows.Services;
 using VisualCrypt.Language.Strings;
 
-namespace VisualCrypt.Windows.Controls
+namespace VisualCrypt.Applications.ViewModels
 {
-    class PasswordDialogViewModel : ViewModelBase, IActiveCleanup
+    public class PortablePasswordDialogViewModel : ViewModelBase
     {
         readonly IMessageBoxService _messageBoxService;
         readonly IEncryptionService _encryptionService;
         readonly ResourceWrapper _resourceWrapper;
-        readonly Action<bool> _closePopup;
-        readonly Action<bool> _setIsPasswordSet;
-        readonly bool _isPasswordSetWhenDialogOpened;
+        readonly IPrinter _printer;
 
-        public PasswordDialogViewModel(SetPasswordDialogMode setPasswordDialogMode, 
-            Action<bool> closePopup, Action<bool> setIsPasswordSet, bool isPasswordSetWhenDialogOpened)
+        Action<bool> _setIsPasswordSet;
+        Action<bool> _closeAction;
+        bool _isPasswordSetWhenDialogOpened;
+
+        public ResourceWrapper ResourceWrapper { get { return _resourceWrapper; } }
+
+        public PortablePasswordDialogViewModel()
         {
             _encryptionService = Service.Get<IEncryptionService>();
             _messageBoxService = Service.Get<IMessageBoxService>();
             _resourceWrapper = Service.Get<ResourceWrapper>();
+            _printer = Service.Get<IPrinter>();
 
-            _closePopup = closePopup;
-            _setIsPasswordSet = setIsPasswordSet;
-            _isPasswordSetWhenDialogOpened = isPasswordSetWhenDialogOpened;
+           
+
             PropertyChanged += OnPasswordBoxTextChanged;
 
+          
+            OnPasswordBoxTextChanged(null, new PropertyChangedEventArgs(nameof(PasswordBoxText)));
+        }
+
+        public void Init(SetPasswordDialogMode setPasswordDialogMode, Action<bool> setIsPasswordSet, Action<bool> closeAction, bool isPasswordSetWhenDialogOpened)
+        {
+            _setIsPasswordSet = setIsPasswordSet;
+            _closeAction = closeAction;
+            _isPasswordSetWhenDialogOpened = isPasswordSetWhenDialogOpened;
             SetMode(setPasswordDialogMode);
         }
 
@@ -101,8 +105,7 @@ namespace VisualCrypt.Windows.Controls
                 if (response.IsSuccess)
                 {
                     var sigCount = response.Result.Length;
-                    SignificantCharCountText = string.Format("{0} of {1} Unicode Characters", sigCount.ToString("N0"),
-                        NormalizedPassword.MaxSanitizedPasswordLength.ToString("N0"));
+                    SignificantCharCountText = string.Format(_resourceWrapper.spd_msgXofYUnicodeChars, sigCount.ToString("N0"));
                 }
                 else
                 {
@@ -115,73 +118,52 @@ namespace VisualCrypt.Windows.Controls
             }
 
             SetPasswordCommand.RaiseCanExecuteChanged();
-            ClearPasswordCommand.RaiseCanExecuteChanged();
         }
 
-        public void Hyperlink_CreatePassword_OnClick(Hyperlink sender, HyperlinkClickEventArgs args)
-        {
-            try
-            {
-                var response = _encryptionService.GenerateRandomPassword();
-                if (response.IsSuccess)
-                    PasswordBoxText = response.Result;
-                else
-                    _messageBoxService.ShowError(response.Error);
-            }
-            catch (Exception ex)
-            {
-                _messageBoxService.ShowError(ex);
-            }
-        }
+     
 
         #endregion
 
-        #region private methods
+        #region private Methods
 
         void SetMode(SetPasswordDialogMode setPasswordDialogMode)
         {
             switch (setPasswordDialogMode)
             {
                 case SetPasswordDialogMode.Set:
-                    Title = "Set Password";
-                    OKButtonContent = "Set Password";
+                    Title = _resourceWrapper.spdm_Set_Title;
+                    OKButtonContent = _resourceWrapper.spdm_Set_OK;
                     break;
                 case SetPasswordDialogMode.Change:
-                    Title = "Change Password";
-                    OKButtonContent = "Change Password";
+                    Title = _resourceWrapper.spdm_Change_Title;
+                    OKButtonContent = _resourceWrapper.spdm_Change_OK;
                     break;
                 case SetPasswordDialogMode.SetAndEncrypt:
-                    Title = "Set Password & Encrypt";
-                    OKButtonContent = "Encrypt";
+                    Title = _resourceWrapper.spdm_SetAndEncrypt_Title;
+                    OKButtonContent = _resourceWrapper.spdm_SetAndEncrypt_OK;
                     break;
                 case SetPasswordDialogMode.SetAndDecrypt:
-                    Title = "Set Password & Decrypt";
-                    OKButtonContent = "Decrypt";
+                    Title = _resourceWrapper.spdm_SetAndDecrypt_Title;
+                    OKButtonContent = _resourceWrapper.spdm_SetAndDecrypt_OK;
                     break;
                 case SetPasswordDialogMode.SetAndEncryptAndSave:
-                    Title = "Set Password, Encrypt and Save";
-                    OKButtonContent = "Encrypt and Save";
+                    Title = _resourceWrapper.spdm_SetAndEncryptAndSave_Title;
+                    OKButtonContent = _resourceWrapper.spdm_SetAndEncryptAndSave_OK;
                     break;
                 case SetPasswordDialogMode.SetAndDecryptLoadedFile:
-                    Title = "Enter password to decrypt loaded file";
-                    OKButtonContent = "Decrypt loaded file";
+                    Title = _resourceWrapper.spdm_SetAndDecryptLoadedFile_Title;
+                    OKButtonContent = _resourceWrapper.spdm_SetAndDecryptLoadedFile_OK;
                     break;
                 case SetPasswordDialogMode.CorrectPassword:
-                    Title = "The current password is not correct";
-                    OKButtonContent = "Change Password and decrypt";
+                    Title = _resourceWrapper.spdm_CorrectPassword_Title;
+                    OKButtonContent = _resourceWrapper.spdm_CorrectPassword_OK;
                     break;
             }
         }
 
-        void CloseWithEscape(object sender, KeyEventArgs e)
+        public void Close(bool setClicked)
         {
-            //if (e.Key == Key.Escape)
-            //    Close();
-        }
-
-        void Close(bool setClicked)
-        {
-            _closePopup(setClicked);
+            _closeAction(setClicked);
         }
 
         #endregion
@@ -207,9 +189,10 @@ namespace VisualCrypt.Windows.Controls
                 if (sigCount == 0)
                 {
                     string warningMessage = _passwordBoxText.Length == sigCount
-                        ? "Use empty password?"
-                        : "The password is effectively empty - are you sure?";
-                    var okClicked = await _messageBoxService.Show(warningMessage, "Use empty password?", RequestButton.OKCancel,
+                         ? _resourceWrapper.spd_msgUseEmptyPassword
+                         : _resourceWrapper.spd_msgPasswordEffectivelyEmpty;
+                    var okClicked = await _messageBoxService.Show(warningMessage, _resourceWrapper.spd_msgUseEmptyPassword,
+                        RequestButton.OKCancel,
                         RequestImage.Warning) == RequestResult.OK;
                     if (!okClicked)
                         return;
@@ -271,6 +254,69 @@ namespace VisualCrypt.Windows.Controls
 
         #endregion
 
+        #region SuggestPasswordCommand
+
+        public DelegateCommand SuggestPasswordCommand
+            => CreateCommand(ref _suggestPasswordCommandPasswordCommand, ExecuteSuggestPasswordCommand, () => true);
+        DelegateCommand _suggestPasswordCommandPasswordCommand;
+
+        void ExecuteSuggestPasswordCommand()
+        {
+            try
+            {
+                var response = _encryptionService.GenerateRandomPassword();
+                if (response.IsSuccess)
+                    PasswordBoxText = response.Result;
+                else
+                    _messageBoxService.ShowError(response.Error);
+            }
+            catch (Exception ex)
+            {
+                _messageBoxService.ShowError(ex);
+            }
+        }
+
+        #endregion
+
+        #region PrintPasswordCommand
+
+        public DelegateCommand PrintPasswordCommand
+            => CreateCommand(ref _printPasswordCommand, ExecutePrintPasswordCommand, CanExecutePrintPasswordCommand);
+        DelegateCommand _printPasswordCommand;
+
+        void ExecutePrintPasswordCommand()
+        {
+            try
+            {
+                var response = _encryptionService.SanitizePassword(_passwordBoxText);
+                if (response.IsSuccess)
+                {
+                    string normalizedPassword = response.Result;
+                    _printer.PrintEditorText(normalizedPassword);
+
+
+                }
+                else
+                {
+                    _messageBoxService.ShowError(response.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _messageBoxService.ShowError(ex);
+            }
+        }
+        bool CanExecutePrintPasswordCommand()
+        {
+            if (_passwordBoxText.Length > 0 || _isPasswordSetWhenDialogOpened)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        #endregion
+
         #region CancelCommand
 
         public DelegateCommand CancelCommand
@@ -279,15 +325,11 @@ namespace VisualCrypt.Windows.Controls
 
         void ExecuteCancelCommand()
         {
+            PasswordBoxText = string.Empty;
             Close(false);
         }
 
         #endregion
 
-
-        public void Cleanup()
-        {
-            PropertyChanged -= OnPasswordBoxTextChanged;
-        }
     }
 }

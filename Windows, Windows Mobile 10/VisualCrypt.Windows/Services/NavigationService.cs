@@ -16,7 +16,8 @@ namespace VisualCrypt.Windows.Services
             if (App.IsPhoneLayout())
                 frame.Navigate(typeof(MainPagePhone), filesPageCommandArgs, new DrillInNavigationTransitionInfo());
             else
-                frame.Navigate(typeof(MainPage), filesPageCommandArgs, new DrillInNavigationTransitionInfo());
+                throw new System.Exception();
+                //frame.Navigate(typeof(MainPage), filesPageCommandArgs, new DrillInNavigationTransitionInfo());
         }
 
         public void NavigateToFilesPage()

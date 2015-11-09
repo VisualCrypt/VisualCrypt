@@ -7,7 +7,6 @@ namespace VisualCrypt.Windows.Controls
     public sealed partial class PlainTextBarPhoneTop
     {
         readonly PortableMainViewModel _viewModel;
-        readonly ILocale _locale;
 
         public PlainTextBarPhoneTop()
         {

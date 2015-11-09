@@ -5,12 +5,17 @@
         public FileReference()
         {
             ShortFilename = string.Empty;
-            Filename = string.Empty;
+            PathAndFileName = string.Empty;
+            ModifiedDate = string.Empty;
         }
 
         public string ShortFilename { get; set; }
 
-        public string Filename { get; set; }
+        public string PathAndFileName { get; set; }
+
+        public string ModifiedDate { get; set; }
+
+        public object FileSystemObject { get; set; }
 
 
 

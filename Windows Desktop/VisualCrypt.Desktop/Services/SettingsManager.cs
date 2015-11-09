@@ -49,7 +49,7 @@ namespace VisualCrypt.Desktop.Services
                 FontWeight = FontWeights.Normal
             }
             ;
-            CryptographySettings = new CryptographySettings { LogRounds = 13 };
+            CryptographySettings = new CryptographySettings { LogRounds = 10 };
             UpdateSettings = new UpdateSettings
             {
                 Version = _aip.AssemblyVersion,

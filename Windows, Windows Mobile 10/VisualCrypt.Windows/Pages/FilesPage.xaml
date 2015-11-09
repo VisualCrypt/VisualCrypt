@@ -5,27 +5,42 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:VisualCrypt.Applications.Models"
-    NavigationCacheMode="Disabled"
-    mc:Ignorable="d">
-  
+    NavigationCacheMode="Disabled">
     <Page.TopAppBar>
-        <CommandBar>
-            <AppBarButton Label="Add" Icon="Add" Command="{x:Bind _viewModel.NavigateToNewCommand}" />
+        <CommandBar Style="{StaticResource CommandBarStyle}">
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Select" FontFamily="OverflowCheckGlyph" Command="{x:Bind _viewModel.SelectCommand}"
+                          Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibilityInverse}}">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe762;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Add" Icon="Add" Command="{x:Bind _viewModel.NavigateToNewCommand}"
+                          Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibilityInverse}}" />
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Rename" Icon="Rename" 
+                          Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibility}}"  Command="{x:Bind _viewModel.RenameCommand}" />
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Delete" Icon="Delete" 
+                          Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibility}}"  Command="{x:Bind _viewModel.DeleteCommand}"  />
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Cancel" Icon="Cancel"
+                          Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibility}}"  Command="{x:Bind _viewModel.CancelSelectCommand}" />
+
         </CommandBar>
     </Page.TopAppBar>
-    <Page.Resources>
-        <DataTemplate x:Key="ContactListViewTemplate" x:DataType="models:FileReference">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+    
+    <Grid Background="White">
+        <Grid.Resources>
+            <!-- When using x:Bind, you need to set x:DataType -->
+            <DataTemplate x:Key="ContactListViewTemplate" x:DataType="models:FileReference">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <Ellipse x:Name="Ellipse"
+                    <Ellipse x:Name="Ellipse"
                          Grid.RowSpan="2"
                          Width="32"
                          Height="32"
@@ -33,29 +48,34 @@
                          VerticalAlignment="Center"
                          HorizontalAlignment="Center"
                          Fill="LightGray" />
-                <TextBlock Grid.Row="0" Grid.Column="1"
+                    <TextBlock Grid.Row="0" Grid.Column="1" Foreground="Black"
                            Text="{x:Bind ShortFilename}"
                            Style="{ThemeResource BaseTextBlockStyle}"
                            Margin="12,6,0,0" />
-                <TextBlock Grid.Column="1"
+                    <TextBlock Grid.Column="1"  Foreground="Black"
                            Grid.Row="1"
-                           Text="{x:Bind Filename}"
-                           Style="{ThemeResource BodyTextBlockStyle}"
+                           Text="{x:Bind ModifiedDate}"
+                           FontSize="11"
                            Margin="12,0,0,6" />
-            </Grid>
-        </DataTemplate>
-     
-            <ResourceDictionary x:Key="dummy"  Source="/Styles/InUse/BarStyles.xaml" />
-            <!-- When using x:Bind, you need to set x:DataType -->
-
-    </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ListView
+                </Grid>
+            </DataTemplate>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <ListView x:Name="FilesListView" HorizontalAlignment="Stretch"
             ItemsSource="{x:Bind _viewModel.FileReferences}"
             IsItemClickEnabled="True"
             SelectionMode="None"
             ItemClick="ListView_ItemClick"
-            ItemTemplate="{StaticResource ContactListViewTemplate }"
-            ></ListView>
+            ItemTemplate="{StaticResource ContactListViewTemplate}"
+            >
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+        </ListView>
     </Grid>
+   
 </Page>

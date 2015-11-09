@@ -67,6 +67,7 @@ namespace VisualCrypt.Windows
 
             Service.Register<PortableMainViewModel, PortableMainViewModel>(true);
             Service.Register<PortableEditorViewModel, PortableEditorViewModel>(true);
+            Service.Register<PortablePasswordDialogViewModel, PortablePasswordDialogViewModel>(true);
             Service.Register<FilesPageViewModel, FilesPageViewModel>(true);
 
             Service.Register<IFontManager, FontManager>(true);

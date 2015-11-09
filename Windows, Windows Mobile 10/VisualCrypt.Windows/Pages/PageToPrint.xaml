@@ -1,0 +1,50 @@
+﻿<Page
+    x:Class="VisualCrypt.Windows.Pages.PageToPrint"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid x:Name="PrintableArea">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="6*" />
+            <ColumnDefinition Width="4*"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel x:Name="Header" Grid.Row="0" Grid.ColumnSpan="2" Height="60"  Visibility="Collapsed">
+            <!--<StackPanel Orientation="Horizontal" >
+                --><!--<Image Source="ms-appx:///Assets/PrintHeaderLogo.png" HorizontalAlignment="Left" Stretch="None"/>--><!--
+                <RichTextBlock Foreground="Black"  FontSize="20" TextAlignment="Left" FontFamily="Segoe UI">
+                    <Paragraph>Windows SDK Sample</Paragraph>
+                </RichTextBlock>
+            </StackPanel>
+            <RichTextBlock Foreground="Black" x:Name="SdkTitle" FontSize="22" FontWeight="Bold" FontFamily="Segoe UI" >
+                <Paragraph>PrintSample</Paragraph>
+            </RichTextBlock>-->
+        </StackPanel>
+
+        <RichTextBlock Foreground="Black" x:Name="TextSelection" FontSize="18" Grid.Row="1"  Grid.ColumnSpan="2" OverflowContentTarget="{Binding ElementName=FirstLinkedContainer}"
+            IsTextSelectionEnabled="True" TextAlignment="Left" FontFamily="Segoe UI" VerticalAlignment="Top" HorizontalAlignment="Left" Visibility="Collapsed"/>
+
+        <RichTextBlock Foreground="Black" x:Name="TextContent" FontSize="18" Grid.Row="1"  Grid.ColumnSpan="2" OverflowContentTarget="{Binding ElementName=FirstLinkedContainer}"
+            IsTextSelectionEnabled="True" TextAlignment="Left" FontFamily="Segoe UI" VerticalAlignment="Top" HorizontalAlignment="Left">
+        </RichTextBlock>
+        <RichTextBlockOverflow x:Name="FirstLinkedContainer" OverflowContentTarget="{Binding ElementName=ContinuationPageLinkedContainer}" Grid.Row="2" Grid.Column="0"/>
+        <RichTextBlockOverflow x:Name="ContinuationPageLinkedContainer" Grid.Row="3" Grid.ColumnSpan="2"/>
+        <!--<Image Source="ms-appx:///Assets/print_1.png" x:Name="ScenarioImage" HorizontalAlignment="Center" Grid.Row="2" Grid.Column="1" Margin="10"/>-->
+
+        <StackPanel x:Name="Footer" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Visibility="Collapsed">
+            <!--<Image Source="ms-appx:///Assets/splash-sdk.png" HorizontalAlignment="Left" Stretch="None"/>-->
+            <RichTextBlock Foreground="Black" FontSize="16" TextAlignment="Left" FontFamily="Segoe UI">
+            </RichTextBlock>
+        </StackPanel>
+    </Grid>
+</Page>
