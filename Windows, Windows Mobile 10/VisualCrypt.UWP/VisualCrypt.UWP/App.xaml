@@ -1,0 +1,19 @@
+﻿<Application
+    x:Class="VisualCrypt.UWP.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VisualCrypt.UWP"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--<ResourceDictionary Source="/Styles/VisualCryptColors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Styles/BarStyles.xaml" />
+                <ResourceDictionary Source="/Styles/ContentDialogStyles.xaml" />-->
+            </ResourceDictionary.MergedDictionaries>
+            <!--<valueConverters:BoolVisibilityConverter x:Key="BoolVisibility"/>
+            <valueConverters:BoolVisibilityInverseConverter x:Key="BoolVisibilityInverse"/>
+            <valueConverters:EnabledToBrushConverter x:Key="EnabledToBrush"/>-->
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -7,5 +7,7 @@ namespace VisualCrypt.Applications.Services.Interfaces
       
         void NavigateToMainPage(FilesPageCommandArgs filesPageCommandArgs);
         void NavigateToFilesPage();
+        void NavigateToHelpPage();
+        void NavigateToSettingsPage();
     }
 }

@@ -22,5 +22,15 @@ namespace VisualCrypt.Desktop.Services
 		{
 			throw new NotImplementedException();
 		}
-	}
+
+        public void NavigateToHelpPage()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void NavigateToSettingsPage()
+        {
+            throw new NotImplementedException();
+        }
+    }
 }

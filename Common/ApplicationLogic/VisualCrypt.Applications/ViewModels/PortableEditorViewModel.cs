@@ -49,6 +49,8 @@ namespace VisualCrypt.Applications.ViewModels
             _fileService = Service.Get<IFileService>();
 
             _resourceWrapper = Service.Get<ResourceWrapper>();
+
+            
         }
 
         public void OnViewLoaded()
@@ -60,14 +62,11 @@ namespace VisualCrypt.Applications.ViewModels
 
             _resourceWrapper.Info.CultureChanged += OnCultureChanged;
 
-
-            _textBox1.TextChanged += OnTextChanged;
-            _textBox1.SelectionChanged += OnSelectionChanged;
             _eventAggregator.GetEvent<EditorReceivesText>().Subscribe(OnTextReceived);
             _eventAggregator.GetEvent<EditorShouldSendText>().Subscribe(OnTextRequested);
             _eventAggregator.GetEvent<EditorShouldCleanup>().Subscribe(Cleanup);
-
-            OnTextReceived(string.Empty);
+            _textBox1.TextChanged += OnTextChanged;
+            _textBox1.SelectionChanged += OnSelectionChanged;
         }
 
         void OnCultureChanged(object sender, EventArgs e)
@@ -99,17 +98,15 @@ namespace VisualCrypt.Applications.ViewModels
             _eventAggregator.GetEvent<EditorSendsText>().Publish(args);
         }
 
-
+        bool _isReceivingText;
         void OnTextReceived(string newText)
         {
             if (newText == null)
                 throw new ArgumentNullException("newText");
 
+            _isReceivingText = true;
             _textBox1.IsUndoEnabled = false;
-
-            var backup = _editorContext.FileModel.IsDirty;
-            _textBox1.Text = newText; // triggers Text_Changed which sets FileService.FileModel.IsDirty = true;
-            _editorContext.FileModel.IsDirty = backup;
+            _textBox1.Text = newText;
 
             if (_editorContext.FileModel.IsEncrypted)
             {
@@ -134,12 +131,21 @@ namespace VisualCrypt.Applications.ViewModels
             UpdateStatusBar();
             ReplaceAllCommand.RaiseCanExecuteChanged();
             ReplaceCommand.RaiseCanExecuteChanged();
-            
+            _editorContext.FileModel.HasText = newText.Length != 0;
+
+
+
         }
 
         void OnTextChanged(object sender, object textChangedEventArgs)
         {
-            _editorContext.FileModel.IsDirty = true;
+            if (!_isReceivingText)
+            {
+                _editorContext.FileModel.IsDirty = true;
+            }
+            else _isReceivingText = false;
+
+            _editorContext.FileModel.HasText = _textBox1.Text.Length != 0;
             UpdateStatusBar();
         }
 

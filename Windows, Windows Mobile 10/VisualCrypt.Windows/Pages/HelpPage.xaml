@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="VisualCrypt.Windows.Pages.HelpPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VisualCrypt.Windows.Pages"
+    Foreground="Black">
+    <Page.TopAppBar>
+        <CommandBar Style="{StaticResource CommandBarStyle}">
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Icon="Back" Click="AppBarButton_Back_Click"></AppBarButton>
+            <CommandBar.Content>
+                <TextBlock Style="{StaticResource CommandBarContentTextBlockStyle}" Text="{x:Bind Title}"  />
+            </CommandBar.Content>
+        </CommandBar>
+    </Page.TopAppBar>
+    <Border Padding="20" Background="White">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="225" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid>
+                <StackPanel HorizontalAlignment="Stretch">
+                    <TextBlock FontSize="18" Text="VisualCrypt" />
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource PageTextBlockStyle}" xml:space="preserve">Version: <Run Text="{x:Bind AIP.AssemblyVersion}" /></TextBlock>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Style="{StaticResource PageTextBlockStyle}" xml:space="preserve">SKU: <Run Text="{x:Bind AIP.AssemblyProduct}" /></TextBlock>
+                    </StackPanel>
+                    <TextBlock />
+                    <TextBlock TextWrapping="Wrap"  Style="{StaticResource PageTextBlockStyle}">
+                            This version of VisualCrypt is open source and free for use, provided you accept and comply with the <Hyperlink 
+                               
+                                NavigateUri="https://visualcrypt.com/post/privacy-and-terms">license</Hyperlink>.
+
+                    </TextBlock>
+                    <TextBlock />
+                    <TextBlock TextWrapping="Wrap"  Style="{StaticResource PageTextBlockStyle}">
+                            The latest version can be downloaded from <Hyperlink 
+                                                                          NavigateUri="https://visualcrypt.com/post/download-visualcrypt-pro-for-windows"
+                                                                          >https://visualcrypt.com</Hyperlink>. Please contact us for questions or suggestions at corporate@visualcrypt.com.
+                    </TextBlock>
+                </StackPanel>
+            </Grid>
+            <Grid x:Name="ButtonRow" Grid.Row="1">
+                <StackPanel HorizontalAlignment="Left" VerticalAlignment="Center">
+                    <TextBlock Text="{x:Bind AIP.AssemblyCopyright}"  Style="{StaticResource PageTextBlockStyle}" />
+                </StackPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+</Page>

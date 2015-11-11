@@ -276,6 +276,10 @@
           <source>Search up</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Rechercher vers le haut</target>
         </trans-unit>
+        <trans-unit id="Resx/termNotes" translate="yes" xml:space="preserve">
+          <source>Notes</source>
+          <target state="new">Notes</target>
+        </trans-unit>
         <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
           <source>Go</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Atteindre</target>
@@ -313,8 +317,8 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Par défaut: 2</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
-          <source>Encryption Method</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Méthode de chiffrement</target>
+          <source>Encryption Method:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Méthode de chiffrement</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>

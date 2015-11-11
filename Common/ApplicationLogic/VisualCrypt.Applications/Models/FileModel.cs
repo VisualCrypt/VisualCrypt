@@ -76,7 +76,20 @@ namespace VisualCrypt.Applications.Models
         }
         bool _isEncrypted;
 
+        public bool HasText
+        {
+            get { return _hasText; }
 
+            set
+            {
+                if (_hasText != value)
+                {
+                    _hasText = value;
+                    OnPropertyChanged();
+                }
+            }
+        }
+        bool _hasText;
 
         public string ClearTextContents
         {
@@ -111,7 +124,6 @@ namespace VisualCrypt.Applications.Models
         public Encoding SaveEncoding { get; private set; }
 
         public CipherV2 CipherV2 { get; private set; }
-
 
         public static FileModel EmptyCleartext()
         {

@@ -15,22 +15,23 @@
     </Page.Resources>
     <Page.TopAppBar>
         <CommandBar x:Name="TopAppBar" Style="{StaticResource CommandBarStyle}">
-            <AppBarButton x:Name="abbBack" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Left" Label="Back" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" Width="48" />
-            <AppBarButton x:Name="abbSave" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Label="Save" Command="{x:Bind _viewModel.SaveCommand}" Icon="Save" Width="48" />
-            <AppBarButton x:Name="abbShare" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Label="Share" Icon="Send" Width="48" />
-            <AppBarButton x:Name="abbEncrypt" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Command="{x:Bind _viewModel.EncryptEditorContentsCommand}" Width="60"   >
+            <AppBarButton  Style="{StaticResource AppBarButtonStyle}" HorizontalAlignment="Left" Label="{x:Bind _viewModel.ResourceWrapper.miFileExit}" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" Width="48" />
+            <AppBarButton  Style="{StaticResource AppBarButtonStyle}"  Label="{x:Bind _viewModel.ResourceWrapper.termSave}" Command="{x:Bind _viewModel.SaveCommand, Mode=OneWay}" Icon="Save" Width="48" />
+            <AppBarButton  Style="{StaticResource AppBarButtonStyle}" Label="RES_Share" Icon="Send" Width="48" Click="abbShare_Click" />
+            <AppBarButton  Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.termEncrypt}" Command="{x:Bind _viewModel.EncryptEditorContentsCommand, Mode=OneWay}" Width="60"   >
                 <AppBarButton.Icon> 
                     <FontIcon Glyph="Encrypt" FontFamily="Segoe UI" FontSize="15"  />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton x:Name="abbDecrypt" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Command="{x:Bind _viewModel.DecryptEditorContentsCommand}" Width="60"  >
+            <AppBarButton  x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.termDecrypt}" Command="{x:Bind _viewModel.DecryptEditorContentsCommand, Mode=OneWay}" Width="60"  >
                 <AppBarButton.Icon>
                     <FontIcon  Glyph="Decrypt" FontFamily="Segoe UI" FontSize="15" />
                 </AppBarButton.Icon>
             </AppBarButton>
             <CommandBar.SecondaryCommands>
-                <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Export" Command="{x:Bind _viewModel.ExportCommand}" Icon="View"  />
-                <AppBarButton Style="{StaticResource AppBarButtonStyle}" Width="Auto" Label="{x:Bind _viewModel.PasswordInfo.HyperlinkPasswordText, Mode=OneWay}" Command="{x:Bind _viewModel.ShowSetPasswordDialogCommand}" Icon="HideBcc"  />
+                <AppBarButton Style="{StaticResource AppBarButtonStyle}"  Label="{x:Bind _viewModel.ResourceWrapper.miFileOpen}"  Command="{x:Bind _viewModel.OpenCommand, Mode=OneWay}" Icon="OpenFile"  />
+                <AppBarButton Style="{StaticResource AppBarButtonStyle}"  Label="{x:Bind _viewModel.ResourceWrapper.miFileExportClearText}"  Command="{x:Bind _viewModel.ExportCommand, Mode=OneWay}" Icon="Folder"  />
+                <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.miFilePrint}"  Click="AppBarButton_Print_Click" Icon="Page"  />
             </CommandBar.SecondaryCommands>
             <CommandBar.Content>
                 <TextBlock x:Name="CommandBarContentTextBlock"/>

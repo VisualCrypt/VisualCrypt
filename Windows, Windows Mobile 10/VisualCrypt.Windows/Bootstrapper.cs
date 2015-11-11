@@ -15,6 +15,8 @@ using VisualCrypt.Windows.Services;
 using VisualCrypt.Windows.Models;
 using VisualCrypt.Applications.Models.Settings;
 using VisualCrypt.Language.Strings;
+using System.Globalization;
+using System.Reflection;
 
 namespace VisualCrypt.Windows
 {
@@ -35,6 +37,13 @@ namespace VisualCrypt.Windows
             {
                 Service.Get<ILog>().Exception(e);
             }
+        }
+
+        internal static void StopMeasureStartupTime()
+        {
+            Service.Get<ILog>().Debug(string.Format(CultureInfo.InvariantCulture, "Loading completed after {0}ms.",
+                   StopWatch.ElapsedMilliseconds));
+            StopWatch.Stop();
         }
 
         public static void Register()
@@ -59,7 +68,8 @@ namespace VisualCrypt.Windows
 
             Service.Register<IFileService, FileService>(true);
             Service.Register<IBrowserService, BrowserService>(false);
-            Service.Register<IAssemblyInfoProvider, AssemblyInfoProvider>(false);
+            Service.Register<IAssemblyInfoProvider, AssemblyInfoProvider>(true);
+            Service.Get<IAssemblyInfoProvider>().Assembly = typeof(Bootstrapper).GetTypeInfo().Assembly;
             Service.Register<ILifeTimeService, LifeTimeService>(true);
             Service.Register<IClipBoardService, ClipBoardService>(true);
             Service.Register<IWindowManager, WindowManager>(true);

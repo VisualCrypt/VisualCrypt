@@ -46,7 +46,11 @@ namespace VisualCrypt.Desktop.Services
         public string Text
         {
             get { return _textBox.Text; }
-            set { _textBox.Text = value;
+            set
+            {
+                _textBox.Text = value;
+                if (value == "")
+                    OnTextChanged(this, null);
             }
         }
 

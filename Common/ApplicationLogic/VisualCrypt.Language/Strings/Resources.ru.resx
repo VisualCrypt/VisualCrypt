@@ -285,6 +285,7 @@
   </data>
   <data name="sett_text_EncrpytionMethod" xml:space="preserve">
     <value>Метод шифрования</value>
+    <comment></comment>
   </data>
   <data name="sett_text_BCryptAESRounds" xml:space="preserve">
     <value>Кол-во BCrypt/AES:</value>

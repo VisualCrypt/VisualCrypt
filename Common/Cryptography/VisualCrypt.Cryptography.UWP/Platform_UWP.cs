@@ -5,6 +5,7 @@ using Windows.Storage.Streams;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 using VisualCrypt.Cryptography.VisualCrypt2.Interfaces;
+using System;
 
 namespace VisualCrypt.Cryptography.UWP
 {
@@ -41,6 +42,8 @@ namespace VisualCrypt.Cryptography.UWP
         public byte[] ComputeAESRound(AESDir aesDir, byte[] currentIV, byte[] inputData, byte[] keyBytes)
         {
             Guard.NotNull(new object[] { currentIV, inputData, keyBytes });
+            if (inputData.Length == 0)
+                throw new NotSupportedException("Encryption of zero-lenght data is not supported on Windows Universal.");
 
             IBuffer iv = CryptographicBuffer.CreateFromByteArray(currentIV);
 
@@ -52,8 +55,8 @@ namespace VisualCrypt.Cryptography.UWP
 
             var symmKey = algorithm.CreateSymmetricKey(key);
 
-            var resultBuffer = aesDir == AESDir.Encrypt 
-                ? CryptographicEngine.Encrypt(symmKey, data, iv) 
+            var resultBuffer = aesDir == AESDir.Encrypt
+                ? CryptographicEngine.Encrypt(symmKey, data, iv)
                 : CryptographicEngine.Decrypt(symmKey, data, iv);
 
             byte[] cipherBytes;

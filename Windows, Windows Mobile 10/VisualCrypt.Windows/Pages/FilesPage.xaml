@@ -23,8 +23,17 @@
             <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Cancel" Icon="Cancel"
                           Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibility}}"  Command="{x:Bind _viewModel.CancelSelectCommand}" />
 
+            <CommandBar.Content>
+                <TextBlock Style="{StaticResource CommandBarContentTextBlockStyle}" Text="{x:Bind _viewModel.ResourceWrapper.termNotes}" VerticalAlignment="Center"  Margin="20,10,0,0" FontSize="16" />
+            </CommandBar.Content>
         </CommandBar>
     </Page.TopAppBar>
+    <Page.BottomAppBar>
+        <CommandBar Style="{StaticResource CommandBarStyle}">
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.miHelp}" Icon="Help" Command="{x:Bind _viewModel.NavigateToHelpCommand}" />
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.miVCSettings}" Icon="Setting" Command="{x:Bind _viewModel.NavigateToSettingsCommand}" />
+        </CommandBar>
+    </Page.BottomAppBar>
     
     <Grid Background="White">
         <Grid.Resources>

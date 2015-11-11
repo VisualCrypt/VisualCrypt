@@ -2,15 +2,16 @@
     x:Class="VisualCrypt.Windows.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    RequestedTheme="Dark"
+    RequestedTheme="Light"
     xmlns:valueConverters="using:VisualCrypt.Windows.ValueConverters"
     >
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="/Styles/InUse/VisualCryptColors.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="/Styles/InUse/BarStyles.xaml" />
-                <ResourceDictionary Source="/Styles/InUse/ContentDialogStyles.xaml" />
+                <ResourceDictionary Source="/Styles/VisualCryptColors.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="/Styles/BarStyles.xaml" />
+                <ResourceDictionary Source="/Styles/ContentDialogStyles.xaml" />
+                <ResourceDictionary Source="/Styles/PageStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <valueConverters:BoolVisibilityConverter x:Key="BoolVisibility"/>
             <valueConverters:BoolVisibilityInverseConverter x:Key="BoolVisibilityInverse"/>

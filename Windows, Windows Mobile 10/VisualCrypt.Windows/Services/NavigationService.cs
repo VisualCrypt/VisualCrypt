@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Media.Animation;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Windows.Pages;
+using System;
 
 namespace VisualCrypt.Windows.Services
 {
@@ -24,6 +25,18 @@ namespace VisualCrypt.Windows.Services
         {
             var frame = Window.Current.Content as Frame;
             frame.Navigate(typeof(FilesPage), new DrillInNavigationTransitionInfo());
+        }
+
+        public void NavigateToHelpPage()
+        {
+            var frame = Window.Current.Content as Frame;
+            frame.Navigate(typeof(HelpPage));
+        }
+
+        public void NavigateToSettingsPage()
+        {
+            var frame = Window.Current.Content as Frame;
+            frame.Navigate(typeof(SettingsPage));
         }
     }
 }

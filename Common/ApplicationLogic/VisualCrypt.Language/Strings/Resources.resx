@@ -475,7 +475,7 @@
     <value>Default: 2</value>
   </data>
   <data name="sett_text_EncrpytionMethod" xml:space="preserve">
-    <value>Encryption Method</value>
+    <value>Encryption Method:</value>
   </data>
   <data name="sett_text_orViewThe" xml:space="preserve">
     <value>or view the</value>
@@ -539,5 +539,8 @@
   </data>
   <data name="toolAreaSearchUp" xml:space="preserve">
     <value>Search up</value>
+  </data>
+  <data name="termNotes" xml:space="preserve">
+    <value>Notes</value>
   </data>
 </root>

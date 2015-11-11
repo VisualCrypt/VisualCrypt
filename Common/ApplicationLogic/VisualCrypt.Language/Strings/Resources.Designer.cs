@@ -800,7 +800,7 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Encryption Method.
+        ///   Looks up a localized string similar to Encryption Method:.
         /// </summary>
         internal static string sett_text_EncrpytionMethod {
             get {
@@ -1165,6 +1165,15 @@ namespace VisualCrypt.Language.Strings {
         internal static string termGo {
             get {
                 return ResourceManager.GetString("termGo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Notes.
+        /// </summary>
+        internal static string termNotes {
+            get {
+                return ResourceManager.GetString("termNotes", resourceCulture);
             }
         }
         

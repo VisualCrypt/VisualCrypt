@@ -270,6 +270,10 @@
           <source>Search up</source>
           <target state="new">Search up</target>
         </trans-unit>
+        <trans-unit id="Resx/termNotes" translate="yes" xml:space="preserve">
+          <source>Notes</source>
+          <target state="new">Notes</target>
+        </trans-unit>
         <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
           <source>Go</source>
           <target state="new">Go</target>
@@ -307,8 +311,8 @@
           <target state="new">Default: 2</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
-          <source>Encryption Method</source>
-          <target state="new">Encryption Method</target>
+          <source>Encryption Method:</source>
+          <target state="new">Encryption Method:</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>

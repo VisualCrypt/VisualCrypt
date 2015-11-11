@@ -14,6 +14,7 @@ using VisualCrypt.Applications.Services.PortableImplementations;
 using System.Collections.Generic;
 using VisualCrypt.Windows.Controls;
 using Windows.UI.Xaml.Controls;
+using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Windows.Pages
 {
@@ -29,6 +30,7 @@ namespace VisualCrypt.Windows.Pages
         IFileService _fileService;
         SettingsManager _settingsManager;
         IEventAggregator _eventAggregator;
+        ResourceWrapper _resourceWrapper;
 
         public FilesPageViewModel()
         {
@@ -38,11 +40,13 @@ namespace VisualCrypt.Windows.Pages
             _fileService = Service.Get<IFileService>();
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _eventAggregator = Service.Get<IEventAggregator>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
+            var dummy = ResourceWrapper.uriSpecUrl;
         }
 
 
         public ObservableCollection<FileReference> FileReferences => _fileReferences;
-
+        public ResourceWrapper ResourceWrapper => _resourceWrapper;
 
         public bool IsEditMode
         {
@@ -58,7 +62,21 @@ namespace VisualCrypt.Windows.Pages
         }
         bool _isEditMode;
 
+        public DelegateCommand NavigateToHelpCommand => CreateCommand(ref _navigateToHelpCommand, ExecuteNavigateToHelpCommand, () => true);
+        DelegateCommand _navigateToHelpCommand;
+        void ExecuteNavigateToHelpCommand()
+        {
+            NavigationService.NavigateToHelpPage();
+            Cleanup();
+        }
 
+        public DelegateCommand NavigateToSettingsCommand => CreateCommand(ref _navigateToSettingsCommand, ExecuteNavigateToSettingsCommand, () => true);
+        DelegateCommand _navigateToSettingsCommand;
+        void ExecuteNavigateToSettingsCommand()
+        {
+            NavigationService.NavigateToSettingsPage();
+            Cleanup();
+        }
 
         public DelegateCommand NavigateToNewCommand => CreateCommand(ref _navigateToNewCommand, ExecuteNavigateToNewCommand, () => true);
         DelegateCommand _navigateToNewCommand;

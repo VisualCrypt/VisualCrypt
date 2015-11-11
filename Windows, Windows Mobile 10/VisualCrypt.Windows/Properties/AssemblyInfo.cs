@@ -4,13 +4,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("VisualCrypt.Windows")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("VisualCrypt")]
+[assembly: AssemblyDescription("Latest Changes: Initial Version")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("VisualCrypt.Windows")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
+[assembly: AssemblyCompany("VisualCrypt AG")]
+[assembly: AssemblyProduct("VisualCrypt for Windows 10")]
+[assembly: AssemblyCopyright("Copyright ©  2014 - 2015 VisualCrypt AG")]
+[assembly: AssemblyTrademark("VisualCrypt")]
 [assembly: AssemblyCulture("")]
 
 // Version information for an assembly consists of the following four values:
@@ -23,6 +23,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]
+[assembly: AssemblyVersion("2.0.0.0")]
+[assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: ComVisible(false)]

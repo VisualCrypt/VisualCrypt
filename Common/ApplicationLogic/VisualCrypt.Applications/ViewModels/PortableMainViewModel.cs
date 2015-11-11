@@ -107,6 +107,17 @@ namespace VisualCrypt.Applications.ViewModels
                 StatusBarModel.OnFileModelChanged(fileModel);
                 _eventAggregator.GetEvent<FileModelChanged>().Publish(fileModel);
             };
+            _fileModel.PropertyChanged += (s, args) =>
+            {
+                if (args.PropertyName == "IsDirty")
+                    SaveCommand.RaiseCanExecuteChanged();
+                if (args.PropertyName == "HasText")
+                {
+                    RaiseAllCanExecuteChanged();
+                }
+
+            };
+
 
             _eventAggregator.GetEvent<EditorSendsText>().Subscribe(ExecuteEditorSendsTextCallback);
             _eventAggregator.GetEvent<EditorSendsStatusBarInfo>().Subscribe(StatusBarModel.UpdateStatusBarText);
@@ -118,7 +129,7 @@ namespace VisualCrypt.Applications.ViewModels
         public async Task OnNavigatedToCompletedAndLoaded(FilesPageCommandArgs command)
         {
             Debug.Assert(command != null);
-           
+
             switch (command.FilesPageCommand)
             {
                 case FilesPageCommand.New:
@@ -130,6 +141,9 @@ namespace VisualCrypt.Applications.ViewModels
                 default:
                     throw new InvalidOperationException(string.Format("Unknwon command {0}", command.FilesPageCommand));
             }
+
+            FileModel.IsDirty = false;
+            RaiseAllCanExecuteChanged();
         }
 
         public async void OpenFromCommandLineOrNew(string[] args)
@@ -489,7 +503,7 @@ namespace VisualCrypt.Applications.ViewModels
             get
             {
                 return CreateCommand(ref _encryptEditorContentsCommand, ExecuteEncryptEditorContentsCommand,
-                    () => !FileModel.IsEncrypted && FileModel.SaveEncoding != null);
+                    () => !FileModel.IsEncrypted && FileModel.SaveEncoding != null && FileModel.HasText);
             }
         }
 
@@ -549,7 +563,7 @@ namespace VisualCrypt.Applications.ViewModels
             get
             {
                 return CreateCommand(ref _decryptEditorContentsCommand, ExecuteDecryptEditorContentsCommand,
-                    () => FileModel.SaveEncoding != null);
+                    () => FileModel.SaveEncoding != null && FileModel.HasText);
             }
         }
 
@@ -644,7 +658,11 @@ namespace VisualCrypt.Applications.ViewModels
             get
             {
                 return CreateCommand(ref _saveCommand, ExecuteSaveCommand,
-                    () => FileModel.SaveEncoding != null);
+                    () =>
+                    {
+                        bool canSave = FileModel.SaveEncoding != null && FileModel.IsDirty;
+                        return canSave;
+                    });
             }
         }
 
@@ -983,6 +1001,7 @@ namespace VisualCrypt.Applications.ViewModels
             ExportCommand.RaiseCanExecuteChanged();
             EncryptEditorContentsCommand.RaiseCanExecuteChanged();
             DecryptEditorContentsCommand.RaiseCanExecuteChanged();
+            SaveCommand.RaiseCanExecuteChanged();
 
         }
 
@@ -1005,7 +1024,7 @@ namespace VisualCrypt.Applications.ViewModels
             return true;
         }
 
-        async void RunCheckForUpdates() 
+        async void RunCheckForUpdates()
         {
             try
             {
@@ -1035,7 +1054,7 @@ namespace VisualCrypt.Applications.ViewModels
                     }
                     catch (Exception e)
                     {
-                        updateInfo = string.Format("Error checking for updates: {0}",e.Message);
+                        updateInfo = string.Format("Error checking for updates: {0}", e.Message);
                     }
                     return updateInfo;
                 });

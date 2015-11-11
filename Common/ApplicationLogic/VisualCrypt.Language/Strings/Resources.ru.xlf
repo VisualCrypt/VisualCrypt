@@ -268,6 +268,10 @@
           <source>Search up</source>
           <target state="signed-off" state-qualifier="mt-suggestion">Поиск назад</target>
         </trans-unit>
+        <trans-unit id="Resx/termNotes" translate="yes" xml:space="preserve">
+          <source>Notes</source>
+          <target state="new">Notes</target>
+        </trans-unit>
         <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
           <source>Go</source>
           <target state="signed-off" state-qualifier="mt-suggestion">Перейти</target>
@@ -305,8 +309,8 @@
           <target state="signed-off" state-qualifier="mt-suggestion">По умолчанию: 2</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
-          <source>Encryption Method</source>
-          <target state="signed-off" state-qualifier="mt-suggestion">Метод шифрования</target>
+          <source>Encryption Method:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Метод шифрования</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>

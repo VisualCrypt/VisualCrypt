@@ -471,6 +471,7 @@
   </data>
   <data name="sett_text_EncrpytionMethod" xml:space="preserve">
     <value>Méthode de chiffrement</value>
+    <comment></comment>
   </data>
   <data name="sett_text_BCryptAESRounds" xml:space="preserve">
     <value>Arrondit de BCrypt/AES :</value>

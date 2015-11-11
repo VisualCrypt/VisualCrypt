@@ -7,7 +7,8 @@ namespace VisualCrypt.Windows.Controls
 {
     public sealed partial class EditorUserControl { 
 
-        readonly PortableEditorViewModel _viewModel;
+        // public for binding the Print AppBarButton
+        public readonly PortableEditorViewModel _viewModel;
         public EditorUserControl()
         {
             InitializeComponent();

@@ -468,6 +468,7 @@
   </data>
   <data name="sett_text_EncrpytionMethod" xml:space="preserve">
     <value>Verschlüsselung</value>
+    <comment></comment>
   </data>
   <data name="sett_text_BCryptAESRounds" xml:space="preserve">
     <value>BCrypt/AES-Runden:</value>
