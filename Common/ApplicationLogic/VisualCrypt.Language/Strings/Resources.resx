@@ -543,4 +543,22 @@
   <data name="termNotes" xml:space="preserve">
     <value>Notes</value>
   </data>
+  <data name="fileDlgDelete" xml:space="preserve">
+    <value>Delete Note?</value>
+  </data>
+  <data name="fileDlgDeleteMany" xml:space="preserve">
+    <value>Delete Notes?</value>
+  </data>
+  <data name="fileDlgRename" xml:space="preserve">
+    <value>Rename Note</value>
+  </data>
+  <data name="fileDlgSetName" xml:space="preserve">
+    <value>Save Note</value>
+  </data>
+  <data name="termFilename" xml:space="preserve">
+    <value>Filename:</value>
+  </data>
+  <data name="termShare" xml:space="preserve">
+    <value>Share</value>
+  </data>
 </root>

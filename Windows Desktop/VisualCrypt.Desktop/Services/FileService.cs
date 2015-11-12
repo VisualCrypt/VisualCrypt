@@ -64,10 +64,10 @@ namespace VisualCrypt.Desktop.Services
         }
 
         public async Task<Tuple<bool, string>> PickFileAsync(string suggestedFilename, DialogFilter diaglogFilter,
-            DialogDirection dialogDirection, string title = null)
+            FileDialogMode dialogDirection, string title = null)
         {
             FileDialog fileDialog;
-            if (dialogDirection == DialogDirection.Open)
+            if (dialogDirection == FileDialogMode.Open)
                 fileDialog = new OpenFileDialog();
             else
                 fileDialog = new SaveFileDialog();

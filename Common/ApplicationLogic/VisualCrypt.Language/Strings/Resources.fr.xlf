@@ -280,6 +280,30 @@
           <source>Notes</source>
           <target state="new">Notes</target>
         </trans-unit>
+        <trans-unit id="Resx/fileDlgSetName" translate="yes" xml:space="preserve">
+          <source>Save Note</source>
+          <target state="new">Save Note</target>
+        </trans-unit>
+        <trans-unit id="Resx/termFilename" translate="yes" xml:space="preserve">
+          <source>Filename:</source>
+          <target state="new">Filename:</target>
+        </trans-unit>
+        <trans-unit id="Resx/termShare" translate="yes" xml:space="preserve">
+          <source>Share</source>
+          <target state="new">Share</target>
+        </trans-unit>
+        <trans-unit id="Resx/fileDlgRename" translate="yes" xml:space="preserve">
+          <source>Rename Note</source>
+          <target state="new">Rename Note</target>
+        </trans-unit>
+        <trans-unit id="Resx/fileDlgDeleteMany" translate="yes" xml:space="preserve">
+          <source>Delete Notes?</source>
+          <target state="new">Delete Notes?</target>
+        </trans-unit>
+        <trans-unit id="Resx/fileDlgDelete" translate="yes" xml:space="preserve">
+          <source>Delete Note?</source>
+          <target state="new">Delete Note?</target>
+        </trans-unit>
         <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
           <source>Go</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Atteindre</target>

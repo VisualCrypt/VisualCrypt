@@ -152,6 +152,42 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete Note?.
+        /// </summary>
+        internal static string fileDlgDelete {
+            get {
+                return ResourceManager.GetString("fileDlgDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete Notes?.
+        /// </summary>
+        internal static string fileDlgDeleteMany {
+            get {
+                return ResourceManager.GetString("fileDlgDeleteMany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Rename Note.
+        /// </summary>
+        internal static string fileDlgRename {
+            get {
+                return ResourceManager.GetString("fileDlgRename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save Note.
+        /// </summary>
+        internal static string fileDlgSetName {
+            get {
+                return ResourceManager.GetString("fileDlgSetName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Typeface:.
         /// </summary>
         internal static string fnt_label_typeFace {
@@ -1151,6 +1187,15 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filename:.
+        /// </summary>
+        internal static string termFilename {
+            get {
+                return ResourceManager.GetString("termFilename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Find.
         /// </summary>
         internal static string termFind {
@@ -1228,6 +1273,15 @@ namespace VisualCrypt.Language.Strings {
         internal static string termSetPassword {
             get {
                 return ResourceManager.GetString("termSetPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Share.
+        /// </summary>
+        internal static string termShare {
+            get {
+                return ResourceManager.GetString("termShare", resourceCulture);
             }
         }
         

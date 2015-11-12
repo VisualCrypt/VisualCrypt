@@ -1,0 +1,2 @@
+MainPackage=C:\VisualCrypt\github\VisualCrypt\Windows_UWP\VisualCrypt.Windows\bin\x86\Release\VisualCrypt.Windows_2.0.4.0_x86.appx
+SymbolPackage=C:\VisualCrypt\Store\VisualCrypt.Windows_2.0.4.0\VisualCrypt.Windows_2.0.4.0_x86.appxsym
