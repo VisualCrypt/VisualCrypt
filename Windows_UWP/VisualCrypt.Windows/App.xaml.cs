@@ -61,7 +61,10 @@ namespace VisualCrypt.Windows
 
         void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
+            var frame = Window.Current.Content as Frame;
+            if (frame == null)
+                frame = new Frame();
+            frame.Navigate(typeof(FilesPage));
         }
 
         /// <summary>

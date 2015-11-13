@@ -6,6 +6,7 @@ namespace VisualCrypt.BuildTools
 {
     public class Program
     {
+        // Feature 1
         public const string GenerateResourceWrapperSwitch = "-generateresourcewrapper";
         public const string InFilename = "Resources.designer.cs";
         public const string OutFilename = "ResourceWrapper.generated.cs";
@@ -13,17 +14,34 @@ namespace VisualCrypt.BuildTools
         public const string MergeMark = "// generated";
         public const string SuggestedCommandLine = @"$(SolutionDir)\misc\VisualCrypt.BuildTools\bin\Debug\VisualCrypt.BuildTools.exe -generateresourcewrapper $(ProjectDir)Strings";
 
+        // Feature 2
+        public const string GenerateResourceClassesSwitch = "-generateresourceclasses";
+
         public static int Main(string[] args)
         {
-            if (args.Length < 2 || args[0] != GenerateResourceWrapperSwitch)
+            if (args.Length < 2 || (args[0] != GenerateResourceWrapperSwitch && args[0] != GenerateResourceClassesSwitch))
                 return HelpAndExit();
+
+            // The working dir is needed for feature 1 and 2
+            if (!Directory.Exists(args[1]))
+            {
+                Console.WriteLine(string.Format("Can't find directory {0}", args[1]));
+                return HelpAndExit();
+            }
+
+            // Feature 2
+            if (args[0] == GenerateResourceClassesSwitch)
+            {
+                int result = ResourceClassGen.Run(args[1]);
+                if (result == 0)
+                    return result;
+                return HelpAndExit();
+            }
+
+            // Feature 1
             try
             {
-                if (!Directory.Exists(args[1]))
-                {
-                    Console.WriteLine(string.Format("Can't find directory {0}", args[1]));
-                    return HelpAndExit();
-                }
+               
                 var dir = args[1];
                 var FullInfileName = Path.GetFullPath(Path.Combine(dir, InFilename));
                 var FullTemplatefileName = Path.GetFullPath(Path.Combine(dir, TemplateFilename));
@@ -59,8 +77,13 @@ namespace VisualCrypt.BuildTools
 
         static int HelpAndExit()
         {
+            // Feature 1
             Console.WriteLine(string.Format("Generates {0} from {1}", OutFilename, InFilename));
             Console.WriteLine(string.Format("To generate code for {0} use this command line as pre-build step in VisualCrypt.Languange: {1}", OutFilename, SuggestedCommandLine));
+
+            // Feature 2
+            Console.WriteLine("OR");
+            Console.WriteLine(string.Format("Use the switch {0} to generate 'Resource Classes' from .resx XML files.", GenerateResourceClassesSwitch));
             return -1;
         }
 
@@ -92,7 +115,7 @@ namespace VisualCrypt.BuildTools
             var merged = template.Replace(MergeMark, netRequiredCode);
 
             var a1 = "ResourceManager.GetString(\"";
-            var b1 = "Resources.";
+            var b1 = "_generatedResource.";
             merged = merged.Replace(a1, b1);
 
             var a2 = "\", resourceCulture);";

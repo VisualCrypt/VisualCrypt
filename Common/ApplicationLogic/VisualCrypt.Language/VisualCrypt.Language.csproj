@@ -104,6 +104,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Strings\Generated_de.cs" />
+    <Compile Include="Strings\Generated_en.cs" />
+    <Compile Include="Strings\Generated_fr.cs" />
+    <Compile Include="Strings\Generated_it.cs" />
+    <Compile Include="Strings\Generated_ru.cs" />
+    <Compile Include="Strings\IGeneratedResource.cs" />
     <Compile Include="Strings\Info.cs" />
     <Compile Include="Strings\NoDotsExtension.cs" />
     <Compile Include="Strings\Resources.de.Designer.cs">
@@ -196,6 +202,7 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.ResxResources.targets" Label="MultilingualAppToolkit" />
   <PropertyGroup>
     <PreBuildEvent>$(SolutionDir)\misc\VisualCrypt.BuildTools\bin\$(ConfigurationName)\VisualCrypt.BuildTools.exe -generateresourcewrapper $(ProjectDir)Strings
+$(SolutionDir)\misc\VisualCrypt.BuildTools\bin\$(ConfigurationName)\VisualCrypt.BuildTools.exe -generateresourceclasses $(ProjectDir)Strings
 </PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

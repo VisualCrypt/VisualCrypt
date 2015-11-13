@@ -154,7 +154,7 @@
     <value>Отменить изменения?</value>
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
-    <value>Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\Большой размер файла ведёт к замедлению работы компьютера.</value>
+    <value>Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\nБольшой размер файла ведёт к замедлению работы компьютера.</value>
   </data>
   <data name="msgFindRegExNoMatch" xml:space="preserve">
     <value>Не удается найти соответствие для «{0}».</value>
@@ -281,8 +281,7 @@
     <value>По умолчанию: 2</value>
   </data>
   <data name="sett_text_EncrpytionMethod" xml:space="preserve">
-    <value>Метод шифрования</value>
-    <comment></comment>
+    <value>Метод шифрования:</value>
   </data>
   <data name="sett_text_BCryptAESRounds" xml:space="preserve">
     <value>Кол-во BCrypt/AES:</value>
@@ -354,8 +353,7 @@
     <value>Масштаб ({0} %)</value>
   </data>
   <data name="miViewZoomIn" xml:space="preserve">
-    <value>Увеличение масштаба
-</value>
+    <value>Увеличение масштаба</value>
   </data>
   <data name="miViewToolArea" xml:space="preserve">
     <value>Область инструментов</value>

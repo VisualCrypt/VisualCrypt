@@ -55,7 +55,7 @@
         </trans-unit>
         <trans-unit id="Resx/msgFileIsBinary" translate="yes" xml:space="preserve">
           <source>This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</source>
-          <target state="signed-off">Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\Большой размер файла ведёт к замедлению работы компьютера.</target>
+          <target state="signed-off">Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\nБольшой размер файла ведёт к замедлению работы компьютера.</target>
         </trans-unit>
         <trans-unit id="Resx/msgFindRegExNoMatch" translate="yes" xml:space="preserve">
           <source>No match for '{0}' could be found.</source>
@@ -331,8 +331,7 @@
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
           <source>Encryption Method:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Метод шифрования</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          <target state="signed-off">Метод шифрования:</target>
           </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>
@@ -425,8 +424,7 @@
         </trans-unit>
         <trans-unit id="Resx/miViewZoomIn" translate="yes" xml:space="preserve">
           <source>Zoom In</source>
-          <target state="signed-off">Увеличение масштаба
-</target>
+          <target state="translated">Увеличение масштаба</target>
         </trans-unit>
         <trans-unit id="Resx/miViewToolArea" translate="yes" xml:space="preserve">
           <source>Tool Area</source>
