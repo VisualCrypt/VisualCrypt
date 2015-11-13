@@ -46,11 +46,6 @@
           <source>Calculating MAC...</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Il calcolo del Mac...</target>
         </trans-unit>
-        <trans-unit id="Resx/Hello_World" translate="yes" xml:space="preserve">
-          <source>Hello World!</source>
-          <target state="needs-review-translation">Ciao, mondo!</target>
-          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
-          </trans-unit>
         <trans-unit id="Resx/uriSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</source>
           <target state="translated">https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</target></trans-unit>
@@ -277,31 +272,31 @@
         </trans-unit>
         <trans-unit id="Resx/termNotes" translate="yes" xml:space="preserve">
           <source>Notes</source>
-          <target state="new">Notes</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Note</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgSetName" translate="yes" xml:space="preserve">
           <source>Save Note</source>
-          <target state="new">Save Note</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Salva nota</target>
         </trans-unit>
         <trans-unit id="Resx/termFilename" translate="yes" xml:space="preserve">
           <source>Filename:</source>
-          <target state="new">Filename:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nome file:</target>
         </trans-unit>
         <trans-unit id="Resx/termShare" translate="yes" xml:space="preserve">
           <source>Share</source>
-          <target state="new">Share</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Condivisione</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgRename" translate="yes" xml:space="preserve">
           <source>Rename Note</source>
-          <target state="new">Rename Note</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rinominare la nota</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgDeleteMany" translate="yes" xml:space="preserve">
           <source>Delete Notes?</source>
-          <target state="new">Delete Notes?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Eliminare le note?</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgDelete" translate="yes" xml:space="preserve">
           <source>Delete Note?</source>
-          <target state="new">Delete Note?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Eliminare nota?</target>
         </trans-unit>
         <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
           <source>Go</source>
@@ -341,8 +336,9 @@
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
           <source>Encryption Method:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Metodo di crittografia</target><note from="MultilingualUpdate" priority="2" annotates="source">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
-        </trans-unit>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Metodo di crittografia</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
+          </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">BCrypt/AES arrotondamenti:</target>

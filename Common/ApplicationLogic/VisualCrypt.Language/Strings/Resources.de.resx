@@ -117,9 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Hello_World" xml:space="preserve">
-    <value>Hallo Welt!</value>
-  </data>
   <data name="constUntitledDotVisualCrypt" xml:space="preserve">
     <value>Unbenannt.visualcrypt</value>
   </data>
@@ -541,5 +538,26 @@
   </data>
   <data name="termReplace" xml:space="preserve">
     <value>Ersetzen</value>
+  </data>
+  <data name="termNotes" xml:space="preserve">
+    <value>Notizen</value>
+  </data>
+  <data name="fileDlgSetName" xml:space="preserve">
+    <value>Notiz</value>
+  </data>
+  <data name="termFilename" xml:space="preserve">
+    <value>Dateiname:</value>
+  </data>
+  <data name="termShare" xml:space="preserve">
+    <value>Freigabe</value>
+  </data>
+  <data name="fileDlgRename" xml:space="preserve">
+    <value>Notiz umbenennen</value>
+  </data>
+  <data name="fileDlgDeleteMany" xml:space="preserve">
+    <value>Löschen Notizen?</value>
+  </data>
+  <data name="fileDlgDelete" xml:space="preserve">
+    <value>Löschen Hinweis?</value>
   </data>
 </root>

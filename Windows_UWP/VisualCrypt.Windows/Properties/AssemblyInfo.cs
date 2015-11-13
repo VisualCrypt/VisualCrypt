@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Resources;
+using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following 
@@ -11,7 +12,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyProduct("VisualCrypt for Windows 10")]
 [assembly: AssemblyCopyright("Copyright ©  2014 - 2015 VisualCrypt AG")]
 [assembly: AssemblyTrademark("VisualCrypt")]
-[assembly: AssemblyCulture("")]
+[assembly: NeutralResourcesLanguage("en")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -26,3 +27,4 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("2.0.0.0")]
 [assembly: AssemblyFileVersion("2.0.0.0")]
 [assembly: ComVisible(false)]
+

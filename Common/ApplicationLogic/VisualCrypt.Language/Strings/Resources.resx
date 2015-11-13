@@ -147,9 +147,6 @@
   <data name="encrpytedStatusbarText" xml:space="preserve">
     <value>VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.</value>
   </data>
-  <data name="Hello_World" xml:space="preserve">
-    <value>Hello World!</value>
-  </data>
   <data name="miEdit" xml:space="preserve">
     <value>Edit</value>
   </data>

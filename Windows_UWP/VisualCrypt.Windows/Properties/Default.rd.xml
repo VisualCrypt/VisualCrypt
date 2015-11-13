@@ -22,9 +22,12 @@
       the application package. The asterisks are not wildcards.
     -->
     <Assembly Name="*Application*" Dynamic="Required All" />
-    
-    
+    <Namespace Name=" VisualCrypt.Applications.Models.Settings" DataContractSerializer="Required All" />
+    <Namespace Name="VisualCrypt.Windows.Models" DataContractSerializer="Required All" />
+
     <!-- Add your application specific runtime directives here. -->
+    <Assembly Name="VisualCrypt.Languange" XmlSerializer="Required All" />
+    <Assembly Name="System.Resources" XmlSerializer="Required All" />
 
 
   </Application>

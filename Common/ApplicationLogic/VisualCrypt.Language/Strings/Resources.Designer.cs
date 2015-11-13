@@ -233,15 +233,6 @@ namespace VisualCrypt.Language.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Hello World!.
-        /// </summary>
-        internal static string Hello_World {
-            get {
-                return ResourceManager.GetString("Hello_World", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to This debug information will not be saved to a file..
         /// </summary>
         internal static string logWindowInfoText {

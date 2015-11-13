@@ -1,1 +1,1 @@
-MainPackage=C:\VisualCrypt\github\VisualCrypt\Windows_UWP\VisualCrypt.Windows\bin\ARM\Release\VisualCrypt.Windows_2.0.6.0_ARM.appx
+MainPackage=C:\VisualCrypt\github\VisualCrypt\Windows_UWP\VisualCrypt.Windows\bin\ARM\Release\VisualCrypt.Windows_2.0.7.0_ARM.appx

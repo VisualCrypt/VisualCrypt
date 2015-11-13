@@ -12,7 +12,6 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyProduct("VisualCrypt.Language")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("en")]
 
 // Version information for an assembly consists of the following four values:
