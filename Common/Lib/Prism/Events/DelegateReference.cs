@@ -13,10 +13,10 @@ namespace Prism.Events
     /// </summary>
     public class DelegateReference : IDelegateReference
     {
-        private readonly Delegate _delegate;
-        private readonly WeakReference _weakReference;
-        private readonly MethodInfo _method;
-        private readonly Type _delegateType;
+        readonly Delegate _delegate;
+        readonly WeakReference _weakReference;
+        readonly MethodInfo _method;
+        readonly Type _delegateType;
 
         /// <summary>
         /// Initializes a new instance of <see cref="DelegateReference"/>.
@@ -60,7 +60,7 @@ namespace Prism.Events
             }
         }
 
-        private Delegate TryGetDelegate()
+        Delegate TryGetDelegate()
         {
             if (_method.IsStatic)
             {

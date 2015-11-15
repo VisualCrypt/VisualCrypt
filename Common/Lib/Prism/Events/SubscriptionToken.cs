@@ -11,8 +11,8 @@ namespace Prism.Events
     [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1063:ImplementIDisposableCorrectly", Justification = "Should never have a need for a finalizer, hence no need for Dispole(bool)")]
     public class SubscriptionToken : IEquatable<SubscriptionToken>, IDisposable
     {
-        private readonly Guid _token;
-        private Action<SubscriptionToken> _unsubscribeAction;
+        readonly Guid _token;
+        Action<SubscriptionToken> _unsubscribeAction;
 
         /// <summary>
         /// Initializes a new instance of <see cref="SubscriptionToken"/>.

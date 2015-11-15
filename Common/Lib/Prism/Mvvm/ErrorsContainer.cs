@@ -13,7 +13,7 @@ namespace Prism.Mvvm
     /// <typeparam name="T">The type of the error object.</typeparam>
     public class ErrorsContainer<T>
     {
-        private static readonly T[] noErrors = new T[0];
+        static readonly T[] noErrors = new T[0];
         protected readonly Action<string> raiseErrorsChanged;
         protected readonly Dictionary<string, List<T>> validationResults;
 

@@ -1,0 +1,24 @@
+﻿<UserControl
+    x:Class="VisualCrypt.UWP.Controls.WorkingBarPhone"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <Grid>
+        <StackPanel Style="{StaticResource ExtendedAppBarStackPanelStyle}">
+            <Button Style="{StaticResource ExtendedAppBarButtonStyle}" 
+                    HorizontalAlignment="Left" Click="WorkingBar_Cancel_Click" 
+                    Content="{x:Bind _viewModel.ResourceWrapper.termCancel, Mode=OneWay}" />
+
+            <ProgressBar Width="50" Height="8" Margin="5,0" IsIndeterminate="False" Foreground="#FF77FF77"
+                         BorderThickness="0" Background="{StaticResource BarColorBrush}"
+                         Value="{x:Bind _viewModel.StatusBarModel.ProgressPercent, Mode=OneWay}" 
+                         VerticalAlignment="Center" />
+         
+            <StackPanel Orientation="Vertical" Margin="10,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center">
+                <TextBlock Style="{StaticResource BottomBarTextBlockStyle}" Text="{x:Bind _viewModel.StatusBarModel.ProgressBarOpName, Mode=OneWay}" />
+                <TextBlock Style="{StaticResource BottomBarTextBlockStyle}" Text="{x:Bind _viewModel.StatusBarModel.ProgressMessage, Mode=OneWay}" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

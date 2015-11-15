@@ -13,7 +13,7 @@ namespace Prism.Events
     ///</summary>
     public abstract class EventBase
     {
-        private readonly List<IEventSubscription> _subscriptions = new List<IEventSubscription>();
+        readonly List<IEventSubscription> _subscriptions = new List<IEventSubscription>();
 
         /// <summary>
         /// Allows the SynchronizationContext to be set by the EventAggregator for UI Thread Dispatching
@@ -96,7 +96,7 @@ namespace Prism.Events
             }
         }
 
-        private List<Action<object[]>> PruneAndReturnStrategies()
+        List<Action<object[]>> PruneAndReturnStrategies()
         {
             List<Action<object[]>> returnList = new List<Action<object[]>>();
 

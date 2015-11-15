@@ -2,7 +2,7 @@
 
 namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 {
-	internal static class StringFormatInvariant
+    static class StringFormatInvariant
 	{
 		public static string FormatInvariant(this string format, params object[] args)
 		{

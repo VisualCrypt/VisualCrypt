@@ -37,7 +37,7 @@ namespace VisualCrypt.BuildTools
             return 0;
         }
 
-        private static void GenerateInterfaceImplementation(string directory, string lang, Dictionary<string, string> resourceDictionary)
+        static void GenerateInterfaceImplementation(string directory, string lang, Dictionary<string, string> resourceDictionary)
         {
             var sb = new StringBuilder();
             sb.AppendLine("namespace VisualCrypt.Language.Strings {");

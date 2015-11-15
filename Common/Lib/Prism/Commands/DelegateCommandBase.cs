@@ -15,10 +15,10 @@ namespace Prism.Commands
     /// </summary>
     public abstract class DelegateCommandBase : ICommand, IActiveAware
     {
-        private bool _isActive;
+        bool _isActive;
 
         readonly HashSet<string> _propertiesToObserve = new HashSet<string>();
-        private INotifyPropertyChanged _inpc;
+        INotifyPropertyChanged _inpc;
 
         protected readonly Func<object, Task> _executeMethod;
         protected Func<object, bool> _canExecuteMethod;

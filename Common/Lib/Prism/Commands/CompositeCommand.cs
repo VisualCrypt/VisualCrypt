@@ -11,9 +11,9 @@ namespace Prism.Commands
     /// </summary>
     public class CompositeCommand : ICommand
     {
-        private readonly List<ICommand> _registeredCommands = new List<ICommand>();
-        private readonly bool _monitorCommandActivity;
-        private readonly EventHandler _onRegisteredCommandCanExecuteChangedHandler;
+        readonly List<ICommand> _registeredCommands = new List<ICommand>();
+        readonly bool _monitorCommandActivity;
+        readonly EventHandler _onRegisteredCommandCanExecuteChangedHandler;
 
         /// <summary>
         /// Initializes a new instance of <see cref="CompositeCommand"/>.
@@ -101,7 +101,7 @@ namespace Prism.Commands
             }
         }
 
-        private void OnRegisteredCommandCanExecuteChanged(object sender, EventArgs e)
+        void OnRegisteredCommandCanExecuteChanged(object sender, EventArgs e)
         {
             this.OnCanExecuteChanged();
         }
@@ -227,7 +227,7 @@ namespace Prism.Commands
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">EventArgs to pass to the event.</param>
-        private void Command_IsActiveChanged(object sender, EventArgs e)
+        void Command_IsActiveChanged(object sender, EventArgs e)
         {
             this.OnCanExecuteChanged();
         }

@@ -11,7 +11,6 @@ using Prism.Commands;
 using Prism.Events;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Events;
-using VisualCrypt.Applications.Extensions;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
@@ -24,24 +23,11 @@ namespace VisualCrypt.Applications.ViewModels
 {
     public class PortableMainViewModel : ViewModelBase, IActiveCleanup, IEditorContext
     {
-        public PasswordInfo PasswordInfo
-        {
-            get { return _passwordInfo; }
-        }
+        public PasswordInfo PasswordInfo { get; } = new PasswordInfo();
 
-        readonly PasswordInfo _passwordInfo = new PasswordInfo();
+        public StatusBarModel StatusBarModel { get; } = new StatusBarModel();
 
-        public StatusBarModel StatusBarModel
-        {
-            get { return _statusBarModel; }
-        }
-        readonly StatusBarModel _statusBarModel = new StatusBarModel();
-
-        public FileModel FileModel
-        {
-            get { return _fileModel; }
-        }
-        readonly FileModel _fileModel;
+        public FileModel FileModel { get; }
 
         IFileModel IEditorContext.FileModel
         {
@@ -101,13 +87,13 @@ namespace VisualCrypt.Applications.ViewModels
             _resourceWrapper = Service.Get<ResourceWrapper>();
             _aip = Service.Get<IAssemblyInfoProvider>();
 
-            _fileModel = FileModel.EmptyCleartext();
-            _fileModel.OnFileModelUpdated = fileModel =>
+            FileModel = FileModel.EmptyCleartext();
+            FileModel.OnFileModelUpdated = fileModel =>
             {
                 StatusBarModel.OnFileModelChanged(fileModel);
                 _eventAggregator.GetEvent<FileModelChanged>().Publish(fileModel);
             };
-            _fileModel.PropertyChanged += (s, args) =>
+            FileModel.PropertyChanged += (s, args) =>
             {
                 if (args.PropertyName == "IsDirty")
                     SaveCommand.RaiseCanExecuteChanged();

@@ -4,7 +4,7 @@ using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
 {
-    internal static class SanitizationStringExtensions
+    static class SanitizationStringExtensions
     {
        
 

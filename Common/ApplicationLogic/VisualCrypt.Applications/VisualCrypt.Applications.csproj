@@ -150,6 +150,7 @@
     <Compile Include="Services\Interfaces\IMessageBoxService.cs" />
     <Compile Include="Services\Interfaces\INavigationService.cs" />
     <Compile Include="Services\Interfaces\IPasswordDialogDispatcher.cs" />
+    <Compile Include="ViewModels\PortableFilesPageViewModel.cs" />
     <Compile Include="ViewModels\PortableMainViewModel.cs" />
     <Compile Include="Models\FileReference.cs" />
     <Compile Include="Models\PasswordInfo.cs" />

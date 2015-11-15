@@ -11,7 +11,7 @@ namespace Prism.Events
     /// <typeparam name="TData">The type of data to pass.</typeparam>
     public class DataEventArgs<TData> : EventArgs
     {
-        private readonly TData _value;
+        readonly TData _value;
 
         /// <summary>
         /// Initializes the DataEventArgs class.

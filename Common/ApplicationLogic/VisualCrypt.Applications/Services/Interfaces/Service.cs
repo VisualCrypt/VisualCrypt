@@ -5,7 +5,7 @@ namespace VisualCrypt.Applications.Services.Interfaces
 {
     public static class Service
     {
-        readonly static Dictionary<string, Implementation> Container = new Dictionary<string, Implementation>();
+        static readonly Dictionary<string, Implementation> Container = new Dictionary<string, Implementation>();
 
         public static void Register<TKey, TImplementation>(bool isInstanceShared, string instanceLabel = null, bool replaceExisting = false) where TImplementation : class
         {
@@ -28,11 +28,11 @@ namespace VisualCrypt.Applications.Services.Interfaces
                 : $"{typeof (TKey).FullName} - {instanceLabel}";
         }
 
-        public static TKey Get<TKey>(string instanceLabel = null)
+        public static TKey Get<TKey>(string instanceLabel = null) where TKey :class
         {
             var key = GetKey<TKey>(instanceLabel);
             if (!Container.ContainsKey(key))
-                throw new InvalidOperationException($"{typeof (TKey)} is not available from the container.");
+                return null;
 
             var typeInstance = Container[key];
 

@@ -104,7 +104,7 @@ namespace Prism.Mvvm
         /// </summary>
         /// <param name="view">The view that the view model wants.</param>
         /// <returns>The vie wmodel that corresponds to the view passed as a parameter.</returns>
-        private static object GetViewModelForView(object view)
+        static object GetViewModelForView(object view)
         {
             var viewKey = view.GetType().ToString();
 

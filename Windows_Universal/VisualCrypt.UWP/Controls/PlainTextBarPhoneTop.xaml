@@ -1,0 +1,22 @@
+﻿<UserControl
+    x:Class="VisualCrypt.UWP.Controls.PlainTextBarPhoneTop"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
+    <Grid>
+        <StackPanel Style="{StaticResource ExtendedAppBarStackPanelStyle}" 
+                    HorizontalAlignment="Right" Margin="0,0,45,0">
+            <Button Style="{StaticResource ExtendedAppBarButtonStyle}" 
+                    HorizontalAlignment="Right" 
+                    Click="Hyperlink_SetPassword_Click" 
+                    Content="{x:Bind _viewModel.PasswordInfo.PasswordStatus, Mode=OneWay}" />
+            <Button Style="{StaticResource ExtendedAppBarButtonStyle}" 
+                    Content="r"
+                    HorizontalAlignment="Right" FontFamily="WebDings" 
+                    Click="Hyperlink_ClearPassword_MouseDown"
+                    Visibility="{x:Bind _viewModel.PasswordInfo.IsPasswordSet, Mode=OneWay, Converter={StaticResource BoolVisibility}}"  
+                    />
+        </StackPanel>
+    </Grid>
+</UserControl>

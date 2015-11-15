@@ -14,8 +14,8 @@ namespace Prism.Events
     /// <typeparam name="TPayload">The type to use for the generic <see cref="System.Action{TPayload}"/> and <see cref="Predicate{TPayload}"/> types.</typeparam>
     public class EventSubscription<TPayload> : IEventSubscription
     {
-        private readonly IDelegateReference _actionReference;
-        private readonly IDelegateReference _filterReference;
+        readonly IDelegateReference _actionReference;
+        readonly IDelegateReference _filterReference;
 
         ///<summary>
         /// Creates a new instance of <see cref="EventSubscription{TPayload}"/>.

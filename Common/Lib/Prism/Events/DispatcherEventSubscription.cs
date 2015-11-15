@@ -13,7 +13,7 @@ namespace Prism.Events
     /// <typeparam name="TPayload">The type to use for the generic <see cref="System.Action{TPayload}"/> and <see cref="Predicate{TPayload}"/> types.</typeparam>
     public class DispatcherEventSubscription<TPayload> : EventSubscription<TPayload>
     {
-        private readonly SynchronizationContext syncContext;
+        readonly SynchronizationContext syncContext;
 
         ///<summary>
         /// Creates a new instance of <see cref="BackgroundEventSubscription{TPayload}"/>.
