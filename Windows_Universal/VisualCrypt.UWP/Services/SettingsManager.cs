@@ -12,13 +12,17 @@ namespace VisualCrypt.UWP.Services
 {
     sealed class SettingsManager : AbstractSettingsManager
     {
-
+        /// <summary>
+        /// In this version of the App, the CurrentDirectoryName set from OpenFile is ignored.
+        /// Instead, it will always be ApplicationData.Current.LocalFolder.Path.
+        /// </summary>
         public override string CurrentDirectoryName
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(_currentDirectoryName) || !Directory.Exists(_currentDirectoryName))
-                    _currentDirectoryName = ApplicationData.Current.LocalFolder.Path;
+                // in WPF: if (string.IsNullOrWhiteSpace(_currentDirectoryName) || !Directory.Exists(_currentDirectoryName))
+                // here: always overwrite the value with the path of the local folder.
+                _currentDirectoryName = ApplicationData.Current.LocalFolder.Path;
                 return _currentDirectoryName;
             }
             set { _currentDirectoryName = value; }

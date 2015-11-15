@@ -15,6 +15,8 @@
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe762;" />
                 </AppBarButton.Icon>
             </AppBarButton>
+            <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Open" Icon="OpenFile" Click="OnButtonOpenFileClick"
+                          Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibilityInverse}}" />
             <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Add" Icon="Add" Command="{x:Bind _viewModel.NavigateToNewCommand}"
                           Visibility="{x:Bind _viewModel.IsEditMode, Mode=OneWay, Converter={StaticResource BoolVisibilityInverse}}" />
             <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="Rename" Icon="Rename" 
@@ -35,7 +37,7 @@
             <AppBarButton Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.miVCSettings}" Icon="Setting" Command="{x:Bind _viewModel.NavigateToSettingsCommand}" />
         </CommandBar>
     </Page.BottomAppBar>
-    
+
     <Grid x:Name="BackgroundGrid" Background="White">
         <Grid.Resources>
             <!-- When using x:Bind, you need to set x:DataType -->
@@ -79,6 +81,7 @@
         </Grid.RowDefinitions>
         <controls:FilenameUserControl x:Name="FilenameUserControl" x:FieldModifier="public" Grid.Row="0" Visibility="Collapsed"
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{StaticResource AccentColorBrush}" />
+
         <ListView Grid.Row="1" x:Name="FilesListView" HorizontalAlignment="Stretch" Style="{StaticResource ListViewStyle}"
             ItemsSource="{x:Bind _viewModel.FileReferences}"
             IsItemClickEnabled="True"
@@ -132,6 +135,7 @@
                 </Style>
             </ListView.ItemContainerStyle>
         </ListView>
+
     </Grid>
-   
+
 </Page>

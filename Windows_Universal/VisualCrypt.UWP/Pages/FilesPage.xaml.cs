@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.Storage;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,6 +9,7 @@ using Windows.UI.Xaml.Navigation;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.ViewModels;
+using VisualCrypt.Language.Strings;
 using VisualCrypt.UWP.Styles;
 
 namespace VisualCrypt.UWP.Pages
@@ -21,6 +23,11 @@ namespace VisualCrypt.UWP.Pages
         static bool _isFirstLoopComplete;
 
         readonly PortableFilesPageViewModel _viewModel;
+        readonly PortableMainViewModel _mainViewModel;
+        readonly ResourceWrapper _resourceWrapper;
+        readonly IFileService _fileService;
+        readonly IMessageBoxService _messageBoxService;
+
         bool _isFilenameDialogOpen;
 
 
@@ -28,7 +35,10 @@ namespace VisualCrypt.UWP.Pages
         {
             InitializeComponent();
             _viewModel = Service.Get<PortableFilesPageViewModel>();
-
+            _mainViewModel = Service.Get<PortableMainViewModel>();
+            _resourceWrapper = Service.Get<ResourceWrapper>();
+            _fileService = Service.Get<IFileService>();
+            _messageBoxService = Service.Get<IMessageBoxService>();
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -55,7 +65,7 @@ namespace VisualCrypt.UWP.Pages
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;
                 FilesListView.SelectionChanged -= OnListViewSelectionChanged;
                 FilesListView.SelectionChanged += OnListViewSelectionChanged;
-                
+
                 SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
                 SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
@@ -67,7 +77,7 @@ namespace VisualCrypt.UWP.Pages
         void WorkAroundLayoutBugWithMultipleScreens(object sender, object e)
         {
             ((DispatcherTimer)sender).Stop();
-            Frame.Navigate(typeof (FilesPage), new EntranceNavigationTransitionInfo());
+            Frame.Navigate(typeof(FilesPage), new EntranceNavigationTransitionInfo());
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -132,7 +142,7 @@ namespace VisualCrypt.UWP.Pages
                     _viewModel.MultiSelectedFileReferences.Add((FileReference)item);
                 }
             }
-          
+
             _viewModel.SelectedItemsCount = FilesListView.SelectedItems.Count;
             _viewModel.RenameCommand.RaiseCanExecuteChanged();
             _viewModel.DeleteCommand.RaiseCanExecuteChanged();
@@ -173,6 +183,35 @@ namespace VisualCrypt.UWP.Pages
             HideDialogCommon();
             FilenameUserControl.Visibility = Visibility.Collapsed;
             _isFilenameDialogOpen = false;
+        }
+
+        async void OnButtonOpenFileClick(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var pickFileResult =
+                    await
+                        _fileService.PickFileAsync(null, DialogFilter.VisualCryptAndText, FileDialogMode.Open,
+                            _resourceWrapper.miFileOpen.NoDots());
+                if (pickFileResult.Item1)
+                {
+                    var storageFile = await StorageFile.GetFileFromPathAsync(pickFileResult.Item2);
+                    var basicProperties = await storageFile.GetBasicPropertiesAsync();
+                    var modifiedDate = basicProperties.DateModified.ToLocalTime().ToString();
+                    var fileReference = new FileReference
+                    {
+                        ShortFilename = storageFile.Name,
+                        PathAndFileName = storageFile.Path,
+                        ModifiedDate = modifiedDate
+                    };
+                    await _viewModel.NavigateToOpenCommand.Execute(fileReference);
+                }
+            }
+            catch (Exception ex)
+            {
+                await _messageBoxService.ShowError(ex);
+            }
+
         }
     }
 }

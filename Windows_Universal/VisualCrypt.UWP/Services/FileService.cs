@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using Windows.Storage.AccessCache;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
+using Windows.Storage.Streams;
 using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
@@ -22,6 +25,8 @@ namespace VisualCrypt.UWP.Services
         readonly SettingsManager _settingsManager;
         readonly ResourceWrapper _resourceWrapper;
         readonly IMessageBoxService _messageBoxService;
+        readonly Dictionary<string, string> _accessTokens;
+
 
         public FileService()
         {
@@ -29,14 +34,10 @@ namespace VisualCrypt.UWP.Services
             _log = Service.Get<ILog>();
             _resourceWrapper = Service.Get<ResourceWrapper>();
             _messageBoxService = Service.Get<IMessageBoxService>();
+            _accessTokens = new Dictionary<string, string>();
         }
 
-        public async void WriteAllBytes(string pathAndFilename, byte[] encodedTextBytes)
-        {
-            var storageFolder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(pathAndFilename));
-            var storageFile = await storageFolder.CreateFileAsync(Path.GetFileName(pathAndFilename), CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteBytesAsync(storageFile, encodedTextBytes).AsTask();
-        }
+
 
         /// <summary>
         /// ATM this code is the same in WPF and UWP, consider sharing!
@@ -51,7 +52,7 @@ namespace VisualCrypt.UWP.Services
                     return false;
                 if (!filename.EndsWith(PortableConstants.DotVisualCrypt, StringComparison.Ordinal))
                     return false;
-                if (File.Exists(filename))
+                if (Exists(filename))
                     return true;
                 return false;
             }
@@ -62,10 +63,81 @@ namespace VisualCrypt.UWP.Services
             }
         }
 
-        public bool Exists(string filename)
+        public bool Exists(string pathAndFilename)
         {
-            return System.IO.File.Exists(filename);
+            var task = Task.Run(async () =>
+            {
+                var token = GetTokenByPathAndFilename(pathAndFilename);
+                if (token != null)
+                {
+                    try
+                    {
+                        StorageFile tokenFile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+                        return tokenFile != null;
+                    }
+                    catch (Exception)
+                    {
+                        return false;
+                    }
+                }
+
+                var storageFolder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(pathAndFilename));
+                var file = storageFolder.TryGetItemAsync(Path.GetFileName(pathAndFilename));
+                return file != null;
+            });
+            task.Wait();
+            return task.Result;
+
         }
+
+        public byte[] ReadAllBytes(string pathAndFilename)
+        {
+            var task = Task.Run(async () =>
+            {
+                IStorageFile storagefile;
+                var token = GetTokenByPathAndFilename(pathAndFilename);
+                if (token != null)
+                {
+                    storagefile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+                }
+                else
+                {
+                    storagefile = await StorageFile.GetFileFromPathAsync(pathAndFilename);
+                }
+
+                var buffer = await FileIO.ReadBufferAsync(storagefile);
+                return buffer.ToArray();
+            });
+            task.Wait();
+            return task.Result;
+        }
+
+        public async void WriteAllBytes(string pathAndFilename, byte[] encodedTextBytes)
+        {
+            IStorageFile storagefile;
+            var token = GetTokenByPathAndFilename(pathAndFilename);
+            if (token != null)
+            {
+                storagefile = await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+            }
+            else
+            {
+                var storageFolder = await StorageFolder.GetFolderFromPathAsync(Path.GetDirectoryName(pathAndFilename));
+                storagefile = await storageFolder.CreateFileAsync(Path.GetFileName(pathAndFilename), CreationCollisionOption.ReplaceExisting);
+            }
+
+            await FileIO.WriteBytesAsync(storagefile, encodedTextBytes).AsTask();
+        }
+
+        string GetTokenByPathAndFilename(string pathAndFilename)
+        {
+            if (_accessTokens.ContainsKey(pathAndFilename))
+                return _accessTokens[pathAndFilename];
+            return null;
+        }
+
+
+
 
         public string ReadAllText(string filename, Encoding selectedEncoding)
         {
@@ -76,16 +148,95 @@ namespace VisualCrypt.UWP.Services
         {
             switch (fileDialogMode)
             {
-                case FileDialogMode.SaveAs:
+                case FileDialogMode.SaveAs: // Built-in filename prompt
                     return await SaveAsAsync();
+                case FileDialogMode.ExplicitSaveAs: // System SaveFilePicker
+                    return await ExplicitSaveAsAsync(filenames, diaglogFilter, title);
                 case FileDialogMode.Rename:
                     return await RenameAsync(filenames);
                 case FileDialogMode.Delete:
                     return await DeleteAsyncWithCustomDialog(new string[] { filenames }, title);
                 case FileDialogMode.DeleteMany:
                     return await DeleteAsyncWithCustomDialog(filenames.Split(';'), title);
+                case FileDialogMode.Open:
+                    return await OpenAsyncWithSystemPicker(diaglogFilter, title);
             }
             throw new NotSupportedException(fileDialogMode.ToString());
+        }
+
+        async Task<Tuple<bool, string>> ExplicitSaveAsAsync(string defaultFileNameOrPathAndFilename, DialogFilter diaglogFilter, string title)
+        {
+            var canceledOrFailed = new Tuple<bool, string>(false, null);
+
+            if (string.IsNullOrEmpty(defaultFileNameOrPathAndFilename))
+                defaultFileNameOrPathAndFilename = _resourceWrapper.constUntitledDotVisualCrypt;
+
+            bool hasPath = defaultFileNameOrPathAndFilename != Path.GetFileName(defaultFileNameOrPathAndFilename);
+
+            var picker = new FileSavePicker
+            {
+                DefaultFileExtension = diaglogFilter == DialogFilter.Text ? ".txt" : ".visualcrypt"
+
+            };
+            if (diaglogFilter == DialogFilter.Text)
+            {
+                picker.FileTypeChoices.Add("Text", new List<string> { ".txt" });
+                picker.FileTypeChoices.Add("All Files", new List<string> { "." });
+
+            }
+            else
+            {
+                picker.FileTypeChoices.Add("VisualCrypt", new List<string> { ".visualcrypt" });
+                picker.FileTypeChoices.Add("All Files", new List<string> { "." });
+            }
+           
+
+            if (!hasPath)
+            {
+                picker.SuggestedStartLocation = PickerLocationId.Desktop;
+                picker.SuggestedFileName = defaultFileNameOrPathAndFilename;
+            }
+            else
+            {
+                var shortFilename = Path.GetFileName(defaultFileNameOrPathAndFilename);
+                var directoryName = Path.GetDirectoryName(defaultFileNameOrPathAndFilename);
+                if (directoryName.Contains("AppData"))
+                {
+                    picker.SuggestedStartLocation = PickerLocationId.Desktop;
+                    picker.SuggestedFileName = shortFilename;
+                }
+                else
+                {
+                    picker.SuggestedSaveFile = await StorageFile.GetFileFromPathAsync(defaultFileNameOrPathAndFilename);
+                }
+            }
+
+            var fileToSave = await picker.PickSaveFileAsync();
+
+            if (fileToSave == null)
+                return canceledOrFailed;
+
+            if (!Path.GetDirectoryName(fileToSave.Path).Equals(ApplicationData.Current.LocalFolder.Path))
+            {
+                string fileToken = StorageApplicationPermissions.FutureAccessList.Add(fileToSave, fileToSave.Path);
+                _accessTokens[fileToSave.Path] = fileToken; // add or replace
+            }
+            return new Tuple<bool, string>(true, fileToSave.Path);
+        }
+
+        async Task<Tuple<bool, string>> OpenAsyncWithSystemPicker(DialogFilter diaglogFilter, string title)
+        {
+            var canceledOrFailed = new Tuple<bool, string>(false, null);
+
+            FileOpenPicker picker = new FileOpenPicker { SuggestedStartLocation = PickerLocationId.Desktop };
+            picker.FileTypeFilter.Add("*");
+            StorageFile fileToOpen = await picker.PickSingleFileAsync();
+            if (fileToOpen == null)
+                return canceledOrFailed;
+
+            string fileToken = StorageApplicationPermissions.FutureAccessList.Add(fileToOpen, fileToOpen.Path);
+            _accessTokens[fileToOpen.Path] = fileToken; // add or replace
+            return new Tuple<bool, string>(true, fileToOpen.Path);
         }
 
         private Task<Tuple<bool, string>> DeleteAsyncWithCustomDialog(string[] v, string title)
@@ -162,10 +313,7 @@ namespace VisualCrypt.UWP.Services
 
 
 
-        public byte[] ReadAllBytes(string filename)
-        {
-            return System.IO.File.ReadAllBytes(filename);
-        }
+
 
         public string PathGetFileName(string filename)
         {

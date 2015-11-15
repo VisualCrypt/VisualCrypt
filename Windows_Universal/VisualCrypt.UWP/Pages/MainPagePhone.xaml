@@ -26,6 +26,7 @@
             <AppBarButton  Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.termShare}" Icon="Send" Width="48" Click="OnShareButtonClick" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="{x:Bind _viewModel.ResourceWrapper.miFileOpen}"  Command="{x:Bind _viewModel.OpenCommand, Mode=OneWay}" Icon="OpenFile"  />
+                <AppBarButton Label="{x:Bind _viewModel.ResourceWrapper.miFileSaveAs}"  Command="{x:Bind _viewModel.SaveAsCommand, Mode=OneWay}"   />
                 <AppBarButton  Label="{x:Bind _viewModel.ResourceWrapper.miFileExportClearText}"  Command="{x:Bind _viewModel.ExportCommand, Mode=OneWay}" Icon="Folder"  />
                 <AppBarButton  Label="{x:Bind _viewModel.ResourceWrapper.miFilePrint}"  Click="OnPrintButtonClick" Icon="Page"  />
             </CommandBar.SecondaryCommands>

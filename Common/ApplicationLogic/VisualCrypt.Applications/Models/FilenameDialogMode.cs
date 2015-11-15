@@ -6,6 +6,7 @@
 		SaveAs,
 		Rename,
 		Delete,
-		DeleteMany
-	}
+		DeleteMany,
+        ExplicitSaveAs
+    }
 }

@@ -382,7 +382,7 @@ namespace VisualCrypt.Applications.ViewModels
             {
                 await _messageBoxService.ShowError(e.Message);
             }
-           
+
         }
 
 
@@ -684,12 +684,22 @@ namespace VisualCrypt.Applications.ViewModels
                 // This is the case where we need a new filename and can then also 'just save'.
                 else if (FileModel.IsEncrypted && (isSaveAs || !_fileService.CheckFilenameForQuickSave(FileModel.Filename)))
                 {
-                    string suggestedFilename = null;
-                    if (isSaveAs)
-                        suggestedFilename = FileModel.Filename;
+                    var suggestedFilename = FileModel.Filename;
+                    FileDialogMode fileDialogMode;
+
+                    // WPF treats the following SaveAs modes the same, the Apps will get 
+                    // a local name with SaveAs and show the System dialog with ExplicitSaveAs
+                    if (isSaveAs) // we need to get a filename because the user explicitly wishes it
+                    {
+                        fileDialogMode = FileDialogMode.ExplicitSaveAs;
+                    }
+                    else // we need to get a filename because we dont have one yes or CheckForQuickSave returned false
+                    {
+                        fileDialogMode = FileDialogMode.SaveAs;
+                    }
 
                     var pickFileResult =
-                        await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, FileDialogMode.SaveAs, _resourceWrapper.miFileSaveAs);
+                        await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, fileDialogMode, _resourceWrapper.miFileSaveAs);
                     if (pickFileResult.Item1)
                     {
                         FileModel.Filename = pickFileResult.Item2;
@@ -728,12 +738,22 @@ namespace VisualCrypt.Applications.ViewModels
             // Then we must sure we have the file name:
             if (isSaveAs || !_fileService.CheckFilenameForQuickSave(FileModel.Filename))
             {
-                string suggestedFilename = null;
-                if (isSaveAs)
-                    suggestedFilename = FileModel.Filename;
+                var suggestedFilename = FileModel.Filename;
+                FileDialogMode fileDialogMode;
+
+                // WPF treats the following SaveAs modes the same, the Apps will get 
+                // a local name with SaveAs and show the System dialog with ExplicitSaveAs
+                if (isSaveAs) // we need to get a filename because the user explicitly wishes it
+                {
+                    fileDialogMode = FileDialogMode.ExplicitSaveAs;
+                }
+                else // we need to get a filename because we dont have one yes or CheckForQuickSave returned false
+                {
+                    fileDialogMode = FileDialogMode.SaveAs;
+                }
 
                 var pickFileResult =
-                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, FileDialogMode.SaveAs, _resourceWrapper.miFileSaveAs);
+                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.VisualCrypt, fileDialogMode, _resourceWrapper.miFileSaveAs);
                 if (!pickFileResult.Item1)
                     return;
                 FileModel.Filename = pickFileResult.Item2;
@@ -830,7 +850,7 @@ namespace VisualCrypt.Applications.ViewModels
                     FileModel.Filename.ReplaceCaseInsensitive(PortableConstants.DotVisualCrypt,
                         string.Empty);
                 var pickFileResult =
-                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.Text, FileDialogMode.SaveAs, title);
+                    await _fileService.PickFileAsync(suggestedFilename, DialogFilter.Text, FileDialogMode.ExplicitSaveAs, title);
                 if (pickFileResult.Item1)
                 {
                     byte[] encodedTextBytes = FileModel.SaveEncoding.GetBytes(editorClearText);
