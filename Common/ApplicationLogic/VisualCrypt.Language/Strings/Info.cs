@@ -7,14 +7,13 @@ namespace VisualCrypt.Language.Strings
 {
     public class Info : INotifyPropertyChanged
     {
-        public List<string> AvailableCultures = new List<string>() {"en", "de", "fr", "it", "ru" };
+        public readonly List<string> AvailableCultures = new List<string> {"en", "de", "fr", "it", "ru" };
 
         public void SwitchCulture(string cultureString)
         {
             var culture = new CultureInfo(cultureString);
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
-            Resources.Culture = culture;
             OnCultureChanged();
             OnPropertyChanged(nameof(IsEN));
             OnPropertyChanged(nameof(IsDE));

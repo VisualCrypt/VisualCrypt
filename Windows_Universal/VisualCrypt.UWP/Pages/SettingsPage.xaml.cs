@@ -1,21 +1,20 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Animation;
 using Prism.Commands;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.Services.PortableImplementations;
-using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 using VisualCrypt.Language.Strings;
 using VisualCrypt.UWP.Services;
 
 namespace VisualCrypt.UWP.Pages
 {
-    public sealed partial class SettingsPage : Page, INotifyPropertyChanged
+    public sealed partial class SettingsPage : INotifyPropertyChanged
     {
         readonly IMessageBoxService _messageBoxService;
-        readonly IEncryptionService _encryptionService;
         readonly SettingsManager _settingsManager;
         readonly ResourceWrapper _resourceWrapper;
         readonly string _title;
@@ -25,19 +24,34 @@ namespace VisualCrypt.UWP.Pages
         {
             InitializeComponent();
             _messageBoxService = Service.Get<IMessageBoxService>();
-            _encryptionService = Service.Get<IEncryptionService>();
             _settingsManager = (SettingsManager)Service.Get<AbstractSettingsManager>();
             _resourceWrapper = Service.Get<ResourceWrapper>();
             _title = _resourceWrapper.miVCSettings.NoDots();
 
             LogRounds = _settingsManager.CryptographySettings.LogRounds;
             _initialLogRounds = _logRounds;
+
+            Loaded += OnLoaded;
+        }
+
+        void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
+            SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+        }
+
+        void OnBackRequested(object sender, BackRequestedEventArgs e)
+        {
+            e.Handled = true;
+
+            e.Handled = true;
+            Frame.Navigate(typeof(FilesPage), new EntranceNavigationTransitionInfo());
         }
 
         string Title => _title;
         ResourceWrapper ResourceWrapper => _resourceWrapper;
 
-        byte DefaultBCryptRoundsLog2 = BCrypt.DefaultBCryptRoundsLog2;
+        readonly byte _defaultBCryptRoundsLog2 = 10;
 
         void AppBarButton_Back_Click(object sender, RoutedEventArgs e)
         {
@@ -87,12 +101,12 @@ namespace VisualCrypt.UWP.Pages
 
         void ExecuteDefaultsCommand()
         {
-            LogRounds = BCrypt.DefaultBCryptRoundsLog2;
+            LogRounds = _defaultBCryptRoundsLog2;
         }
 
         bool CanExecuteDefaultsCommand()
         {
-            return LogRounds != BCrypt.DefaultBCryptRoundsLog2;
+            return Math.Abs(LogRounds - _defaultBCryptRoundsLog2) > 0.5;
         }
 
       
@@ -118,12 +132,12 @@ namespace VisualCrypt.UWP.Pages
 
         void SetWarningText(byte logRounds)
         {
-            if (logRounds == BCrypt.DefaultBCryptRoundsLog2)
+            if (logRounds == _defaultBCryptRoundsLog2)
             {
                 TextBlockWarning.Text = _resourceWrapper.sett_warn_neutral;
                 return;
             }
-            TextBlockWarning.Text = logRounds > BCrypt.DefaultBCryptRoundsLog2
+            TextBlockWarning.Text = logRounds > _defaultBCryptRoundsLog2
                 ? _resourceWrapper.sett_warn_high
                 : _resourceWrapper.sett_warn_low;
         }

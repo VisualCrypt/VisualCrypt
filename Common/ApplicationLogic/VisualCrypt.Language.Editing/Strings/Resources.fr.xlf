@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
-  <file datatype="xml" source-language="en" target-language="it" original="Resources.resx" tool-id="MultilingualAppToolkit" product-name="VisualCrypt.Language" product-version="1.0.0.0" build-num="0">
+  <file datatype="xml" source-language="en" target-language="fr" original="Resources.resx" tool-id="MultilingualAppToolkit" product-name="VisualCrypt.Language.Editing" product-version="1.0.0.0" build-num="0">
     <header>
       <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="3.1.1250.0" tool-company="Microsoft" />
     </header>
@@ -8,218 +8,219 @@
       <group id="Resx">
         <trans-unit id="Resx/constUntitledDotVisualCrypt" translate="yes" xml:space="preserve">
           <source>Untitled.visualcrypt</source>
-          <target state="translated">Senza titolo.visualcrypt</target>
+          <target state="translated">Sans titre.visualcrypt</target>
         </trans-unit>
         <trans-unit id="Resx/encrpytedStatusbarText" translate="yes" xml:space="preserve">
           <source>VisualCrypt {0}, AES 256 Bit, 2^{1} Rounds , {2} Ch.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt: {0}, AES 256 Bit, 2 ^ {1} arrotondamenti, capitolo {2}</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt {0}, AES 256 bits, 2 ^ Arrondit {1}, {2} Ch.</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_ProcessingKey" translate="yes" xml:space="preserve">
           <source>Processing Key...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Elaborazione della chiave...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Traitement de la clé...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingRandomKey" translate="yes" xml:space="preserve">
           <source>Encrypting Random Key...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Chiave di crittografia casuale...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crypter la clé aléatoire...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingMessage" translate="yes" xml:space="preserve">
           <source>Encrypting Message...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La crittografia dei messaggi...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le cryptage des messages...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_EncryptingMAC" translate="yes" xml:space="preserve">
           <source>Encrypting MAC...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La crittografia di Mac...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le cryptage Mac...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingRandomKey" translate="yes" xml:space="preserve">
           <source>Decrypting Random Key...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografare una chiave casuale...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décryptage de clé aléatoire...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingMessage" translate="yes" xml:space="preserve">
           <source>Decrypting Message...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La decrittografia del messaggio...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décryptage du Message...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_DecryptingMAC" translate="yes" xml:space="preserve">
           <source>Decrypting MAC...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografia di Mac...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décryptage Mac...</target>
         </trans-unit>
         <trans-unit id="Resx/encProgr_CalculatingMAC" translate="yes" xml:space="preserve">
           <source>Calculating MAC...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Il calcolo del Mac...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Calcul du Mac...</target>
         </trans-unit>
         <trans-unit id="Resx/uriSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</source>
-          <target state="translated">https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</target></trans-unit>
+          <target state="translated">https://visualcrypt.com/post/visualcrypt-2-encryption-standard-specification</target>
+          </trans-unit>
         <trans-unit id="Resx/msgDiscardChanges" translate="yes" xml:space="preserve">
           <source>Discard Changes?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ignorare le modifiche?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ignorer les modifications ?</target>
         </trans-unit>
         <trans-unit id="Resx/msgFileIsBinary" translate="yes" xml:space="preserve">
           <source>This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Questo file non è né testo né VisualCrypt - Visualizza con visualizzazione esadecimale? \r\n\r\nIf file è molto grande editor può diventare meno efficiente.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ce fichier n'est ni texte, ni VisualCrypt - Afficher vue de Hex? \r\n\r\nIf fichier est très volumineux, l'éditeur peut devenir moins réactive.</target>
         </trans-unit>
         <trans-unit id="Resx/msgFindRegExNoMatch" translate="yes" xml:space="preserve">
           <source>No match for '{0}' could be found.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Non Impossibile trovare alcuna corrispondenza per '{0}'.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Aucune correspondance pour « {0} » n'a été trouvé.</target>
         </trans-unit>
         <trans-unit id="Resx/msgNothingFoundSearchFromStart" translate="yes" xml:space="preserve">
           <source>Nothing found - Search again from the top of the document?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nessun risultato trovato - ricerca nuovamente dalla parte superiore del documento?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Aucun élément détecté - recherche à partir du haut du document ?</target>
         </trans-unit>
         <trans-unit id="Resx/msgReplaceOccucancesReplaced" translate="yes" xml:space="preserve">
           <source>{0} occurrences were replaced.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">sono state sostituite {0} occorrenze.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">{0} occurrences ont été remplacés.</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Set_Title" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostare la Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Définir le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_PrintPassword" translate="yes" xml:space="preserve">
           <source>Print Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Stampare la Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Imprimer le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_VisualCryptPasswords" translate="yes" xml:space="preserve">
           <source>VisualCrypt Passwords</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Password VisualCrypt</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Les mots de passe VisualCrypt</target>
         </trans-unit>
         <trans-unit id="Resx/spd_linktext_GeneratePassword" translate="yes" xml:space="preserve">
           <source>Generate Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Generare Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Générer un mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/spd_lbl_PasswordOrPhrase" translate="yes" xml:space="preserve">
           <source>Password/-phrase:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Password/frase:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">/-Mot de passe :</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgXofYUnicodeChars" translate="yes" xml:space="preserve">
           <source>{0} significant Unicode Characters</source>
-          <target state="translated">{0} caratteri Unicode</target>
+          <target state="translated">{0} caractères Unicode</target>
           </trans-unit>
         <trans-unit id="Resx/spd_text_ReadMoreAbout" translate="yes" xml:space="preserve">
           <source>Read more about</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Per ulteriori informazioni su</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">En savoir plus sur</target>
         </trans-unit>
         <trans-unit id="Resx/spd_text_from256BitRD" translate="yes" xml:space="preserve">
           <source>(256 Bit Random Data)</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">da 256 Bit di dati casuali</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">à partir des données aléatoires 256 bits</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/spd_msgUseEmptyPassword" translate="yes" xml:space="preserve">
           <source>Use empty password?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Utilizzare password vuota?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Utiliser un mot de passe vide ?</target>
         </trans-unit>
         <trans-unit id="Resx/spd_msgPasswordEffectivelyEmpty" translate="yes" xml:space="preserve">
           <source>The password is effectively empty - are you sure?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La password è effettivamente vuota - è certi che?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le mot de passe est effectivement vide - êtes vous sûr ?</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Set_OK" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostare la Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Définir le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncrypt_Title" translate="yes" xml:space="preserve">
           <source>Set Password %%amp; Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crittografare Password set %%amp;</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cryptage de mot de passe de jeu de %%amp;</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncrypt_OK" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crypter</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncryptAndSave_Title" translate="yes" xml:space="preserve">
           <source>Set Password, Encrypt and Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostare la Password, crittografare e salvare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Définir le mot de passe, crypter et enregistrer</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndEncryptAndSave_OK" translate="yes" xml:space="preserve">
           <source>Encrypt and Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crittografare e salvare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crypter et enregistrer</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecrypt_Title" translate="yes" xml:space="preserve">
           <source>Set Password %%amp; Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostare Password %%amp;decrittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Définir le mot de passe %%amp;décrypter</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecrypt_OK" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecryptLoadedFile_Title" translate="yes" xml:space="preserve">
           <source>Enter password to decrypt loaded file</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Immettere la password per decrittografare il file caricato</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Entrez le mot de passe pour décrypter le fichier chargé</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_SetAndDecryptLoadedFile_OK" translate="yes" xml:space="preserve">
           <source>Decrypt loaded file</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografare i file caricati</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter le fichier chargé</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_CorrectPassword_Title" translate="yes" xml:space="preserve">
           <source>The current password is not correct</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La password corrente non è corretta</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le mot de passe actuel n'est pas correct</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_CorrectPassword_OK" translate="yes" xml:space="preserve">
           <source>Change Password and decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cambiare la Password e la decrittografia</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifier le mot de passe et décrypter</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Change_Title" translate="yes" xml:space="preserve">
           <source>Change Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cambia Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifier le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/spdm_Change_OK" translate="yes" xml:space="preserve">
           <source>Change Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cambia Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifier le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/termBinary" translate="yes" xml:space="preserve">
           <source>Binary File</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">File binario</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Fichier binaire</target>
         </trans-unit>
         <trans-unit id="Resx/msgReplaceInvalidRegEx" translate="yes" xml:space="preserve">
           <source>Invalid Regular Expression Syntax</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sintassi delle espressioni regolari non valido</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Syntaxe d'Expression régulière non valide</target>
         </trans-unit>
         <trans-unit id="Resx/msgFindCouldNotBeFound" translate="yes" xml:space="preserve">
           <source>'{0}' could not be found.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">'{0}' non trovato.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">« {0} » est introuvable.</target>
         </trans-unit>
         <trans-unit id="Resx/termChangePassword" translate="yes" xml:space="preserve">
           <source>Change Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cambia Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifier le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/termClear" translate="yes" xml:space="preserve">
           <source>Clear</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cancella</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Effacer</target>
         </trans-unit>
         <trans-unit id="Resx/termReplaceAll" translate="yes" xml:space="preserve">
           <source>Replace All</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sostituisci tutto</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Remplacer tout</target>
         </trans-unit>
         <trans-unit id="Resx/titleExportCleartext" translate="yes" xml:space="preserve">
           <source>Export Clear Text (Encoding: {0})</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Esportare testo non crittografato (codifica: {0})</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Exporter le texte en clair (codage: {0})</target>
         </trans-unit>
         <trans-unit id="Resx/titleImportWithEncoding" translate="yes" xml:space="preserve">
           <source>Import with encoding: {0}</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Importazione con codifica: {0}</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Importation avec codage : {0}</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_label_typeFace" translate="yes" xml:space="preserve">
           <source>Typeface:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Typeface :</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/fnt_theQuickBrownFox" translate="yes" xml:space="preserve">
           <source>The quick brown fox jumps over the lazy dog</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Salta Cantami o Diva del pelide Achille</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rapide, le renard brun saute sur le chien paresseux</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelSize" translate="yes" xml:space="preserve">
           <source>Size:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">_Size :</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/fnt_labelPreview" translate="yes" xml:space="preserve">
           <source>Preview:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Anteprima:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Aperçu :</target>
         </trans-unit>
         <trans-unit id="Resx/fnt_labelFontFamilies" translate="yes" xml:space="preserve">
           <source>Font family:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Famiglia _Font:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Famille de _Font :</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/termDefaults" translate="yes" xml:space="preserve">
           <source>Defaults</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostazioni predefinite</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Valeurs par défaut</target>
         </trans-unit>
         <trans-unit id="Resx/termOK" translate="yes" xml:space="preserve">
           <source>OK</source>
@@ -227,247 +228,249 @@
         </trans-unit>
         <trans-unit id="Resx/termClearPassword" translate="yes" xml:space="preserve">
           <source>Clear Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cancella Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Effacer le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/msgFormatError" translate="yes" xml:space="preserve">
           <source>Invalid VisualCrypt format - Cannot decrypt this.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Non valido formato 2 VisualCrypt: Impossibile decrittografare questo!</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Valide le format de VisualCrypt 2 - Impossible de décrypter ce !</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/msgInvalidFilename" translate="yes" xml:space="preserve">
           <source>Invalid Filename.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nome file non valido.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nom de fichier non valide.</target>
         </trans-unit>
         <trans-unit id="Resx/termClose" translate="yes" xml:space="preserve">
           <source>Close</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Chiudere</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Fermer</target>
         </trans-unit>
         <trans-unit id="Resx/termFind" translate="yes" xml:space="preserve">
           <source>Find</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Trova</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rechercher</target>
         </trans-unit>
         <trans-unit id="Resx/toolAreaGoLineNo" translate="yes" xml:space="preserve">
           <source>Line Number (1-</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Numero di riga (1-</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Numéro de ligne (1-</target>
         </trans-unit>
         <trans-unit id="Resx/toolAreaRegularEx" translate="yes" xml:space="preserve">
           <source>Use Regular Expressions</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Utilizzare le espressioni regolari</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Utiliser des Expressions régulières</target>
         </trans-unit>
         <trans-unit id="Resx/toolAreaMatchWholeWord" translate="yes" xml:space="preserve">
           <source>Match whole word</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Parola intera</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Mot entier</target>
         </trans-unit>
         <trans-unit id="Resx/toolAreaMatchCase" translate="yes" xml:space="preserve">
           <source>Match case</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Maiuscole / minuscole</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Respecter la casse</target>
         </trans-unit>
         <trans-unit id="Resx/toolAreaReplaceWith" translate="yes" xml:space="preserve">
           <source>Replace with:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sostituire con:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Remplacer par :</target>
         </trans-unit>
         <trans-unit id="Resx/toolAreaSearchUp" translate="yes" xml:space="preserve">
           <source>Search up</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ricerca verso l'alto</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rechercher vers le haut</target>
         </trans-unit>
         <trans-unit id="Resx/termNotes" translate="yes" xml:space="preserve">
           <source>Notes</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Note</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Notes</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgSetName" translate="yes" xml:space="preserve">
           <source>Save Note</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Salva nota</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Enregistrer la Note</target>
         </trans-unit>
         <trans-unit id="Resx/termFilename" translate="yes" xml:space="preserve">
           <source>Filename:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nome file:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nom du fichier :</target>
         </trans-unit>
         <trans-unit id="Resx/termShare" translate="yes" xml:space="preserve">
           <source>Share</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Condivisione</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Partage</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgRename" translate="yes" xml:space="preserve">
           <source>Rename Note</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rinominare la nota</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Renommer la Note</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgDeleteMany" translate="yes" xml:space="preserve">
           <source>Delete Notes?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Eliminare le note?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Supprimer des Notes ?</target>
         </trans-unit>
         <trans-unit id="Resx/fileDlgDelete" translate="yes" xml:space="preserve">
           <source>Delete Note?</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Eliminare nota?</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Supprimer la Note ?</target>
         </trans-unit>
         <trans-unit id="Resx/termGo" translate="yes" xml:space="preserve">
           <source>Go</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Vai</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Atteindre</target>
         </trans-unit>
         <trans-unit id="Resx/termReplace" translate="yes" xml:space="preserve">
           <source>Replace</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sostituire</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Remplacer</target>
         </trans-unit>
         <trans-unit id="Resx/logWindowInfoText" translate="yes" xml:space="preserve">
           <source>This debug information will not be saved to a file.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Queste informazioni di debug non verranno salvate in un file.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ces informations de débogage ne seront pas enregistrées dans un fichier.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_neutral" translate="yes" xml:space="preserve">
           <source>The setting influences the required computational work to create the BCrypt hash. A higher value means more work.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">L'impostazione influenza il lavoro di calcolo necessario per creare l'hash BCrypt. Un valore maggiore indica una quantità di lavoro.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le paramètre influence le travail de calcul requis pour créer le hachage BCrypt. Une valeur élevée signifie plus de travail.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_low" translate="yes" xml:space="preserve">
           <source>Warning: A low value faciliates brute force and dictionary attacks.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Avviso: Un valore basso faciliates brute force attacchi con dizionario.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Avertissement : Une valeur faible faciliates brute force et par dictionnaire.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_warn_high" translate="yes" xml:space="preserve">
           <source>Warning: A high value will turn encryption and decryption into a very time consuming operation.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Avviso: Un valore elevato consente di ruotare la crittografia e decrittografia in un'operazione richiede molto tempo.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Avertissement : Une valeur élevée se transforme de cryptage et décryptage dans une opération très longue.</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_ReadThe" translate="yes" xml:space="preserve">
           <source>Read the</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Lettura di</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Lire la</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_orViewThe" translate="yes" xml:space="preserve">
           <source>or view the</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">o visualizzare il</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">ou consulter la</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_default_2_power" translate="yes" xml:space="preserve">
           <source>Default: 2</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Predefinito: 2</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Par défaut: 2</target>
         </trans-unit>
         <trans-unit id="Resx/sett_text_EncrpytionMethod" translate="yes" xml:space="preserve">
           <source>Encryption Method:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Metodo di crittografia</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Méthode de chiffrement</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/sett_text_BCryptAESRounds" translate="yes" xml:space="preserve">
           <source>BCrypt/AES Rounds:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">BCrypt/AES arrotondamenti:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Arrondit de BCrypt/AES :</target>
         </trans-unit>
         <trans-unit id="Resx/sett_linktext_Spec" translate="yes" xml:space="preserve">
           <source>Spec</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Specifiche</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Spécifications</target>
         </trans-unit>
         <trans-unit id="Resx/sett_linktext_Source" translate="yes" xml:space="preserve">
           <source>source code</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">codice sorgente</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">code source</target>
         </trans-unit>
         <trans-unit id="Resx/sett_combo_VisualCrypt2" translate="yes" xml:space="preserve">
           <source>VisualCrypt 2 (AES 256 Bit, BCrypt - Multi)</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt 2 (AES 256 Bit, BCrypt - multipla)</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">VisualCrypt 2 (AES 256 bits, BCrypt - Multi)</target>
         </trans-unit>
         <trans-unit id="Resx/uriSourceUrl" translate="yes" xml:space="preserve">
           <source>https://github.com/VisualCrypt/VisualCrypt</source>
-          <target state="signed-off">https://github.com/VisualCrypt/VisualCrypt</target></trans-unit>
+          <target state="translated">https://github.com/VisualCrypt/VisualCrypt</target></trans-unit>
         <trans-unit id="Resx/uriPWSpecUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/post/password-quality</source>
-          <target state="translated">https://visualcrypt.com/post/password-quality</target></trans-unit>
+          <target state="signed-off">https://visualcrypt.com/post/password-quality</target>
+          </trans-unit>
         <trans-unit id="Resx/uriHelpUrl" translate="yes" xml:space="preserve">
           <source>https://visualcrypt.com/category/faq</source>
-          <target state="translated">https://visualcrypt.com/category/faq</target></trans-unit>
+          <target state="signed-off">https://visualcrypt.com/category/faq</target>
+          </trans-unit>
         <trans-unit id="Resx/termSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostare la Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Définir le mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/termSave" translate="yes" xml:space="preserve">
           <source>Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Salva</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Enregistrer</target>
         </trans-unit>
         <trans-unit id="Resx/termPassword" translate="yes" xml:space="preserve">
           <source>Password</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Password</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Mot de passe</target>
         </trans-unit>
         <trans-unit id="Resx/termEncrypt" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crypter</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/termDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter</target>
         </trans-unit>
         <trans-unit id="Resx/termCopyToClipboard" translate="yes" xml:space="preserve">
           <source>Copy to Clipboard</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Copia negli Appunti</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Copier dans le Presse-papiers</target>
         </trans-unit>
         <trans-unit id="Resx/termCancel" translate="yes" xml:space="preserve">
           <source>Cancel</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Annulla</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Annuler</target>
         </trans-unit>
         <trans-unit id="Resx/plaintextStatusbarText" translate="yes" xml:space="preserve">
           <source>Plaintext | {0} | {1}</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Testo normale | {0} | {1}</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Texte brut | {0} | {1}</target>
         </trans-unit>
         <trans-unit id="Resx/plaintextStatusbarPositionInfo" translate="yes" xml:space="preserve">
           <source>Ln {0}, Col {1} | Pos {2}/{3}</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ln {0}, {1} Col | POS {2} / {3}</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ln {0}, colonne {1} | POS {2} / {3}</target>
         </trans-unit>
         <trans-unit id="Resx/operationEncryption" translate="yes" xml:space="preserve">
           <source>Encrypting:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crittografia:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le cryptage :</target>
         </trans-unit>
         <trans-unit id="Resx/operationEncryptAndSave" translate="yes" xml:space="preserve">
           <source>Encrypting and saving:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La crittografia e il salvataggio:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Le cryptage et l'enregistrement :</target>
         </trans-unit>
         <trans-unit id="Resx/operationDecryptOpenedFile" translate="yes" xml:space="preserve">
           <source>Decrypting loaded file:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografare il file aperto:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter le fichier à ouvrir :</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
           </trans-unit>
         <trans-unit id="Resx/operationDecryption" translate="yes" xml:space="preserve">
           <source>Decrypting:</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">La decrittografia:</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décryptage :</target>
         </trans-unit>
         <trans-unit id="Resx/msgPasswordError" translate="yes" xml:space="preserve">
           <source>Incorrect password or corrupted/forged message.</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Password errata o messaggio danneggiato contraffatti.</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Mot de passe incorrect ou endommagé/falsifié le message.</target>
         </trans-unit>
         <trans-unit id="Resx/miViewZoomOut" translate="yes" xml:space="preserve">
           <source>Zoom Out</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Zoom indietro</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Effectuer un zoom arrière</target>
         </trans-unit>
         <trans-unit id="Resx/miViewZoomLevelText" translate="yes" xml:space="preserve">
           <source>Zoom ({0}%)</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Zoom (%{0})</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Zoom ({0} %)</target>
         </trans-unit>
         <trans-unit id="Resx/miViewZoomIn" translate="yes" xml:space="preserve">
           <source>Zoom In</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Eseguire lo zoom avanti</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Zoom avant</target>
         </trans-unit>
         <trans-unit id="Resx/miViewToolArea" translate="yes" xml:space="preserve">
           <source>Tool Area</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Strumento Area</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Outil zone</target>
         </trans-unit>
         <trans-unit id="Resx/miViewStatusBar" translate="yes" xml:space="preserve">
           <source>Status Bar</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Barra di stato</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Barre d'état</target>
         </trans-unit>
         <trans-unit id="Resx/miViewLanguage" translate="yes" xml:space="preserve">
           <source>Language</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Lingua</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Langue</target>
         </trans-unit>
         <trans-unit id="Resx/miView" translate="yes" xml:space="preserve">
           <source>View</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Visualizzazione</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Affichage</target>
         </trans-unit>
         <trans-unit id="Resx/miVCSettings" translate="yes" xml:space="preserve">
           <source>Cryptography Settings...</source>
-          <target state="translated">Impostazioni di crittografia...</target></trans-unit>
+          <target state="translated">Paramètres de chiffrement...</target></trans-unit>
         <trans-unit id="Resx/miVCSetPassword" translate="yes" xml:space="preserve">
           <source>Set Password...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Impostare la Password...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Définir le mot de passe...</target>
         </trans-unit>
         <trans-unit id="Resx/miVCEncrypt" translate="yes" xml:space="preserve">
           <source>Encrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Crypter</target>
         </trans-unit>
         <trans-unit id="Resx/miVCDecrypt" translate="yes" xml:space="preserve">
           <source>Decrypt</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Decrittografare</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Décrypter</target>
         </trans-unit>
         <trans-unit id="Resx/miVCChangePassword" translate="yes" xml:space="preserve">
           <source>Change Password...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Cambia Password...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifier le mot de passe...</target>
         </trans-unit>
         <trans-unit id="Resx/miVC" translate="yes" xml:space="preserve">
           <source>VisualCrypt</source>
@@ -475,127 +478,127 @@
         </trans-unit>
         <trans-unit id="Resx/miHelpViewOnline" translate="yes" xml:space="preserve">
           <source>View Help Online</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Visualizzare la Guida in linea</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Afficher l'aide en ligne</target>
         </trans-unit>
         <trans-unit id="Resx/miHelpLog" translate="yes" xml:space="preserve">
           <source>Log...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Registro...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Journal...</target>
         </trans-unit>
         <trans-unit id="Resx/miHelpAbout" translate="yes" xml:space="preserve">
           <source>About VisualCrypt...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Informazioni su VisualCrypt...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">À propos de VisualCrypt...</target>
         </trans-unit>
         <trans-unit id="Resx/miHelp" translate="yes" xml:space="preserve">
           <source>Help</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Guida in linea</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Aide</target>
         </trans-unit>
         <trans-unit id="Resx/miFormatWordWrap" translate="yes" xml:space="preserve">
           <source>Word Wrap</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ritorno a capo automatico</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Retour à la ligne de Word</target>
         </trans-unit>
         <trans-unit id="Resx/miFormatFont" translate="yes" xml:space="preserve">
           <source>Font...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Tipo di carattere...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Police...</target>
         </trans-unit>
         <trans-unit id="Resx/miFormatCheckSpelling" translate="yes" xml:space="preserve">
           <source>Spellchecking</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Controllo ortografico</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Vérification de l'orthographe</target>
         </trans-unit>
         <trans-unit id="Resx/miFormat" translate="yes" xml:space="preserve">
           <source>Format</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Formato</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Format</target>
         </trans-unit>
         <trans-unit id="Resx/miFileSaveAs" translate="yes" xml:space="preserve">
           <source>Save As...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Salva come...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Enregistrer en tant que...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileSave" translate="yes" xml:space="preserve">
           <source>Save</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Salva</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Enregistrer</target>
         </trans-unit>
         <trans-unit id="Resx/miFilePrint" translate="yes" xml:space="preserve">
           <source>Print...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Stampa...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Imprimer...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileOpen" translate="yes" xml:space="preserve">
           <source>Open...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Apri...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ouvrir...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileNew" translate="yes" xml:space="preserve">
           <source>New</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nuovo</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Nouveau</target>
         </trans-unit>
         <trans-unit id="Resx/miFileImportWithEnconding" translate="yes" xml:space="preserve">
           <source>Import With Encoding...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Importazione con la codifica...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Importation avec codage...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileExportClearText" translate="yes" xml:space="preserve">
           <source>Export Cleartext...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Esporta in chiaro...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Exporter en texte clair...</target>
         </trans-unit>
         <trans-unit id="Resx/miFileExit" translate="yes" xml:space="preserve">
           <source>Exit</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Uscita</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sortie</target>
         </trans-unit>
         <trans-unit id="Resx/miFile" translate="yes" xml:space="preserve">
           <source>File</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">File</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Fichier</target>
         </trans-unit>
         <trans-unit id="Resx/miEditUndo" translate="yes" xml:space="preserve">
           <source>Undo</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Annulla</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Annuler</target>
         </trans-unit>
         <trans-unit id="Resx/miEditSelectAll" translate="yes" xml:space="preserve">
           <source>Select All</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Seleziona tutto</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sélectionner tout</target>
         </trans-unit>
         <trans-unit id="Resx/miEditReplace" translate="yes" xml:space="preserve">
           <source>Replace...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Sostituire...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Remplacer...</target>
         </trans-unit>
         <trans-unit id="Resx/miEditRedo" translate="yes" xml:space="preserve">
           <source>Redo</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Ripeti</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rétablir</target>
         </trans-unit>
         <trans-unit id="Resx/miEditPaste" translate="yes" xml:space="preserve">
           <source>Paste</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Incolla</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Coller</target>
         </trans-unit>
         <trans-unit id="Resx/miEditInsertDateTime" translate="yes" xml:space="preserve">
           <source>Insert Date, Time</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Inserisci data, ora</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Insérer la Date, heure</target>
         </trans-unit>
         <trans-unit id="Resx/miEditGoTo" translate="yes" xml:space="preserve">
           <source>Go To...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Vai a...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Aller à...</target>
         </trans-unit>
         <trans-unit id="Resx/miEditFindPrevious" translate="yes" xml:space="preserve">
           <source>Find Previous</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Trova precedente</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rechercher précédent</target>
         </trans-unit>
         <trans-unit id="Resx/miEditFindNext" translate="yes" xml:space="preserve">
           <source>Find Next</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Trova successivo</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rechercher le suivant</target>
         </trans-unit>
         <trans-unit id="Resx/miEditFind" translate="yes" xml:space="preserve">
           <source>Find...</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Trova...</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Rechercher...</target>
         </trans-unit>
         <trans-unit id="Resx/miEditDeleteLine" translate="yes" xml:space="preserve">
           <source>Delete Line</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Elimina riga</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Supprimer ligne</target>
         </trans-unit>
         <trans-unit id="Resx/miEditCut" translate="yes" xml:space="preserve">
           <source>Cut</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Taglio</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Couper</target>
         </trans-unit>
         <trans-unit id="Resx/miEditCopy" translate="yes" xml:space="preserve">
           <source>Copy</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Copia</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Copie</target>
         </trans-unit>
         <trans-unit id="Resx/miEdit" translate="yes" xml:space="preserve">
           <source>Edit</source>
-          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifica</target>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Modifier</target>
         </trans-unit>
       </group>
     </body>

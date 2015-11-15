@@ -2,7 +2,8 @@
     x:Class="VisualCrypt.UWP.Pages.HelpPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Foreground="Black">
+    Foreground="Black"
+    NavigationCacheMode="Disabled">
     <Page.TopAppBar>
         <CommandBar Style="{StaticResource CommandBarStyle}">
             <AppBarButton Style="{StaticResource AppBarButtonStyle}" Icon="Back" Click="AppBarButton_Back_Click"></AppBarButton>

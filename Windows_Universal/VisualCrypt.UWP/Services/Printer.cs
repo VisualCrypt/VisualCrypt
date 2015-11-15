@@ -30,6 +30,7 @@ namespace VisualCrypt.UWP.Services
 
             try
             {
+                // does not block!
                 bool success = await PrintManager.ShowPrintUIAsync();
             }
             catch (Exception e)
@@ -37,6 +38,7 @@ namespace VisualCrypt.UWP.Services
                 await _messageBoxService.ShowError(e);
             }
 
+            // do not call this now, only after printing
             // printHelper.UnregisterForPrinting();
         }
 
@@ -123,6 +125,7 @@ namespace VisualCrypt.UWP.Services
             printDocument.AddPages += AddPrintPages;
 
             PrintManager printMan = PrintManager.GetForCurrentView();
+            //printMan.PrintTaskRequested -= PrintTaskRequested;
             printMan.PrintTaskRequested += PrintTaskRequested;
         }
 

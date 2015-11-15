@@ -364,14 +364,25 @@ namespace VisualCrypt.Applications.ViewModels
 
         async void ExecuteOpenCommand()
         {
-            if (!await ConfirmToDiscardText())
-                return;
-
-            var pickFileResult = await _fileService.PickFileAsync(null, DialogFilter.VisualCryptAndText, FileDialogMode.Open, _resourceWrapper.miFileOpen.NoDots());
-            if (pickFileResult.Item1)
+            try
             {
-                await OpenFileCommon(pickFileResult.Item2);
+                if (!await ConfirmToDiscardText())
+                    return;
+
+                var pickFileResult =
+                    await
+                        _fileService.PickFileAsync(null, DialogFilter.VisualCryptAndText, FileDialogMode.Open,
+                            _resourceWrapper.miFileOpen.NoDots());
+                if (pickFileResult.Item1)
+                {
+                    await OpenFileCommon(pickFileResult.Item2);
+                }
             }
+            catch (Exception e)
+            {
+                await _messageBoxService.ShowError(e.Message);
+            }
+           
         }
 
 
@@ -647,7 +658,7 @@ namespace VisualCrypt.Applications.ViewModels
                 return CreateCommand(ref _saveCommand, ExecuteSaveCommand,
                     () =>
                     {
-                        bool canSave = FileModel.SaveEncoding != null && FileModel.IsDirty;
+                        bool canSave = FileModel.SaveEncoding != null && FileModel.IsDirty && FileModel.HasText && FileModel.HasText;
                         return canSave;
                     });
             }
@@ -726,6 +737,7 @@ namespace VisualCrypt.Applications.ViewModels
                 if (!pickFileResult.Item1)
                     return;
                 FileModel.Filename = pickFileResult.Item2;
+                FileModel.ShortFilename = _fileService.PathGetFileName(pickFileResult.Item2);
             }
             // No we have password and filename, we can now encrypt and save in one step.
             // We will not replace FileModel because we continue editing the same cleartext.

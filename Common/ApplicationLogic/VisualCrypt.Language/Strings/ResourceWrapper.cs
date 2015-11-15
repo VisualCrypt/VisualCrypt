@@ -17,10 +17,6 @@ namespace VisualCrypt.Language.Strings
             _info = new Info();
             Info.CultureChanged += (s, e) =>
             {
-                var p = PropertyChanged;
-                if (p != null)
-                    p(this, new PropertyChangedEventArgs(null));
-
                 if (_info.IsEN)
                     _generatedResource = new Generated_en();
                 if (_info.IsDE)
@@ -32,6 +28,9 @@ namespace VisualCrypt.Language.Strings
                 if (_info.IsIT)
                     _generatedResource = new Generated_it();
 
+                var p = PropertyChanged;
+                if (p != null)
+                    p(this, new PropertyChangedEventArgs(null));
             };
         }
 

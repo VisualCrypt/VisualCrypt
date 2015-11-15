@@ -3,7 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     Foreground="Black"
-    Opacity="1">
+    Opacity="1"
+    NavigationCacheMode="Disabled"
+    >
     <Page.TopAppBar>
         <CommandBar Style="{StaticResource CommandBarStyle}">
             <AppBarButton Style="{StaticResource AppBarButtonStyle}" Icon="Back" Click="AppBarButton_Back_Click"></AppBarButton>
@@ -57,7 +59,7 @@
                             <TextBlock Style="{StaticResource PageTextBlockStyle}" VerticalAlignment="Center" Margin="10,0,0,0">
                                     <Run Text="{x:Bind ResourceWrapper.sett_text_default_2_power, Mode=OneTime}"></Run>
                                     <Run Typography.Variants="Superscript" 
-                                         Text="{x:Bind DefaultBCryptRoundsLog2}" />
+                                         Text="{x:Bind _defaultBCryptRoundsLog2}" />
                             </TextBlock>
                         </StackPanel>
                         <TextBlock x:Name="TextBlockWarning" TextWrapping="Wrap" Style="{StaticResource PageTextBlockStyle}" Margin="0,0,0,20"  />

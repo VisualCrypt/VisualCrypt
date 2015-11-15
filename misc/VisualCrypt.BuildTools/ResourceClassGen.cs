@@ -3,29 +3,24 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Linq;
 
 namespace VisualCrypt.BuildTools
 {
     static class ResourceClassGen
     {
-        const string csnamespace = "namespace VisualCrypt.Language.Strings {";
-
-
-
-        public static int Run(string directory)
+        public static int Run()
         {
             try
             {
-                var languages = new string[] { "en", "de", "ru", "fr", "it" };
+                var languages = new[] { "en", "de", "ru", "fr", "it" };
 
                 foreach (var l in languages)
                 {
-                    var resourceDictionary = LoadResourceDictionary(l, directory);
+                    var resourceDictionary = LoadResourceDictionary(l, Program.ResXFilesPath);
                     if (l == "en")
-                        GenerateInterface(directory, resourceDictionary);
-                    GenerateInterfaceImplementation(directory, l, resourceDictionary);
+                        GenerateInterface(Program.CodeGenerationPath, resourceDictionary);
+                    GenerateInterfaceImplementation(Program.CodeGenerationPath, l, resourceDictionary);
                 }
                 Console.WriteLine("VisualCrypt.BuildTools: Resources code generation complete!");
             }
@@ -78,20 +73,29 @@ namespace VisualCrypt.BuildTools
             // <data name="constUntitledDotVisualCrypt" xml:space = "preserve">
             // <value> Untitled.visualcrypt </value>
             // </data>
-            var dataElements = doc.Root.Elements("data")
-                        .Where(e => e.Attribute("name") != null)
-                        .Where(e => e.HasElements);
-
-            foreach (var de in dataElements)
+            if (doc.Root != null)
             {
-                var propname = de.Attribute("name").Value;
+                var dataElements = doc.Root.Elements("data")
+                    .Where(e => e.Attribute("name") != null)
+                    .Where(e => e.HasElements);
 
-                var contents = de.Element("value").Value;
-                if (contents == null)
-                    contents = string.Empty;
-                contents = contents.Replace("\r", "").Replace("\n", "");
+                foreach (var de in dataElements)
+                {
+                    var propname = de.Attribute("name").Value;
 
-                dict.Add(propname, contents);
+                    var xElement = de.Element("value");
+                    if (xElement != null)
+                    {
+                        var contents = xElement.Value;
+                        contents = contents.Replace("\r", "").Replace("\n", "");
+
+                        dict.Add(propname, contents);
+                    }else throw new InvalidOperationException("Missing element 'value'");
+                }
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid XML Resource file!");
             }
             return dict;
         }

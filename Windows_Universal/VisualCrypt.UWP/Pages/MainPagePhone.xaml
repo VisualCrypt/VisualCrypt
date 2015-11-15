@@ -5,7 +5,7 @@
     xmlns:controls="using:VisualCrypt.UWP.Controls"
     Opacity="1"
     Background="#FFFFFFFF"
-    NavigationCacheMode="Required"
+    NavigationCacheMode="Disabled"
  >
 
     <Page.TopAppBar>

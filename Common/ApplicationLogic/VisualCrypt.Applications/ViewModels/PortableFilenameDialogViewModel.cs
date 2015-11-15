@@ -1,7 +1,6 @@
 ﻿using Prism.Commands;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
@@ -49,7 +48,7 @@ namespace VisualCrypt.Applications.ViewModels
                     _filename = value;
 
                     if (_filename.ToLowerInvariant().Contains(".visualcrypt"))
-                        _filename = _filename.Remove(value.IndexOf(".visualcrypt"));
+                        _filename = _filename.Remove(value.IndexOf(".visualcrypt", StringComparison.Ordinal));
 
                     OnPropertyChanged();
                     OKCommand.RaiseCanExecuteChanged();
@@ -130,10 +129,7 @@ namespace VisualCrypt.Applications.ViewModels
             return true;
 
         }
-        public void Close(bool setClicked)
-        {
-
-        }
+      
 
         #endregion
 
@@ -155,7 +151,7 @@ namespace VisualCrypt.Applications.ViewModels
             }
             finally
             {
-                _filename = string.Empty;
+                Filename = string.Empty;
             }
         }
 

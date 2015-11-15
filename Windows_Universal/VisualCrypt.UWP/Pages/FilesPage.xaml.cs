@@ -55,7 +55,7 @@ namespace VisualCrypt.UWP.Pages
                 _viewModel.PropertyChanged += OnViewModelPropertyChanged;
                 FilesListView.SelectionChanged -= OnListViewSelectionChanged;
                 FilesListView.SelectionChanged += OnListViewSelectionChanged;
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                
                 SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
                 SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 

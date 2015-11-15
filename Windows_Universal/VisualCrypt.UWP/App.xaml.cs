@@ -171,6 +171,10 @@ namespace VisualCrypt.UWP
                     }
                 };
             }
+            else
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            }
         }
 
         public static bool IsPhone()
