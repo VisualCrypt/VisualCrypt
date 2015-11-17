@@ -364,6 +364,7 @@
     </ReservedNames>
   </ProductReservedInfo>
   <AccountPackageIdentityNames>
+    <MainPackageIdentityName>VisualCryptAG.NotepadPhone</MainPackageIdentityName>
     <MainPackageIdentityName>VisualCryptAG.VisualCryptPro</MainPackageIdentityName>
   </AccountPackageIdentityNames>
   <PackageInfoList LandingUrl="https://dev.windows.com/dashboard/Application?appId=9NBLGGH1Z647" />

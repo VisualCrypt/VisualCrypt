@@ -9,8 +9,8 @@
  >
 
     <Page.TopAppBar>
-        <CommandBar x:Name="MainPageTopAppBar" Style="{StaticResource CommandBarStyle}">
-            <AppBarButton  Style="{StaticResource AppBarButtonStyle}"  Label="{x:Bind _viewModel.ResourceWrapper.miFileExit}" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" Width="48" />
+        <CommandBar x:Name="MainPageTopAppBar" Style="{StaticResource CommandBarStyle}" IsEnabled="{x:Bind _viewModel.StatusBarModel.IsProgressBarVisible, Mode=OneWay, Converter={StaticResource BoolInverse}}">
+            <AppBarButton  x:Name="AppBarButtonBack"  Style="{StaticResource AppBarButtonStyle}"  Label="{x:Bind _viewModel.ResourceWrapper.miFileExit}" Command="{x:Bind _viewModel.GoBackToFilesCommand}" Icon="Back" Width="48" />
             <AppBarButton  Style="{StaticResource AppBarButtonStyle}"  Label="{x:Bind _viewModel.ResourceWrapper.termSave}" Command="{x:Bind _viewModel.SaveCommand, Mode=OneWay}" Icon="Save" Width="48" />
            
             <AppBarButton  Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.termEncrypt}" Command="{x:Bind _viewModel.EncryptEditorContentsCommand, Mode=OneWay}" Width="60"   >
@@ -23,7 +23,7 @@
                     <FontIcon  Glyph="Decrypt" FontFamily="Segoe UI" FontSize="15" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton  Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.termShare}" Icon="Send" Width="48" Click="OnShareButtonClick" />
+            <AppBarButton x:Name="AppBarButtonShare"  Style="{StaticResource AppBarButtonStyle}" Label="{x:Bind _viewModel.ResourceWrapper.termShare}" Icon="Send" Width="48" Click="OnShareButtonClick" />
             <CommandBar.SecondaryCommands>
                 <AppBarButton Label="{x:Bind _viewModel.ResourceWrapper.miFileOpen}"  Command="{x:Bind _viewModel.OpenCommand, Mode=OneWay}" Icon="OpenFile"  />
                 <AppBarButton Label="{x:Bind _viewModel.ResourceWrapper.miFileSaveAs}"  Command="{x:Bind _viewModel.SaveAsCommand, Mode=OneWay}"   />

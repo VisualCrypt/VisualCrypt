@@ -21,7 +21,7 @@
     <PackageCertificateThumbprint>8B77FE91FA621AC02217F5DEFC4ACAEC5F1B86BD</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxPackageDir>C:\VisualCrypt\Store\</AppxPackageDir>
-    <AppxSymbolPackageEnabled>True</AppxSymbolPackageEnabled>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
     <AppxBundle>Never</AppxBundle>
     <AppxBundlePlatforms>arm</AppxBundlePlatforms>
   </PropertyGroup>
@@ -59,6 +59,7 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <UseDotNetNativeToolchain>false</UseDotNetNativeToolchain>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
     <OutputPath>bin\x64\Release\</OutputPath>
@@ -138,12 +139,14 @@
     <Compile Include="Pages\HelpPage.xaml.cs">
       <DependentUpon>HelpPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\ContinuationPage.xaml.cs" />
+    <Compile Include="Services\Printing\ContinuationPage.xaml.cs" />
     <Compile Include="Pages\MainPagePhone.xaml.cs">
       <DependentUpon>MainPagePhone.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\PageToPrint.xaml.cs" />
+    <Compile Include="Services\Printing\PageToPrint.xaml.cs" />
+    <Compile Include="Services\Printing\PrintHelper.cs" />
     <Compile Include="Styles\MoreColors.cs" />
+    <Compile Include="ValueConverters\BoolInverseConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityInverseConverter.cs" />
     <Compile Include="ValueConverters\BoolVisibilityConverter.cs" />
     <Compile Include="Controls\WorkingBarPhone.xaml.cs">
@@ -161,7 +164,7 @@
     <Compile Include="Services\MessageBoxService.cs" />
     <Compile Include="Services\ClipBoardService.cs" />
     <Compile Include="Services\LifeTimeService.cs" />
-    <Compile Include="Services\Printer.cs" />
+    <Compile Include="Services\Printing\Printer.cs" />
     <Compile Include="Services\TextBoxController.cs" />
     <Compile Include="Services\SettingsManager.cs" />
     <Compile Include="Services\WindowManager.cs" />
@@ -174,7 +177,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\logo_square_150.png" />
-    <Content Include="Assets\logo_square_310.png" />
     <Content Include="Assets\logo_square_44.png" />
     <Content Include="Assets\logo_square_71.png" />
     <Content Include="Assets\Splash_620_300.png" />
@@ -230,7 +232,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\ContinuationPage.xaml">
+    <Page Include="Services\Printing\ContinuationPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -242,7 +244,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\PageToPrint.xaml">
+    <Page Include="Services\Printing\PageToPrint.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

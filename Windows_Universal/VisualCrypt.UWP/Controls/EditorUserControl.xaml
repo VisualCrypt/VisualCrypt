@@ -5,6 +5,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006">
         <TextBox Grid.Row="0" x:Name="TextBox1" x:FieldModifier="public"
+                 IsEnabled="{x:Bind _mainViewModel.StatusBarModel.IsProgressBarVisible, Mode=OneWay, Converter={StaticResource BoolInverse}}"
+                 FontFamily="Consolas"
+                 FontSize="16"
                  BorderThickness="0" 
                  IsSpellCheckEnabled="False" 
                  IsTextPredictionEnabled="False"

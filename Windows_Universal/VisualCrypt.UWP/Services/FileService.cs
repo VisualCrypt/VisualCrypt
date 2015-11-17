@@ -25,7 +25,7 @@ namespace VisualCrypt.UWP.Services
         readonly SettingsManager _settingsManager;
         readonly ResourceWrapper _resourceWrapper;
         readonly IMessageBoxService _messageBoxService;
-        readonly Dictionary<string, string> _accessTokens;
+        public readonly Dictionary<string, string> AccessTokens;
 
 
         public FileService()
@@ -34,7 +34,7 @@ namespace VisualCrypt.UWP.Services
             _log = Service.Get<ILog>();
             _resourceWrapper = Service.Get<ResourceWrapper>();
             _messageBoxService = Service.Get<IMessageBoxService>();
-            _accessTokens = new Dictionary<string, string>();
+            AccessTokens = new Dictionary<string, string>();
         }
 
 
@@ -131,8 +131,8 @@ namespace VisualCrypt.UWP.Services
 
         string GetTokenByPathAndFilename(string pathAndFilename)
         {
-            if (_accessTokens.ContainsKey(pathAndFilename))
-                return _accessTokens[pathAndFilename];
+            if (AccessTokens.ContainsKey(pathAndFilename))
+                return AccessTokens[pathAndFilename];
             return null;
         }
 
@@ -219,7 +219,7 @@ namespace VisualCrypt.UWP.Services
             if (!Path.GetDirectoryName(fileToSave.Path).Equals(ApplicationData.Current.LocalFolder.Path))
             {
                 string fileToken = StorageApplicationPermissions.FutureAccessList.Add(fileToSave, fileToSave.Path);
-                _accessTokens[fileToSave.Path] = fileToken; // add or replace
+                AccessTokens[fileToSave.Path] = fileToken; // add or replace
             }
             return new Tuple<bool, string>(true, fileToSave.Path);
         }
@@ -235,7 +235,7 @@ namespace VisualCrypt.UWP.Services
                 return canceledOrFailed;
 
             string fileToken = StorageApplicationPermissions.FutureAccessList.Add(fileToOpen, fileToOpen.Path);
-            _accessTokens[fileToOpen.Path] = fileToken; // add or replace
+            AccessTokens[fileToOpen.Path] = fileToken; // add or replace
             return new Tuple<bool, string>(true, fileToOpen.Path);
         }
 
@@ -322,7 +322,9 @@ namespace VisualCrypt.UWP.Services
 
         public string GetEncodingDisplayString(Encoding saveEncoding)
         {
-            return saveEncoding.EncodingName;
+            return saveEncoding != null ?
+             saveEncoding.EncodingName
+             : "HEX";
         }
 
         async Task ShowSaveFileDialog(string suggestedFilename, DialogFilter diaglogFilter)

@@ -4,20 +4,15 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 >
-
     <Grid x:Name="PrintableArea">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition />
-        </Grid.ColumnDefinitions>
-
         <RichTextBlockOverflow x:Name="ContinuationPageLinkedContainer" Grid.Row="0" Grid.Column="0" />
-        <StackPanel x:Name="Footer" Grid.Row="4" Grid.Column="0" VerticalAlignment="Top" Visibility="Collapsed">
+        <StackPanel x:Name="Footer" Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Visibility="Collapsed">
             <RichTextBlock Foreground="Black" FontSize="16" TextAlignment="Left" FontFamily="Segoe UI">
-                <Paragraph>Copyright © Microsoft Corporation. All rights reserved.</Paragraph>
+                <Paragraph></Paragraph>
             </RichTextBlock>
         </StackPanel>
     </Grid>

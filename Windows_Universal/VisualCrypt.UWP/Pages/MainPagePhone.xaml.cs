@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
-using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -22,7 +20,6 @@ namespace VisualCrypt.UWP.Pages
         readonly PortableMainViewModel _viewModel;
 
         // Set in OnNavigatedTo (navigation parameters)
-        ShareOperation _shareOperation;
         FilesPageCommandArgs _filesPageCommandArgs;
 
         // Set in OnLoaded or in methods
@@ -44,13 +41,11 @@ namespace VisualCrypt.UWP.Pages
             base.OnNavigatedTo(e);
 
             // Copy only the navigation parameters
-            _shareOperation = e.Parameter as ShareOperation;
             _filesPageCommandArgs = e.Parameter as FilesPageCommandArgs;
 
             // For everything else, wait till all elements have been contructed.
             Loaded -= OnLoaded;
             Loaded += OnLoaded;
-
         }
 
         // Life Cycle: 2
@@ -66,19 +61,13 @@ namespace VisualCrypt.UWP.Pages
             SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
             SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
 
-            // behave like a share target...
-            if (_shareOperation != null)
-                await HandleAsShareTarget(_shareOperation);
-            else  // ...or register the current page as a share source.
-            {
-                _dataTransferManager = DataTransferManager.GetForCurrentView();
-                _dataTransferManager.DataRequested -= SendContentToShare;
-                _dataTransferManager.DataRequested += SendContentToShare;
-            }
-
             // Update the globally accessible reference to this instance.
             PageReference = this;
-
+            if (_filesPageCommandArgs.FilesPageCommand == FilesPageCommand.ShareTarget)
+            {
+                AppBarButtonBack.Visibility = Visibility.Collapsed;
+                AppBarButtonShare.Visibility = Visibility.Collapsed;
+            }
             // Finally, pass control to the ViewModel.
             await _viewModel.OnNavigatedToCompletedAndLoaded(_filesPageCommandArgs);
         }
@@ -91,8 +80,6 @@ namespace VisualCrypt.UWP.Pages
             Loaded -= OnLoaded;
             Window.Current.SizeChanged -= AdjustAppBarButtonSpacing;
             SystemNavigationManager.GetForCurrentView().BackRequested -= OnBackRequested;
-            if (_dataTransferManager != null)
-                _dataTransferManager.DataRequested -= SendContentToShare;
         }
 
         // Do not forget to unregister the BackRequested event in OnNavigatedFrom!
@@ -119,59 +106,56 @@ namespace VisualCrypt.UWP.Pages
                 await _viewModel.GoBackToFilesCommand.Execute();
         }
 
-     
+
 
         void OnShareButtonClick(object sender, RoutedEventArgs e)
         {
-            DataTransferManager.ShowShareUI();
+            try
+            {
+                _dataTransferManager = DataTransferManager.GetForCurrentView();
+                if (_dataTransferManager == null)
+                    return;
+
+                _dataTransferManager.DataRequested -= SendContentToShare;
+                _dataTransferManager.DataRequested += SendContentToShare;
+                DataTransferManager.ShowShareUI();
+            }
+            catch (Exception)
+            {
+                if (_dataTransferManager != null)
+                    _dataTransferManager.DataRequested -= SendContentToShare;
+            }
+        }
+        void SendContentToShare(DataTransferManager sender, DataRequestedEventArgs e)
+        {
+            try
+            {
+                var dataToSend = EditorUserControl.TextBox1.Text;
+                e.Request.Data.Properties.Title = "VisualCrypt";
+                e.Request.Data.SetText(dataToSend);
+                e.Request.Data.RequestedOperation = DataPackageOperation.Copy;
+               
+            }
+            catch (Exception)
+            {
+            }
+            finally
+            {
+                if (_dataTransferManager != null)
+                { 
+                    _dataTransferManager.DataRequested -= SendContentToShare;
+                }
+            }
+           
         }
 
         void OnPrintButtonClick(object sender, RoutedEventArgs e)
         {
-            if (EditorUserControl._viewModel.CanExecutePrint())
-                EditorUserControl._viewModel.ExecutePrint();
+            if (EditorUserControl.EditorViewModel.CanExecutePrint())
+                EditorUserControl.EditorViewModel.ExecutePrint();
         }
 
 
-        async Task HandleAsShareTarget(ShareOperation shareOperation)
-        {
-            if (shareOperation == null)
-                return;
-
-            await Task.Factory.StartNew(async () =>
-            {
-                if (shareOperation.Data.Contains(StandardDataFormats.Text))
-                {
-                    try
-                    {
-                        var sharedText = await shareOperation.Data.GetTextAsync();
-                        await
-                            Dispatcher.RunAsync(CoreDispatcherPriority.Normal,
-                                () => { EditorUserControl.TextBox1.Text = sharedText; });
-                    }
-                    catch (Exception ex)
-                    {
-                        NotifyUserBackgroundThread("Failed GetTextAsync - " + ex.Message);
-                    }
-                }
-            });
-        }
-
-        async void NotifyUserBackgroundThread(string message)
-        {
-            await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            {
-                Service.Get<IMessageBoxService>().ShowError(message);
-            });
-        }
-
-        void SendContentToShare(DataTransferManager sender, DataRequestedEventArgs e)
-        {
-            e.Request.Data.Properties.Title = "VisualCrypt";
-
-            e.Request.Data.Properties.ContentSourceApplicationLink = new Uri("ms-sdk-sharesourcecs:navigate?page=" + GetType().Name);
-            e.Request.Data.SetText(EditorUserControl.TextBox1.Text);
-        }
 
         void AdjustAppBarButtonSpacing(object sender, WindowSizeChangedEventArgs e)
         {
@@ -209,10 +193,8 @@ namespace VisualCrypt.UWP.Pages
             ExtendedAppBar.Visibility = Visibility.Collapsed;
 
             EditorUserControl.TextBox1.IsEnabled = false;
-            EditorUserControl.TextBox1.Opacity = 0.8;
 
             BottomBar.Opacity = 0.8;
-            BackgroundGrid.Background = MoreColors.BackgroundGridDisabledColorBrush;
         }
 
         void HideDialogCommon()
@@ -220,10 +202,8 @@ namespace VisualCrypt.UWP.Pages
             MainPageTopAppBar.Visibility = Visibility.Visible;
             ExtendedAppBar.Visibility = Visibility.Visible;
             EditorUserControl.TextBox1.IsEnabled = true;
-            EditorUserControl.TextBox1.Opacity = 1;
             EditorUserControl.TextBox1.Focus(FocusState.Programmatic);
             BottomBar.Opacity = 1;
-            BackgroundGrid.Background = MoreColors.WhiteBrush;
         }
 
         public void DisplayPasswordDialog()

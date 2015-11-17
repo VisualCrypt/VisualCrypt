@@ -4,17 +4,24 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.ApplicationModel.DataTransfer.ShareTarget;
 using Windows.Foundation.Metadata;
 using Windows.Globalization;
+using Windows.Storage;
+using Windows.Storage.AccessCache;
+using Windows.Storage.FileProperties;
 using Windows.UI.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Language.Strings;
 using VisualCrypt.UWP.Pages;
+using VisualCrypt.UWP.Services;
 using VisualCrypt.UWP.Styles;
 
 namespace VisualCrypt.UWP
@@ -30,30 +37,94 @@ namespace VisualCrypt.UWP
 
         protected override async void OnShareTargetActivated(ShareTargetActivatedEventArgs args)
         {
-            var rootFrame = await GetOrCreateRootFrame();
+            try
+            {
+                if (args?.ShareOperation?.Data == null)
+                    return;
+                if (!args.ShareOperation.Data.Contains(StandardDataFormats.Text))
+                {
+                    args.ShareOperation.ReportError("VisualCrypt can only handle text data at this time.");
+                    return;
+                }
 
-            // TODO: Setup ShareTarget state
+                var textReceived = await args.ShareOperation.Data.GetTextAsync();
+                Bootstrapper.StopMeasureStartupTime();
 
-            Window.Current.Content = rootFrame;
+                var rootFrame = await GetOrCreateRootFrame();
 
-            rootFrame.Navigate(typeof(MainPagePhone), args.ShareOperation, new EntranceNavigationTransitionInfo());
+                await rootFrame.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+                {
+                    Window.Current.Content = rootFrame;
+                    Service.Get<INavigationService>().NavigateToMainPage(new FilesPageCommandArgs
+                    {
+                        FilesPageCommand = FilesPageCommand.ShareTarget,
+                        TextContents = textReceived
+                    });
+                    Window.Current.Activate();
+                });
 
-            Bootstrapper.StopMeasureStartupTime();
+            }
+            catch (Exception e)
+            {
+                args?.ShareOperation?.ReportError("VisualCrypt: " + e.Message);
+            }
+        }
 
-            Window.Current.Activate();
+        IStorageItem _file;
+        BasicProperties _props;
+        Frame _rootFrame;
+        protected async override void OnFileActivated(FileActivatedEventArgs args)
+        {
+            try
+            {
+                _file = args.Files[0];
+                _props = await _file.GetBasicPropertiesAsync();
+                Bootstrapper.StopMeasureStartupTime();
+                _rootFrame = await GetOrCreateRootFrame();
+                Window.Current.Content = _rootFrame;
+                Window.Current.Activate();
+
+                var timer = new DispatcherTimer();
+                timer.Tick += WorkAroundLayoutBugWithMultipleScreens;
+                timer.Interval = new TimeSpan(0, 0, 0, 0, 50);
+                timer.Start();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+
+        async void WorkAroundLayoutBugWithMultipleScreens(object sender, object e)
+        {
+            ((DispatcherTimer)sender).Stop();
+            await _rootFrame.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            {
+                var fileservice = (FileService)Service.Get<IFileService>();
+                string fileToken = StorageApplicationPermissions.FutureAccessList.Add(_file, _file.Path);
+                fileservice.AccessTokens[_file.Path] = fileToken; // add or replace
+               
+                Service.Get<INavigationService>().NavigateToMainPage(new FilesPageCommandArgs
+                {
+                    FilesPageCommand = FilesPageCommand.Open,
+                    FileReference = new FileReference
+                    {
+                        FileSystemObject = _file,
+                        ModifiedDate = _props.DateModified.ToString(),
+                        PathAndFileName = _file.Path
+                    }
+                });
+
+            });
         }
 
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             var rootFrame = await GetOrCreateRootFrame();
-
             Window.Current.Content = rootFrame;
-
-            Bootstrapper.StopMeasureStartupTime();
-
-            Window.Current.Activate();
             rootFrame.Navigate(typeof(FilesPage), e.Arguments);
-
+            Window.Current.Activate();
+            Bootstrapper.StopMeasureStartupTime();
         }
 
 
@@ -79,10 +150,10 @@ namespace VisualCrypt.UWP
 
         static async Task<Frame> GetOrCreateRootFrame()
         {
-            #if DEBUG
+#if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
                 Current.DebugSettings.EnableFrameRateCounter = false;
-            #endif
+#endif
 
             var rootFrame = Window.Current.Content as Frame;
 
@@ -94,7 +165,7 @@ namespace VisualCrypt.UWP
             SetLanguage(rootFrame);
 
             await ConfigureUI();
-
+            rootFrame.NavigationFailed -= OnNavigationFailed;
             rootFrame.NavigationFailed += OnNavigationFailed;
             return rootFrame;
         }

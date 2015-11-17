@@ -120,15 +120,22 @@ namespace VisualCrypt.Applications.ViewModels
             {
                 case FilesPageCommand.New:
                     ExecuteNewCommand();
+                    FileModel.IsDirty = false;
                     break;
                 case FilesPageCommand.Open:
                     await OpenFileCommon(command.FileReference.PathAndFileName);
+                    FileModel.IsDirty = false;
+                    break;
+                case FilesPageCommand.ShareTarget:
+                    ExecuteNewCommand();
+                    _eventAggregator.GetEvent<EditorReceivesText>().Publish(command.TextContents);
+                    FileModel.IsDirty = true;
                     break;
                 default:
                     throw new InvalidOperationException(string.Format("Unknwon command {0}", command.FilesPageCommand));
             }
 
-            FileModel.IsDirty = false;
+            
             RaiseAllCanExecuteChanged();
             RunCheckForUpdates();
         }

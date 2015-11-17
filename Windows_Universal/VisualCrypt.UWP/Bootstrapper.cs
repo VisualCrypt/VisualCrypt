@@ -15,6 +15,7 @@ using VisualCrypt.Language.Strings;
 using VisualCrypt.UWP.Models;
 using VisualCrypt.UWP.Pages;
 using VisualCrypt.UWP.Services;
+using VisualCrypt.UWP.Services.Printing;
 
 namespace VisualCrypt.UWP
 {

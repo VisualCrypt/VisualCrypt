@@ -13,6 +13,7 @@
                 <ResourceDictionary Source="/Styles/EditorTextBoxStyle.xaml" />
                 <ResourceDictionary Source="/Styles/ListViewStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <valueConverters:BoolInverseConverter x:Key="BoolInverse"/>
             <valueConverters:BoolVisibilityConverter x:Key="BoolVisibility"/>
             <valueConverters:BoolVisibilityInverseConverter x:Key="BoolVisibilityInverse"/>
             <valueConverters:EnabledToBrushConverter x:Key="EnabledToBrush"/>

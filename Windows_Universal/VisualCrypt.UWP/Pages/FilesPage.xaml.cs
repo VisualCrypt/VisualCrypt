@@ -154,21 +154,17 @@ namespace VisualCrypt.UWP.Pages
             FilesPageTopAppBar.Visibility = Visibility.Collapsed;
 
             FilesListView.IsEnabled = false;
-            FilesListView.Opacity = 0.8;
 
             FilesPageBottomAppBar.Visibility = Visibility.Collapsed;
-            BackgroundGrid.Background = MoreColors.BackgroundGridDisabledColorBrush;
         }
 
         void HideDialogCommon()
         {
             FilesPageTopAppBar.Visibility = Visibility.Visible;
             FilesListView.IsEnabled = true;
-            FilesListView.Opacity = 1;
             FilesListView.Focus(FocusState.Programmatic);
 
             FilesPageBottomAppBar.Visibility = Visibility.Visible;
-            BackgroundGrid.Background = MoreColors.WhiteBrush;
         }
 
         public void DisplayFilenameDialog()
