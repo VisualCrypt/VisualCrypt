@@ -9,7 +9,7 @@ namespace VisualCrypt.Applications.Services.Interfaces
 		/// <summary>
 		/// Returns a clear text file or an encrypted file.
 		/// </summary>
-		Response<FileModel> OpenFile(string filename);
+		Response<FileModel> OpenFile(string filename, LongRunningOperationContext context);
 
 		Response<FileModel> EncryptForDisplay(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent,
             LongRunningOperationContext context);
@@ -21,7 +21,7 @@ namespace VisualCrypt.Applications.Services.Interfaces
 
 		Response ClearPassword();
 
-		Response SaveEncryptedFile(FileModel fileModel);
+		Response SaveEncryptedFile(FileModel fileModel, LongRunningOperationContext context);
 
 		Response<string> EncryptAndSaveFile(FileModel fileModel, string textBufferContents, RoundsExponent roundsExponent,
             LongRunningOperationContext context);

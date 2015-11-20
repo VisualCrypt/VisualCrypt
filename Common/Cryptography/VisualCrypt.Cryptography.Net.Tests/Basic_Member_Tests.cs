@@ -122,7 +122,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
         public void Member_Decrypt_Can_Decrypt_Specific_Message()
         {
             var specificMessage = "VisualCrypt/AgoDqjwFKw84kRUVeg3hUfVMiP7Yr9lAlpOT2Af+D10ly$zLQ6UrAWZyHHspGYP57e4Xtj7mYNIx4ZHhRbII7WAP8GAOsHPkt6ZJrmf4$YjjHYA = ";
-            CipherV2 decoded = _service.DecodeVisualCrypt(specificMessage).Result;
+            CipherV2 decoded = _service.DecodeVisualCrypt(specificMessage, CreateContext()).Result;
             var passwordHash = CreatePasswordHash("the password");
 
             var response = _service.Decrypt(decoded, passwordHash, CreateContext());
@@ -159,7 +159,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
                     throw new Exception(encryptResponse.Error);
 
                 // decrypt
-                var decodeResponse = _service.DecodeVisualCrypt(visualCrypt);
+                var decodeResponse = _service.DecodeVisualCrypt(visualCrypt,CreateContext());
 
                 if (!decodeResponse.IsSuccess)
                     throw new Exception(decodeResponse.Error);
@@ -202,7 +202,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
                 hashPasswordResponse = _service.HashPassword(_service.NormalizePassword("incorrect" + password).Result);
 
                 // decrypt
-                var decodeResponse = _service.DecodeVisualCrypt(visualCrypt);
+                var decodeResponse = _service.DecodeVisualCrypt(visualCrypt, CreateContext());
 
                 if (!decodeResponse.IsSuccess)
                     throw new Exception(decodeResponse.Error);
@@ -242,7 +242,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var visualCryptText = @"VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSs
                                     zXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg=";
 
-            var response = _service.DecodeVisualCrypt(visualCryptText);
+            var response = _service.DecodeVisualCrypt(visualCryptText, CreateContext());
 
             Assert.IsTrue(response.IsSuccess);
             CipherV2 cipherV2 = response.Result;
@@ -258,7 +258,7 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var arbitraryCipherV2 = CreateArbitraryCipherV2();
             string arbitraryVisualCryptText = _service.EncodeVisualCrypt(arbitraryCipherV2).Result.Text;
 
-            var response = _service.DecodeVisualCrypt(arbitraryVisualCryptText);
+            var response = _service.DecodeVisualCrypt(arbitraryVisualCryptText,CreateContext());
 
             Assert.IsTrue(response.IsSuccess);
 
@@ -273,22 +273,22 @@ namespace VisualCrypt.Cryptography.Net.Tests
             var invalidVisualCrypt = new List<Response<CipherV2>>
             {
                 // empty string
-                _service.DecodeVisualCrypt(""),
+                _service.DecodeVisualCrypt("",CreateContext()),
                 // just something
-                _service.DecodeVisualCrypt("390214829374023"),
+                _service.DecodeVisualCrypt("390214829374023",CreateContext()),
                 // xyz after VisualCrypt/ is not valid
-                _service.DecodeVisualCrypt("VisualCrypt/xyzoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
+                _service.DecodeVisualCrypt("VisualCrypt/xyzoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg=",CreateContext()),
                 // truncated, too short
-                _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6Kqh"),
+                _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6Kqh",CreateContext()),
         };
 
             // with the intoduction of WhiteListing, this is now also valid VisualCrypt:
             var validVisualCrypt = new List<Response<CipherV2>>
             {
                 // invalid Base64 char 'ä' included
-                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCedä775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
+                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQsrwe9dIurkVbJy5RCLvT6KqhHCedä775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg=",CreateContext()),
                  // Chinese inserted in in otherwise correct format
-                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQs菲舍爾的弗里茨才對鮮魚rwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg="),
+                 _service.DecodeVisualCrypt("VisualCrypt/AgoESMEkbivp64nHLWWgRGoP6XuQs菲舍爾的弗里茨才對鮮魚rwe9dIurkVbJy5RCLvT6KqhHCed775BSszXvNlU1cxyGRnAzlnkxLHMJ1QNrC7jdoI+KCJKkJ98aDEF+pg=",CreateContext()),
             };
 
 

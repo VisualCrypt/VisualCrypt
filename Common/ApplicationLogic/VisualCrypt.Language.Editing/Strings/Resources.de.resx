@@ -362,6 +362,7 @@
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
     <value>Diese Datei ist weder Text noch VisualCrypt - Hex-Ansicht anzeigen? \r\n\r\nWenn die Datei zu groß ist kann das Programm sehr langsam werden.</value>
+    <comment></comment>
   </data>
   <data name="spdm_Set_Title" xml:space="preserve">
     <value>Passwort setzen</value>
@@ -559,5 +560,16 @@
   </data>
   <data name="fileDlgDelete" xml:space="preserve">
     <value>Löschen Hinweis?</value>
+  </data>
+  <data name="fileProgr_Saving" xml:space="preserve">
+    <value>Speichern...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProgr_Loading" xml:space="preserve">
+    <value>Wird geladen...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
+    <value>Inhalt wird analysiert...</value>
   </data>
 </root>

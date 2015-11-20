@@ -340,6 +340,7 @@
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
     <value>Ce fichier n'est ni texte, ni VisualCrypt - Afficher vue de Hex? \r\n\r\nIf fichier est très volumineux, l'éditeur peut devenir moins réactive.</value>
+    <comment></comment>
   </data>
   <data name="msgFindRegExNoMatch" xml:space="preserve">
     <value>Aucune correspondance pour « {0} » n'a été trouvé.</value>
@@ -565,5 +566,16 @@
   </data>
   <data name="fileDlgDelete" xml:space="preserve">
     <value>Supprimer la Note ?</value>
+  </data>
+  <data name="fileProgr_Saving" xml:space="preserve">
+    <value>L'enregistrement en cours...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProgr_Loading" xml:space="preserve">
+    <value>Chargement en cours...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
+    <value>Analyse de contenu...</value>
   </data>
 </root>

@@ -135,7 +135,7 @@ namespace VisualCrypt.Applications.ViewModels
                     throw new InvalidOperationException(string.Format("Unknwon command {0}", command.FilesPageCommand));
             }
 
-            
+
             RaiseAllCanExecuteChanged();
             RunCheckForUpdates();
         }
@@ -405,21 +405,31 @@ namespace VisualCrypt.Applications.ViewModels
 
             try
             {
-                var openFileResponse = _encryptionService.OpenFile(filename);
-                if (!openFileResponse.IsSuccess)
+                FileModel fileModelOpening;
+                using (_longRunningOperation = StartLongRunnungOperation(_resourceWrapper.fileProgr_Loading))
                 {
-                    await _messageBoxService.ShowError(openFileResponse.Error);
-                    return;
-                }
-                if (openFileResponse.Result.SaveEncoding == null)
-                {
-                    if (await _messageBoxService.Show(
-                        _resourceWrapper.msgFileIsBinary,
-                        _resourceWrapper.termBinary,
-                        RequestButton.OKCancel, RequestImage.Warning) == RequestResult.Cancel)
+                    var openFileResponse = await Task.Run(() => _encryptionService.OpenFile(filename, _longRunningOperation.Context));
+
+                    if (!openFileResponse.IsSuccess)
+                    {
+                        if (!openFileResponse.IsCanceled)
+                            await _messageBoxService.ShowError(openFileResponse.Error);
+                        _longRunningOperation.Cancel();
                         return;
+                    }
+                    if (openFileResponse.Result.SaveEncoding == null)
+                    {
+                        await _messageBoxService.Show(
+                            _resourceWrapper.msgFileIsBinary,
+                            _resourceWrapper.termBinary,
+                            RequestButton.OK, RequestImage.Error);
+                        _longRunningOperation.Cancel();
+                        return;
+                    }
+                    fileModelOpening = openFileResponse.Result;
                 }
-                FileModel.UpdateFrom(openFileResponse.Result);
+
+                FileModel.UpdateFrom(fileModelOpening);
                 _settingsManager.CurrentDirectoryName = Path.GetDirectoryName(filename);
 
                 var ert = _eventAggregator.GetEvent<EditorReceivesText>();
@@ -683,7 +693,7 @@ namespace VisualCrypt.Applications.ViewModels
                 // This is the simple case, we can 'just save'.
                 if (FileModel.IsEncrypted && !isSaveAs && _fileService.CheckFilenameForQuickSave(FileModel.Filename))
                 {
-                    var response = _encryptionService.SaveEncryptedFile(FileModel);
+                    var response = _encryptionService.SaveEncryptedFile(FileModel, null);
                     if (!response.IsSuccess)
                         throw new Exception(response.Error);
                     FileModel.IsDirty = false;
@@ -710,7 +720,7 @@ namespace VisualCrypt.Applications.ViewModels
                     if (pickFileResult.Item1)
                     {
                         FileModel.Filename = pickFileResult.Item2;
-                        var response = _encryptionService.SaveEncryptedFile(FileModel);
+                        var response = _encryptionService.SaveEncryptedFile(FileModel, null);
                         if (!response.IsSuccess)
                             throw new Exception(response.Error);
                         FileModel.IsDirty = false;

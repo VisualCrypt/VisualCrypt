@@ -14,6 +14,7 @@ using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 using VisualCrypt.Language.Strings;
 using VisualCrypt.UWP.Pages;
 
@@ -90,9 +91,9 @@ namespace VisualCrypt.UWP.Services
 
         }
 
-        public byte[] ReadAllBytes(string pathAndFilename)
+        public async Task<byte[]> ReadAllBytes(string pathAndFilename, LongRunningOperationContext context)
         {
-            var task = Task.Run(async () =>
+            var result = await Task.Run(async () =>
             {
                 IStorageFile storagefile;
                 var token = GetTokenByPathAndFilename(pathAndFilename);
@@ -105,11 +106,68 @@ namespace VisualCrypt.UWP.Services
                     storagefile = await StorageFile.GetFileFromPathAsync(pathAndFilename);
                 }
 
-                var buffer = await FileIO.ReadBufferAsync(storagefile);
-                return buffer.ToArray();
+                using (IRandomAccessStream readStream = await storagefile.OpenAsync(FileAccessMode.Read))
+                {
+                    using (DataReader dataReader = new DataReader(readStream))
+                    {
+                        dataReader.InputStreamOptions = InputStreamOptions.Partial;
+                        ulong inputSize = readStream.Size;
+                        if (inputSize > int.MaxValue)
+                            throw new IOException("File is too big ");
+
+                        byte[] outputBytes = new byte[inputSize];
+                        uint readBufferSize = 8192u;
+                        ulong writePos = 0;
+
+                        // START encryptionProgress / Cancellation
+                        context.CancellationToken.ThrowIfCancellationRequested();
+                        context.EncryptionProgress.Percent = 0;
+                        context.EncryptionProgress.Message = 0.ToString();
+                        context.EncryptionProgress.Report(context.EncryptionProgress);
+
+                        // END encryptionProgress
+                        while (writePos<inputSize)
+                        {
+                            uint loaded = await dataReader.LoadAsync(readBufferSize);
+                            IBuffer buffer = dataReader.ReadBuffer(loaded);
+                            buffer.CopyTo(0u, outputBytes, (int)writePos, (int)buffer.Length);
+                            writePos += loaded;
+
+                            // START encryptionProgress / Cancellation
+                            context.CancellationToken.ThrowIfCancellationRequested();
+                            var progressValue = writePos / (decimal)(inputSize - 1) * 100m;
+                            context.EncryptionProgress.Percent = (int)progressValue;
+                            context.EncryptionProgress.Message = writePos.ToString();
+                            context.EncryptionProgress.Report(context.EncryptionProgress);
+                            // END encryptionProgress
+                        }
+                        return outputBytes;
+                        //while (dataReader.UnconsumedBufferLength > 0)
+                        //{
+                        //    // START encryptionProgress / Cancellation
+                        //    context.CancellationToken.ThrowIfCancellationRequested();
+                        //    var progressValue = writePos / (decimal)(inputSize - 1) * 100m;
+                        //    context.EncryptionProgress.Percent = (int)progressValue;
+                        //    context.EncryptionProgress.Report(context.EncryptionProgress);
+
+                        //    // END encryptionProgress
+                        //    //IBuffer buffer = dataReader.ReadBuffer(readBufferSize);
+                        //    //buffer.CopyTo(0u, outputBytes, writePos, (int)buffer.Length);
+                        //    //writePos += (int)buffer.Length;
+
+
+                        //}
+                        //// START encryptionProgress / Cancellation
+                        //context.CancellationToken.ThrowIfCancellationRequested();
+                        //context.EncryptionProgress.Percent = (int)(writePos / (decimal)(inputSize - 1) * 100m); 
+                        //context.EncryptionProgress.Report(context.EncryptionProgress);
+                        // END encryptionProgress
+                        return outputBytes;
+                    }
+                }
             });
-            task.Wait();
-            return task.Result;
+
+            return result;
         }
 
         public async void WriteAllBytes(string pathAndFilename, byte[] encodedTextBytes)
@@ -189,7 +247,7 @@ namespace VisualCrypt.UWP.Services
                 picker.FileTypeChoices.Add("VisualCrypt", new List<string> { ".visualcrypt" });
                 picker.FileTypeChoices.Add("All Files", new List<string> { "." });
             }
-           
+
 
             if (!hasPath)
             {

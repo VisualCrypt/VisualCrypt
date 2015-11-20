@@ -340,6 +340,7 @@
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
     <value>Questo file non è né testo né VisualCrypt - Visualizza con visualizzazione esadecimale? \r\n\r\nIf file è molto grande editor può diventare meno efficiente.</value>
+    <comment></comment>
   </data>
   <data name="msgFindRegExNoMatch" xml:space="preserve">
     <value>Non Impossibile trovare alcuna corrispondenza per '{0}'.</value>
@@ -565,5 +566,16 @@
   </data>
   <data name="fileDlgDelete" xml:space="preserve">
     <value>Eliminare nota?</value>
+  </data>
+  <data name="fileProgr_Saving" xml:space="preserve">
+    <value>Il salvataggio...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProgr_Loading" xml:space="preserve">
+    <value>Caricamento...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
+    <value>Analisi di contenuto...</value>
   </data>
 </root>

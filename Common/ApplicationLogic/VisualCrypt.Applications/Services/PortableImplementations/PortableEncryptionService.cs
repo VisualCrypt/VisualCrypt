@@ -3,8 +3,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading.Tasks;
+using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Cryptography.VisualCrypt2;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
 using VisualCrypt.Cryptography.VisualCrypt2.Implementations;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
@@ -29,7 +32,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             _stopWatch = new Stopwatch();
         }
 
-        public Response<FileModel> OpenFile(string filename)
+        public Response<FileModel> OpenFile(string filename, LongRunningOperationContext context)
         {
             var response = new Response<FileModel>();
             StartMeasure();
@@ -39,10 +42,16 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 if (filename == null)
                     throw new ArgumentNullException("filename");
 
-                var rawBytesFromFile = _fileService.ReadAllBytes(filename);
-                var shortFilename = _fileService.PathGetFileName(filename);
+                var readTask =  _fileService.ReadAllBytes(filename,context);
+                readTask.Wait();
 
-                Response<string, Encoding> getStringResponse = _encodingDetection.GetStringFromFile(rawBytesFromFile);
+                var shortFilename = _fileService.PathGetFileName(filename);
+               context.EncryptionProgress.Message = LocalizableStrings.MsgAnalyzingContents;
+                context.EncryptionProgress.Percent = 100;
+                context.EncryptionProgress.IsIndeterminate = true;
+                context.EncryptionProgress.Report(context.EncryptionProgress);
+
+                Response<string, Encoding> getStringResponse = _encodingDetection.GetStringFromFile(readTask.Result, context);
 
                 if (!getStringResponse.IsSuccess) // we do not even have a string.
                 {
@@ -52,7 +61,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 }
 
                 // if we are here we have a string. Is it VisualCrypt/text or just Cleartext?
-                var decodeResponse = _visualCrypt2Service.DecodeVisualCrypt(getStringResponse.Result);
+                var decodeResponse = _visualCrypt2Service.DecodeVisualCrypt(getStringResponse.Result, context);
 
                 if (decodeResponse.IsSuccess)
                 {
@@ -177,7 +186,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 if (context == null)
                     throw new ArgumentNullException("context");
 
-                var decodeResponse = _visualCrypt2Service.DecodeVisualCrypt(textBufferContents);
+                var decodeResponse = _visualCrypt2Service.DecodeVisualCrypt(textBufferContents,context);
                 if (decodeResponse.IsSuccess)
                 {
                     var decrpytResponse = _visualCrypt2Service.Decrypt(decodeResponse.Result, KeyStore.GetPasswordHash(), context);
@@ -202,7 +211,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             return response;
         }
 
-        public Response SaveEncryptedFile(FileModel fileModel)
+        public Response SaveEncryptedFile(FileModel fileModel, LongRunningOperationContext context)
         {
             var response = new Response();
             StartMeasure();
@@ -215,7 +224,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 if (!fileModel.IsEncrypted)
                     throw new Exception("Aborting Save - IsEncrypted is false.");
 
-                if (!_visualCrypt2Service.DecodeVisualCrypt(fileModel.VisualCryptText).IsSuccess)
+                if (!_visualCrypt2Service.DecodeVisualCrypt(fileModel.VisualCryptText,context).IsSuccess)
                     throw new Exception("Aborting Save -  The data being saved is not valid VisualCrypt format.");
 
                 byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(fileModel.VisualCryptText);

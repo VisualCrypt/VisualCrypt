@@ -14,9 +14,9 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Infrastructure
 		public int Percent { get; set; }
 
 		public string Message { get; set; }
+        public bool IsIndeterminate { get; set; }
 
-
-		public void Report(EncryptionProgress progress)
+        public void Report(EncryptionProgress progress)
 		{
 			OnReport(progress);
 		}

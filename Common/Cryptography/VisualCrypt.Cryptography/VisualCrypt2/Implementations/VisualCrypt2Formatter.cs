@@ -60,11 +60,11 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             return new VisualCryptText(sb.ToString());
         }
 
-        public static CipherV2 DissectVisualCryptText(string visualCryptText)
+        public static CipherV2 DissectVisualCryptText(string visualCryptText, LongRunningOperationContext context)
         {
             try
             {
-                var visualCrypt = WhiteListVisualCryptCharacters(visualCryptText);
+                var visualCrypt = WhiteListVisualCryptCharacters(visualCryptText, context);
 
                 if (!visualCrypt.StartsWith(VisualCryptSlashText, StringComparison.OrdinalIgnoreCase))
                     throw CommonFormatException("The prefix '{0}' is missing.".FormatInvariant(VisualCryptSlashText));
@@ -122,12 +122,13 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
         }
 
 
-        static string WhiteListVisualCryptCharacters(string visualCryptBase64)
+        static string WhiteListVisualCryptCharacters(string visualCryptBase64, LongRunningOperationContext context)
         {
             var sb = new StringBuilder();
 
             foreach (var c in visualCryptBase64)
             {
+                context.CancellationToken.ThrowIfCancellationRequested();
                 if (WhiteList.Contains(c))
                     sb.Append(c);
             }

@@ -8,6 +8,7 @@ using VisualCrypt.Applications.Constants;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 using VisualCrypt.Language.Strings;
 
 namespace VisualCrypt.Desktop.Services
@@ -117,9 +118,12 @@ namespace VisualCrypt.Desktop.Services
             return await tcs.Task;
         }
 
-        public byte[] ReadAllBytes(string filename)
+        public  Task<byte[]> ReadAllBytes(string filename, LongRunningOperationContext context)
         {
-            return File.ReadAllBytes(filename);
+            var tcs=  new TaskCompletionSource<byte[]>();
+            var bytes =  File.ReadAllBytes(filename);
+            tcs.SetResult(bytes);
+            return tcs.Task;
         }
 
         public string PathGetFileName(string filename)

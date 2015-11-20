@@ -55,9 +55,9 @@
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Ignorer les modifications ?</target>
         </trans-unit>
         <trans-unit id="Resx/msgFileIsBinary" translate="yes" xml:space="preserve">
-          <source>This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</source>
+          <source>This file is neither text nor VisualCrypt!</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Ce fichier n'est ni texte, ni VisualCrypt - Afficher vue de Hex? \r\n\r\nIf fichier est très volumineux, l'éditeur peut devenir moins réactive.</target>
-        </trans-unit>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
         <trans-unit id="Resx/msgFindRegExNoMatch" translate="yes" xml:space="preserve">
           <source>No match for '{0}' could be found.</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Aucune correspondance pour « {0} » n'a été trouvé.</target>
@@ -287,6 +287,18 @@
           <source>Share</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Partage</target>
         </trans-unit>
+        <trans-unit id="Resx/fileProgr_Saving" translate="yes" xml:space="preserve">
+          <source>Saving File:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">L'enregistrement en cours...</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
+        <trans-unit id="Resx/fileProg_MsgAnalyzingContents" translate="yes" xml:space="preserve">
+          <source>Analyzing Contents...</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Analyse de contenu...</target>
+        </trans-unit>
+        <trans-unit id="Resx/fileProgr_Loading" translate="yes" xml:space="preserve">
+          <source>Loading File:</source>
+          <target state="needs-review-translation" state-qualifier="mt-suggestion">Chargement en cours...</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note></trans-unit>
         <trans-unit id="Resx/fileDlgRename" translate="yes" xml:space="preserve">
           <source>Rename Note</source>
           <target state="needs-review-translation" state-qualifier="mt-suggestion">Renommer la Note</target>

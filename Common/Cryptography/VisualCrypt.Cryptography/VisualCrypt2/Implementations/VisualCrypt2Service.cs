@@ -181,7 +181,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
             return response;
         }
 
-        public Response<CipherV2> DecodeVisualCrypt(string visualCryptText)  // should the parameter type be VisualCryptText? 
+        public Response<CipherV2> DecodeVisualCrypt(string visualCryptText, LongRunningOperationContext context)  // should the parameter type be VisualCryptText? 
         {
             var response = new Response<CipherV2>();
 
@@ -190,7 +190,7 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Implementations
                 Guard.NotNull(visualCryptText);
                 EnsurePlatform();
 
-                response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText);
+                response.Result = VisualCrypt2Formatter.DissectVisualCryptText(visualCryptText, context);
                 response.SetSuccess();
             }
             catch (Exception e)

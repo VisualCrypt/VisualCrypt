@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using VisualCrypt.Applications.Extensions;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
@@ -24,18 +25,19 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             }
         }
 
-        public Response<string, Encoding> GetStringFromFile(byte[] data)
+        public Response<string, Encoding> GetStringFromFile(byte[] data, LongRunningOperationContext context)
         {
             var response = new Response<string, Encoding>();
 
             try
             {
+                context.CancellationToken.ThrowIfCancellationRequested();
                 Guard.NotNull(data);
-                if(!_isPlatformDefaultEncodingSupplied)
+                if (!_isPlatformDefaultEncodingSupplied)
                     throw new InvalidOperationException("An instance of Encoding or null must be explicitly set.");
 
                 Encoding encoding;
-                var decodeFileResult = GetTextDetectingEncoding(data, out encoding, _platformDefaultEncoding);
+                var decodeFileResult = GetTextDetectingEncoding(data, out encoding, _platformDefaultEncoding, context);
                 if (decodeFileResult != null)
                 {
                     response.Result = decodeFileResult;
@@ -55,7 +57,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
         /// - If VisualCrypt is detected, this is just from the prefix, does not mean it's valid or what version.
         /// </summary>
         static string GetTextDetectingEncoding(byte[] rawBytesFromFile, out Encoding appliedEncoding,
-            Encoding optionalPlatformDefaultEncoding)
+            Encoding optionalPlatformDefaultEncoding, LongRunningOperationContext context)
         {
             Guard.NotNull(new object[] { rawBytesFromFile });  // optionalPlatformDefaultEncoding is allowed to be null
 
@@ -88,17 +90,20 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
             {
             }
 
+            context.CancellationToken.ThrowIfCancellationRequested();
+
             // If we are here it's a very likely a single byte encoding but not valid UTF8.
             // Before we continue, let's make a simple check whether it's more likely a binary than text.
-            decimal controlCharPercent = GetIllegalCharacterPercent(rawBytesFromFile);
+            decimal controlCharPercent = GetIllegalCharacterPercent(rawBytesFromFile, context);
             if (controlCharPercent >= 2)
             {
                 // yes, this is probaby no text at all, encode it to displayable hex numbers to show the user 'something'.
                 appliedEncoding = null;
                 // null has the special meaning it's Hex View (can't create a custom encoding with EncodingName property in portable class library)
-                return rawBytesFromFile.ToHexView();
+                return "BINARY";
+                //return rawBytesFromFile.ToHexView();
             }
-
+            context.CancellationToken.ThrowIfCancellationRequested();
             // If we are e.g. on Desktop, try injected default encoding.
             if (optionalPlatformDefaultEncoding != null)
             {
@@ -154,12 +159,13 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
         /// assuming we know it's a single byte ISO-8859-x or Windows-125x encoding
         /// or UTF8 or some other encoding that uses traditional control characters.
         /// </summary>
-        static decimal GetIllegalCharacterPercent(byte[] rawBytesFromFile)
+        static decimal GetIllegalCharacterPercent(byte[] rawBytesFromFile, LongRunningOperationContext context)
         {
             decimal totalChars = rawBytesFromFile.Length;
             decimal illegalCharCount = 0;
             foreach (byte t in rawBytesFromFile)
             {
+                context.CancellationToken.ThrowIfCancellationRequested();
                 if (IsIllegalChar(t))
                     illegalCharCount++;
             }

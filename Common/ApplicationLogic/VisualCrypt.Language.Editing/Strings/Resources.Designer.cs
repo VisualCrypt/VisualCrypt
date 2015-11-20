@@ -188,6 +188,33 @@ namespace VisualCrypt.Language.Editing.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analyzing Contents....
+        /// </summary>
+        internal static string fileProg_MsgAnalyzingContents {
+            get {
+                return ResourceManager.GetString("fileProg_MsgAnalyzingContents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading File:.
+        /// </summary>
+        internal static string fileProgr_Loading {
+            get {
+                return ResourceManager.GetString("fileProgr_Loading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saving File:.
+        /// </summary>
+        internal static string fileProgr_Saving {
+            get {
+                return ResourceManager.GetString("fileProgr_Saving", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Typeface:.
         /// </summary>
         internal static string fnt_label_typeFace {
@@ -647,7 +674,7 @@ namespace VisualCrypt.Language.Editing.Strings {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive..
+        ///   Looks up a localized string similar to This file is neither text nor VisualCrypt!.
         /// </summary>
         internal static string msgFileIsBinary {
             get {

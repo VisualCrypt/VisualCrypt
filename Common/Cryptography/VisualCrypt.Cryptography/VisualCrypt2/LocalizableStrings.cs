@@ -15,5 +15,9 @@
         public const string MsgDecryptingRandomKey = "MsgDecryptingRandomKey";
         public const string MsgDecryptingMessage = "MsgDecryptingMessage";
         public const string MsgProcessingKey = "MsgProcessingKey";
+
+        public const string MsgFileLoading = "MsgFileLoading";
+        public const string MsgFileSaving = "MsgFileSaving";
+        public const string MsgAnalyzingContents = "MsgAnalyzingContents";
     }
 }

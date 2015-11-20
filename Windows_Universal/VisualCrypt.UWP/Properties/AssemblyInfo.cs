@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("VisualCrypt")]
-[assembly: AssemblyDescription("Latest Changes: General Polishing & Fixes")]
+[assembly: AssemblyDescription("Latest Changes: Support for long running I/O operations.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("VisualCrypt AG")]
 [assembly: AssemblyProduct("VisualCrypt for Windows 10")]
@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.9.0")]
-[assembly: AssemblyFileVersion("2.0.9.0")]
+[assembly: AssemblyVersion("2.0.10.0")]
+[assembly: AssemblyFileVersion("2.0.10.0")]
 [assembly: ComVisible(false)]
 

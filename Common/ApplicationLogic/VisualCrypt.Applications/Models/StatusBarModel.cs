@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Reflection;
 using VisualCrypt.Applications.Services.Interfaces;
 using VisualCrypt.Cryptography.VisualCrypt2;
 using VisualCrypt.Cryptography.VisualCrypt2.DataTypes;
@@ -8,7 +8,7 @@ namespace VisualCrypt.Applications.Models
 {
     public class StatusBarModel : ViewModelBase
     {
-        ResourceWrapper _resourceWrapper;
+        readonly ResourceWrapper _resourceWrapper;
 
         public StatusBarModel()
         {
@@ -66,6 +66,13 @@ namespace VisualCrypt.Applications.Models
             get { return _progressMessage; }
             set
             {
+                if (value.Length > 0 && char.IsNumber(value[0]))
+                {
+                    _progressMessage = string.Format("{0} Bytes", value);
+                    OnPropertyChanged();
+                    return;
+                }
+
                 switch(value)
                 {
                     case "":
@@ -96,9 +103,18 @@ namespace VisualCrypt.Applications.Models
                     case LocalizableStrings.MsgProcessingKey:
                         _progressMessage = _resourceWrapper.encProgr_ProcessingKey;
                         break;
+                    case LocalizableStrings.MsgFileLoading:
+                        _progressMessage = _resourceWrapper.fileProgr_Loading;
+                        break;
+                    case LocalizableStrings.MsgFileSaving:
+                        _progressMessage = _resourceWrapper.fileProgr_Saving;
+                        break;
+                    case LocalizableStrings.MsgAnalyzingContents:
+                        _progressMessage = _resourceWrapper.fileProg_MsgAnalyzingContents;
+                        break;
                     default:
-                        throw new Exception("Unexpected Progress Message");
-
+                        _progressMessage = "LocalizableString: Missing";
+                        break;
                 }
                 OnPropertyChanged();
             }

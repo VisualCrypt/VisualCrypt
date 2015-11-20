@@ -337,7 +337,7 @@
     <value>Discard Changes?</value>
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
-    <value>This file is neither text nor VisualCrypt - display with Hex View?\r\n\r\nIf file is very large the editor may become less responsive.</value>
+    <value>This file is neither text nor VisualCrypt!</value>
   </data>
   <data name="msgFindCouldNotBeFound" xml:space="preserve">
     <value>'{0}' could not be found.</value>
@@ -557,5 +557,14 @@
   </data>
   <data name="termShare" xml:space="preserve">
     <value>Share</value>
+  </data>
+  <data name="fileProgr_Loading" xml:space="preserve">
+    <value>Loading File:</value>
+  </data>
+  <data name="fileProgr_Saving" xml:space="preserve">
+    <value>Saving File:</value>
+  </data>
+  <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
+    <value>Analyzing Contents...</value>
   </data>
 </root>

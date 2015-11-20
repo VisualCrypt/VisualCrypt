@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using System.Threading.Tasks;
 using VisualCrypt.Cryptography.VisualCrypt2.Infrastructure;
 
 namespace VisualCrypt.Applications.Services.Interfaces
@@ -7,6 +8,7 @@ namespace VisualCrypt.Applications.Services.Interfaces
     {
         Encoding PlatformDefaultEncoding { set; }
 
-        Response<string, Encoding> GetStringFromFile(byte[] data);
+        Response<string, Encoding> GetStringFromFile(byte[] data, LongRunningOperationContext context);
+     
     }
 }

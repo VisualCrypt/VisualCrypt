@@ -155,6 +155,7 @@
   </data>
   <data name="msgFileIsBinary" xml:space="preserve">
     <value>Этот файл не является ни текстом, ни VisualCrypt. Oтобразить с Hex? \r\n\r\nБольшой размер файла ведёт к замедлению работы компьютера.</value>
+    <comment></comment>
   </data>
   <data name="msgFindRegExNoMatch" xml:space="preserve">
     <value>Не удается найти соответствие для «{0}».</value>
@@ -558,5 +559,16 @@
   </data>
   <data name="fileDlgDelete" xml:space="preserve">
     <value>Удалить заметку?</value>
+  </data>
+  <data name="fileProgr_Saving" xml:space="preserve">
+    <value>Сохранение...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProgr_Loading" xml:space="preserve">
+    <value>Загрузка...</value>
+    <comment></comment>
+  </data>
+  <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
+    <value>Анализ содержимого...</value>
   </data>
 </root>

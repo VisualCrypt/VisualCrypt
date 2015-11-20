@@ -21,6 +21,6 @@ namespace VisualCrypt.Cryptography.VisualCrypt2.Interfaces
 
         Response<VisualCryptText> EncodeVisualCrypt(CipherV2 cipherV2);
 
-        Response<CipherV2> DecodeVisualCrypt(string visualCryptText);
+        Response<CipherV2> DecodeVisualCrypt(string visualCryptText, LongRunningOperationContext context);
     }
 }
