@@ -167,7 +167,6 @@
     <Compile Include="Services\Printing\Printer.cs" />
     <Compile Include="Services\TextBoxController.cs" />
     <Compile Include="Services\SettingsManager.cs" />
-    <Compile Include="Services\WindowManager.cs" />
     <Compile Include="ValueConverters\EnabledToBrushConverter.cs" />
   </ItemGroup>
   <ItemGroup>

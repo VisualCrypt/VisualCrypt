@@ -70,7 +70,6 @@ namespace VisualCrypt.UWP
             Service.Get<IAssemblyInfoProvider>().Assembly = typeof(Bootstrapper).GetTypeInfo().Assembly;
             Service.Register<ILifeTimeService, LifeTimeService>(true);
             Service.Register<IClipBoardService, ClipBoardService>(true);
-            Service.Register<IWindowManager, WindowManager>(true);
             Service.Register<IEncodingDetection, EncodingDetection>(true);
 
             Service.Register<PortableMainViewModel, PortableMainViewModel>(true);

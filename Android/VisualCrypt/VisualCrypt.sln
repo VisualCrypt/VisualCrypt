@@ -1,0 +1,17 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VisualCrypt", "VisualCrypt\VisualCrypt.csproj", "{7FC152AB-D447-4D16-AF3D-98DBCC3CCBD8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FC152AB-D447-4D16-AF3D-98DBCC3CCBD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FC152AB-D447-4D16-AF3D-98DBCC3CCBD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FC152AB-D447-4D16-AF3D-98DBCC3CCBD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FC152AB-D447-4D16-AF3D-98DBCC3CCBD8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

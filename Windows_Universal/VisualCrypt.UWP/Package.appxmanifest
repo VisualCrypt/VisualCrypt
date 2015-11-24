@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="VisualCryptAG.VisualCrypt" Publisher="CN=654E30EA-20D7-420A-B648-CD599E934B6B" Version="2.0.9.0" />
+  <Identity Name="VisualCryptAG.VisualCrypt" Publisher="CN=654E30EA-20D7-420A-B648-CD599E934B6B" Version="2.0.10.0" />
   <mp:PhoneIdentity PhoneProductId="8117c58a-0d4b-411a-aa50-1efdd2a32055" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>VisualCrypt</DisplayName>
@@ -24,22 +24,15 @@
         <uap:SplashScreen Image="Assets\Splash_620_300.png" BackgroundColor="#AF0007" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.shareTarget">
-          <uap:ShareTarget>
+        <uap:Extension Category="windows.fileTypeAssociation">
+          <uap:FileTypeAssociation Name="visualcrypt">
+            <uap:DisplayName>VisualCrypt</uap:DisplayName>
             <uap:SupportedFileTypes>
-              <uap:SupportsAnyFileType />
+              <uap:FileType ContentType="text/plain">.visualcrypt</uap:FileType>
+              <uap:FileType ContentType="text/plain">.txt</uap:FileType>
+              <uap:FileType ContentType="text/plain">.md</uap:FileType>
             </uap:SupportedFileTypes>
-            <uap:DataFormat>Text</uap:DataFormat>
-          </uap:ShareTarget>
-        </uap:Extension>
-        <uap:Extension Category="windows.fileOpenPicker">
-          <uap:FileOpenPicker>
-            <uap:SupportedFileTypes>
-              <uap:FileType>.visualcrypt</uap:FileType>
-              <uap:FileType>.txt</uap:FileType>
-              <uap:FileType>.md</uap:FileType>
-            </uap:SupportedFileTypes>
-          </uap:FileOpenPicker>
+          </uap:FileTypeAssociation>
         </uap:Extension>
         <uap:Extension Category="windows.fileSavePicker">
           <uap:FileSavePicker>
@@ -50,15 +43,22 @@
             </uap:SupportedFileTypes>
           </uap:FileSavePicker>
         </uap:Extension>
-        <uap:Extension Category="windows.fileTypeAssociation">
-          <uap:FileTypeAssociation Name="visualcrypt">
-            <uap:DisplayName>VisualCrypt</uap:DisplayName>
+        <uap:Extension Category="windows.fileOpenPicker">
+          <uap:FileOpenPicker>
             <uap:SupportedFileTypes>
-              <uap:FileType ContentType="text/plain">.visualcrypt</uap:FileType>
-              <uap:FileType ContentType="text/plain">.txt</uap:FileType>
-              <uap:FileType ContentType="text/plain">.md</uap:FileType>
+              <uap:FileType>.visualcrypt</uap:FileType>
+              <uap:FileType>.txt</uap:FileType>
+              <uap:FileType>.md</uap:FileType>
             </uap:SupportedFileTypes>
-          </uap:FileTypeAssociation>
+          </uap:FileOpenPicker>
+        </uap:Extension>
+        <uap:Extension Category="windows.shareTarget">
+          <uap:ShareTarget>
+            <uap:SupportedFileTypes>
+              <uap:SupportsAnyFileType />
+            </uap:SupportedFileTypes>
+            <uap:DataFormat>Text</uap:DataFormat>
+          </uap:ShareTarget>
         </uap:Extension>
       </Extensions>
     </Application>
