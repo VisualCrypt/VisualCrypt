@@ -52,7 +52,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="SettingsActivity.cs" />
     <Compile Include="Bootstrapper.cs" />
+    <Compile Include="AboutActivity.cs" />
+    <Compile Include="FilesActivity.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Models\FontSettings.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -73,7 +76,13 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
-    <AndroidResource Include="Resources\layout\toolbar.axml">
+    <AndroidResource Include="Resources\layout\Files.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\About.axml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\Settings.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
   </ItemGroup>
@@ -87,9 +96,6 @@
     <AndroidResource Include="Resources\mipmap-xhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\Icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\Icon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\menu\MenuMain.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\..\Common\ApplicationLogic\VisualCrypt.Applications\VisualCrypt.Applications.csproj">
@@ -127,6 +133,12 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_border_all_black_24dp.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\menu_files.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\menu\menu_main.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

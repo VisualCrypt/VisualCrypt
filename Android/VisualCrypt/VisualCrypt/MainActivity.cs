@@ -5,6 +5,7 @@ using Android.Support.V7.App;
 using AlertDialog = Android.Support.V7.App.AlertDialog;
 
 using Toolbar = Android.Support.V7.Widget.Toolbar;
+using Service = VisualCrypt.Applications.Services.Interfaces.Service;
 
 
 using System;
@@ -12,7 +13,7 @@ using Android.Views;
 
 namespace VisualCrypt
 {
-	[Activity (Label = "VisualCrypt", MainLauncher = true, Icon = "@mipmap/icon")]
+	[Activity (Label = "MainActivity",  ParentActivity = typeof(FilesActivity))]
 	public class MainActivity : AppCompatActivity  // http://developer.android.com/reference/android/support/v7/app/AppCompatActivity.html
     {
 		int count = 1;
@@ -21,21 +22,13 @@ namespace VisualCrypt
 		{
 			base.OnCreate (savedInstanceState);
 
-			// Set our view from the "main" layout resource
 			SetContentView (Resource.Layout.Main);
 
             // http://developer.android.com/training/appbar/index.html
             var toolbar = FindViewById<Toolbar>(Resource.Id.toolbar);
-         
-
-            //Toolbar will now take on default actionbar characteristics
             SetSupportActionBar(toolbar);
-
-            SupportActionBar.Title = "";
-
-
-            // Get our button from the layout resource,
-            // and attach an event to it
+            SupportActionBar.SetDisplayHomeAsUpEnabled(true);
+           
             Button button = FindViewById<Button> (Resource.Id.myButton);
 			
 			button.Click += delegate {
@@ -45,10 +38,20 @@ namespace VisualCrypt
 
 	    public override bool OnCreateOptionsMenu(IMenu menu)
 	    {
-            MenuInflater.Inflate(Resource.Menu.MenuMain, menu);
+            MenuInflater.Inflate(Resource.Menu.menu_main, menu);
 	        return base.OnCreateOptionsMenu(menu);
 	    }
 
+	    public override bool OnOptionsItemSelected(IMenuItem item)
+	    {
+	        switch (item.ItemId)
+	        {
+                case Resource.Id.action_encrypt:
+	                return true;
+                default:
+                    return base.OnOptionsItemSelected(item);
+	        }
+	    }
 
 	    bool ShowDialog()
 	    {

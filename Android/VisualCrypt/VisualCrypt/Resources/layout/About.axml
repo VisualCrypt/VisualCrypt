@@ -3,11 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-  <!--<include
-      android:id="@+id/toolbar"
-      layout="@layout/toolbar" />-->
   <android.support.v7.widget.Toolbar
- android:id="@+id/toolbar"
+ android:id="@+id/about_toolbar"
    android:layout_width="match_parent"
    android:layout_height="?attr/actionBarSize"
    android:background="?attr/colorPrimary"
@@ -15,33 +12,15 @@
    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
     >
-  
-
-    <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="left"
-          android:id="@+id/Back"
-          android:textSize="12sp"
-          android:background="@null"
-          android:textColor="#FFF"
-          android:text="&lt;"/>
-
 
   </android.support.v7.widget.Toolbar>
   <LinearLayout
       android:orientation="vertical"
       android:layout_width="fill_parent"
       android:layout_height="fill_parent"
-      android:id="@+id/main_content"
-      android:layout_below="@id/toolbar">
-    
-    <Button
-    android:id="@+id/myButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/hello"
-    />
+      android:id="@+id/about_content"
+      android:layout_below="@id/about_toolbar">
+
   </LinearLayout>
 </RelativeLayout>
 
