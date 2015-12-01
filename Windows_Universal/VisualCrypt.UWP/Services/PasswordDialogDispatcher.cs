@@ -9,12 +9,12 @@ namespace VisualCrypt.UWP.Services
     public class PasswordDialogDispatcher : IPasswordDialogDispatcher
     {
        
-        public async Task<bool> LaunchAsync(IEncryptionService encryptionServcie, SetPasswordDialogMode setPasswordDialogMode, 
+        public async Task<bool> LaunchAsync(SetPasswordDialogMode setPasswordDialogMode, 
             Action<bool> setIsPasswordSet, bool isPasswordSet)
         {
             var mainPage = MainPagePhone.PageReference;
             var tcs = new TaskCompletionSource<bool>();
-            mainPage.PasswordUserControl.InitViewModel(encryptionServcie, setPasswordDialogMode,
+            mainPage.PasswordUserControl.InitViewModel(setPasswordDialogMode,
                 setIsPasswordSet, tcs.SetResult, isPasswordSet);
                 
             mainPage.DisplayPasswordDialog();

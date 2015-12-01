@@ -572,4 +572,7 @@
   <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
     <value>Inhalt wird analysiert...</value>
   </data>
+  <data name="msgTakesTooLong" xml:space="preserve">
+    <value>Wenn dies auf Ihr Gerät zu lange dauert, wählen Sie weniger runden in Settings.</value>
+  </data>
 </root>

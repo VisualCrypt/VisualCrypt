@@ -578,4 +578,7 @@
   <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
     <value>Analisi di contenuto...</value>
   </data>
+  <data name="msgTakesTooLong" xml:space="preserve">
+    <value>Se si impiega troppo tempo nel dispositivo, scegliete Impostazioni meno arrotondamenti.</value>
+  </data>
 </root>

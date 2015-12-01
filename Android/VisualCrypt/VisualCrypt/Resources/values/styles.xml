@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <resources>
   <color name="VisualCryptColor">#AF0007</color>
+  <color name="White">#FFFFFF</color>
   <style name="MyTheme" parent="MyTheme.Base">
   </style>
   <!-- Base theme applied no matter what API -->
-  <style name="MyTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+  <style name="MyTheme.Base" parent="Theme.AppCompat.NoActionBar">
     <!--If you are using revision 22.1 please use just windowNoTitle. Without android:-->
     <item name="windowNoTitle">true</item>
     <!--We will be using the toolbar so no need to show ActionBar-->
@@ -17,10 +18,11 @@
     <item name="colorPrimaryDark">@color/VisualCryptColor</item>
     <!-- colorAccent is used as the default value for colorControlActivated
          which is used to tint widgets -->
-    <item name="colorAccent">#FF4081</item>
+    <item name="colorAccent">#FFFF00</item>
     <!-- You can also set colorControlNormal, colorControlActivated
          colorControlHighlight and colorSwitchThumbNormal. -->
   </style>
+
 </resources>
 
 

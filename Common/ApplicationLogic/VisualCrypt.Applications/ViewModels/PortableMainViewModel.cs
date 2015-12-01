@@ -179,6 +179,7 @@ namespace VisualCrypt.Applications.ViewModels
             _eventAggregator.GetEvent<EditorShouldSendText>()
                 .Publish(tcs.SetResult);
             return await tcs.Task;
+         
         }
 
 
@@ -915,7 +916,7 @@ namespace VisualCrypt.Applications.ViewModels
         {
             return
                 await
-                    _passwordDialogDispatcher.LaunchAsync(_encryptionService, setPasswordDialogMode,
+                    _passwordDialogDispatcher.LaunchAsync(setPasswordDialogMode,
                         PasswordInfo.SetIsPasswordSet, PasswordInfo.IsPasswordSet);
         }
 

@@ -8,6 +8,7 @@
             PathAndFileName = string.Empty;
             ModifiedDate = string.Empty;
         }
+        public int ID { get; set; }
 
         public string ShortFilename { get; set; }
 

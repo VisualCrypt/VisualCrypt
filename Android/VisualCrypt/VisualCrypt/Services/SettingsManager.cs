@@ -1,41 +1,64 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using VisualCrypt.Applications.Models.Settings;
 using VisualCrypt.Applications.Services.PortableImplementations;
+using VisualCrypt.Droid.Models;
 
 namespace VisualCrypt.Droid.Services
 {
     class SettingsManager : AbstractSettingsManager
     {
-        string _currentDirectoryName;
 
         public override string CurrentDirectoryName
         {
-            get { return _currentDirectoryName; }
-            set { _currentDirectoryName = value; }
+            get
+            {
+                return Environment.GetFolderPath(Environment.SpecialFolder.Personal); ;
+            }
+            set { }
         }
 
         protected override void FactorySettings()
         {
-            throw new NotImplementedException();
+            _log.Debug("Applying factory settings.");
+
+            EditorSettings = new EditorSettings
+            {
+                IsWordWrapChecked = true,
+                IsSpellCheckingChecked = false,
+                PagePadding = 72,
+                IsToolAreaVisible = false
+
+
+            };
+            FontSettings = new FontSettings
+            {
+                //FontFamily = new FontFamily("Lucida Console"),
+                //FontSize = 11,
+                //FontStretch = FontStretch.Normal,
+                //FontStyle = FontStyle.Normal,
+                //FontWeight = FontWeights.Normal
+            }
+            ;
+            CryptographySettings = new CryptographySettings { LogRounds = 13 };
+            UpdateSettings = new UpdateSettings
+            {
+                Version = _aip.AssemblyVersion,
+                SKU = _aip.AssemblyProduct,
+                Date = DateTime.UtcNow,
+                Notify = true
+            };
         }
 
         protected override string ReadSettingsFile()
         {
-            throw new NotImplementedException();
+            return File.ReadAllText(Path.Combine(CurrentDirectoryName, SettingsFilename), Encoding.Unicode);
         }
 
         protected override void WriteSettingsFile(string settingsFile)
         {
-            throw new NotImplementedException();
+            File.WriteAllText(Path.Combine(CurrentDirectoryName, SettingsFilename), settingsFile, Encoding.Unicode);
         }
     }
 }

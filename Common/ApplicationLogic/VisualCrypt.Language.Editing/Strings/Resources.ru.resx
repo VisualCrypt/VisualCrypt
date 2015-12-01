@@ -571,4 +571,7 @@
   <data name="fileProg_MsgAnalyzingContents" xml:space="preserve">
     <value>Анализ содержимого...</value>
   </data>
+  <data name="msgTakesTooLong" xml:space="preserve">
+    <value>Если это занимает слишком много времени на устройстве, выберите в настройках меньше циклов.</value>
+  </data>
 </root>

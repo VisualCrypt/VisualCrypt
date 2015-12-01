@@ -17,27 +17,27 @@ namespace VisualCrypt.Droid.Services
     {
         public void ApplyFontsFromSettingsToEditor()
         {
-            throw new NotImplementedException();
+            
         }
 
         public bool CanExecuteChooseFont()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool CanExecuteZoom100()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool CanExecuteZoomIn()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public bool CanExecuteZoomOut()
         {
-            throw new NotImplementedException();
+            return false;
         }
 
         public void ExecuteChooseFont()
@@ -47,7 +47,7 @@ namespace VisualCrypt.Droid.Services
 
         public void ExecuteZoom100()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void ExecuteZoomIn()

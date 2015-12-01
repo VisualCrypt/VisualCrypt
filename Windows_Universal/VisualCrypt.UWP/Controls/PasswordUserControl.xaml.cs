@@ -17,7 +17,7 @@ namespace VisualCrypt.UWP.Controls
             _viewModel = Service.Get<PortablePasswordDialogViewModel>();
         }
 
-        public void InitViewModel(IEncryptionService encryptionService, SetPasswordDialogMode setPasswordDialogMode,
+        public void InitViewModel(SetPasswordDialogMode setPasswordDialogMode,
             Action<bool> setIsPasswordSet, Action<bool> closeAction, bool isPasswordSetWhenDialogOpened)
         {
             _viewModel.Init(setPasswordDialogMode, setIsPasswordSet, closeAction, isPasswordSetWhenDialogOpened);

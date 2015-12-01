@@ -42,11 +42,11 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 if (filename == null)
                     throw new ArgumentNullException("filename");
 
-                var readTask =  _fileService.ReadAllBytes(filename,context);
+                var readTask = _fileService.ReadAllBytes(filename, context);
                 readTask.Wait();
 
                 var shortFilename = _fileService.PathGetFileName(filename);
-               context.EncryptionProgress.Message = LocalizableStrings.MsgAnalyzingContents;
+                context.EncryptionProgress.Message = LocalizableStrings.MsgAnalyzingContents;
                 context.EncryptionProgress.Percent = 100;
                 context.EncryptionProgress.IsIndeterminate = true;
                 context.EncryptionProgress.Report(context.EncryptionProgress);
@@ -186,7 +186,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 if (context == null)
                     throw new ArgumentNullException("context");
 
-                var decodeResponse = _visualCrypt2Service.DecodeVisualCrypt(textBufferContents,context);
+                var decodeResponse = _visualCrypt2Service.DecodeVisualCrypt(textBufferContents, context);
                 if (decodeResponse.IsSuccess)
                 {
                     var decrpytResponse = _visualCrypt2Service.Decrypt(decodeResponse.Result, KeyStore.GetPasswordHash(), context);
@@ -221,11 +221,8 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
                 if (fileModel == null)
                     throw new ArgumentNullException("fileModel");
 
-                if (!fileModel.IsEncrypted)
+                if (!fileModel.IsEncrypted || fileModel.VisualCryptText == null || !fileModel.VisualCryptText.StartsWith("VisualCrypt/"))
                     throw new Exception("Aborting Save - IsEncrypted is false.");
-
-                if (!_visualCrypt2Service.DecodeVisualCrypt(fileModel.VisualCryptText,context).IsSuccess)
-                    throw new Exception("Aborting Save -  The data being saved is not valid VisualCrypt format.");
 
                 byte[] visualCryptTextBytes = fileModel.SaveEncoding.GetBytes(fileModel.VisualCryptText);
                 _fileService.WriteAllBytes(fileModel.Filename, visualCryptTextBytes);
@@ -281,7 +278,7 @@ namespace VisualCrypt.Applications.Services.PortableImplementations
         public Response<string> GenerateRandomPassword()
         {
             StartMeasure();
-            var response =  _visualCrypt2Service.SuggestRandomPassword();
+            var response = _visualCrypt2Service.SuggestRandomPassword();
             if (!response.IsSuccess)
                 _log.Exception(new Exception(response.Error));
             StopMeasure();

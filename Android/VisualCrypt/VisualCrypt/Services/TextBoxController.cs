@@ -15,11 +15,31 @@ namespace VisualCrypt.Droid.Services
 {
     class TextBoxController : ITextBoxController
     {
+        EditText _textBox;
+        public object PlatformTextBox
+        {
+            set
+            {
+                _textBox = value as EditText;
+                if (_textBox == null)
+                    return;
+                _textBox.TextChanged += OnTextChanged;
+
+            }
+        }
+
+        void OnTextChanged(object sender, Android.Text.TextChangedEventArgs e)
+        {
+
+            var handler = TextChanged;
+            handler?.Invoke(this, e);
+        }
+
         public int CaretIndex
         {
             get
             {
-                throw new NotImplementedException();
+                return _textBox.SelectionStart;
             }
 
             set
@@ -32,12 +52,12 @@ namespace VisualCrypt.Droid.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return 10;
             }
 
             set
             {
-                throw new NotImplementedException();
+                ;
             }
         }
 
@@ -45,12 +65,12 @@ namespace VisualCrypt.Droid.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             set
             {
-                throw new NotImplementedException();
+                ;
             }
         }
 
@@ -58,12 +78,12 @@ namespace VisualCrypt.Droid.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return false;
             }
 
             set
             {
-                throw new NotImplementedException();
+                ;
             }
         }
 
@@ -71,23 +91,17 @@ namespace VisualCrypt.Droid.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return _textBox.LineCount;
             }
         }
 
-        public object PlatformTextBox
-        {
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
+
 
         public int SelectionLength
         {
             get
             {
-                throw new NotImplementedException();
+                return _textBox.SelectionEnd - _textBox.SelectionStart;
             }
 
             set
@@ -100,12 +114,12 @@ namespace VisualCrypt.Droid.Services
         {
             get
             {
-                throw new NotImplementedException();
+                return _textBox.Text;
             }
 
             set
             {
-                throw new NotImplementedException();
+                _textBox.Text = value;
             }
         }
 
@@ -114,32 +128,32 @@ namespace VisualCrypt.Droid.Services
 
         public void Focus()
         {
-            throw new NotImplementedException();
+            _textBox.RequestFocus();
         }
 
         public int GetCharacterIndexFromLineIndex(int currentLineIndex)
         {
-            throw new NotImplementedException();
+            return 7;
         }
 
         public int GetLineIndexFromCharacterIndex(int rawPos)
         {
-            throw new NotImplementedException();
+            return 8;
         }
 
         public int GetLineLength(int currentLineIndex)
         {
-            throw new NotImplementedException();
+            return 9;
         }
 
         public void Select(int indexInSourceText, int length)
         {
-            throw new NotImplementedException();
+            _textBox.SetSelection(indexInSourceText, length);
         }
 
         public void SelectAll()
         {
-            throw new NotImplementedException();
+            _textBox.SelectAll();
         }
     }
 }

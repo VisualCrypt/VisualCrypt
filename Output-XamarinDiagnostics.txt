@@ -1,0 +1,8 @@
+﻿[I:]:                     Tracking android devices started
+[D:]:                     Tracking avd started
+[D:]:                     avd watcher *.ini path: 'C:\Users\Claus\.android\avd'
+[D:]:                     avd watcher android path: 'C:\PROGRA~2\Android\ANDROI~1\tools\android.bat'
+[D:]:                     TrackDeviceTask got: 10.71.34.101:5555	device
+[I:]:                     Got new device list from adb with 1 devices
+[D:RunShellCommand]:      10.71.34.101:5555 getprop
+[D:RunShellCommand]:      10.71.34.101:5555 getprop

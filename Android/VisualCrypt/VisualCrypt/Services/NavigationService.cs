@@ -11,6 +11,8 @@ using Android.Views;
 using Android.Widget;
 using VisualCrypt.Applications.Models;
 using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Views;
+using VisualCrypt.Applications.ViewModels;
 
 namespace VisualCrypt.Droid.Services
 {
@@ -28,7 +30,9 @@ namespace VisualCrypt.Droid.Services
 
         public void NavigateToMainPage(FilesPageCommandArgs filesPageCommandArgs)
         {
-            throw new NotImplementedException();
+            FilesActivity.Instance.StartActivity(typeof(MainActivity));
+            Applications.Services.Interfaces.Service.Get<PortableMainViewModel>().OnNavigatedToCompletedAndLoaded(filesPageCommandArgs);
+
         }
 
         public void NavigateToSettingsPage()

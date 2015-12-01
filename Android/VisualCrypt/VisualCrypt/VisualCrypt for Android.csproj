@@ -38,7 +38,10 @@
     <AndroidUseSharedRuntime>false</AndroidUseSharedRuntime>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Mono.Data.Sqlite" />
     <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="Mono.Android" />
@@ -52,11 +55,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="SettingsActivity.cs" />
+    <Compile Include="FileReferencesAdapter.cs" />
+    <Compile Include="Views\PasswordFragment.cs" />
+    <Compile Include="Views\FilenameFragment.cs" />
+    <Compile Include="Views\EncryptedBarBottomFragment.cs" />
+    <Compile Include="Views\EncryptedBarFragment.cs" />
+    <Compile Include="Views\PlaintextBarBottomFragment.cs" />
+    <Compile Include="Views\WorkingBarBottomFragment.cs" />
+    <Compile Include="Views\WorkingBarFragment.cs" />
+    <Compile Include="Views\PlaintextBarFragment.cs" />
+    <Compile Include="Views\SettingsActivity.cs" />
     <Compile Include="Bootstrapper.cs" />
-    <Compile Include="AboutActivity.cs" />
-    <Compile Include="FilesActivity.cs" />
-    <Compile Include="MainActivity.cs" />
+    <Compile Include="Views\AboutActivity.cs" />
+    <Compile Include="Views\FilesActivity.cs" />
+    <Compile Include="Views\MainActivity.cs" />
     <Compile Include="Models\FontSettings.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,6 +82,9 @@
     <Compile Include="Services\Printer.cs" />
     <Compile Include="Services\SettingsManager.cs" />
     <Compile Include="Services\TextBoxController.cs" />
+    <Compile Include="temp\ConnectionManager.cs" />
+    <Compile Include="temp\FileDatabase.cs" />
+    <Compile Include="Views\BaseActivity.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -84,6 +99,9 @@
     </AndroidResource>
     <AndroidResource Include="Resources\layout\Settings.axml">
       <SubType>Designer</SubType>
+    </AndroidResource>
+    <AndroidResource Include="Resources\layout\PasswordFragment.axml">
+      <SubType>AndroidResource</SubType>
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
@@ -135,10 +153,35 @@
     <AndroidResource Include="Resources\drawable\ic_border_all_black_24dp.png" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\menu\menu_files.xml" />
+    <AndroidResource Include="Resources\menu\menu_files.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\menu\menu_main.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\PlaintextBarFragment.axml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\EncryptedBarFragment.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\WorkingBarFragment.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\EncryptedBarBottomFragment.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\PlaintextBarBottomFragment.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\WorkingBarBottomFragment.xml">
+      <SubType>Designer</SubType>
+    </AndroidResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\layout\FilenameFragment.axml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

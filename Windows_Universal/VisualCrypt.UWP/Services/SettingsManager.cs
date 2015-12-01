@@ -21,11 +21,10 @@ namespace VisualCrypt.UWP.Services
             get
             {
                 // in WPF: if (string.IsNullOrWhiteSpace(_currentDirectoryName) || !Directory.Exists(_currentDirectoryName))
-                // here: always overwrite the value with the path of the local folder.
-                _currentDirectoryName = ApplicationData.Current.LocalFolder.Path;
-                return _currentDirectoryName;
+                // here: always return the path of the local folder.
+                return ApplicationData.Current.LocalFolder.Path;
             }
-            set { _currentDirectoryName = value; }
+            set {  }
         }
 
         protected override void FactorySettings()

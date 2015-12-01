@@ -41,7 +41,7 @@ namespace VisualCrypt.UWP.Services
 
 
         /// <summary>
-        /// ATM this code is the same in WPF and UWP, consider sharing!
+        /// ATM this code is the same in WPF, Android and UWP, consider sharing!
         /// </summary>
         /// <param name="filename"></param>
         /// <returns></returns>

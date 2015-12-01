@@ -1,49 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-  <!--<include
+<!--<include
       android:id="@+id/toolbar"
       layout="@layout/toolbar" />-->
-  <android.support.v7.widget.Toolbar
- android:id="@+id/toolbar"
-   android:layout_width="match_parent"
-   android:layout_height="?attr/actionBarSize"
-   android:background="?attr/colorPrimary"
-   android:elevation="4dp"
-   android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-   app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-    >
-  
-
-    <Button
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_gravity="left"
-          android:id="@+id/Back"
-          android:textSize="12sp"
-          android:background="@null"
-          android:textColor="#FFF"
-          android:text="&lt;"/>
-
-
-  </android.support.v7.widget.Toolbar>
-  <LinearLayout
-      android:orientation="vertical"
-      android:layout_width="fill_parent"
-      android:layout_height="fill_parent"
-      android:id="@+id/main_content"
-      android:layout_below="@id/toolbar">
-    
-    <Button
-    android:id="@+id/myButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/hello"
-    />
-  </LinearLayout>
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/main_toolbar"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/main_content"
+        android:layout_below="@id/main_toolbar">
+        <FrameLayout
+            android:id="@+id/extendedAppBar_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:minHeight="30dp" />
+        <FrameLayout
+            android:id="@+id/filenameFragment_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/VisualCryptColor" />
+        <FrameLayout
+            android:id="@+id/passwordFragment_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/VisualCryptColor" />
+        <EditText
+            android:id="@+id/textBox1"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:background="@color/White"
+            android:textColor="#000"
+            android:gravity="top"
+            android:layout_gravity="top"
+            android:layout_weight="1" />
+        <FrameLayout
+            android:id="@+id/bottomBar_frameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:minHeight="30dp" />
+    </LinearLayout>
 </RelativeLayout>
-
-
-

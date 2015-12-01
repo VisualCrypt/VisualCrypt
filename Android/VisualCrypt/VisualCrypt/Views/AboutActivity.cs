@@ -1,20 +1,13 @@
 using Android.App;
 using Android.OS;
-using Android.Support.V7.App;
 using VisualCrypt.Language.Strings;
 using Toolbar = Android.Support.V7.Widget.Toolbar;
-using Service = VisualCrypt.Applications.Services.Interfaces.Service;
 
-namespace VisualCrypt
+namespace VisualCrypt.Views
 {
-    [Activity(Label = "", ParentActivity = typeof(FilesActivity))]
-    public class AboutActivity : AppCompatActivity
+    [Activity(ParentActivity = typeof(FilesActivity))]
+    public class AboutActivity : BaseActivity
     {
-        readonly ResourceWrapper _resourceWrapper;
-        public AboutActivity()
-        {
-            _resourceWrapper = Service.Get<ResourceWrapper>();
-        }
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);

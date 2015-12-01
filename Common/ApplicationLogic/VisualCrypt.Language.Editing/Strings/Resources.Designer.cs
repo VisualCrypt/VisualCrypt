@@ -755,6 +755,15 @@ namespace VisualCrypt.Language.Editing.Strings {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to If this takes too long on your device, choose less Rounds in Settings..
+        /// </summary>
+        internal static string msgTakesTooLong {
+            get {
+                return ResourceManager.GetString("msgTakesTooLong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Decrypting:.
         /// </summary>
         internal static string operationDecryption {

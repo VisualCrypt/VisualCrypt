@@ -1,18 +1,21 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using Android.App;
-using Android.Content;
-using Android.OS;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
+using System.Threading.Tasks;
+using VisualCrypt.Applications.Models;
+using VisualCrypt.Applications.Services.Interfaces;
+using VisualCrypt.Views;
 
 namespace VisualCrypt.Droid.Services
 {
-    class PasswordDialogDispatcher
+    class PasswordDialogDispatcher : IPasswordDialogDispatcher
     {
+        public async Task<bool> LaunchAsync(SetPasswordDialogMode setPasswordDialogMode, Action<bool> setIsPasswordSetViewModelCallback, bool isPasswordSetWhenDialogOpened)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+            MainActivity.MainActivityInstance.DisplayPasswordDialog(setPasswordDialogMode,
+                setIsPasswordSetViewModelCallback, isPasswordSetWhenDialogOpened, tcs.SetResult);
+            var result = await tcs.Task;
+            MainActivity.MainActivityInstance.HidePasswordDialog();
+            return result;
+        }
     }
 }

@@ -734,31 +734,34 @@ namespace VisualCrypt
 			public const int VisualCryptColor = 2131427386;
 			
 			// aapt resource value: 0x7f0b003b
-			public const int abc_background_cache_hint_selector_material_dark = 2131427387;
+			public const int White = 2131427387;
 			
 			// aapt resource value: 0x7f0b003c
-			public const int abc_background_cache_hint_selector_material_light = 2131427388;
+			public const int abc_background_cache_hint_selector_material_dark = 2131427388;
 			
 			// aapt resource value: 0x7f0b003d
-			public const int abc_color_highlight_material = 2131427389;
+			public const int abc_background_cache_hint_selector_material_light = 2131427389;
+			
+			// aapt resource value: 0x7f0b003e
+			public const int abc_color_highlight_material = 2131427390;
 			
 			// aapt resource value: 0x7f0b0000
 			public const int abc_input_method_navigation_guard = 2131427328;
 			
-			// aapt resource value: 0x7f0b003e
-			public const int abc_primary_text_disable_only_material_dark = 2131427390;
-			
 			// aapt resource value: 0x7f0b003f
-			public const int abc_primary_text_disable_only_material_light = 2131427391;
+			public const int abc_primary_text_disable_only_material_dark = 2131427391;
 			
 			// aapt resource value: 0x7f0b0040
-			public const int abc_primary_text_material_dark = 2131427392;
+			public const int abc_primary_text_disable_only_material_light = 2131427392;
 			
 			// aapt resource value: 0x7f0b0041
-			public const int abc_primary_text_material_light = 2131427393;
+			public const int abc_primary_text_material_dark = 2131427393;
 			
 			// aapt resource value: 0x7f0b0042
-			public const int abc_search_url_text = 2131427394;
+			public const int abc_primary_text_material_light = 2131427394;
+			
+			// aapt resource value: 0x7f0b0043
+			public const int abc_search_url_text = 2131427395;
 			
 			// aapt resource value: 0x7f0b0001
 			public const int abc_search_url_text_normal = 2131427329;
@@ -769,11 +772,11 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0b0003
 			public const int abc_search_url_text_selected = 2131427331;
 			
-			// aapt resource value: 0x7f0b0043
-			public const int abc_secondary_text_material_dark = 2131427395;
-			
 			// aapt resource value: 0x7f0b0044
-			public const int abc_secondary_text_material_light = 2131427396;
+			public const int abc_secondary_text_material_dark = 2131427396;
+			
+			// aapt resource value: 0x7f0b0045
+			public const int abc_secondary_text_material_light = 2131427397;
 			
 			// aapt resource value: 0x7f0b0004
 			public const int accent_material_dark = 2131427332;
@@ -931,11 +934,11 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0b0037
 			public const int switch_thumb_disabled_material_light = 2131427383;
 			
-			// aapt resource value: 0x7f0b0045
-			public const int switch_thumb_material_dark = 2131427397;
-			
 			// aapt resource value: 0x7f0b0046
-			public const int switch_thumb_material_light = 2131427398;
+			public const int switch_thumb_material_dark = 2131427398;
+			
+			// aapt resource value: 0x7f0b0047
+			public const int switch_thumb_material_light = 2131427399;
 			
 			// aapt resource value: 0x7f0b0038
 			public const int switch_thumb_normal_material_dark = 2131427384;
@@ -1399,20 +1402,17 @@ namespace VisualCrypt
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f0c0052
-			public const int Back = 2131492946;
-			
 			// aapt resource value: 0x7f0c004e
 			public const int about_content = 2131492942;
 			
 			// aapt resource value: 0x7f0c004d
 			public const int about_toolbar = 2131492941;
 			
-			// aapt resource value: 0x7f0c0055
-			public const int action0 = 2131492949;
+			// aapt resource value: 0x7f0c0063
+			public const int action0 = 2131492963;
 			
-			// aapt resource value: 0x7f0c0067
-			public const int action_about = 2131492967;
+			// aapt resource value: 0x7f0c0088
+			public const int action_about = 2131493000;
 			
 			// aapt resource value: 0x7f0c003e
 			public const int action_bar = 2131492926;
@@ -1435,20 +1435,23 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0021
 			public const int action_bar_title = 2131492897;
 			
-			// aapt resource value: 0x7f0c006a
-			public const int action_cancelSelect = 2131492970;
+			// aapt resource value: 0x7f0c008b
+			public const int action_cancelSelect = 2131493003;
 			
 			// aapt resource value: 0x7f0c003f
 			public const int action_context_bar = 2131492927;
 			
-			// aapt resource value: 0x7f0c0069
-			public const int action_delete = 2131492969;
+			// aapt resource value: 0x7f0c008e
+			public const int action_decrpyt = 2131493006;
 			
-			// aapt resource value: 0x7f0c0059
-			public const int action_divider = 2131492953;
+			// aapt resource value: 0x7f0c008a
+			public const int action_delete = 2131493002;
 			
-			// aapt resource value: 0x7f0c006b
-			public const int action_encrypt = 2131492971;
+			// aapt resource value: 0x7f0c0067
+			public const int action_divider = 2131492967;
+			
+			// aapt resource value: 0x7f0c008d
+			public const int action_encrypt = 2131493005;
 			
 			// aapt resource value: 0x7f0c0002
 			public const int action_menu_divider = 2131492866;
@@ -1465,26 +1468,32 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0023
 			public const int action_mode_close_button = 2131492899;
 			
-			// aapt resource value: 0x7f0c0065
-			public const int action_new = 2131492965;
+			// aapt resource value: 0x7f0c0086
+			public const int action_new = 2131492998;
 			
-			// aapt resource value: 0x7f0c0064
-			public const int action_open = 2131492964;
+			// aapt resource value: 0x7f0c0085
+			public const int action_open = 2131492997;
 			
-			// aapt resource value: 0x7f0c0068
-			public const int action_rename = 2131492968;
+			// aapt resource value: 0x7f0c0091
+			public const int action_print = 2131493009;
 			
-			// aapt resource value: 0x7f0c006c
-			public const int action_search = 2131492972;
+			// aapt resource value: 0x7f0c0089
+			public const int action_rename = 2131493001;
 			
-			// aapt resource value: 0x7f0c0063
-			public const int action_select = 2131492963;
+			// aapt resource value: 0x7f0c008c
+			public const int action_save = 2131493004;
 			
-			// aapt resource value: 0x7f0c0066
-			public const int action_settings = 2131492966;
+			// aapt resource value: 0x7f0c0090
+			public const int action_saveAs = 2131493008;
 			
-			// aapt resource value: 0x7f0c006d
-			public const int action_user = 2131492973;
+			// aapt resource value: 0x7f0c0084
+			public const int action_select = 2131492996;
+			
+			// aapt resource value: 0x7f0c008f
+			public const int action_send = 2131493007;
+			
+			// aapt resource value: 0x7f0c0087
+			public const int action_settings = 2131492999;
 			
 			// aapt resource value: 0x7f0c0024
 			public const int activity_chooser_view_content = 2131492900;
@@ -1498,17 +1507,20 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0018
 			public const int beginning = 2131492888;
 			
+			// aapt resource value: 0x7f0c0062
+			public const int bottomBar_frameLayout = 2131492962;
+			
 			// aapt resource value: 0x7f0c0034
 			public const int buttonPanel = 2131492916;
 			
-			// aapt resource value: 0x7f0c0056
-			public const int cancel_action = 2131492950;
+			// aapt resource value: 0x7f0c0064
+			public const int cancel_action = 2131492964;
 			
 			// aapt resource value: 0x7f0c0036
 			public const int checkbox = 2131492918;
 			
-			// aapt resource value: 0x7f0c005c
-			public const int chronometer = 2131492956;
+			// aapt resource value: 0x7f0c006a
+			public const int chronometer = 2131492970;
 			
 			// aapt resource value: 0x7f0c001c
 			public const int collapseActionView = 2131492892;
@@ -1534,11 +1546,23 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0040
 			public const int edit_query = 2131492928;
 			
+			// aapt resource value: 0x7f0c004f
+			public const int encryptedBarBottomText = 2131492943;
+			
+			// aapt resource value: 0x7f0c0051
+			public const int encryptedBarFragment_textViewClearPassword = 2131492945;
+			
+			// aapt resource value: 0x7f0c0052
+			public const int encryptedBarFragment_textViewCopyAll = 2131492946;
+			
+			// aapt resource value: 0x7f0c0050
+			public const int encryptedBarFragment_textViewPasswordStatus = 2131492944;
+			
 			// aapt resource value: 0x7f0c0019
 			public const int end = 2131492889;
 			
-			// aapt resource value: 0x7f0c0061
-			public const int end_padder = 2131492961;
+			// aapt resource value: 0x7f0c006f
+			public const int end_padder = 2131492975;
 			
 			// aapt resource value: 0x7f0c0025
 			public const int expand_activities_button = 2131492901;
@@ -1546,11 +1570,35 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0035
 			public const int expanded_menu = 2131492917;
 			
-			// aapt resource value: 0x7f0c0050
-			public const int files_content = 2131492944;
+			// aapt resource value: 0x7f0c005e
+			public const int extendedAppBar_frameLayout = 2131492958;
 			
-			// aapt resource value: 0x7f0c004f
-			public const int files_toolbar = 2131492943;
+			// aapt resource value: 0x7f0c0057
+			public const int filenameFragment_buttonCancel = 2131492951;
+			
+			// aapt resource value: 0x7f0c0058
+			public const int filenameFragment_buttonOK = 2131492952;
+			
+			// aapt resource value: 0x7f0c0055
+			public const int filenameFragment_editTextFilename = 2131492949;
+			
+			// aapt resource value: 0x7f0c005f
+			public const int filenameFragment_frameLayout = 2131492959;
+			
+			// aapt resource value: 0x7f0c0056
+			public const int filenameFragment_linearLayout1 = 2131492950;
+			
+			// aapt resource value: 0x7f0c0054
+			public const int filenameFragment_textViewFilename = 2131492948;
+			
+			// aapt resource value: 0x7f0c0053
+			public const int filenameFragment_textViewTitle = 2131492947;
+			
+			// aapt resource value: 0x7f0c005a
+			public const int files_content = 2131492954;
+			
+			// aapt resource value: 0x7f0c0059
+			public const int files_toolbar = 2131492953;
 			
 			// aapt resource value: 0x7f0c0004
 			public const int home = 2131492868;
@@ -1567,35 +1615,38 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0026
 			public const int image = 2131492902;
 			
-			// aapt resource value: 0x7f0c0060
-			public const int info = 2131492960;
+			// aapt resource value: 0x7f0c006e
+			public const int info = 2131492974;
 			
-			// aapt resource value: 0x7f0c005a
-			public const int line1 = 2131492954;
+			// aapt resource value: 0x7f0c0068
+			public const int line1 = 2131492968;
 			
-			// aapt resource value: 0x7f0c005e
-			public const int line3 = 2131492958;
+			// aapt resource value: 0x7f0c006c
+			public const int line3 = 2131492972;
 			
 			// aapt resource value: 0x7f0c0009
 			public const int listMode = 2131492873;
 			
+			// aapt resource value: 0x7f0c005b
+			public const int listView_files = 2131492955;
+			
 			// aapt resource value: 0x7f0c0028
 			public const int list_item = 2131492904;
 			
-			// aapt resource value: 0x7f0c0053
-			public const int main_content = 2131492947;
+			// aapt resource value: 0x7f0c005d
+			public const int main_content = 2131492957;
 			
-			// aapt resource value: 0x7f0c0058
-			public const int media_actions = 2131492952;
+			// aapt resource value: 0x7f0c005c
+			public const int main_toolbar = 2131492956;
+			
+			// aapt resource value: 0x7f0c0066
+			public const int media_actions = 2131492966;
 			
 			// aapt resource value: 0x7f0c001a
 			public const int middle = 2131492890;
 			
 			// aapt resource value: 0x7f0c0013
 			public const int multiply = 2131492883;
-			
-			// aapt resource value: 0x7f0c0054
-			public const int myButton = 2131492948;
 			
 			// aapt resource value: 0x7f0c001e
 			public const int never = 2131492894;
@@ -1608,6 +1659,51 @@ namespace VisualCrypt
 			
 			// aapt resource value: 0x7f0c002b
 			public const int parentPanel = 2131492907;
+			
+			// aapt resource value: 0x7f0c0079
+			public const int passwordFragment_buttonCancel = 2131492985;
+			
+			// aapt resource value: 0x7f0c007a
+			public const int passwordFragment_buttonOK = 2131492986;
+			
+			// aapt resource value: 0x7f0c0077
+			public const int passwordFragment_buttonPrintPW = 2131492983;
+			
+			// aapt resource value: 0x7f0c0076
+			public const int passwordFragment_buttonSuggestPW = 2131492982;
+			
+			// aapt resource value: 0x7f0c0074
+			public const int passwordFragment_editTextPassword = 2131492980;
+			
+			// aapt resource value: 0x7f0c0060
+			public const int passwordFragment_frameLayout = 2131492960;
+			
+			// aapt resource value: 0x7f0c0071
+			public const int passwordFragment_gridLayout1 = 2131492977;
+			
+			// aapt resource value: 0x7f0c0075
+			public const int passwordFragment_gridLayout2 = 2131492981;
+			
+			// aapt resource value: 0x7f0c0078
+			public const int passwordFragment_readMoreAboutPWs = 2131492984;
+			
+			// aapt resource value: 0x7f0c0072
+			public const int passwordFragment_textViewPasswordPhrase = 2131492978;
+			
+			// aapt resource value: 0x7f0c0073
+			public const int passwordFragment_textViewSigCharCout = 2131492979;
+			
+			// aapt resource value: 0x7f0c0070
+			public const int passwordFragment_textViewTitle = 2131492976;
+			
+			// aapt resource value: 0x7f0c007b
+			public const int plainTextBarText = 2131492987;
+			
+			// aapt resource value: 0x7f0c007d
+			public const int plaintextBarFragment_textViewClearPassword = 2131492989;
+			
+			// aapt resource value: 0x7f0c007c
+			public const int plaintextBarFragment_textViewPasswordStatus = 2131492988;
 			
 			// aapt resource value: 0x7f0c0005
 			public const int progress_circular = 2131492869;
@@ -1657,8 +1753,8 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c004c
 			public const int select_dialog_listview = 2131492940;
 			
-			// aapt resource value: 0x7f0c0062
-			public const int settings_toolbar = 2131492962;
+			// aapt resource value: 0x7f0c007e
+			public const int settings_toolbar = 2131492990;
 			
 			// aapt resource value: 0x7f0c0037
 			public const int shortcut = 2131492919;
@@ -1684,8 +1780,8 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c0017
 			public const int src_over = 2131492887;
 			
-			// aapt resource value: 0x7f0c0057
-			public const int status_bar_latest_event_content = 2131492951;
+			// aapt resource value: 0x7f0c0065
+			public const int status_bar_latest_event_content = 2131492965;
 			
 			// aapt resource value: 0x7f0c0049
 			public const int submit_area = 2131492937;
@@ -1693,26 +1789,26 @@ namespace VisualCrypt
 			// aapt resource value: 0x7f0c000b
 			public const int tabMode = 2131492875;
 			
-			// aapt resource value: 0x7f0c005f
-			public const int text = 2131492959;
+			// aapt resource value: 0x7f0c006d
+			public const int text = 2131492973;
 			
-			// aapt resource value: 0x7f0c005d
-			public const int text2 = 2131492957;
+			// aapt resource value: 0x7f0c006b
+			public const int text2 = 2131492971;
+			
+			// aapt resource value: 0x7f0c0061
+			public const int textBox1 = 2131492961;
 			
 			// aapt resource value: 0x7f0c0031
 			public const int textSpacerNoButtons = 2131492913;
 			
-			// aapt resource value: 0x7f0c005b
-			public const int time = 2131492955;
+			// aapt resource value: 0x7f0c0069
+			public const int time = 2131492969;
 			
 			// aapt resource value: 0x7f0c002a
 			public const int title = 2131492906;
 			
 			// aapt resource value: 0x7f0c002d
 			public const int title_template = 2131492909;
-			
-			// aapt resource value: 0x7f0c0051
-			public const int toolbar = 2131492945;
 			
 			// aapt resource value: 0x7f0c002c
 			public const int topPanel = 2131492908;
@@ -1725,6 +1821,21 @@ namespace VisualCrypt
 			
 			// aapt resource value: 0x7f0c001f
 			public const int withText = 2131492895;
+			
+			// aapt resource value: 0x7f0c007f
+			public const int workingBarBottomText = 2131492991;
+			
+			// aapt resource value: 0x7f0c0081
+			public const int workingBarFragment_progressBar = 2131492993;
+			
+			// aapt resource value: 0x7f0c0080
+			public const int workingBarFragment_textViewCancel = 2131492992;
+			
+			// aapt resource value: 0x7f0c0082
+			public const int workingBarFragment_textViewProgress1 = 2131492994;
+			
+			// aapt resource value: 0x7f0c0083
+			public const int workingBarFragment_textViewProgress2 = 2131492995;
 			
 			// aapt resource value: 0x7f0c0020
 			public const int wrap_content = 2131492896;
@@ -1846,49 +1957,73 @@ namespace VisualCrypt
 			public const int About = 2130968600;
 			
 			// aapt resource value: 0x7f040019
-			public const int Files = 2130968601;
+			public const int EncryptedBarBottomFragment = 2130968601;
 			
 			// aapt resource value: 0x7f04001a
-			public const int Main = 2130968602;
+			public const int EncryptedBarFragment = 2130968602;
 			
 			// aapt resource value: 0x7f04001b
-			public const int notification_media_action = 2130968603;
+			public const int FilenameFragment = 2130968603;
 			
 			// aapt resource value: 0x7f04001c
-			public const int notification_media_cancel_action = 2130968604;
+			public const int Files = 2130968604;
 			
 			// aapt resource value: 0x7f04001d
-			public const int notification_template_big_media = 2130968605;
+			public const int Main = 2130968605;
 			
 			// aapt resource value: 0x7f04001e
-			public const int notification_template_big_media_narrow = 2130968606;
+			public const int notification_media_action = 2130968606;
 			
 			// aapt resource value: 0x7f04001f
-			public const int notification_template_lines = 2130968607;
+			public const int notification_media_cancel_action = 2130968607;
 			
 			// aapt resource value: 0x7f040020
-			public const int notification_template_media = 2130968608;
+			public const int notification_template_big_media = 2130968608;
 			
 			// aapt resource value: 0x7f040021
-			public const int notification_template_part_chronometer = 2130968609;
+			public const int notification_template_big_media_narrow = 2130968609;
 			
 			// aapt resource value: 0x7f040022
-			public const int notification_template_part_time = 2130968610;
+			public const int notification_template_lines = 2130968610;
 			
 			// aapt resource value: 0x7f040023
-			public const int select_dialog_item_material = 2130968611;
+			public const int notification_template_media = 2130968611;
 			
 			// aapt resource value: 0x7f040024
-			public const int select_dialog_multichoice_material = 2130968612;
+			public const int notification_template_part_chronometer = 2130968612;
 			
 			// aapt resource value: 0x7f040025
-			public const int select_dialog_singlechoice_material = 2130968613;
+			public const int notification_template_part_time = 2130968613;
 			
 			// aapt resource value: 0x7f040026
-			public const int Settings = 2130968614;
+			public const int PasswordFragment = 2130968614;
 			
 			// aapt resource value: 0x7f040027
-			public const int support_simple_spinner_dropdown_item = 2130968615;
+			public const int PlaintextBarBottomFragment = 2130968615;
+			
+			// aapt resource value: 0x7f040028
+			public const int PlaintextBarFragment = 2130968616;
+			
+			// aapt resource value: 0x7f040029
+			public const int select_dialog_item_material = 2130968617;
+			
+			// aapt resource value: 0x7f04002a
+			public const int select_dialog_multichoice_material = 2130968618;
+			
+			// aapt resource value: 0x7f04002b
+			public const int select_dialog_singlechoice_material = 2130968619;
+			
+			// aapt resource value: 0x7f04002c
+			public const int Settings = 2130968620;
+			
+			// aapt resource value: 0x7f04002d
+			public const int support_simple_spinner_dropdown_item = 2130968621;
+			
+			// aapt resource value: 0x7f04002e
+			public const int WorkingBarBottomFragment = 2130968622;
+			
+			// aapt resource value: 0x7f04002f
+			public const int WorkingBarFragment = 2130968623;
 			
 			static Layout()
 			{

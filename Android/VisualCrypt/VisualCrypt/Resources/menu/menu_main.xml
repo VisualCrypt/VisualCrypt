@@ -4,31 +4,41 @@
  xmlns:tools="http://schemas.android.com/tools"
  tools:context=".MainActivity">
   <item
-      android:id="@+id/action_settings"
-      android:orderInCategory="100"
-      android:title="@string/action_settings"
-      app:showAsAction="never" />
+      android:id="@+id/action_save"
+      android:orderInCategory="1"
+      android:title="Save"
+      app:showAsAction="always" />
   <item
       android:id="@+id/action_encrypt"
-      android:orderInCategory="100"
-      android:title="@string/termEncrypt"
-      app:showAsAction="ifRoom" />
+      android:orderInCategory="2"
+      android:title="Encrypt"
+      app:showAsAction="always" />
   <item
-      android:id="@+id/action_search"
-      android:orderInCategory="200"
-      android:title="Search"
-      android:icon="@drawable/ic_attach_file_black_24dp"
-      app:showAsAction="ifRoom"
-        >
-    
-  </item>
+     android:id="@+id/action_decrpyt"
+     android:orderInCategory="3"
+     android:title="Decrypt"
+     app:showAsAction="always" />
   <item
-      android:id="@+id/action_user"
-      android:orderInCategory="300"
-      android:title="User"
-      android:icon="@drawable/ic_border_all_black_24dp"
-      app:showAsAction="ifRoom">
-    
-  </item>
-
+     android:id="@+id/action_send"
+     android:orderInCategory="4"
+     android:title="Send"
+     app:showAsAction="always" />
+  <item
+      android:id="@+id/action_open"
+      android:orderInCategory="5"
+      android:title="Open"
+      app:showAsAction="never"
+        />
+  <item
+   android:id="@+id/action_saveAs"
+   android:orderInCategory="6"
+   android:title="Save As"
+   app:showAsAction="never"
+        />
+  <item
+   android:id="@+id/action_print"
+   android:orderInCategory="7"
+   android:title="Print"
+   app:showAsAction="never"
+        />
 </menu>

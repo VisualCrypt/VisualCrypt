@@ -60,11 +60,17 @@ namespace VisualCrypt.Applications.ViewModels
             SearchOptions = new SearchOptions();
             _fontManager.ExecuteZoom100();
 
-            _resourceWrapper.Info.CultureChanged += OnCultureChanged;
+            _eventAggregator.GetEvent<EditorReceivesText>().Unsubscribe(OnTextReceived);
+            _eventAggregator.GetEvent<EditorShouldSendText>().Unsubscribe(OnTextRequested);
+            _eventAggregator.GetEvent<EditorShouldCleanup>().Unsubscribe(Cleanup);
+            _resourceWrapper.Info.CultureChanged -= OnCultureChanged;
+            _textBox1.TextChanged -= OnTextChanged;
+            _textBox1.SelectionChanged -= OnSelectionChanged;
 
             _eventAggregator.GetEvent<EditorReceivesText>().Subscribe(OnTextReceived);
             _eventAggregator.GetEvent<EditorShouldSendText>().Subscribe(OnTextRequested);
             _eventAggregator.GetEvent<EditorShouldCleanup>().Subscribe(Cleanup);
+            _resourceWrapper.Info.CultureChanged += OnCultureChanged;
             _textBox1.TextChanged += OnTextChanged;
             _textBox1.SelectionChanged += OnSelectionChanged;
         }
